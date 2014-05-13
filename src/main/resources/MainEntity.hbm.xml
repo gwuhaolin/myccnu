@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<class name="tool.studentInfo.MainEntity" table="main" schema="" catalog="weixin">
+		<id name="studentId">
+			<column name="StudentID" sql-type="varchar" length="20" not-null="true"/>
+		</id>
+		<property name="openId">
+			<column name="OpenID" sql-type="varchar" length="64"/>
+		</property>
+		<property name="weight">
+			<column name="Weight" sql-type="varchar" length="10"/>
+		</property>
+		<property name="highSchool">
+			<column name="HighSchool" sql-type="varchar" length="40"/>
+		</property>
+		<property name="dormAddress">
+			<column name="DormAddress" sql-type="varchar" length="40"/>
+		</property>
+		<property name="nativePlace">
+			<column name="NativePlace" sql-type="varchar" length="50"/>
+		</property>
+		<property name="idNumber">
+			<column name="IdNumber" sql-type="varchar" length="20"/>
+		</property>
+		<property name="password">
+			<column name="Password" sql-type="varchar" length="50"/>
+		</property>
+		<property name="nation">
+			<column name="Nation" sql-type="varchar" length="50"/>
+		</property>
+		<property name="familyAddress">
+			<column name="FamilyAddress" sql-type="varchar" length="50"/>
+		</property>
+		<property name="major">
+			<column name="Major" sql-type="varchar" length="40"/>
+		</property>
+		<property name="sex">
+			<column name="Sex" sql-type="tinyint" length="3"/>
+		</property>
+		<property name="familyPhoneNumber">
+			<column name="FamilyPhoneNumber" sql-type="varchar" length="20"/>
+		</property>
+		<property name="phoneNumber">
+			<column name="PhoneNumber" sql-type="varchar" length="20"/>
+		</property>
+		<property name="academy">
+			<column name="Academy" sql-type="varchar" length="30"/>
+		</property>
+		<property name="height">
+			<column name="Height" sql-type="varchar" length="10"/>
+		</property>
+		<property name="formerName">
+			<column name="FormerName" sql-type="varchar" length="15"/>
+		</property>
+		<property name="name">
+			<column name="Name" sql-type="varchar" length="15"/>
+		</property>
+		<property name="educationInfo">
+			<column name="EducationInfo" sql-type="longtext" length="2147483647"/>
+		</property>
+		<property name="familyInfo">
+			<column name="FamilyInfo" sql-type="longtext" length="2147483647"/>
+		</property>
+		<property name="highSchoolPerformance">
+			<column name="HighSchoolPerformance" sql-type="longtext" length="2147483647"/>
+		</property>
+		<property name="birthday">
+			<column name="Birthday" sql-type="varchar" length="8"/>
+		</property>
+	</class>
+</hibernate-mapping>

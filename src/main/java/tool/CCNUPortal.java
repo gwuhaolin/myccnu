@@ -1,0 +1,140 @@
+package tool;
+
+/**
+ * Created with Intellij IDEA.
+ * User: WuHaoLin
+ * Date: 1/18/14
+ * Time: 10:22 AM
+ */
+
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import java.io.IOException;
+import java.util.Map;
+
+/**
+ * 登入CCNU信息门户
+ */
+public class CCNUPortal {
+
+	/**
+	 * 信息门户的基本网址
+	 */
+	public static final String URL_Basic = "http://portal.ccnu.edu.cn/";
+	/**
+	 * 登入的URL
+	 */
+	public static final String URL_Login = "http://portal.ccnu.edu.cn/loginAction.do";
+	/**
+	 * 进入信息门户主页
+	 */
+	public static final String URL_Main = "http://portal.ccnu.edu.cn/index_jg.jsp";
+
+	/**
+	 * 用学号密码去登录信息门户看是否正确
+	 * @param XH
+	 * @param MM
+	 * @return
+	 */
+	public static boolean XHMMisTrue(String XH,String MM){
+		Connection connection= Jsoup.connect("http://portal.ccnu.edu.cn/loginAction.do");
+		connection.data("userName",XH);
+		connection.data("userPass",MM);
+		try {
+			Document document=connection.post();
+			if (document.toString().contains("错误")){
+				return false;
+			}else {
+				return true;
+			}
+//			System.out.println(document);
+		} catch (IOException e) {
+//			e.printStackTrace();
+		}
+		return false;
+	}
+
+	/**
+	 * 用帐号密码去登入信息门户,获得信息门户的cookies
+	 *
+	 * @param XH
+	 * @param MM
+	 * @return 返回信息门户网站的JSESSIONID
+	 * @throws 如果帐号密码错误或网络异常这抛出异常
+	 */
+	public static Map<String,String> getCookie(String XH, String MM) throws Exception{
+		Connection connection = Jsoup.connect(URL_Login);//登入的URL
+//		Connection connection = Jsoup.connect("http://122.204.187.1/loginAction.do");//登入的URL
+		connection.data("userName", XH);
+		connection.data("userPass", MM);
+		connection.timeout(R.ConnectTimeout);
+		Document document = null;
+		try {
+			document = connection.get();
+		} catch (IOException e) {
+			throw new Exception("学校信息门户服务器网络繁忙");
+		}
+		if (document.getElementsByTag("script").size() > 1) {
+			throw new Exception("你的帐号密码错误");
+		}
+		return connection.response().cookies();
+	}
+
+	/**
+	 * 获得同学的详细信息
+	 * TODO 待测试
+	 * @param XH
+	 * @return 返回信息的HTML文档
+	 */
+	public static Document getStudentInfo(String XH, String MM) throws Exception {
+		Connection connection = Jsoup.connect("http://portal.ccnu.edu.cn/roamingAction.do?appId=HSXG");
+		connection.cookies(getCookie(XH,MM));
+		connection.timeout(R.ConnectTimeout);
+		connection.ignoreHttpErrors(true);
+		connection.get();
+		Map<String, String> cookies = connection.response().cookies();
+
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		connection = Jsoup.connect("http://202.114.32.143/ccnuxg/xg/studentInfo.do?method=getStudentInfo");
+		connection.cookies(cookies);
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		return connection.post();
+	}
+
+	/**
+	 * 获得老师的详细信息
+	 * TODO 待测试
+	 * @param XH
+	 * @return 返回信息的HTML文档
+	 */
+	public static Document getTeacherInfo(String XH,String MM) throws Exception{
+		Connection connection = Jsoup.connect("http://portal.ccnu.edu.cn/roamingAction.do?appId=RSXT");
+		connection.cookies(getCookie(XH,MM));
+		connection.timeout(R.ConnectTimeout);
+		connection.followRedirects(false);
+		connection.get();
+		String newUrl= connection.response().header("Location");
+		connection= Jsoup.connect(newUrl);
+		connection.get();
+		Map<String, String> cookies = connection.response().cookies();
+
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		connection = Jsoup.connect("http://202.114.32.145/ccnurs/rskEmployeeInput.do?method=modifySelfInfo&init=no&send=yes");
+		connection.cookies(cookies);
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		return connection.post();
+	}
+
+	public static void main(String[] args) {
+		try {
+//			System.out.println(getCookie("2012210817","930820"));
+//			System.out.println(getStudentInfo("2012210817","930820"));
+//			System.out.println(getTeacherInfo("2006980003"));
+			System.out.println(XHMMisTrue("2012210817","930820"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+}

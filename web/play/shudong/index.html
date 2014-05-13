@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+	<script src="../../lib/js/jquery-1.11.2.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../lib/css/semantic.min.css">
+	<script src="../../lib/js/semantic.min.js"></script>
+	<script src="../../lib/js/handlebars-v1.3.0.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../lib/css/main.css">
+	<script src="../../lib/js/plupload.full.min.js"></script>
+	<script src="../../lib/js/qiniu.min.js"></script>
+	<script src="../../lib/js/main.js"></script>
+	<title>最新树洞</title>
+	<style>
+		.ifont {
+			color: #fff;
+			text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+			font-weight: normal;
+			letter-spacing: 2px;
+		}
+	</style>
+</head>
+<body>
+
+<!--关于树洞-->
+<div>
+
+<!--显示所有树洞容器-->
+<div class="ui stackable three column page grid  center aligned SHUDONG_Modal" id="shuDongHolder">
+
+</div>
+
+<!--加载更多按钮-->
+<div class="ui stackable three column page grid  center aligned SHUDONG_Modal">
+	<div class="row SHUDONG_Modal">
+		<div class="column"></div>
+		<div class="column">
+			<div id="ShuDongMoreBtn" class="ui button circular fluid" onclick="loadMore()">more</div>
+		</div>
+		<div class="column"></div>
+	</div>
+</div>
+
+<!--发树洞bar-->
+<div class="SHUDONG_Modal">
+
+	<div class="ui styled sidebar left floating" id="AddShuDongBarCon">
+		<div class="ui header icon huge center aligned">
+			<i class="icon mail circular inverted blue"></i>
+		</div>
+		<div class="ui form">
+
+			<div class="field">
+				<textarea id="addShuDongInput" placeholder="向树洞倾诉你的心声" class="SAY"></textarea>
+			</div>
+			<div class="field">
+				<button class="ui button fluid" onclick="addShuDong()">扔进树洞</button>
+			</div>
+		</div>
+	</div>
+
+	<!--发树洞按钮-->
+	<a onclick="toggleAddShuDongBox(this)" class="ui button icon circular mini POPUP"
+	   style="position: fixed;z-index: 20;bottom: 5px;right: 5px" title="向树洞倾诉你的心声">
+		<i class="icon mail"></i>
+	</a>
+
+</div>
+
+<!--最新最热切换按钮-->
+<button onclick="switchShuDongModel(this)" class="ui button icon circular mini SHUDONG_Modal POPUP"
+        style="position: fixed;top: 5px;left: 5px" title="在最新最热的树洞之间切换">hot
+</button>
+
+
+<!--展示背景图片按钮-->
+<div class="ui button circular mini icon SHUDONG_Modal POPUP" style="position: fixed;top: 5px;right: 5px"
+     onclick="changeModal()" title="欣赏背景">
+	<i class="icon photo"></i>
+</div>
+
+<script>
+
+	/**
+	 * 所有树洞的容器
+	 */
+	var ShuDongHolder = $('#shuDongHolder');
+
+	/**
+	 *  加载更多树洞按钮
+	 */
+	var ShuDongMoreBtn = $('#ShuDongMoreBtn');
+	/**
+	 * 添加树洞的bar
+	 */
+	var AddShuDongBarCon = $('#AddShuDongBarCon');
+
+	/**
+	 * 所有的模式
+	 */
+	var allCmd = ['new', 'hot', 'my'];
+
+	/**
+	 * 当前的模式
+	 */
+	var nowCmd = 0;
+
+	/**
+	 * 当前分页数
+	 */
+	var nowCount = 0;
+
+	/**
+	 * 活动树洞apiURL
+	 */
+	var url_GetShuDong = makeApiUrl('shudong/getPage');
+
+	/**
+	 * 添加树洞apiURL
+	 */
+	var url_AddShuDong = makeApiUrl('shudong/addOne');
+
+	/**
+	 * 点赞树洞apiURL
+	 */
+	var url_LikeIt = makeApiUrl('shudong/likeIt');
+
+	$(document).ready(function () {
+		loadMore(ShuDongMoreBtn);
+		$('.POPUP').popup();
+	});
+
+	/**
+	 * 加载更多树洞
+	 */
+	function loadMore() {
+		$(ShuDongMoreBtn).toggleClass('loading');
+		$.getJSON(url_GetShuDong,
+				{
+					begin: nowCount,
+					cmd: allCmd[nowCmd]
+				}
+		).done(function (data) {
+					$(ShuDongMoreBtn).toggleClass('loading');
+					if (data.length >= 1) {
+						var html = toHTML('OneShuDong', data);
+						$(ShuDongHolder).append(html);
+						nowCount += 5;
+					} else {
+						$(ShuDongMoreBtn).addClass('disabled');
+					}
+				}
+		).error(function () {
+					showError();
+				});
+	}
+
+	/**
+	 * 点赞
+	 * @param likeBtn 点赞按钮
+	 * @param id 对应树洞的id
+	 */
+	function likeIt(likeBtn, id) {
+		$.getJSON(url_LikeIt, {
+			id: id
+		}).done(function (data) {
+			$(likeBtn).text(data);
+		});
+	}
+
+	/**
+	 * 切换最新最热树洞
+	 * @param btn 切换按钮
+	 */
+	function switchShuDongModel(btn) {
+		nowCmd++;
+		nowCmd = nowCmd % allCmd.length;
+		$(ShuDongHolder).html('');
+		nowCount = 0;
+		loadMore();
+		$(btn).text(allCmd[(nowCmd + 1) % allCmd.length]);
+		document.title = allCmd[nowCmd] + '树洞';
+	}
+
+
+	/**
+	 * 显示出发树洞框
+	 */
+	function toggleAddShuDongBox(btn) {
+		$(btn).toggleClass('red');
+		$(AddShuDongBarCon).sidebar({
+			overlay: true
+		}).sidebar('toggle');
+	}
+
+	/**
+	 * 向服务器发送一条树洞
+	 */
+	function addShuDong() {
+		var say = $(AddShuDongBarCon).find('.SAY').first().val();
+		console.log(say);
+		if (say.length < 1) {//检查非空
+			$(AddShuDongBarCon).find('.SAY').first().transition('shake');
+			return;
+		}
+		$.getJSON(url_AddShuDong, {
+			say: say
+		}).done(function (data) {
+			var html = toHTML('OneShuDong', data);
+			$(html).prependTo(ShuDongHolder);
+			toggleAddShuDongBox();//收起发树洞bar
+			goTop();//滚到顶部
+			$(AddShuDongBarCon).find('.SAY').first().val('');//清空输入框
+		}).error(function () {
+			alert('Sorry,树洞暂时被塞满了~');
+		});
+	}
+
+	/**
+	 * 在图片模式和树洞模式之间切换
+	 */
+	function changeModal() {
+		$('.SHUDONG_Modal').fadeToggle();
+		$('.BGIMG_Modal').fadeToggle();
+	}
+
+</script>
+
+</div>
+
+<!--关于背景-->
+<div>
+
+<!--背景图片容器-->
+<img id="BGIMG" src="" style="position: fixed;top: 0;left: 0;height: 100%;width: 100%;z-index: -1000">
+
+
+<!--介绍背景图片-->
+<div id="BGIMG_CON" class="BGIMG_Modal" style="opacity:0.8;display: none">
+
+	<!--回到树洞-->
+	<div class="ui button circular mini icon inverted black POPUP" style="position: fixed;top: 5px;right: 5px"
+	     onclick="changeModal()" title="回到树洞">
+		<i class="icon heart"></i>
+	</div>
+
+	<!--介绍背景图片-->
+	<div style="text-align: center">
+
+		<!--描述-->
+		<div class="DES_BgImg ifont"
+		     style="position: fixed;margin: auto;top: 35%;width: 100%;font-size:30px;">
+		</div>
+
+		<!--操作框-->
+		<div style="position: fixed;margin: auto;bottom: 5px;width: 100%">
+			<i class="icon arrow left inverted circular link" onclick="prevBgImg()"></i>
+			<div class="ui button circular mini icon inverted black LIKECOUNT" onclick="likeIt_BgImg(this)">
+				<i class="icon heart"></i>
+			</div>
+			<i class="icon arrow right inverted circular link" onclick="nextBgImg()"></i>
+		</div>
+
+		<!--id-->
+		<input type="hidden" value="" class="ID">
+
+	</div>
+</div>
+
+<!--背景交给你bar-->
+<div class="SHUDONG_Modal">
+
+	<div class="ui styled sidebar right floating" id="UpBgImgCon">
+		<div class="ui header icon huge center aligned">
+			<i class="icon camera circular inverted black link" id="pickfiles"></i>
+		</div>
+		<div class="ui form">
+
+			<div class="field">
+				<div class="ui message Msg">
+					点击上面的图标或把图片拖到这里上传背景图片
+				</div>
+			</div>
+
+			<div class="field">
+				<div class="ui active progress PROGRESS" style="display: none">
+					<div class="bar" style="width: 100%"></div>
+				</div>
+			</div>
+
+			<div class="field">
+				<div class="ui left labeled input">
+					<input type="text" placeholder="你的昵称或姓名" class="NAME">
+				</div>
+			</div>
+
+			<div class="field">
+				<div class="ui left labeled icon input">
+					<textarea placeholder="再给你的图片配上些文字" class="DES"></textarea>
+				</div>
+			</div>
+
+			<div class="field">
+				<div class="ui submit button fluid" onclick="submitBgImg()">提交</div>
+			</div>
+		</div>
+	</div>
+
+	<!--上传背景图片按钮-->
+	<div onclick="toggleUpBgImgCon(this)" class="ui button circular mini icon POPUP"
+	     style="position: fixed;bottom: 5px;left: 5px"
+	     title="背景交给你">
+		<i class="icon camera"></i>
+	</div>
+
+</div>
+
+<!--关于背景图片-->
+<script>
+	/**
+	 * 背景图片
+	 */
+	var BGIMG = $('#BGIMG');
+	var BGIMG_CON = $('#BGIMG_CON');
+
+	$(document).ready(function () {
+		loadBgImg();
+	});
+
+	var GetOneBgImg_UTL = makeApiUrl('shudongBgImg/getOne');
+	/**
+	 * 加载背景图片
+	 */
+	function loadBgImg() {
+		$.getJSON(GetOneBgImg_UTL).done(function (data) {
+			resetBgImg(data);
+		});
+	}
+
+	/**
+	 *  重置背景图片和其简介
+	 */
+	function resetBgImg(data) {
+		var bgImg = new Image();
+		bgImg.src = data.picUrl;
+		$(BGIMG_CON).find('.ID').val(data.id);
+		bgImg.onload = function () {
+			$(BGIMG).attr('src', bgImg.src);
+			$(BGIMG_CON).find('.DES_BgImg').html(data.des + '<br><em>' + data.author + '</em><br><em style="font-size: 10px">' + data.date + '</em>');
+			$(BGIMG_CON).find('.Author_BgImg').text(data.author);
+			$(BGIMG_CON).find('.LIKECOUNT').html('<i class="icon heart"></i>' + data.likeCount);
+			$(BGIMG_CON).find('.COMMENT').attr('src','comment.html?id='+data.id+'&BgImg');
+		};
+	}
+
+	var LikeIt_BgImg_URL = makeApiUrl('shudongBgImg/likeIt');
+	/**
+	 * 点赞
+	 */
+	function likeIt_BgImg(btn) {
+		$.getJSON(LikeIt_BgImg_URL, {
+			id: $(BGIMG_CON).find('.ID').val()
+		}).done(function (data) {
+			$(btn).html(data).transition('bounce');
+		});
+	}
+
+	var GetNext_BgImg_URL = makeApiUrl('shudongBgImg/getNext');
+	/**
+	 * 显示下一张大图
+	 */
+	function nextBgImg() {
+		$.getJSON(GetNext_BgImg_URL, {
+			id: $(BGIMG_CON).find('.ID').val()
+		}).done(function (data) {
+			resetBgImg(data);
+		});
+	}
+
+	var GetPrev_BgImg_URL = makeApiUrl('shudongBgImg/getPrev');
+	/**
+	 * 显示下一张大图
+	 */
+	function prevBgImg() {
+		$.getJSON(GetPrev_BgImg_URL, {
+			id: $(BGIMG_CON).find('.ID').val()
+		}).done(function (data) {
+			resetBgImg(data);
+		});
+	}
+
+</script>
+
+<!--关于上传背景图片-->
+<script>
+
+	var UpBgImgCon = $('#UpBgImgCon');
+	var SubmitBgImg_URL = makeApiUrl('shudongBgImg/addOne');
+
+	function toggleUpBgImgCon(btn) {
+		$(btn).toggleClass('red');
+		$(UpBgImgCon).sidebar({
+			overlay: true
+		}).sidebar('toggle');
+	}
+
+	function submitBgImg() {
+		var name = $(UpBgImgCon).find('.NAME').val();
+		var des = $(UpBgImgCon).find('.DES').val();
+		$.getJSON(SubmitBgImg_URL, {
+			picUrl: PicURL,
+			author: name,
+			des: des
+		}).done(function (data) {
+			if (data) {
+				$(UpBgImgCon).sidebar('hide');
+				loadBgImg();
+				changeModal();
+			} else {
+				showError();
+			}
+		});
+	}
+
+	var QiNiuDomain = 'http://shudongbgimg.qiniudn.com/';
+	var PicURL = null;//将要上传的图片
+	var Msg_UpBgImg = $(UpBgImgCon).find('.MSG').first();
+	var Progress_UpBgImg = $(UpBgImgCon).find('.PROGRESS').first();
+	//初始化七牛
+	$.getJSON(makeApiUrl('qiniu/getToken')).done(function (data) {
+		Qiniu.uploader({
+			runtimes: 'html5,flash,html4',    //上传模式,依次退化
+			browse_button: 'pickfiles',       //上传选择的点选按钮，**必需**
+			uptoken: data, //若未指定uptoken_url,则必须指定 uptoken ,uptoken由其他程序生成
+			unique_names: true, // 默认 false，key为文件名。若开启该选项，SDK会为每个文件自动生成key（文件名）
+			domain: QiNiuDomain,   //bucket 域名，下载资源时用到，**必需**
+			max_file_size: '100mb',           //最大文件体积限制
+			flash_swf_url: '../../lib/js/Moxie.swf',  //引入flash,相对路径
+			max_retries: 3,                   //上传失败最大重试次数
+			dragdrop: true,                   //开启可拖曳上传
+			drop_element: 'UpBgImgCon',        //拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
+			chunk_size: '4mb',                //分块上传时，每片的体积
+			auto_start: true,                 //选择文件后自动上传，若关闭需要自己绑定事件触发上传,
+			init: {
+				'BeforeUpload': function (up, file) {
+					// 每个文件上传前,处理相关的事情
+					$(Progress_UpBgImg).fadeIn();
+					$(Msg_UpBgImg).text('图片上传中...').addClass('blue');
+				},
+				'FileUploaded': function (up, file, info) {
+					// 每个文件上传成功后,处理相关的事情
+					PicURL = QiNiuDomain + parseJSON(info).key;
+					$(BGIMG).attr('src', PicURL);
+					$(Progress_UpBgImg).fadeOut();
+					$(Msg_UpBgImg).text('图片上传成功').addClass('green');
+				},
+				'Error': function (up, err, errTip) {
+					//上传出错时,处理相关的事情
+					showError();
+					$(Progress_UpBgImg).fadeOut();
+					$(Msg_UpBgImg).text('图片上传失败').addClass('red');
+				}
+			}
+		});
+	});
+
+</script>
+
+</div>
+
+<!--模版-->
+<div class="hidden">
+
+	<!--一条树洞-->
+	<div id="OneShuDong">
+		{{#.}}
+		<div class="column">
+			<div class="ui piled segment  SHUDONG_Modal">
+				<p>{{content}}</p>
+
+				<!--分割线-->
+				<div class="ui divider"></div>
+
+				<!--评论按钮-->
+				<i class="ui icon comment blue link" onclick="$(this).next().toggle()"></i>
+				<!--评论框-->
+				<iframe src="comment.html?id={{id}}" style="display: none">
+				</iframe>
+
+				<!--时间-->
+				<i class="ui small label circular" style="font-size: xx-small">{{date}}</i>
+
+				<!--点赞按钮-->
+				<i class="ui icon heart red link" onclick="likeIt(this,{{id}})">{{seeCount}}</i>
+
+			</div>
+		</div>
+		{{/.}}
+	</div>
+
+</div>
+
+</body>
+</html>

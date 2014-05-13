@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<class name="play.vote.MyCampaignerEntity" table="mycampaigner" schema="" catalog="weixin">
+		<id name="id">
+			<column name="id" sql-type="int" not-null="true"/>
+			<generator class="increment"/>
+		</id>
+		<property name="name">
+			<column name="name" sql-type="varchar" length="50"/>
+		</property>
+		<property name="des">
+			<column name="des" sql-type="text" length="65535"/>
+		</property>
+		<property name="picUrl">
+			<column name="picURL" sql-type="varchar" length="100"/>
+		</property>
+		<property name="voteSum">
+			<column name="voteSum" sql-type="int"/>
+		</property>
+		<property name="other1">
+			<column name="other1" sql-type="varchar" length="50"/>
+		</property>
+		<property name="other2">
+			<column name="other2" sql-type="varchar" length="100"/>
+		</property>
+		<property name="other3">
+			<column name="other3" sql-type="text" length="65535"/>
+		</property>
+	</class>
+</hibernate-mapping>

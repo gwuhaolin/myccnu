@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<class name="life.jobs.MyJobEntity" table="myjob" schema="" catalog="weixin">
+		<id name="id">
+			<column name="id" sql-type="int" length="10" not-null="true"/>
+		</id>
+		<property name="name">
+			<column name="name" sql-type="varchar"/>
+		</property>
+		<property name="jobInfo">
+			<column name="jobInfo" sql-type="longtext" length="2147483647"/>
+		</property>
+		<property name="money">
+			<column name="money" sql-type="varchar"/>
+		</property>
+		<property name="jobTime">
+			<column name="jobTime" sql-type="varchar"/>
+		</property>
+		<property name="jobLocation">
+			<column name="jobLocation" sql-type="varchar"/>
+		</property>
+		<property name="otherInfo">
+			<column name="otherInfo" sql-type="longtext" length="2147483647"/>
+		</property>
+		<property name="manager">
+			<column name="manager" sql-type="varchar"/>
+		</property>
+		<property name="target">
+			<column name="target" sql-type="int" length="10"/>
+		</property>
+	</class>
+</hibernate-mapping>

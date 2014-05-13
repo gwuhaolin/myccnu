@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<class name="play.joinUs.JoinusEntity" table="joinus" schema="" catalog="weixin">
+		<id name="id">
+			<column name="id" sql-type="int" length="10" not-null="true"/>
+		</id>
+		<property name="xh">
+			<column name="XH" sql-type="varchar" length="20" not-null="true"/>
+		</property>
+	</class>
+</hibernate-mapping>

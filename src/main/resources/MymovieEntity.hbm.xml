@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<class name="play.movie.MyMovieEntity" table="mymovie" schema="" catalog="weixin">
+		<id name="id">
+			<column name="Id" sql-type="int" length="10" not-null="true"/>
+		</id>
+		<property name="name">
+			<column name="Name" sql-type="varchar" length="55" not-null="true"/>
+		</property>
+		<property name="picUrl">
+			<column name="PicUrl" sql-type="longtext" length="2147483647"/>
+		</property>
+		<property name="des">
+			<column name="Des" sql-type="longtext" length="2147483647"/>
+		</property>
+		<property name="pay">
+			<column name="Pay" sql-type="longtext" length="2147483647"/>
+		</property>
+		<property name="other">
+			<column name="Other" sql-type="longtext" length="2147483647"/>
+		</property>
+		<property name="date">
+			<column name="Date" sql-type="varchar" length="30"/>
+		</property>
+		<property name="target">
+			<column name="Target" sql-type="varchar" length="10" not-null="true"/>
+		</property>
+	</class>
+</hibernate-mapping>
