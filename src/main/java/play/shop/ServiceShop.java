@@ -54,7 +54,7 @@ public class ServiceShop {
 	                              @QueryParam("ownerXH") String ownerXH,
 	                              @CookieParam("ownerQQ") String ownerQQ
 	) {
-		if (name==null || price==0 || ownerPhone==null){
+		if (name==null || price==0 || ownerPhone==null || tag==0){
 			return null;
 		}
 		ShopItemsEntity one = new ShopItemsEntity();

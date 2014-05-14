@@ -66,12 +66,14 @@
 					</div>
 				</div>
 
+				<input type="hidden" class="PICURL" value="">
+
 				<div class="field">
 					<input type="text" placeholder="怎么称呼它-必须" class="NAME" name="NAME">
 				</div>
 
 				<div class="field">
-					<input type="number" placeholder="要价多少-必须" class="PRICE" name="PRICE">
+					<input type="number" placeholder="要价多少(人民币元)-必须" class="PRICE" name="PRICE">
 				</div>
 
 				<div class="field">
@@ -85,10 +87,10 @@
 						<div class="text">属于哪类</div>
 						<i class="dropdown icon"></i>
 
-						<div class="menu ui transition hidden">
-							<div class="item" data-value="1">Male</div>
-							<div class="item" data-value="2">Female</div>
+						<div class="menu ui transition hidden" id="AllTags_Dropdown">
+
 						</div>
+
 					</div>
 				</div>
 
@@ -177,33 +179,16 @@
 
 		<div class="field">
 			<div class="ui left labeled input">
-				<input type="text" placeholder="输入关键字搜索" class="NAME">
+				<input type="text" placeholder="输入关键字搜索" class="WANT">
 			</div>
 		</div>
 
 		<div class="field">
-			<div class="ui submit button fluid circular" onclick="">搜索</div>
+			<div class="ui submit button fluid circular" onclick="doSearch()">搜索</div>
 		</div>
 
-		<div class="field">
-			<a class="ui label circular" style="margin: 3px">
-				23
-			</a>
-			<a class="ui label circular" style="margin: 3px">
-				232
-			</a>
-			<a class="ui label circular" style="margin: 3px">
-				23de
-			</a>
-			<a class="ui label circular" style="margin: 3px">
-				23ded
-			</a>
-			<a class="ui label circular" style="margin: 3px">
-				23dede
-			</a>
-			<a class="ui label circular" style="margin: 3px">
-				23ws
-			</a>
+		<div class="field" id="AllTagsCon">
+
 		</div>
 
 	</div>
@@ -276,7 +261,7 @@ var url_LikeIt = makeApiUrl('shop/likeIt');
 
 $(document).ready(function () {
 	loadMore();
-	$('.dropdown').dropdown();
+	loadAllTags();
 	$('.POPUP').popup();
 	$('.accordion').accordion();
 });
@@ -288,7 +273,7 @@ function loadMore() {
 	$(MoreBtn).toggleClass('loading');
 	$.getJSON(url_GetItems,
 			{
-				begin: nowCount,
+				from: nowCount,
 				cmd: nowCmd,
 				tag: nowTag,
 				want: nowSearchWant
@@ -299,13 +284,14 @@ function loadMore() {
 					var html = toHTML('OneItem_TEMP', data);
 					$(AllItemsHolder).append(html);
 					nowCount += 5;
+					$(AllItemsHolder).find('.image.fluid').dimmer({
+						on: 'hover'
+					});
 				} else {
 					$(MoreBtn).addClass('disabled');
 				}
 			}
-	).error(function () {
-				showError();
-			});
+	);
 }
 
 /**
@@ -317,6 +303,17 @@ function reloadAllItems() {
 	loadMore();
 	$(SearchBarCon).sidebar('hide');
 	document.title = nowCmd;
+}
+
+/**
+ * 加载所有标签
+ */
+function loadAllTags() {
+	$.getJSON(makeApiUrl('shop/getAllTags')).done(function (data) {
+		$('#AllTagsCon').html(toHTML('OneTag_Search_TEMP', data));
+		$('#AllTags_Dropdown').html(toHTML('OneTag_Drop_TEMP', data));
+		$('.dropdown').dropdown();
+	});
 }
 
 /**
@@ -338,7 +335,8 @@ function doShowHot() {
 /**
  * 执行关键字搜索
  */
-function doSearch(want) {
+function doSearch() {
+	var want = $(SearchBarCon).find('.WANT').first().val();
 	nowCmd = 'search';
 	nowSearchWant = want;
 	reloadAllItems();
@@ -366,7 +364,7 @@ function doShowMyUp() {
  * @param likeBtn 点赞按钮
  * @param id 对应商品的id
  */
-function likeIt(likeBtn, id) {
+function likeIt(id, likeBtn) {
 	$.getJSON(url_LikeIt, {
 		id: id
 	}).done(function (data) {
@@ -403,7 +401,7 @@ function addItem() {
 	var name = $(AddItemBarCon).find('.NAME').first().val();
 	var price = $(AddItemBarCon).find('.PRICE').first().val();
 	var des = $(AddItemBarCon).find('.DES').first().val();
-	var picUrl = $(AddItemBarCon).find('.PICURL').first().val();
+	var picUrl = $(Img_UpBgImg).attr('src');
 	var tag = $(AddItemBarCon).find('.TAG').first().val();
 	var phone = $(AddItemBarCon).find('.PHONE').first().val();
 	var QQ = $(AddItemBarCon).find('.QQ').first().val();
@@ -419,14 +417,13 @@ function addItem() {
 		ownerPhone: phone,
 		ownerQQ: QQ
 	}).done(function (data) {
-		doShowNewest();
-		var html = toHTML('OneItem_TEMP', data);
-		$(html).prependTo(AllItemsHolder);
-		toggleAddBox();//收起发商品bar
-		goTop();//滚到顶部
-		$(AddItemBarCon).find('input').val('');//清空输入框
-	}).error(function () {
-		showError();
+		if (data != null) {
+			var html = toHTML('OneItem_TEMP', data);
+			$(html).prependTo(AllItemsHolder);
+			toggleAddBox();//收起发商品bar
+			goTop();//滚到顶部
+			$(AddItemBarCon).find('input').val('');//清空输入框
+		}
 	});
 }
 
@@ -437,8 +434,9 @@ function addItem() {
 	var QiNiuBucket = 'myccnushop';
 	var QiNiuDomain = 'http://' + QiNiuBucket + '.qiniudn.com/';
 	var PicURL = null;//将要上传的图片
-	var Msg_UpBgImg = $(SearchBarCon).find('.MSG').first();
-	var Progress_UpBgImg = $(SearchBarCon).find('.PROGRESS').first();
+	var Msg_UpBgImg = $(AddItemBarCon).find('.MSG').first();
+	var Img_UpBgImg = $(AddItemBarCon).find('.IMG').first();
+	var Progress_UpBgImg = $(AddItemBarCon).find('.PROGRESS').first();
 	//初始化七牛
 	$.getJSON(makeApiUrl('qiniu/getToken'), {bucket: QiNiuBucket}).done(function (data) {
 		Qiniu.uploader({
@@ -461,7 +459,7 @@ function addItem() {
 				'FileUploaded': function (up, file, info) {
 					// 每个文件上传成功后,处理相关的事情
 					PicURL = QiNiuDomain + parseJSON(info).key;
-					$(BGIMG).attr('src', PicURL);
+					$(Img_UpBgImg).attr('src', PicURL);
 					$(Progress_UpBgImg).fadeOut();
 					$(Msg_UpBgImg).text('图片上传成功').addClass('green');
 				},
@@ -479,17 +477,29 @@ function addItem() {
 
 <!--模版-->
 <div class="hidden">
+
+	<!--一个标签-->
+	<div id="OneTag_Search_TEMP">
+		{{#.}}
+		<a class="ui label circular" style="margin: 3px" onclick="doShowTag({{id}})">
+			{{name}}
+		</a>
+		{{/.}}
+	</div>
+
+	<!--一个标签-->
+	<div id="OneTag_Drop_TEMP">
+		{{#.}}
+		<div class="item" data-value="{{id}}">{{name}}</div>
+		{{/.}}
+	</div>
+
+
 	<!--一条商品-->
 	<div id="OneItem_TEMP">
 		{{#.}}
 		<div class="column">
 			<div class="ui image labeled rounded fluid">
-				<div class="ui label corner icon small">
-					<i class="icon">{{seeCount}}</i>
-				</div>
-				<div class="ui bottom left attached label small">{{name}}</div>
-				<div class="ui bottom right attached label small"><i class="icon yen"></i>{{price}}</div>
-				<img src="{{picUrl}}" alt="{{name}}:{{des}}" onclick="$(this).next().dimmer('show')">
 				<!--dimmer-->
 				<div class="ui dimmer">
 					<div class="content">
@@ -498,31 +508,92 @@ function addItem() {
 								<p>{{des}}</p>
 
 								<div class="ui button circular mini"
-								     onclick="$(this).parent().parent().parent().parent().dimmer('hide').parent().next().dimmer('show')">
+								     onclick="likeIt({{id}});$(this).parent().parent().parent().parent().dimmer('hide').parent().next().dimmer('show')">
 									查看详情
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+				<div class="ui label corner icon small">
+					<i class="icon">{{seeCount}}</i>
+				</div>
+				<div class="ui bottom left attached label small">{{name}}</div>
+				<div class="ui bottom right attached label small"><i class="icon yen"></i>{{price}}</div>
+				<img src="{{picUrl}}" alt="{{name}}:{{des}}">
 			</div>
-			<div class="ui page dimmer hidden1 inverted">
-				<i class="icon close red circular inverted link" onclick="$(this).parent().dimmer('hide')"></i>
-
+			<div class="ui page dimmer inverted">
 				<div class="content">
-					<div class="ui header">
+					<div class="ui header center aligned">
 						<h3>{{name}}</h3>
-						<!--时间-->
-						<i class="ui small label circular" style="font-size: xx-small">{{date}}</i>
 
-						<div class="ui sub header">
-							<p>{{des}}</p>
+						<div class="ui relaxed divided selection list">
+							<div class="item">
+								<i class="icon dollar"></i>
+
+								<div class="content">
+									<div class="header">{{price}}</div>
+								</div>
+							</div>
+							<div class="item">
+								<i class="icon time"></i>
+
+								<div class="content">
+									<div class="header">{{date}}</div>
+								</div>
+							</div>
+							<div class="item">
+								<i class="icon heart"></i>
+
+								<div class="content">
+									<div class="header" onclick="likeIt({{id}},this)">{{seeCount}}<i
+											class="icon red heart"></i></div>
+								</div>
+							</div>
+
+							{{# if ownerName}}
+							<div class="item">
+								<i class="icon user"></i>
+
+								<div class="content">
+									<div class="header">{{ownerName}}</div>
+								</div>
+							</div>
+							{{/if}}
+
+							{{# if ownerPhone}}
+							<div class="item">
+								<i class="icon phone"></i>
+
+								<div class="content">
+									<div class="header">{{ownerPhone}}</div>
+								</div>
+							</div>
+							{{/if}}
+
+							{{# if ownerQQ}}
+							<div class="item">
+								<i class="icon">Q</i>
+
+								<div class="content">
+									<div class="header">{{ownerQQ}}</div>
+								</div>
+							</div>
+							{{/if}}
+
+							{{# if des}}
+							<div class="item">
+								<i class="icon info"></i>
+
+								<div class="content">
+									<div class="header">{{des}}</div>
+								</div>
+							</div>
+							{{/if}}
 						</div>
-						<div class="ui image labeled rounded">
-							<img src="{{picUrl}}" alt="{{name}}:{{des}}">
-						</div>
+
 						<!--评论框-->
-						<iframe src="comment.html?id={{id}}">
+						<iframe src="comment.html?id={{id}}" style="border: none;margin: 20px;height: 200px">
 						</iframe>
 					</div>
 				</div>

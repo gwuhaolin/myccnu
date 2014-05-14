@@ -7,6 +7,7 @@
 	<class name="play.shop.ShopItemsEntity" table="shopitems" schema="" catalog="weixin">
 		<id name="id">
 			<column name="id" sql-type="int" not-null="true"/>
+			<generator class="increment"/>
 		</id>
 		<property name="name">
 			<column name="name" sql-type="varchar"/>
