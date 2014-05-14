@@ -28,7 +28,7 @@
 <div>
 
 <!--显示所有树洞容器-->
-<div class="ui stackable three column page grid  center aligned SHUDONG_Modal" id="shuDongHolder">
+<div class="ui stackable three column page grid  center aligned SHUDONG_Modal" id="ShuDongHolder">
 
 </div>
 
@@ -86,7 +86,7 @@
 	/**
 	 * 所有树洞的容器
 	 */
-	var ShuDongHolder = $('#shuDongHolder');
+	var ShuDongHolder = $('#ShuDongHolder');
 
 	/**
 	 *  加载更多树洞按钮
@@ -144,7 +144,7 @@
 				}
 		).done(function (data) {
 					$(ShuDongMoreBtn).toggleClass('loading');
-					if (data.length >= 1) {
+					if (data.length >0) {
 						var html = toHTML('OneShuDong', data);
 						$(ShuDongHolder).append(html);
 						nowCount += 5;
@@ -257,6 +257,7 @@
 		<!--操作框-->
 		<div style="position: fixed;margin: auto;bottom: 5px;width: 100%">
 			<i class="icon arrow left inverted circular link" onclick="prevBgImg()"></i>
+
 			<div class="ui button circular mini icon inverted black LIKECOUNT" onclick="likeIt_BgImg(this)">
 				<i class="icon heart"></i>
 			</div>
@@ -351,7 +352,7 @@
 			$(BGIMG_CON).find('.DES_BgImg').html(data.des + '<br><em>' + data.author + '</em><br><em style="font-size: 10px">' + data.date + '</em>');
 			$(BGIMG_CON).find('.Author_BgImg').text(data.author);
 			$(BGIMG_CON).find('.LIKECOUNT').html('<i class="icon heart"></i>' + data.likeCount);
-			$(BGIMG_CON).find('.COMMENT').attr('src','comment.html?id='+data.id+'&BgImg');
+			$(BGIMG_CON).find('.COMMENT').attr('src', 'comment.html?id=' + data.id + '&BgImg');
 		};
 	}
 
@@ -424,12 +425,13 @@
 		});
 	}
 
-	var QiNiuDomain = 'http://shudongbgimg.qiniudn.com/';
+	var QiNiuBucket = 'myccnushudong';
+	var QiNiuDomain='http://' + QiNiuBucket + '.qiniudn.com/';
 	var PicURL = null;//将要上传的图片
 	var Msg_UpBgImg = $(UpBgImgCon).find('.MSG').first();
 	var Progress_UpBgImg = $(UpBgImgCon).find('.PROGRESS').first();
 	//初始化七牛
-	$.getJSON(makeApiUrl('qiniu/getToken')).done(function (data) {
+	$.getJSON(makeApiUrl('qiniu/getToken'), {bucket: QiNiuBucket}).done(function (data) {
 		Qiniu.uploader({
 			runtimes: 'html5,flash,html4',    //上传模式,依次退化
 			browse_button: 'pickfiles',       //上传选择的点选按钮，**必需**

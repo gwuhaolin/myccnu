@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+	<script src="../../lib/js/jquery-1.11.2.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../lib/css/semantic.min.css">
+	<script src="../../lib/js/semantic.min.js"></script>
+	<script src="../../lib/js/handlebars-v1.3.0.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../lib/css/main.css">
+	<script src="../../lib/js/plupload.full.min.js"></script>
+	<script src="../../lib/js/qiniu.min.js"></script>
+	<script src="../../lib/js/main.js"></script>
+</head>
+<body>
+
+<!--显示所有商品的容器-->
+<div class="ui stackable three column page grid  center aligned " id="AllItemsHolder">
+
+</div>
+
+<!--加载更多按钮-->
+<div class="ui stackable three column page grid  center aligned ">
+	<div class="row ">
+		<div class="column"></div>
+		<div class="column">
+			<div id="MoreBtn" class="ui button circular fluid" onclick="loadMore()">more</div>
+		</div>
+		<div class="column"></div>
+	</div>
+</div>
+
+<!--发商品bar-->
+<div>
+
+	<div class="ui styled sidebar right floating form" id="AddItemBarCon">
+
+		<div class="field">
+			<div class="ui message MSG">
+				上传你的闲置物品来这里拍卖吧
+			</div>
+		</div>
+
+		<div class="ui accordion fluid field">
+
+			<div class="active title">
+				<i class="dropdown icon"></i>
+				物品介绍
+			</div>
+			<div class="active content">
+
+				<div class="field">
+					<div class="ui button fluid mini circular" id="UpImgBtn">
+						点击上传物品图片
+					</div>
+				</div>
+
+				<div class="ui image rounded small">
+					<img src="" class="IMG">
+				</div>
+
+				<div class="field">
+					<div class="ui active progress PROGRESS" style="display: none">
+						<div class="bar" style="width: 100%"></div>
+					</div>
+				</div>
+
+				<div class="field">
+					<input type="text" placeholder="怎么称呼它-必须" class="NAME" name="NAME">
+				</div>
+
+				<div class="field">
+					<input type="number" placeholder="要价多少-必须" class="PRICE" name="PRICE">
+				</div>
+
+				<div class="field">
+					<input type="text" placeholder="介绍下它-非必须" class="DES">
+				</div>
+
+				<div class="field">
+					<div class="ui fluid selection dropdown">
+						<input type="hidden" name="TAG">
+
+						<div class="text">属于哪类</div>
+						<i class="dropdown icon"></i>
+
+						<div class="menu ui transition hidden">
+							<div class="item" data-value="1">Male</div>
+							<div class="item" data-value="2">Female</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="title">
+				<i class="dropdown icon"></i>
+				怎么联系你
+			</div>
+			<div class="content">
+
+				<div class="field">
+					<input type="text" placeholder="你是电话号-必须" class="PHONE" name="PHONE">
+				</div>
+
+				<div class="field">
+					<input type="text" placeholder="你的QQ-非必须" class="QQ">
+				</div>
+
+				<div class="field">
+					<input type="text" placeholder="你的大名-非必须" class="OWNER_NAME">
+				</div>
+
+			</div>
+		</div>
+
+		<div class="field">
+			<button class="ui button circular fluid" onclick="addItem()">添加商品</button>
+		</div>
+
+		<script>
+			$(AddItemBarCon).form({
+				NAME: {
+					identifier: 'NAME',
+					rules: [
+						{
+							type: 'empty'
+						}
+					]
+				},
+				PRICE: {
+					identifier: 'PRICE',
+					rules: [
+						{
+							type: 'empty'
+						}
+					]
+				},
+				PHONE: {
+					identifier: 'PHONE',
+					rules: [
+						{
+							type: 'empty'
+						}
+					]
+				},
+				TAG: {
+					identifier: 'TAG',
+					rules: [
+						{
+							type: 'empty'
+						}
+					]
+				}
+			});
+		</script>
+
+	</div>
+
+	<!--展开发商品按钮-->
+	<a onclick="toggleAddBox(this)" class="ui button icon circular mini POPUP"
+	   style="position: fixed;bottom: 5px;left: 5px" title="上传你的物品">
+		<i class="icon mail"></i>
+	</a>
+
+</div>
+
+<!--筛选功能bar-->
+<div class="ui styled sidebar left floating" id="SearchBarCon">
+
+	<div class="ui header icon huge center aligned">
+		<i class="icon search circular inverted blue"></i>
+	</div>
+
+	<div class="ui form">
+
+		<div class="field">
+			<div class="ui left labeled input">
+				<input type="text" placeholder="输入关键字搜索" class="NAME">
+			</div>
+		</div>
+
+		<div class="field">
+			<div class="ui submit button fluid circular" onclick="">搜索</div>
+		</div>
+
+		<div class="field">
+			<a class="ui label circular" style="margin: 3px">
+				23
+			</a>
+			<a class="ui label circular" style="margin: 3px">
+				232
+			</a>
+			<a class="ui label circular" style="margin: 3px">
+				23de
+			</a>
+			<a class="ui label circular" style="margin: 3px">
+				23ded
+			</a>
+			<a class="ui label circular" style="margin: 3px">
+				23dede
+			</a>
+			<a class="ui label circular" style="margin: 3px">
+				23ws
+			</a>
+		</div>
+
+	</div>
+
+	<!--展开筛选功能bar按钮-->
+	<div onclick="toggleSearchBarCon(this)" class="ui button circular mini icon POPUP"
+	     style="position: fixed;bottom: 5px;right: 5px"
+	     title="筛选物品">
+		<i class="icon search"></i>
+	</div>
+
+</div>
+
+<script>
+
+/**
+ * 所有商品的容器
+ */
+var AllItemsHolder = $('#AllItemsHolder');
+
+/**
+ *  加载更多商品按钮
+ */
+var MoreBtn = $('#MoreBtn');
+
+/**
+ * 添加商品的bar
+ */
+var AddItemBarCon = $('#AddItemBarCon');
+
+/**
+ * 搜索功能框bar
+ */
+var SearchBarCon = $('#SearchBarCon');
+
+/**
+ * 当前的指令模式
+ */
+var nowCmd = "new";
+
+/**
+ * 当前分页数
+ */
+var nowCount = 0;
+
+/**
+ * 当前浏览分类标签
+ */
+var nowTag = 0;
+
+/**
+ * 当前搜索的关键字,默认为最新
+ */
+var nowSearchWant = "";
+
+/**
+ * 获得商品apiURL
+ */
+var url_GetItems = makeApiUrl('shop/getPage');
+
+/**
+ * 添加商品apiURL
+ */
+var url_AddItem = makeApiUrl('shop/addOne');
+
+/**
+ * 点赞商品apiURL
+ */
+var url_LikeIt = makeApiUrl('shop/likeIt');
+
+$(document).ready(function () {
+	loadMore();
+	$('.dropdown').dropdown();
+	$('.POPUP').popup();
+	$('.accordion').accordion();
+});
+
+/**
+ * 加载更多商品
+ */
+function loadMore() {
+	$(MoreBtn).toggleClass('loading');
+	$.getJSON(url_GetItems,
+			{
+				begin: nowCount,
+				cmd: nowCmd,
+				tag: nowTag,
+				want: nowSearchWant
+			}
+	).done(function (data) {
+				$(MoreBtn).toggleClass('loading');
+				if (data.length > 0) {
+					var html = toHTML('OneItem_TEMP', data);
+					$(AllItemsHolder).append(html);
+					nowCount += 5;
+				} else {
+					$(MoreBtn).addClass('disabled');
+				}
+			}
+	).error(function () {
+				showError();
+			});
+}
+
+/**
+ * 根据现在的参数重新加载所有物品
+ */
+function reloadAllItems() {
+	$(AllItemsHolder).html('');
+	nowCount = 0;
+	loadMore();
+	$(SearchBarCon).sidebar('hide');
+	document.title = nowCmd;
+}
+
+/**
+ * 显示最新的商品
+ */
+function doShowNewest() {
+	nowCmd = 'new';
+	reloadAllItems();
+}
+
+/**
+ * 显示最热门的商品
+ */
+function doShowHot() {
+	nowCmd = 'hot';
+	reloadAllItems();
+}
+
+/**
+ * 执行关键字搜索
+ */
+function doSearch(want) {
+	nowCmd = 'search';
+	nowSearchWant = want;
+	reloadAllItems();
+}
+
+/**
+ * 执行标签分类查找
+ */
+function doShowTag(tag) {
+	nowCmd = 'tag';
+	nowTag = tag;
+	reloadAllItems();
+}
+
+/**
+ * 执行显示我上传的
+ */
+function doShowMyUp() {
+	nowCmd = 'my';
+	reloadAllItems();
+}
+
+/**
+ * 点赞
+ * @param likeBtn 点赞按钮
+ * @param id 对应商品的id
+ */
+function likeIt(likeBtn, id) {
+	$.getJSON(url_LikeIt, {
+		id: id
+	}).done(function (data) {
+		$(likeBtn).text(data);
+	});
+}
+
+/**
+ * 显示添加商品bar
+ */
+function toggleAddBox(btn) {
+	$(btn).toggleClass('red');
+	$(AddItemBarCon).sidebar({
+		overlay: true
+	}).sidebar('toggle');
+}
+
+/**
+ * 显示筛选商品bar
+ */
+function toggleSearchBarCon(btn) {
+	$(btn).toggleClass('red');
+	$(SearchBarCon).sidebar({
+		overlay: true
+	}).sidebar('toggle');
+}
+
+/**
+ * 向服务器发送添加一条商品
+ */
+function addItem() {
+	$(AddItemBarCon).submit();
+
+	var name = $(AddItemBarCon).find('.NAME').first().val();
+	var price = $(AddItemBarCon).find('.PRICE').first().val();
+	var des = $(AddItemBarCon).find('.DES').first().val();
+	var picUrl = $(AddItemBarCon).find('.PICURL').first().val();
+	var tag = $(AddItemBarCon).find('.TAG').first().val();
+	var phone = $(AddItemBarCon).find('.PHONE').first().val();
+	var QQ = $(AddItemBarCon).find('.QQ').first().val();
+	var ownerName = $(AddItemBarCon).find('.OWNER_NAME').first().val();
+
+	$.getJSON(url_AddItem, {
+		name: name,
+		price: price,
+		des: des,
+		picUrl: picUrl,
+		tag: tag,
+		ownerName: ownerName,
+		ownerPhone: phone,
+		ownerQQ: QQ
+	}).done(function (data) {
+		doShowNewest();
+		var html = toHTML('OneItem_TEMP', data);
+		$(html).prependTo(AllItemsHolder);
+		toggleAddBox();//收起发商品bar
+		goTop();//滚到顶部
+		$(AddItemBarCon).find('input').val('');//清空输入框
+	}).error(function () {
+		showError();
+	});
+}
+
+</script>
+
+<!--关于上传图片-->
+<script>
+	var QiNiuBucket = 'myccnushop';
+	var QiNiuDomain = 'http://' + QiNiuBucket + '.qiniudn.com/';
+	var PicURL = null;//将要上传的图片
+	var Msg_UpBgImg = $(SearchBarCon).find('.MSG').first();
+	var Progress_UpBgImg = $(SearchBarCon).find('.PROGRESS').first();
+	//初始化七牛
+	$.getJSON(makeApiUrl('qiniu/getToken'), {bucket: QiNiuBucket}).done(function (data) {
+		Qiniu.uploader({
+			runtimes: 'html5,flash,html4',    //上传模式,依次退化
+			browse_button: 'UpImgBtn',       //上传选择的点选按钮，**必需**
+			uptoken: data, //若未指定uptoken_url,则必须指定 uptoken ,uptoken由其他程序生成
+			unique_names: true, // 默认 false，key为文件名。若开启该选项，SDK会为每个文件自动生成key（文件名）
+			domain: QiNiuDomain,   //bucket 域名，下载资源时用到，**必需**
+			max_file_size: '100mb',           //最大文件体积限制
+			flash_swf_url: '../../lib/js/Moxie.swf',  //引入flash,相对路径
+			max_retries: 3,                   //上传失败最大重试次数
+			chunk_size: '4mb',                //分块上传时，每片的体积
+			auto_start: true,                 //选择文件后自动上传，若关闭需要自己绑定事件触发上传,
+			init: {
+				'BeforeUpload': function (up, file) {
+					// 每个文件上传前,处理相关的事情
+					$(Progress_UpBgImg).fadeIn();
+					$(Msg_UpBgImg).text('图片上传中...').addClass('blue');
+				},
+				'FileUploaded': function (up, file, info) {
+					// 每个文件上传成功后,处理相关的事情
+					PicURL = QiNiuDomain + parseJSON(info).key;
+					$(BGIMG).attr('src', PicURL);
+					$(Progress_UpBgImg).fadeOut();
+					$(Msg_UpBgImg).text('图片上传成功').addClass('green');
+				},
+				'Error': function (up, err, errTip) {
+					//上传出错时,处理相关的事情
+					showError();
+					$(Progress_UpBgImg).fadeOut();
+					$(Msg_UpBgImg).text('图片上传失败').addClass('red');
+				}
+			}
+		});
+	});
+
+</script>
+
+<!--模版-->
+<div class="hidden">
+	<!--一条商品-->
+	<div id="OneItem_TEMP">
+		{{#.}}
+		<div class="column">
+			<div class="ui image labeled rounded fluid">
+				<div class="ui label corner icon small">
+					<i class="icon">{{seeCount}}</i>
+				</div>
+				<div class="ui bottom left attached label small">{{name}}</div>
+				<div class="ui bottom right attached label small"><i class="icon yen"></i>{{price}}</div>
+				<img src="{{picUrl}}" alt="{{name}}:{{des}}" onclick="$(this).next().dimmer('show')">
+				<!--dimmer-->
+				<div class="ui dimmer">
+					<div class="content">
+						<div class="center">
+							<div class="ui header center aligned">
+								<p>{{des}}</p>
+
+								<div class="ui button circular mini"
+								     onclick="$(this).parent().parent().parent().parent().dimmer('hide').parent().next().dimmer('show')">
+									查看详情
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="ui page dimmer hidden1 inverted">
+				<i class="icon close red circular inverted link" onclick="$(this).parent().dimmer('hide')"></i>
+
+				<div class="content">
+					<div class="ui header">
+						<h3>{{name}}</h3>
+						<!--时间-->
+						<i class="ui small label circular" style="font-size: xx-small">{{date}}</i>
+
+						<div class="ui sub header">
+							<p>{{des}}</p>
+						</div>
+						<div class="ui image labeled rounded">
+							<img src="{{picUrl}}" alt="{{name}}:{{des}}">
+						</div>
+						<!--评论框-->
+						<iframe src="comment.html?id={{id}}">
+						</iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+		{{/.}}
+	</div>
+</div>
+
+</body>
+</html>

@@ -43,7 +43,7 @@ public class ServiceShop {
 	 */
 	@JSONP(queryParam = R.JSONP_CALLBACK)
 	@GET
-	@Path("/add")
+	@Path("/addOne")
 	public ShopItemsEntity addOne(@QueryParam("name") String name,
 	                              @QueryParam("price") float price,
 	                              @QueryParam("des") String des,
@@ -54,6 +54,9 @@ public class ServiceShop {
 	                              @QueryParam("ownerXH") String ownerXH,
 	                              @CookieParam("ownerQQ") String ownerQQ
 	) {
+		if (name==null || price==0 || ownerPhone==null){
+			return null;
+		}
 		ShopItemsEntity one = new ShopItemsEntity();
 		one.setName(name);
 		one.setPrice(price);
@@ -96,6 +99,9 @@ public class ServiceShop {
 			@QueryParam("ownerPhone") String ownerPhone,
 			@QueryParam("ownerXH") String ownerXH,
 			@CookieParam("ownerQQ") String ownerQQ) {
+		if (name==null || price==0 || ownerPhone==null){
+			return false;
+		}
 		ShopItemsEntity one = new ShopItemsEntity();
 		one.setId(id);
 		one.setName(name);
@@ -162,25 +168,13 @@ public class ServiceShop {
 		} else if (cmd.equals("my")) {
 			re = ManageShop.get_page_XH(from, XH);
 		} else if (cmd.equals("tag")) {
-			int tag=Integer.parseInt(request.getParameter("tag"));
+			int tag = Integer.parseInt(request.getParameter("tag"));
 			re = ManageShop.get_Page_tag(from, tag);
+		}else if (cmd.equals("search")){
+			String want=request.getParameter("want");
+			re=ManageShop.search_page(from,want);
 		}
 		return re;
-	}
-
-	/**
-	 * 关键字搜索
-	 *
-	 * @param from 第一条从哪里开始
-	 * @param want 关键字
-	 * @return
-	 */
-	@JSONP(queryParam = R.JSONP_CALLBACK)
-	@GET
-	@Path("/search")
-	public List<ShopItemsEntity> search(@QueryParam("from") int from,
-	                                    @QueryParam("want") String want) {
-		return ManageShop.search_page(from, want);
 	}
 
 	@JSONP(queryParam = R.JSONP_CALLBACK)
@@ -188,6 +182,20 @@ public class ServiceShop {
 	@Path("/likeIt")
 	public int likeIt(@QueryParam("id") int id) {
 		return ManageShop.likeIt(id);
+	}
+
+	@JSONP(queryParam = R.JSONP_CALLBACK)
+	@GET
+	@Path("/getAllTags")
+	public List<ShopTagsEntity> getTags() {
+		return ManageShop.getTags();
+	}
+
+	@JSONP(queryParam = R.JSONP_CALLBACK)
+	@GET
+	@Path("/addTag")
+	public int addTag(@QueryParam("name") String name) {
+		return ManageShop.addTag(name);
 	}
 
 }

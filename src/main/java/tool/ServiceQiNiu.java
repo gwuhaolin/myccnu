@@ -4,7 +4,7 @@
  * Time: 20:49
  */
 
-package play.shudong;
+package tool;
 
 import com.qiniu.api.auth.AuthException;
 import com.qiniu.api.auth.digest.Mac;
@@ -12,11 +12,11 @@ import com.qiniu.api.config.Config;
 import com.qiniu.api.rs.PutPolicy;
 import org.glassfish.jersey.server.JSONP;
 import org.json.JSONException;
-import tool.R;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
 /**
  * Created with Intellij IDEA.
@@ -36,10 +36,9 @@ public class ServiceQiNiu {
 	@JSONP(queryParam = R.JSONP_CALLBACK)
 	@GET
 	@Path("/getToken")
-	public static String getUpToken(){
+	public static String getUpToken(@QueryParam("bucket") String bucket){
 		Mac mac = new Mac(Config.ACCESS_KEY, Config.SECRET_KEY);
-		String bucketName = "shudongbgimg";
-		PutPolicy putPolicy = new PutPolicy(bucketName);
+		PutPolicy putPolicy = new PutPolicy(bucket);
 		String uptoken=null;
 		try {
 			uptoken= "'"+putPolicy.token(mac)+"'";

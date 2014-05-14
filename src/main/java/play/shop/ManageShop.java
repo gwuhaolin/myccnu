@@ -30,6 +30,12 @@ public class ManageShop {
 	public static final int ChangeCount = 5;
 
 	/**
+	 * 后台管理密码
+	 */
+	public static final String ManagePassword = "SHOP";
+
+
+	/**
 	 * 向数据库中添加一个物品
 	 *
 	 * @param shopItemsEntity
@@ -189,6 +195,30 @@ public class ManageShop {
 		session.update(one);
 		HibernateUtil.closeSession(session);
 		return one.getSeeCount();
+	}
+
+	/**
+	 * 获得所有标签
+	 *
+	 * @return
+	 */
+	public static List<ShopTagsEntity> getTags() {
+		Session session = HibernateUtil.getSession();
+		Query query = session.createQuery("from ShopTagsEntity");
+		return query.list();
+	}
+
+	/**
+	 * 添加一个标签
+	 *
+	 * @param tagName 标签的名称
+	 * @return 标签的ID
+	 */
+	public static int addTag(String tagName) {
+		ShopTagsEntity shopTagsEntity = new ShopTagsEntity();
+		shopTagsEntity.setName(tagName);
+		HibernateUtil.addEntity(shopTagsEntity);
+		return shopTagsEntity.getId();
 	}
 
 }

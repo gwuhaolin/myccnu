@@ -64,15 +64,10 @@
 		<mapping resource="MyjobEntity.hbm.xml" class="life.jobs.MyJobEntity"/>
 		<!--讲座-->
 		<mapping resource="MyeventEntity.hbm.xml" class="study.lecture.MyEventEntity"/>
-		<!--加入我们-->
-		<mapping resource="JoinusEntity.hbm.xml" class="play.joinUs.JoinusEntity"/>
 		<!--失物招领-->
 		<mapping resource="MyloseEntity.hbm.xml" class="life.lose.MyLoseEntity"/>
 		<!--CET-->
 		<mapping resource="Cet46Entity.hbm.xml" class="study.CET.Cet46Entity"/>
-		<!--投票-->
-		<mapping resource="MycampaignerEntity.hbm.xml" class="play.vote.MyCampaignerEntity"/>
-		<mapping resource="MyvoteEntity.hbm.xml" class="play.vote.MyVoteEntity"/>
 		<!--教室-->
 		<mapping resource="MyclassroomEntity.hbm.xml" class="study.classroom.MyclassroomEntity"/>
 		<!--二手商城-->
