@@ -7,7 +7,11 @@
 package play.shudong;
 
 import org.glassfish.jersey.server.JSONP;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import tool.HibernateUtil;
 import tool.R;
+import tool.ServiceQiNiu;
 
 import javax.ws.rs.*;
 
@@ -23,6 +27,7 @@ public class ServiceShuDongBgImg {
 
 	/**
 	 * 如果没有id参数就返回最新的一个
+	 *
 	 * @param id
 	 * @return
 	 */
@@ -62,7 +67,7 @@ public class ServiceShuDongBgImg {
 			@DefaultValue("") @QueryParam("des") String des,
 			@CookieParam("XH") String XH
 	) {
-		if (picUrl==null || picUrl.length()<10){
+		if (picUrl == null || picUrl.length() < 10) {
 			return false;
 		}
 		MyShuDongBgImgEntity one = new MyShuDongBgImgEntity();
@@ -78,7 +83,17 @@ public class ServiceShuDongBgImg {
 	@GET
 	@Path("/deleteOne")
 	public boolean deleteOne(@QueryParam("id") int id) {
-		return ManageShuDongBgImg.remove(id);
+		if(id<0){
+			return false;
+		}
+		Session session = HibernateUtil.getSession();
+		Query query = session.createQuery("from MyShuDongBgImgEntity where id=?");
+		query.setInteger(0, id);
+		MyShuDongBgImgEntity myShuDongEntity = (MyShuDongBgImgEntity) query.uniqueResult();
+		session.delete(myShuDongEntity);
+		ServiceQiNiu.removeOne(ServiceQiNiu.ShuDong_QINIU_BUCKET, myShuDongEntity.getPicUrl());
+		HibernateUtil.closeSession(session);
+		return true;
 	}
 
 	@JSONP(queryParam = R.JSONP_CALLBACK)

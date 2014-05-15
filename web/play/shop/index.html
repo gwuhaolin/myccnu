@@ -80,20 +80,6 @@
 					<input type="text" placeholder="介绍下它-非必须" class="DES">
 				</div>
 
-				<div class="field">
-					<div class="ui fluid selection dropdown">
-						<input type="hidden" name="TAG">
-
-						<div class="text">属于哪类</div>
-						<i class="dropdown icon"></i>
-
-						<div class="menu ui transition hidden" id="AllTags_Dropdown">
-
-						</div>
-
-					</div>
-				</div>
-
 			</div>
 
 			<div class="title">
@@ -118,7 +104,7 @@
 		</div>
 
 		<div class="field">
-			<button class="ui button circular fluid" onclick="addItem()">添加商品</button>
+			<button class="ui button circular fluid" onclick="addItem()">添加物品</button>
 		</div>
 
 		<script>
@@ -172,19 +158,28 @@
 <div class="ui styled sidebar left floating" id="SearchBarCon">
 
 	<div class="ui header icon huge center aligned">
-		<i class="icon search circular inverted blue"></i>
+		<i class="icon search circular inverted blue small"></i>
 	</div>
 
 	<div class="ui form">
 
 		<div class="field">
-			<div class="ui left labeled input">
+			<div class="ui icon input">
 				<input type="text" placeholder="输入关键字搜索" class="WANT">
+				<i class="icon search"></i>
 			</div>
 		</div>
 
 		<div class="field">
 			<div class="ui submit button fluid circular" onclick="doSearch()">搜索</div>
+		</div>
+
+		<div class="field">
+			<div class="ui buttons mini three fluid">
+				<div class="ui button green" onclick="doShowNewest()">最新</div>
+				<div class="ui button red" onclick="doShowHot()">最热</div>
+				<div class="ui button blue" onclick="doShowMyUp()">我的</div>
+			</div>
 		</div>
 
 		<div class="field" id="AllTagsCon">
@@ -193,12 +188,14 @@
 
 	</div>
 
-	<!--展开筛选功能bar按钮-->
-	<div onclick="toggleSearchBarCon(this)" class="ui button circular mini icon POPUP"
-	     style="position: fixed;bottom: 5px;right: 5px"
-	     title="筛选物品">
-		<i class="icon search"></i>
-	</div>
+</div>
+
+<!--展开筛选功能bar按钮-->
+<div onclick="toggleSearchBarCon(this)" class="ui button circular mini icon POPUP"
+     style="position: fixed;bottom: 5px;right: 5px"
+     title="筛选物品">
+	<i class="icon search"></i>
+</div>
 
 </div>
 

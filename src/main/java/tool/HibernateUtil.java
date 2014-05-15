@@ -57,6 +57,17 @@ public class HibernateUtil {
 	}
 
 	/**
+	 * 向数据库中添加或更新这个对象
+	 * @param o
+	 */
+	public static boolean addOrUpdateEntity(Object o){
+		Session session=getSession();
+		session.saveOrUpdate(o);
+		closeSession(session);
+		return true;
+	}
+
+	/**
 	 * 从数据库中修改这个对象
 	 * @param o
 	 */
@@ -77,4 +88,6 @@ public class HibernateUtil {
 		closeSession(session);
 		return true;
 	}
+
+
 }

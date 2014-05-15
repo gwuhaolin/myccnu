@@ -4,15 +4,15 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-	<class name="tool.studentInfo.MainEntity" table="main" schema="" catalog="weixin">
-		<id name="studentId">
-			<column name="StudentID" sql-type="varchar" length="20" not-null="true"/>
+	<class name="tool.studentInfo.StudentInfoEntity" table="studentinfo" schema="" catalog="weixin">
+		<id name="xh">
+			<column name="XH" sql-type="varchar" length="20" not-null="true"/>
 		</id>
 		<property name="openId">
 			<column name="OpenID" sql-type="varchar" length="64"/>
 		</property>
 		<property name="weight">
-			<column name="Weight" sql-type="varchar" length="10"/>
+			<column name="Weight" sql-type="varchar" length="5"/>
 		</property>
 		<property name="highSchool">
 			<column name="HighSchool" sql-type="varchar" length="40"/>
@@ -39,7 +39,7 @@
 			<column name="Major" sql-type="varchar" length="40"/>
 		</property>
 		<property name="sex">
-			<column name="Sex" sql-type="tinyint" length="3"/>
+			<column name="Sex" sql-type="tinyint"/>
 		</property>
 		<property name="familyPhoneNumber">
 			<column name="FamilyPhoneNumber" sql-type="varchar" length="20"/>
@@ -51,7 +51,7 @@
 			<column name="Academy" sql-type="varchar" length="30"/>
 		</property>
 		<property name="height">
-			<column name="Height" sql-type="varchar" length="10"/>
+			<column name="Height" sql-type="varchar" length="5"/>
 		</property>
 		<property name="formerName">
 			<column name="FormerName" sql-type="varchar" length="15"/>
@@ -70,6 +70,9 @@
 		</property>
 		<property name="birthday">
 			<column name="Birthday" sql-type="varchar" length="8"/>
+		</property>
+		<property name="qq">
+			<column name="QQ" sql-type="varchar" length="20"/>
 		</property>
 	</class>
 </hibernate-mapping>

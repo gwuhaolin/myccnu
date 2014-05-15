@@ -10,6 +10,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import tool.HibernateUtil;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -36,12 +37,13 @@ public class ManageShop {
 
 
 	/**
-	 * 向数据库中添加一个物品
+	 * 向数据库中添加一个物品,且自动为其分类
 	 *
 	 * @param shopItemsEntity
 	 * @return
 	 */
 	public static ShopItemsEntity add(ShopItemsEntity shopItemsEntity) {
+		shopItemsEntity.setTag(analyseTag(shopItemsEntity));
 		HibernateUtil.addEntity(shopItemsEntity);
 		return shopItemsEntity;
 	}
@@ -205,7 +207,10 @@ public class ManageShop {
 	public static List<ShopTagsEntity> getTags() {
 		Session session = HibernateUtil.getSession();
 		Query query = session.createQuery("from ShopTagsEntity");
-		return query.list();
+		List<ShopTagsEntity> re = query.list();
+		Collections.sort(re);
+		HibernateUtil.closeSession(session);
+		return re;
 	}
 
 	/**
@@ -221,4 +226,11 @@ public class ManageShop {
 		return shopTagsEntity.getId();
 	}
 
+	/**
+	 * 根据物品的名称和描述自动分析所属标签
+	 * @return 所属标签
+	 */
+	private static int analyseTag(ShopItemsEntity shopItemsEntity) {
+		return 0;
+	}
 }

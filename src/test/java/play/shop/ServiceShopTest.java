@@ -21,7 +21,6 @@ public class ServiceShopTest {
 
 	@Test
 	public void testAddOne() throws Exception {
-		ShopItemsEntity newOne = serviceShop.addOne("name", 12.3F, "详细描述", "12334567", 2, "吴浩麟", "15623007796", "2012210817", "569230199");
 	}
 
 	@Test

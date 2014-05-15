@@ -48,8 +48,6 @@
 		</property>
 
 		<!-- 以下设置对象与数据库表的映像文件 -->
-		<!--个人信息-->
-		<mapping resource="MainEntity.hbm.xml" class="tool.studentInfo.MainEntity"/>
 		<!--电影-->
 		<mapping resource="MymovieEntity.hbm.xml" class="play.movie.MyMovieEntity"/>
 		<!--电脑维修队员-->
@@ -73,6 +71,10 @@
 		<!--二手商城-->
 		<mapping resource="ShopitemsEntity.hbm.xml" class="play.shop.ShopItemsEntity"/>
 		<mapping resource="ShoptagsEntity.hbm.xml" class="play.shop.ShopTagsEntity"/>
+		<!--学生信息-->
+		<mapping resource="StudentbasicinfoEntity.hbm.xml"
+		         class="tool.studentInfo.StudentBasicInfoEntity"/>
+		<mapping class="tool.studentInfo.StudentInfoEntity" resource="StudentinfoEntity.hbm.xml"/>
 
 	</session-factory>
 

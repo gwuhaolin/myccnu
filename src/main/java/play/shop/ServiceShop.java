@@ -48,13 +48,12 @@ public class ServiceShop {
 	                              @QueryParam("price") float price,
 	                              @QueryParam("des") String des,
 	                              @QueryParam("picUrl") String picUrl,
-	                              @QueryParam("tag") int tag,
 	                              @QueryParam("ownerName") String ownerName,
 	                              @QueryParam("ownerPhone") String ownerPhone,
 	                              @QueryParam("ownerXH") String ownerXH,
 	                              @CookieParam("ownerQQ") String ownerQQ
 	) {
-		if (name==null || price==0 || ownerPhone==null || tag==0){
+		if (name==null || price==0 || ownerPhone==null){
 			return null;
 		}
 		ShopItemsEntity one = new ShopItemsEntity();
@@ -62,7 +61,6 @@ public class ServiceShop {
 		one.setPrice(price);
 		one.setDes(des);
 		one.setPicUrl(picUrl);
-		one.setTag(tag);
 		one.setOwnerName(ownerName);
 		one.setOwnerPhone(ownerPhone);
 		one.setOwnerQq(ownerQQ);
