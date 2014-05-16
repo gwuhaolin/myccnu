@@ -10,6 +10,7 @@ package tool;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+
 import java.io.IOException;
 import java.util.Map;
 
@@ -83,21 +84,32 @@ public class CCNUPortal {
 
 	/**
 	 * 获得同学的详细信息
-	 * TODO 待测试
+	 * TODO 获取信息失败 初步分析为 服务器屏蔽非浏览器端口
 	 * @param XH
 	 * @return 返回信息的HTML文档
 	 */
 	public static Document getStudentInfo(String XH, String MM) throws Exception {
 		Connection connection = Jsoup.connect("http://portal.ccnu.edu.cn/roamingAction.do?appId=HSXG");
-		connection.cookies(getCookie(XH,MM));
+		Map<String,String> cookiesFromPortal=getCookie(XH,MM);
+		connection.cookies(cookiesFromPortal);
 		connection.timeout(R.ConnectTimeout);
 		connection.ignoreHttpErrors(true);
+		connection.followRedirects(false);
 		connection.get();
-		Map<String, String> cookies = connection.response().cookies();
-
+		String newURL=connection.response().header("Location");
+		connection=Jsoup.connect(newURL);
+		connection.header("User-Agent", "Mozilla/5.0");
+		connection.header("Referer","http://portal.ccnu.edu.cn/item.jsp?groupId=STU_JZD&groupSeq=4");
+		connection.request().cookie("ys-west-panel","o:collapsed=b%3A1");
+		connection.ignoreHttpErrors(true);
+//		connection.followRedirects(false);
+		connection.get();
+		Map<String, String> cookiesFromXGB = connection.response().cookies();
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		connection = Jsoup.connect("http://202.114.32.143/ccnuxg/xg/studentInfo.do?method=getStudentInfo");
-		connection.cookies(cookies);
+		connection.cookies(cookiesFromXGB);
+		connection.cookie("SECURE_AUTH_ROOT_COOKIE","1771d2220bfc52209255b80905ddb0ec");
+		connection.cookie("SECURE_AUTH_ROOT_COOKIE","1771d2220bfc52209255b80905ddb0ec");
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		return connection.post();
 	}

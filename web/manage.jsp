@@ -5,16 +5,11 @@
 	<meta charset="utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="/lib/css/semantic.min.css">
-	<link rel="stylesheet" type="text/css" href="/lib/css/main.css">
-	<script src="/lib/js/jquery-1.11.2.min.js"></script>
-	<script src="/lib/js/semantic.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="lib/css/semantic.min.css">
+	<link rel="stylesheet" type="text/css" href="lib/css/main.css">
+	<script src="lib/js/jquery-1.11.2.min.js"></script>
+	<script src="lib/js/semantic.min.js"></script>
 	<title>掌上华师管理系统</title>
-	<style>
-		body{
-			background-color: lightblue;
-		}
-	</style>
 </head>
 <body>
 
@@ -73,8 +68,7 @@
 					<a class="item" href="play/movie/manage/login.jsp">校园电影</a>
 					<a class="item" href="play/shudong/manage/login.jsp">树洞</a>
 					<a class="item" href="http://wsq.qq.com/">掌上社区</a>
-					<a class="item" href="play/joinUs/manage/manage.jsp">加入我们</a>
-					<a class="item" href="play/vote/manage/login.jsp">投票</a>
+					<a class="item" href="play/vote/manage.html">投票</a>
 				</div>
 			</div>
 		</div>
@@ -88,6 +82,6 @@
 </div>
 
 
-<script src="/lib/js/main.js"></script>
+<script src="lib/js/main.js"></script>
 </body>
 </html>

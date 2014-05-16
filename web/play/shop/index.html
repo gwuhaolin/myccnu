@@ -13,7 +13,7 @@
 	<script src="../../lib/js/qiniu.min.js"></script>
 	<script src="../../lib/js/main.js"></script>
 </head>
-<body>
+<body style="background-color: #f4f3ff">
 
 <!--显示所有商品的容器-->
 <div class="ui stackable three column page grid  center aligned " id="AllItemsHolder">
@@ -36,75 +36,93 @@
 
 	<div class="ui styled sidebar right floating form" id="AddItemBarCon">
 
-		<div class="field">
-			<div class="ui message MSG">
-				上传你的闲置物品来这里拍卖吧
+		<div class="ui form">
+
+			<div class="field">
+				<div class="ui button fluid MSG" id="UpImgBtn">
+					点击我上传物品的图片
+				</div>
 			</div>
-		</div>
 
-		<div class="ui accordion fluid field">
-
-			<div class="active title">
-				<i class="dropdown icon"></i>
-				物品介绍
+			<div class="ui image rounded small">
+				<img class="IMG">
 			</div>
-			<div class="active content">
 
-				<div class="field">
-					<div class="ui button fluid mini circular" id="UpImgBtn">
-						点击上传物品图片
+			<div class="field">
+				<div class="ui active progress PROGRESS" style="display: none">
+					<div class="bar" style="width: 100%"></div>
+				</div>
+			</div>
+
+			<div class="ui accordion fluid">
+				<div class="active title">
+					<i class="dropdown icon"></i>
+					物品信息
+				</div>
+				<div class="active content">
+
+					<input type="hidden" class="PICURL" value="">
+
+					<div class="field">
+						<div class="ui input icon">
+							<i class="icon yen"></i>
+							<input type="text" placeholder="要价多少(人民币元)" class="PRICE" name="PRICE"
+							       onchange="MyBasicInfoIsChange=true">
+						</div>
 					</div>
-				</div>
 
-				<div class="ui image rounded small">
-					<img src="" class="IMG">
-				</div>
-
-				<div class="field">
-					<div class="ui active progress PROGRESS" style="display: none">
-						<div class="bar" style="width: 100%"></div>
+					<div class="field">
+						<div class="ui input icon">
+							<i class="icon star"></i>
+							<input type="text" placeholder="怎么称呼它" class="NAME" name="NAME"
+							       onchange="MyBasicInfoIsChange=true">
+						</div>
 					</div>
+
+					<div class="field">
+						<div class="ui input icon">
+							<i class="icon file"></i>
+							<textarea placeholder="介绍下它" class="DES" onchange="MyBasicInfoIsChange=true"></textarea>
+						</div>
+					</div>
+
 				</div>
 
-				<input type="hidden" class="PICURL" value="">
-
-				<div class="field">
-					<input type="text" placeholder="怎么称呼它-必须" class="NAME" name="NAME">
+				<div class="title">
+					<i class="dropdown icon"></i>
+					怎么联系你
 				</div>
+				<div class="content">
 
-				<div class="field">
-					<input type="number" placeholder="要价多少(人民币元)-必须" class="PRICE" name="PRICE">
-				</div>
+					<div class="field">
+						<div class="ui input icon">
+							<i class="icon user"></i>
+							<input type="text" placeholder="你的姓名" class="OWNER-NAME">
+						</div>
+					</div>
 
-				<div class="field">
-					<input type="text" placeholder="介绍下它-非必须" class="DES">
+					<div class="field">
+						<div class="ui input icon">
+							<i class="icon user"></i>
+							<input type="text" placeholder="你的电话" class="OWNER-PHONE">
+						</div>
+					</div>
+
+					<div class="field">
+						<div class="ui input icon">
+							<i class="icon user"></i>
+							<input type="text" placeholder="你的QQ" class="OWNER-QQ">
+						</div>
+					</div>
+
 				</div>
 
 			</div>
 
-			<div class="title">
-				<i class="dropdown icon"></i>
-				怎么联系你
+			<div class="field">
+				<button class="ui button circular fluid" onclick="addItem()">添加物品</button>
 			</div>
-			<div class="content">
 
-				<div class="field">
-					<input type="text" placeholder="你是电话号-必须" class="PHONE" name="PHONE">
-				</div>
-
-				<div class="field">
-					<input type="text" placeholder="你的QQ-非必须" class="QQ">
-				</div>
-
-				<div class="field">
-					<input type="text" placeholder="你的大名-非必须" class="OWNER_NAME">
-				</div>
-
-			</div>
-		</div>
-
-		<div class="field">
-			<button class="ui button circular fluid" onclick="addItem()">添加物品</button>
 		</div>
 
 		<script>
@@ -124,22 +142,6 @@
 							type: 'empty'
 						}
 					]
-				},
-				PHONE: {
-					identifier: 'PHONE',
-					rules: [
-						{
-							type: 'empty'
-						}
-					]
-				},
-				TAG: {
-					identifier: 'TAG',
-					rules: [
-						{
-							type: 'empty'
-						}
-					]
 				}
 			});
 		</script>
@@ -149,55 +151,62 @@
 	<!--展开发商品按钮-->
 	<a onclick="toggleAddBox(this)" class="ui button icon circular mini POPUP"
 	   style="position: fixed;bottom: 5px;left: 5px" title="上传你的物品">
-		<i class="icon mail"></i>
+		<i class="icon gift"></i>
 	</a>
 
 </div>
 
 <!--筛选功能bar-->
-<div class="ui styled sidebar left floating" id="SearchBarCon">
+<div>
 
-	<div class="ui header icon huge center aligned">
-		<i class="icon search circular inverted blue small"></i>
+	<div class="ui styled sidebar left floating" id="SearchBarCon">
+
+		<div class="ui header icon huge center aligned">
+			<i class="icon search circular inverted blue"></i>
+		</div>
+
+		<div class="ui form">
+
+			<div class="field">
+				<div class="ui icon input">
+					<input type="text" placeholder="输入关键字搜索" class="WANT">
+					<i class="icon search"></i>
+				</div>
+			</div>
+
+			<div class="field">
+				<div class="ui submit button fluid circular" onclick="doSearch()">搜索</div>
+			</div>
+
+			<div class="field">
+				<div class="ui buttons mini three fluid">
+					<div class="ui button green" onclick="doShowNewest()">最新</div>
+					<div class="ui button red" onclick="doShowHot()">最热</div>
+					<div class="ui button blue" onclick="doShowMyUp()">我的</div>
+				</div>
+			</div>
+
+		</div>
+
 	</div>
 
-	<div class="ui form">
-
-		<div class="field">
-			<div class="ui icon input">
-				<input type="text" placeholder="输入关键字搜索" class="WANT">
-				<i class="icon search"></i>
-			</div>
-		</div>
-
-		<div class="field">
-			<div class="ui submit button fluid circular" onclick="doSearch()">搜索</div>
-		</div>
-
-		<div class="field">
-			<div class="ui buttons mini three fluid">
-				<div class="ui button green" onclick="doShowNewest()">最新</div>
-				<div class="ui button red" onclick="doShowHot()">最热</div>
-				<div class="ui button blue" onclick="doShowMyUp()">我的</div>
-			</div>
-		</div>
-
-		<div class="field" id="AllTagsCon">
-
-		</div>
-
+	<!--展开筛选功能bar按钮-->
+	<div onclick="toggleSearchBarCon(this)" class="ui button circular mini icon POPUP"
+	     style="position: fixed;bottom: 5px;right: 5px"
+	     title="筛选物品">
+		<i class="icon search"></i>
 	</div>
 
 </div>
 
-<!--展开筛选功能bar按钮-->
-<div onclick="toggleSearchBarCon(this)" class="ui button circular mini icon POPUP"
-     style="position: fixed;bottom: 5px;right: 5px"
-     title="筛选物品">
-	<i class="icon search"></i>
+
+<!--排序按钮-->
+<div onclick="sortResult()" class="ui button circular mini icon POPUP"
+     style="position: fixed;top: 5px;right: 5px;z-index: 10"
+     title="价格排序">
+	<i class="icon sort order descending"></i>
 </div>
 
-</div>
 
 <script>
 
@@ -222,6 +231,11 @@ var AddItemBarCon = $('#AddItemBarCon');
 var SearchBarCon = $('#SearchBarCon');
 
 /**
+ * 排序功能框bar
+ */
+var SortBarCon = $('#SortBarCon');
+
+/**
  * 当前的指令模式
  */
 var nowCmd = "new";
@@ -230,11 +244,6 @@ var nowCmd = "new";
  * 当前分页数
  */
 var nowCount = 0;
-
-/**
- * 当前浏览分类标签
- */
-var nowTag = 0;
 
 /**
  * 当前搜索的关键字,默认为最新
@@ -257,8 +266,8 @@ var url_AddItem = makeApiUrl('shop/addOne');
 var url_LikeIt = makeApiUrl('shop/likeIt');
 
 $(document).ready(function () {
+	loadMyInfo();
 	loadMore();
-	loadAllTags();
 	$('.POPUP').popup();
 	$('.accordion').accordion();
 });
@@ -272,10 +281,12 @@ function loadMore() {
 			{
 				from: nowCount,
 				cmd: nowCmd,
-				tag: nowTag,
 				want: nowSearchWant
 			}
 	).done(function (data) {
+				$(data).each(function(){//图片处理
+					this.picUrl+='?imageView/1/w/300/h/300/q';
+				});
 				$(MoreBtn).toggleClass('loading');
 				if (data.length > 0) {
 					var html = toHTML('OneItem_TEMP', data);
@@ -299,18 +310,8 @@ function reloadAllItems() {
 	nowCount = 0;
 	loadMore();
 	$(SearchBarCon).sidebar('hide');
+	$('.dimmer').dimmer('hide');
 	document.title = nowCmd;
-}
-
-/**
- * 加载所有标签
- */
-function loadAllTags() {
-	$.getJSON(makeApiUrl('shop/getAllTags')).done(function (data) {
-		$('#AllTagsCon').html(toHTML('OneTag_Search_TEMP', data));
-		$('#AllTags_Dropdown').html(toHTML('OneTag_Drop_TEMP', data));
-		$('.dropdown').dropdown();
-	});
 }
 
 /**
@@ -340,15 +341,6 @@ function doSearch() {
 }
 
 /**
- * 执行标签分类查找
- */
-function doShowTag(tag) {
-	nowCmd = 'tag';
-	nowTag = tag;
-	reloadAllItems();
-}
-
-/**
  * 执行显示我上传的
  */
 function doShowMyUp() {
@@ -373,6 +365,11 @@ function likeIt(id, likeBtn) {
  * 显示添加商品bar
  */
 function toggleAddBox(btn) {
+
+	$(AddItemBarCon).find('.OWNER-NAME').first().val(MyInfo.name);
+	$(AddItemBarCon).find('.OWNER-PHONE').first().val(MyInfo.phoneNumber);
+	$(AddItemBarCon).find('.OWNER-QQ').first().val(MyInfo.qq);
+
 	$(btn).toggleClass('red');
 	$(AddItemBarCon).sidebar({
 		overlay: true
@@ -389,39 +386,81 @@ function toggleSearchBarCon(btn) {
 	}).sidebar('toggle');
 }
 
+var MyBasicInfoIsChange = false;
 /**
  * 向服务器发送添加一条商品
  */
 function addItem() {
 	$(AddItemBarCon).submit();
+	var one = {};
+	one.name = $(AddItemBarCon).find('.NAME').first().val();
+	one.price = $(AddItemBarCon).find('.PRICE').first().val();
+	one.des = $(AddItemBarCon).find('.DES').first().val();
+	one.picUrl = $(Img_UpBgImg).attr('src');
+	one.xh = MyInfo.xh;
+	$.getJSON(url_AddItem, one).done(function (data) {
+		if (data >= 0) {
 
-	var name = $(AddItemBarCon).find('.NAME').first().val();
-	var price = $(AddItemBarCon).find('.PRICE').first().val();
-	var des = $(AddItemBarCon).find('.DES').first().val();
-	var picUrl = $(Img_UpBgImg).attr('src');
-	var tag = $(AddItemBarCon).find('.TAG').first().val();
-	var phone = $(AddItemBarCon).find('.PHONE').first().val();
-	var QQ = $(AddItemBarCon).find('.QQ').first().val();
-	var ownerName = $(AddItemBarCon).find('.OWNER_NAME').first().val();
+			if (MyBasicInfoIsChange) {//如果上传者的信息修改了就上传修改
+				MyInfo.name = $(AddItemBarCon).find('.OWNER-NAME').first().val();
+				MyInfo.phoneNumber = $(AddItemBarCon).find('.OWNER-PHONE').first().val();
+				MyInfo.qq = $(AddItemBarCon).find('.OWNER-QQ').first().val();
+				MyBasicInfoIsChange = false;
+				updateMyInfo();
+			}
 
-	$.getJSON(url_AddItem, {
-		name: name,
-		price: price,
-		des: des,
-		picUrl: picUrl,
-		tag: tag,
-		ownerName: ownerName,
-		ownerPhone: phone,
-		ownerQQ: QQ
-	}).done(function (data) {
-		if (data != null) {
-			var html = toHTML('OneItem_TEMP', data);
+			one.id = data;
+			var html = toHTML('OneItem_TEMP', one);
 			$(html).prependTo(AllItemsHolder);
 			toggleAddBox();//收起发商品bar
 			goTop();//滚到顶部
-			$(AddItemBarCon).find('input').val('');//清空输入框
+			$(AllItemsHolder).find('.image.fluid').dimmer({
+				on: 'hover'
+			});
+			$(AddItemBarCon).find('input').val('');
+
+		} else if (data == -1) {
+			alertMsg('还有信息需要完善哦');
+		} else if (data == -2) {
+			shouldBind('为防止诈骗我们必须验证你的身份');
+		} else if (data == -3) {
+			showError();
 		}
 	});
+}
+
+/**
+ * 把结果按照要求票数排序
+ * @param fu 1 or -1 顺序还是逆序
+ */
+var fu = 1;
+function sortResult() {
+	var allCom = $(AllItemsHolder).find('.column');
+	$(allCom).sort(function (a, b) {
+		var aSum = $(a).find('.PRICE').text();
+		var bSum = $(b).find('.PRICE').text();
+		return (bSum - aSum) * fu;
+	}).appendTo(AllItemsHolder);
+	goTop();
+	fu = -fu;
+}
+
+/**
+ * 当点击查看详细时
+ * @param id 被查看的物品的Id
+ * @param btn 点击的按钮
+ * @param xh 发布该物品同学的学号
+ */
+function showDetail(id, btn, xh) {
+	likeIt(id);
+	var infoCon = $(btn).parent().parent().parent().parent().dimmer('hide').parent().next().dimmer('show').find('.OWNER_INFO').first();
+	console.log(infoCon);
+	if (xh) {
+		$.getJSON(GetStuInfo_URL, {XH: xh}).done(function (data) {
+			var html = toHTML('OwnerInfo_TEMP', data);
+			$(infoCon).html(html);
+		});
+	}
 }
 
 </script>
@@ -456,7 +495,7 @@ function addItem() {
 				'FileUploaded': function (up, file, info) {
 					// 每个文件上传成功后,处理相关的事情
 					PicURL = QiNiuDomain + parseJSON(info).key;
-					$(Img_UpBgImg).attr('src', PicURL);
+					$(Img_UpBgImg).attr('src', PicURL).show();
 					$(Progress_UpBgImg).fadeOut();
 					$(Msg_UpBgImg).text('图片上传成功').addClass('green');
 				},
@@ -475,28 +514,11 @@ function addItem() {
 <!--模版-->
 <div class="hidden">
 
-	<!--一个标签-->
-	<div id="OneTag_Search_TEMP">
-		{{#.}}
-		<a class="ui label circular" style="margin: 3px" onclick="doShowTag({{id}})">
-			{{name}}
-		</a>
-		{{/.}}
-	</div>
-
-	<!--一个标签-->
-	<div id="OneTag_Drop_TEMP">
-		{{#.}}
-		<div class="item" data-value="{{id}}">{{name}}</div>
-		{{/.}}
-	</div>
-
-
 	<!--一条商品-->
 	<div id="OneItem_TEMP">
 		{{#.}}
 		<div class="column">
-			<div class="ui image labeled rounded fluid">
+			<div class="ui image labeled rounded fluid" style="min-height: 200px">
 				<!--dimmer-->
 				<div class="ui dimmer">
 					<div class="content">
@@ -505,7 +527,7 @@ function addItem() {
 								<p>{{des}}</p>
 
 								<div class="ui button circular mini"
-								     onclick="likeIt({{id}});$(this).parent().parent().parent().parent().dimmer('hide').parent().next().dimmer('show')">
+								     onclick="showDetail({{id}},this,'{{xh}}')">
 									查看详情
 								</div>
 							</div>
@@ -520,16 +542,17 @@ function addItem() {
 				<img src="{{picUrl}}" alt="{{name}}:{{des}}">
 			</div>
 			<div class="ui page dimmer inverted">
+
 				<div class="content">
 					<div class="ui header center aligned">
 						<h3>{{name}}</h3>
 
 						<div class="ui relaxed divided selection list">
 							<div class="item">
-								<i class="icon dollar"></i>
+								<i class="icon yen"></i>
 
 								<div class="content">
-									<div class="header">{{price}}</div>
+									<div class="header PRICE">{{price}}</div>
 								</div>
 							</div>
 							<div class="item">
@@ -543,40 +566,10 @@ function addItem() {
 								<i class="icon heart"></i>
 
 								<div class="content">
-									<div class="header" onclick="likeIt({{id}},this)">{{seeCount}}<i
+									<div class="header" onClick="likeIt({{id}},this)">{{seeCount}}<i
 											class="icon red heart"></i></div>
 								</div>
 							</div>
-
-							{{# if ownerName}}
-							<div class="item">
-								<i class="icon user"></i>
-
-								<div class="content">
-									<div class="header">{{ownerName}}</div>
-								</div>
-							</div>
-							{{/if}}
-
-							{{# if ownerPhone}}
-							<div class="item">
-								<i class="icon phone"></i>
-
-								<div class="content">
-									<div class="header">{{ownerPhone}}</div>
-								</div>
-							</div>
-							{{/if}}
-
-							{{# if ownerQQ}}
-							<div class="item">
-								<i class="icon">Q</i>
-
-								<div class="content">
-									<div class="header">{{ownerQQ}}</div>
-								</div>
-							</div>
-							{{/if}}
 
 							{{# if des}}
 							<div class="item">
@@ -587,16 +580,75 @@ function addItem() {
 								</div>
 							</div>
 							{{/if}}
+
 						</div>
 
-						<!--评论框-->
-						<iframe src="comment.html?id={{id}}" style="border: none;margin: 20px;height: 200px">
-						</iframe>
+						<div class="OWNER_INFO ui relaxed divided selection list small animated">
+
+						</div>
+
 					</div>
 				</div>
 			</div>
 		</div>
 		{{/.}}
+	</div>
+
+	<div id="OwnerInfo_TEMP">
+
+		{{# if name}}
+		<div class="item">
+			{{# if sex}}
+			<i class="icon male blue"></i>
+			{{else}}
+			<i class="icon female red"></i>
+			{{/if}}
+			<div class="content">
+				<div class="header">{{name}}</div>
+			</div>
+		</div>
+		{{/if}}
+
+		{{# if phoneNumber}}
+		<div class="item">
+			<i class="icon phone"></i>
+
+			<div class="content">
+				<div class="header">{{phoneNumber}}</div>
+			</div>
+		</div>
+		{{/if}}
+
+		{{# if qq}}
+		<div class="item">
+			<i class="icon">Q</i>
+
+			<div class="content">
+				<div class="header">{{qq}}</div>
+			</div>
+		</div>
+		{{/if}}
+
+		{{# if dormAddress}}
+		<div class="item">
+			<i class="icon map marker"></i>
+
+			<div class="content">
+				<div class="header">{{dormAddress}}</div>
+			</div>
+		</div>
+		{{/if}}
+
+		{{# if major}}
+		<div class="item">
+			<i class="icon book"></i>
+
+			<div class="content">
+				<div class="header">{{major}}</div>
+			</div>
+		</div>
+		{{/if}}
+
 	</div>
 </div>
 

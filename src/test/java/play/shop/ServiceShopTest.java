@@ -23,10 +23,6 @@ public class ServiceShopTest {
 	public void testAddOne() throws Exception {
 	}
 
-	@Test
-	public void testUpdate() throws Exception {
-		serviceShop.update(1,null,1F,null,null,1,null,null,null,null);
-	}
 
 	@Test
 	public void testRemove() throws Exception {

@@ -29,14 +29,7 @@
 			</div>
 			<%--学号--%>
 			<a class="btn" href="/java/studentsInfo/index.jsp?XH=<%=one.getXh()%>"><%=one.getXh()%></a>
-			<%--是否是今天的--%>
-			<%
-				if (one.isTaday()){
-			%>
-			<button class="btn btn-success btn-xs active">Today</button>
-			<%
-				}
-			%>
+
 		</div>
 		<input type="hidden" name="id" value="<%=one.getId()%>">
 		<input type="hidden" name="cmd" value="<%=ManageShuDong.CMD_Change%>">

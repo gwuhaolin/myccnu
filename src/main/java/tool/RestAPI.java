@@ -10,6 +10,8 @@ import org.glassfish.jersey.server.ResourceConfig;
 import play.shop.ServiceShop;
 import play.shudong.ServiceShuDong;
 import play.shudong.ServiceShuDongBgImg;
+import play.vote.ServiceVote;
+import tool.studentInfo.ServiceStudentInfo;
 
 /**
  * Created with Intellij IDEA.
@@ -26,6 +28,9 @@ public class RestAPI extends ResourceConfig {
 		register(ServiceShuDongBgImg.class);
 		register(ServiceQiNiu.class);
 		register(ServiceShop.class);
+		register(ServiceStudentInfo.class);
+		register(ServiceVote.class);
+
 
 		//注册数据转换器
 		register(JacksonJsonProvider.class);

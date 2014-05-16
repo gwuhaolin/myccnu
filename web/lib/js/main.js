@@ -3,11 +3,6 @@ function loading(btn) {
 	$(btn).text('正在努力加载中.....').addClass('disabled');
 }
 
-//返回上一页
-function back() {
-	history.back();
-}
-
 //高亮显示关键字
 function showHighLight(key) {
 	$.getScript('/lib/js/jquery.highlight.js', function () {
@@ -23,7 +18,7 @@ function shouldBind(msg) {
 		msg = '需要验证你的身份';
 	}
 	var bindModal = $('#modal_bind');
-	var newBindModal = $('<div class="ui basic modal hidden" id="modal_bind"><i class="close icon red circular inverted"></i><div class="ui header icon center aligned"><i class="icon user inverted red circular" id="icon_bind"></i><em id="msg_bind"></em></div><div class="ui form"><div class="two fields"><div class="field"><div class="ui icon input"><input type="text"  value="" id="XH_bind" placeholder="你的学号"><i class="user icon"></i></div></div><div class="field"><div class="ui icon input"><input type="password"  value="" id="MM_bind" placeholder="你的信息门户登入密码"><i class="lock icon"></i></div></div></div><div class="field"><div id="btn_bind" class="ui button blue" onclick="executeAJAXBind()">GO</div></div></div></div>');
+	var newBindModal = $('<div class="ui basic modal hidden" id="modal_bind"><i class="close icon red circular inverted"></i><div class="ui header icon center aligned"><i class="icon user inverted red circular" id="icon_bind"></i><em id="msg_bind"></em></div><div class="ui form"><div class="two fields"><div class="field"><div class="ui icon input"><input type="text"  value="" id="XH_bind" placeholder="你的学号"><i class="user icon"></i></div></div><div class="field"><div class="ui icon input"><input type="password"  value="" id="MM_bind" placeholder="你的信息门户登入密码"><i class="lock icon"></i></div></div></div><div class="field"><div id="btn_bind" class="ui button blue fluid" onclick="executeAJAXBind()">GO</div></div></div></div>');
 	$(newBindModal).find('#msg_bind').text(msg);
 	if (bindModal.length == 0) {
 		bindModal = newBindModal;
@@ -32,13 +27,9 @@ function shouldBind(msg) {
 		$(bindModal).html($(newBindModal).html());
 	}
 	$(bindModal).modal('setting', {
-		closable: true,
-		onDeny: function () {
-			window.close();
-		}
+		closable: true
 	}).modal('show');
 }
-
 
 //异步执行绑定
 function executeAJAXBind() {
@@ -47,24 +38,24 @@ function executeAJAXBind() {
 	var MM = $($(bindModal).find('#MM_bind')).val();
 	var msg = $(bindModal).find('#msg_bind');
 	if (XH == null || XH.length < 2 || MM == null) {
-		$(msg).text('输入的帐号密码正常点好吗!');
+		$(msg).text('输入正常的学号密码!');
 	} else {
 		$(msg).text('正在努力加载中...');
-		$.getScript('../../java/bind/BindServlet.jsp?XH=' + XH + '&MM=' + MM);
+		$.getJSON(makeApiUrl('studentInfo/bind'), {
+			XH: XH,
+			MM: MM
+		}).done(function (data) {
+			if (data == -1) {
+				$(msg).text('学号密码请填完整');
+			} else if (data == -2) {
+				$(msg).text('密码错误');
+			} else if (data == 1) {
+				$(bindModal).modal('hide');
+				loadMyInfo();
+				alert('绑定成功,请继续');
+			}
+		});
 	}
-}
-
-//异步执行绑定成功后调用
-function executeAJAXBindSuccess() {
-	alert('验证身份通过,请重新执行你想要的功能');
-	location.reload();//刷新当前页面
-}
-
-//异步执行绑定失败后调用
-function executeAJAXBindFill() {
-	var bindModal = $('#modal_bind');
-	var msg = $(bindModal).find('#msg_bind');
-	$(msg).text('验证失败!帐号密码错误');
 }
 
 //评论框打开关闭
@@ -79,6 +70,7 @@ function closeWeiXinBtn() {
 		WeixinJSBridge.call('hideToolbar');
 	});
 }
+closeWeiXinBtn();
 
 //已美观化的alert
 function alertMsg(msg) {
@@ -94,13 +86,6 @@ function alertMsg(msg) {
 }
 
 /**
- * 动画滚到底部
- */
-function goBottom() {
-	$('html, body, .content').animate({scrollTop: $(document).height()}, 'slow');
-}
-
-/**
  * 动画滚到顶部
  */
 function goTop() {
@@ -112,20 +97,20 @@ function goTop() {
  * @param path
  * @returns {string}
  */
-function makeApiUrl(path){
+function makeApiUrl(path) {
 	/**
 	 * 主机基本URL
 	 * @type {string}
 	 */
-	var HostURL="http:/localhost:8080/api/";
+	var HostURL = "http://localhost:8080/api/";
 
 	/**
 	 * 使用jsonp方法跨域获得JSON的回调函数
 	 * @type {string}
 	 */
-	var CallBackName='?callback=?';
+	var CallBackName = '?callback=?';
 
-	return HostURL+path+CallBackName;
+	return HostURL + path + CallBackName;
 }
 
 /**
@@ -146,4 +131,26 @@ function parseJSON(jsonStr) {
 $(document).ready(function () {
 	$.getScript('/lib/js/afterDocReady.js');
 });
+
+/**
+ * 当前发问者的基本信息
+ */
+var MyInfo;
+/**
+ * 加载访问者基本信息
+ */
+var GetStuInfo_URL=makeApiUrl('studentInfo/getOne');
+function loadMyInfo() {
+	$.getJSON(GetStuInfo_URL).done(function (data) {
+		MyInfo = data;
+	});
+}
+/**
+ * 把发送给服务器更新发问者基本信息
+ */
+function updateMyInfo() {
+	$.getJSON(makeApiUrl('studentInfo/updateOne'), MyInfo).done(function (data) {
+		MyInfo = data;
+	});
+}
 

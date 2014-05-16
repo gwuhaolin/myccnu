@@ -10,7 +10,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import tool.HibernateUtil;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -35,6 +34,10 @@ public class ManageShop {
 	 */
 	public static final String ManagePassword = "SHOP";
 
+	/**
+	 * 当物品的图片URL为空时的默认URL
+	 */
+	public static final String DEFAULT_PIC_URL = "SHOP";
 
 	/**
 	 * 向数据库中添加一个物品,且自动为其分类
@@ -42,10 +45,8 @@ public class ManageShop {
 	 * @param shopItemsEntity
 	 * @return
 	 */
-	public static ShopItemsEntity add(ShopItemsEntity shopItemsEntity) {
-		shopItemsEntity.setTag(analyseTag(shopItemsEntity));
-		HibernateUtil.addEntity(shopItemsEntity);
-		return shopItemsEntity;
+	public static boolean add(ShopItemsEntity shopItemsEntity) {
+		return HibernateUtil.addEntity(shopItemsEntity);
 	}
 
 	/**
@@ -88,24 +89,6 @@ public class ManageShop {
 		return re > 0;
 	}
 
-	/**
-	 * 根据 标签 来查询物品
-	 * 获得多条物品的信息,用于分页查询
-	 *
-	 * @param from  从这里开始
-	 * @param tagID 所属标签的Id
-	 * @return
-	 */
-	public static List<ShopItemsEntity> get_Page_tag(int from, int tagID) {
-		Session session = HibernateUtil.getSession();
-		Query query = session.createQuery("from ShopItemsEntity where tag=? order by id desc ");
-		query.setInteger(0, tagID);
-		query.setFirstResult(from);
-		query.setMaxResults(ChangeCount);
-		List<ShopItemsEntity> re = query.list();
-		HibernateUtil.closeSession(session);
-		return re;
-	}
 
 	/**
 	 * 根据 发布时间 来查询物品
@@ -153,7 +136,7 @@ public class ManageShop {
 			return null;
 		}
 		Session session = HibernateUtil.getSession();
-		Query query = session.createQuery("from ShopItemsEntity where ownerXh=? order by id desc ");
+		Query query = session.createQuery("from ShopItemsEntity where xh=? order by id desc ");
 		query.setString(0, XH);
 		query.setFirstResult(from);
 		query.setMaxResults(ChangeCount);
@@ -199,38 +182,4 @@ public class ManageShop {
 		return one.getSeeCount();
 	}
 
-	/**
-	 * 获得所有标签
-	 *
-	 * @return
-	 */
-	public static List<ShopTagsEntity> getTags() {
-		Session session = HibernateUtil.getSession();
-		Query query = session.createQuery("from ShopTagsEntity");
-		List<ShopTagsEntity> re = query.list();
-		Collections.sort(re);
-		HibernateUtil.closeSession(session);
-		return re;
-	}
-
-	/**
-	 * 添加一个标签
-	 *
-	 * @param tagName 标签的名称
-	 * @return 标签的ID
-	 */
-	public static int addTag(String tagName) {
-		ShopTagsEntity shopTagsEntity = new ShopTagsEntity();
-		shopTagsEntity.setName(tagName);
-		HibernateUtil.addEntity(shopTagsEntity);
-		return shopTagsEntity.getId();
-	}
-
-	/**
-	 * 根据物品的名称和描述自动分析所属标签
-	 * @return 所属标签
-	 */
-	private static int analyseTag(ShopItemsEntity shopItemsEntity) {
-		return 0;
-	}
 }

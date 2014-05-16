@@ -44,28 +44,32 @@ public class ServiceShop {
 	@JSONP(queryParam = R.JSONP_CALLBACK)
 	@GET
 	@Path("/addOne")
-	public ShopItemsEntity addOne(@QueryParam("name") String name,
-	                              @QueryParam("price") float price,
-	                              @QueryParam("des") String des,
-	                              @QueryParam("picUrl") String picUrl,
-	                              @QueryParam("ownerName") String ownerName,
-	                              @QueryParam("ownerPhone") String ownerPhone,
-	                              @QueryParam("ownerXH") String ownerXH,
-	                              @CookieParam("ownerQQ") String ownerQQ
+	public int addOne(@QueryParam("name") String name,
+	                  @QueryParam("price") float price,
+	                  @QueryParam("des") String des,
+	                  @QueryParam("picUrl") String picUrl,
+	                  @CookieParam("XH") String XH
 	) {
-		if (name==null || price==0 || ownerPhone==null){
-			return null;
+		if (name == null || price == 0) {
+			return -1;//还有信息没有填
+		} else if (XH == null) {
+			return -2;//没有绑定
 		}
-		ShopItemsEntity one = new ShopItemsEntity();
-		one.setName(name);
-		one.setPrice(price);
-		one.setDes(des);
-		one.setPicUrl(picUrl);
-		one.setOwnerName(ownerName);
-		one.setOwnerPhone(ownerPhone);
-		one.setOwnerQq(ownerQQ);
-		one.setOwnerXh(ownerXH);
-		return ManageShop.add(one);
+		if (picUrl==null){
+			picUrl=ManageShop.DEFAULT_PIC_URL;
+		}
+		try {
+			ShopItemsEntity one = new ShopItemsEntity();
+			one.setName(name);
+			one.setPrice(price);
+			one.setDes(des);
+			one.setPicUrl(picUrl);
+			one.setXh(XH);
+			ManageShop.add(one);
+			return one.getId();//成功,返回获得的Id
+		} catch (Exception e) {
+			return -3;//发生异常
+		}
 	}
 
 	/**
@@ -93,12 +97,12 @@ public class ServiceShop {
 			@QueryParam("des") String des,
 			@QueryParam("picUrl") String picUrl,
 			@QueryParam("tag") int tag,
-			@QueryParam("ownerName") String ownerName,
-			@QueryParam("ownerPhone") String ownerPhone,
-			@QueryParam("ownerXH") String ownerXH,
-			@CookieParam("ownerQQ") String ownerQQ) {
-		if (name==null || price==0 || ownerPhone==null){
+			@CookieParam("XH") String XH) {
+		if (name == null || price == 0) {
 			return false;
+		}
+		if (picUrl==null){
+			picUrl=ManageShop.DEFAULT_PIC_URL;
 		}
 		ShopItemsEntity one = new ShopItemsEntity();
 		one.setId(id);
@@ -106,11 +110,7 @@ public class ServiceShop {
 		one.setPrice(price);
 		one.setDes(des);
 		one.setPicUrl(picUrl);
-		one.setTag(tag);
-		one.setOwnerName(ownerName);
-		one.setOwnerPhone(ownerPhone);
-		one.setOwnerQq(ownerQQ);
-		one.setOwnerXh(ownerXH);
+		one.setXh(XH);
 		return ManageShop.update(one);
 	}
 
@@ -165,12 +165,9 @@ public class ServiceShop {
 			re = ManageShop.get_page_hot(from);
 		} else if (cmd.equals("my")) {
 			re = ManageShop.get_page_XH(from, XH);
-		} else if (cmd.equals("tag")) {
-			int tag = Integer.parseInt(request.getParameter("tag"));
-			re = ManageShop.get_Page_tag(from, tag);
-		}else if (cmd.equals("search")){
-			String want=request.getParameter("want");
-			re=ManageShop.search_page(from,want);
+		} else if (cmd.equals("search")) {
+			String want = request.getParameter("want");
+			re = ManageShop.search_page(from, want);
 		}
 		return re;
 	}
@@ -180,20 +177,6 @@ public class ServiceShop {
 	@Path("/likeIt")
 	public int likeIt(@QueryParam("id") int id) {
 		return ManageShop.likeIt(id);
-	}
-
-	@JSONP(queryParam = R.JSONP_CALLBACK)
-	@GET
-	@Path("/getAllTags")
-	public List<ShopTagsEntity> getTags() {
-		return ManageShop.getTags();
-	}
-
-	@JSONP(queryParam = R.JSONP_CALLBACK)
-	@GET
-	@Path("/addTag")
-	public int addTag(@QueryParam("name") String name) {
-		return ManageShop.addTag(name);
 	}
 
 }

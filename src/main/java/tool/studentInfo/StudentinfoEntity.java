@@ -19,7 +19,15 @@ import javax.persistence.Id;
 @Entity
 @javax.persistence.Table(name = "studentinfo", schema = "", catalog = "weixin")
 public class StudentInfoEntity {
+
+	public StudentInfoEntity() {
+	}
+
 	private String xh;
+
+	public StudentInfoEntity(String xh) {
+		this.xh=xh;
+	}
 
 	@Id
 	@javax.persistence.Column(name = "XH", nullable = false, insertable = true, updatable = true, length = 20)

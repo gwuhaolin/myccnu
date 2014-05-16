@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="../../lib/css/semantic.min.css">
+	<link rel="stylesheet" type="text/css" href="../../lib/css/main.css">
+	<script src="../../lib/js/jquery-1.11.2.min.js"></script>
+	<script src="../../lib/js/handlebars-v1.3.0.js"></script>
+	<script src="../../lib/js/semantic.min.js"></script>
+	<script src="../../lib/js/plupload.full.min.js"></script>
+	<script src="../../lib/js/qiniu.min.js"></script>
+	<script src="../../lib/js/main.js"></script>
+</head>
+<body>
+
+<!--添加一个选手-->
+<div class="ui one column page grid">
+	<div class="column">
+		<div class="ui segment stacked form inverted" id="UpBgImgCon">
+
+			<div class="ui accordion fluid">
+				<div class="active title">
+					<i class="dropdown icon"></i>
+					基本信息
+				</div>
+				<div class="active content">
+
+					<img src="" class="ui image rounded small SHOWIMG">
+					<input type="hidden" class="PICURL" value="">
+
+					<div class="field">
+						<div class="ui active progress PROGRESS" style="display: none">
+							<div class="bar" style="width: 100%"></div>
+						</div>
+					</div>
+
+					<div class="field">
+						<div id="pickfiles" class="ui button fluid">点击上传图片</div>
+					</div>
+
+					<div class="field">
+						<input type="text" class="NAME" placeholder="姓名">
+					</div>
+
+					<div class="field">
+						<input type="text" placeholder="简介" class="DES">
+					</div>
+
+				</div>
+
+				<div class="title">
+					<i class="dropdown icon"></i>
+					其他信息
+				</div>
+				<div class="content">
+					<div class="field">
+						<input type="text" class="OTHER1" placeholder="输入附加参数1" value="">
+					</div>
+
+					<div class="field">
+						<input type="text" class="OTHER2" placeholder="输入附加参数2" value="">
+					</div>
+
+					<div class="field">
+						<input type="text" class="OTHER3" placeholder="输入附加参数3" value="">
+					</div>
+				</div>
+			</div>
+			<div class="ui button fluid blue" onclick="addOne(this)">
+				添加一个竞选者
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--所有选手-->
+<div class="ui four column stackable page grid" id="AllComCon">
+</div>
+
+<!--输入管理密码-->
+<div class="ui basic modal hidden" id="InputPasswordCon">
+	<div class="ui header icon center aligned"><i class="icon user inverted red circular"></i></div>
+	<div class="ui form">
+		<div class="two fields">
+			<div class="field">
+				<div class="ui icon input"><input type="password" class="PASSWORD" value="" placeholder="管理密码"><i
+						class="user icon"></i></div>
+			</div>
+			<div class="field">
+				<div id="btn_bind" class="ui button fluid blue" onclick="iHaveInputPass();$(this).text('正在努力加载中...')">
+					登入
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<!--基本信息管理sidebar-->
+<div>
+	<div class="ui styled sidebar left floating" id="BasicInfoCon">
+	</div>
+	<!--展开按钮-->
+	<a onclick="$(this).prev().sidebar({overlay: true}).sidebar('toggle');$(this).toggleClass('red')"
+	   class="ui button icon circular black inverted mini"
+	   style="position: fixed;z-index: 20;bottom: 5px;right: 5px">
+		<i class="icon add"></i>
+	</a>
+</div>
+
+<!--显示所有按钮-->
+<div onclick="showAll()" class="DES ui button blue circular mini icon" title="显示所有参赛者"
+     style="position: fixed;top: 5px;right: 5px">
+	<i class="icon list"></i>
+</div>
+
+<script>
+	/**
+	 * 后台管理密码
+	 */
+	var MM = null;
+
+	/**
+	 * 存放所有选手的容器
+	 */
+	var AllComCon = $('#AllComCon');
+
+	/**
+	 * 存放基本信息的bar
+	 */
+	var BasicInfoCon = $('#BasicInfoCon');
+
+	/**
+	 *  输入管理密码容器
+	 */
+	var InputPasswordCon = $('#InputPasswordCon');
+
+	var getAll_URL = makeApiUrl('vote/getAll');
+	/**
+	 * 在容器里显示当前所有的选手
+	 */
+	function showAll() {
+		$.getJSON(getAll_URL).done(function (data) {
+			$(AllComCon).html(toHTML('One_TEMP', data));
+			$('.accordion').accordion();
+		});
+	}
+
+	var addOne_URL = makeApiUrl('vote/addOne');
+	/**
+	 * 添加一个竞选者
+	 */
+	function addOne(btn) {
+		if (MM == null) {
+			inputPassword();
+		}
+		var con = $(btn).parent();
+		var one = {};
+		one.name = $(con).find('.NAME').val();
+		one.des = $(con).find('.DES').val();
+		one.picUrl = $(con).find('.PICURL').val();
+		one.other1 = $(con).find('.OTHER1').val();
+		one.other2 = $(con).find('.OTHER2').val();
+		one.other3 = $(con).find('.OTHER3').val();
+		one.MM = MM;
+		$.getJSON(addOne_URL, one).done(function (data) {
+			if (data > 0) {//添加成功
+				one.id = data;
+				$(AllComCon).prepend(toHTML('One_TEMP', one));
+				$(con).find('input').val("");
+				$(con).find('img').attr('src', '');
+				$('.accordion').accordion();
+			} else {//失败
+				inputPassword();
+				alertMsg('添加失败');
+			}
+		});
+	}
+
+	var removeOne_URL = makeApiUrl('vote/removeOne');
+	/**
+	 * 删除一个竞选者
+	 */
+	function removeOne(id) {
+		$.getJSON(removeOne_URL, {
+			id: id,
+			MM: MM
+		}).done(function (data) {
+			if (data) {
+				$(AllComCon).find('#' + id).remove();
+			} else {
+				inputPassword();
+				alertMsg('删除失败');
+			}
+		})
+	}
+
+	var updateOne_URL = makeApiUrl('vote/updateOne');
+	/**
+	 * 更新一个竞选者
+	 */
+	function updateOne(id) {
+		var con = $(AllComCon).find('#' + id);
+		var one = {};
+		one.id = id;
+		one.name = $(con).find('.NAME').val();
+		one.des = $(con).find('.DES').val();
+		one.picUrl = $(con).find('.PICURL').val();
+		one.other1 = $(con).find('.OTHER1').val();
+		one.other2 = $(con).find('.OTHER2').val();
+		one.other3 = $(con).find('.OTHER3').val();
+		one.MM = MM;
+		$.getJSON(updateOne_URL, one).done(function (data) {
+			if (!data) {//失败
+				inputPassword();
+				alertMsg('修改失败');
+			} else {
+				alertMsg('修改成功');
+			}
+		});
+	}
+
+	var updateBasicInfo_URL = makeApiUrl('vote/updateBasicInfo');
+	/**
+	 * 更新基本信息
+	 */
+	function updateBasicInfo() {
+		var one = {};
+		one.name = $(BasicInfoCon).find('.NAME').val();
+		one.des = $(BasicInfoCon).find('.DES').val();
+		one.shouldCheckSize = $(BasicInfoCon).find('.SHOULD_NUM').val();
+		one.voteIsStop = $(BasicInfoCon).find('.VOTE_IS_STOP').val();
+		one.defaultPicUrl = $(BasicInfoCon).find('.DEFAULT_PIC_URL').val();
+		one.MM = MM;
+		$.getJSON(updateBasicInfo_URL, one, function (data) {
+			if (data) {
+				alertMsg('操作成功');
+			} else {
+				inputPassword();
+				alertMsg('操作失败');
+			}
+		});
+		loadBasicInfo();
+	}
+
+	/**
+	 * 加载基本信息
+	 */
+	function loadBasicInfo() {
+		$.getJSON(getBasicInfo_URL).done(function (data) {
+			$(BasicInfoCon).html(toHTML('BasicInfo_TEMP', data));
+		});
+	}
+
+	/**
+	 * 输入管理密码
+	 */
+	function inputPassword() {
+		$(InputPasswordCon).modal('setting', 'closable', false).modal('show');
+	}
+
+	var Password_IsOK = makeApiUrl('vote/passwordIsOk');
+	/**
+	 * 当输入了密码点按钮后
+	 */
+	function iHaveInputPass() {
+		var password = $(InputPasswordCon).find('.PASSWORD').val();
+		$.getJSON(Password_IsOK, {
+			MM: password
+		}).done(function (data) {
+			if (data) {
+				MM = password;
+				$(InputPasswordCon).modal('hide');
+			} else {
+				alertMsg('密码错误');
+			}
+		});
+	}
+
+	var ClearDB_URL = makeApiUrl('vote/clearDB');
+	/**
+	 * 清空数据库
+	 */
+	function clearDB() {
+		var en = confirm('你确定要清空所有数据吗?这是一个很危险的操作!');
+		if (en) {
+			$.getJSON(ClearDB_URL, {MM: MM}).done(function (data) {
+				if (data) {
+					alertMsg('成功清除所有数据');
+				} else {
+					showError();
+				}
+			})
+		}
+	}
+
+	var getBasicInfo_URL = makeApiUrl('vote/getBasicInfo');
+	$(document).ready(function () {
+		inputPassword();
+		loadBasicInfo();
+		$('.DES').popup();
+	});
+
+	$('.accordion').accordion();
+
+</script>
+
+<!--关于上传背景图片-->
+<script>
+
+	var QiNiuBucket = 'myccnuvote';
+	var QiNiuDomain = 'http://' + QiNiuBucket + '.qiniudn.com/';
+	var UpBgImgCon = $('#UpBgImgCon');
+	var Progress_UpBgImg = $(UpBgImgCon).find('.PROGRESS').first();
+	var ShowPic = $(UpBgImgCon).find('.SHOWIMG').first();
+	//初始化七牛
+	$.getJSON(makeApiUrl('qiniu/getToken'), {bucket: QiNiuBucket}).done(function (data) {
+		Qiniu.uploader({
+			runtimes: 'html5,flash,html4',    //上传模式,依次退化
+			browse_button: 'pickfiles',       //上传选择的点选按钮，**必需**
+			uptoken: data, //若未指定uptoken_url,则必须指定 uptoken ,uptoken由其他程序生成
+			unique_names: true, // 默认 false，key为文件名。若开启该选项，SDK会为每个文件自动生成key（文件名）
+			domain: QiNiuDomain,   //bucket 域名，下载资源时用到，**必需**
+			max_file_size: '100mb',           //最大文件体积限制
+			flash_swf_url: '../lib/js/Moxie.swf',  //引入flash,相对路径
+			max_retries: 3,                   //上传失败最大重试次数
+			dragdrop: true,                   //开启可拖曳上传
+			drop_element: 'UpBgImgCon',        //拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
+			chunk_size: '4mb',                //分块上传时，每片的体积
+			auto_start: true,                 //选择文件后自动上传，若关闭需要自己绑定事件触发上传,
+			init: {
+				'BeforeUpload': function (up, file) {
+					// 每个文件上传前,处理相关的事情
+					$(Progress_UpBgImg).fadeIn();
+				},
+				'FileUploaded': function (up, file, info) {
+					// 每个文件上传成功后,处理相关的事情
+					var nowPicURL = QiNiuDomain + parseJSON(info).key;
+					$(ShowPic).attr('src', nowPicURL);
+					$(UpBgImgCon).find('.PICURL').first().val(nowPicURL);
+					$(Progress_UpBgImg).fadeOut();
+				},
+				'Error': function (up, err, errTip) {
+					//上传出错时,处理相关的事情
+					showError();
+					$(Progress_UpBgImg).fadeOut();
+				}
+			}
+		});
+	});
+
+</script>
+
+
+<!--模版-->
+<div class="hidden">
+
+	<!--基本信息管理-->
+	<div id="BasicInfo_TEMP">
+		<div class="ui form">
+			<div class="field">
+				<input class="NAME" type="text" value="{{VoteName}}" placeholder="活动名称">
+			</div>
+			<div class="field">
+				<input type="text" class="DES" placeholder="活动简介" value="{{VoteDes}}">
+			</div>
+			<div class="field">
+				<input type="number" value="{{ShouldVoteCount}}" class="SHOULD_NUM" placeholder="必须选中的人数">
+			</div>
+			<img src="{{DefaultPicUrl}}" class="ui image rounded">
+
+			<div class="field">
+				<input type="text" value="{{DefaultPicUrl}}" class="DEFAULT_PIC_URL" placeholder="当图片URL没填时显示的图片的URL"
+				       onclick="reloadPic(this)">
+			</div>
+
+			<div class="field">
+				<div class="ui button red fluid mini" onclick="clearDB()">清空所有数据</div>
+			</div>
+
+			<!--活动是否停止-->
+			<input type="hidden" class="VOTE_IS_STOP" value="{{VoteIsStop}}">
+
+			<div class="field">
+				{{#if VoteIsStop}}
+				<div class="ui button inverted fluid"
+				     onclick="$(this).parent().prev().val(false);updateBasicInfo();">活动已经暂停,点击开启
+				</div>
+				{{else}}
+				<div class="ui button red inverted fluid"
+				     onclick="$(this).parent().prev().val(true);updateBasicInfo();">活动正在进行,点击暂停
+				</div>
+				{{/if}}
+			</div>
+
+			<div class="field">
+				<div class="ui button black fluid large" onclick="updateBasicInfo()">提交修改</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!--一个竞选者-->
+	<div id="One_TEMP">
+		{{#.}}
+		<div class="column">
+			<div class="ui segment stacked form inverted" id="{{id}}">
+
+				<div class="ui accordion fluid">
+					<div class="active title">
+						<i class="dropdown icon"></i>
+						基本信息
+					</div>
+					<div class="active content">
+
+						<div class="field">
+							<input type="text" placeholder="姓名" value="{{name}}" class="NAME">
+						</div>
+
+						<img src="{{picUrl}}" class="ui image rounded">
+
+						<div class="field">
+							<input type="text" value="{{picUrl}}" onchange="reloadPic(this)" placeholder="图片URL"
+							       class="PICURL">
+						</div>
+
+						<div class="field">
+							<input type="text" placeholder="简介" value="{{des}}" class="DES">
+						</div>
+
+					</div>
+
+					<div class="title">
+						<i class="dropdown icon"></i>
+						其他信息
+					</div>
+					<div class="content">
+						<div class="field">
+							<input type="text" value="{{other1}}" name="other1" placeholder="输入附加参数1" class="OTHER1">
+						</div>
+
+						<div class="field">
+							<input type="text" value="{{other2}}" name="other2" placeholder="输入附加参数2" class="OTHER2">
+						</div>
+
+						<div class="field">
+							<input type="text" value="{{other3}}" name="other3" placeholder="输入附加参数3" class="OTHER3">
+						</div>
+						<div class="field">
+							<div class="ui button fluid red" onclick="removeOne({{id}})">删除本竞选者</div>
+						</div>
+					</div>
+				</div>
+				<div class="ui button fluid blue" onclick="updateOne({{id}})">
+					修改信息
+				</div>
+				<div class="ui error message"></div>
+			</div>
+		</div>
+		{{/.}}
+	</div>
+
+</div>
+
+</body>
+</html>

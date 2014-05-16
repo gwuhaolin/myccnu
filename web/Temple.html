@@ -14,11 +14,27 @@
 	<script src="lib/js/main.js"></script>
 </head>
 <body>
-<script>
-	var url= makeApiUrl('getOne');
-	$.getJSON(url, {id: 1}).done(function (data) {
-		console.log(data);
-	});
-</script>
+
+<div class="ui basic modal hidden" id="modal_bind"><i class="close icon red circular inverted"></i>
+
+	<div class="ui header icon center aligned"><i class="icon user inverted red circular" id="icon_bind"></i><em
+			id="msg_bind"></em></div>
+	<div class="ui form">
+		<div class="two fields">
+			<div class="field">
+				<div class="ui icon input"><input type="text" value="" id="XH_bind" placeholder="你的学号"><i
+						class="user icon"></i></div>
+			</div>
+			<div class="field">
+				<div class="ui icon input"><input type="password" value="" id="MM_bind" placeholder="你的信息门户登入密码"><i
+						class="lock icon"></i></div>
+			</div>
+		</div>
+		<div class="field">
+			<div id="btn_bind" class="ui button blue" onclick="executeAJAXBind()">GO</div>
+		</div>
+	</div>
+</div>
+
 </body>
 </html>

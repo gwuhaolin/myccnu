@@ -1,7 +1,5 @@
 <%@ page import="tool.CCNUPortal" %>
 <%@ page import="tool.Tool" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
 <%--
   Created by Intellij IDEA.
   User: WuHaoLin

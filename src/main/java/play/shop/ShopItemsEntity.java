@@ -1,7 +1,7 @@
 /**
  * Author: WuHaoLin
- * Date: 2014/5/13
- * Time: 11:01
+ * Date: 2014/5/15
+ * Time: 19:46
  */
 
 package play.shop;
@@ -13,12 +13,8 @@ import javax.persistence.*;
 /**
  * Created with Intellij IDEA.
  * User: WuHaoLin
- * Date: 2014/5/13
- * Time: 11:01
- */
-
-/**
- * javaBean 代表一个物品
+ * Date: 2014/5/15
+ * Time: 19:46
  */
 @Entity
 @Table(name = "shopitems", schema = "", catalog = "weixin")
@@ -27,13 +23,9 @@ public class ShopItemsEntity {
 	private String name;
 	private Float price;
 	private String des;
-	private String picUrl;
+	private String picUrl=ManageShop.DEFAULT_PIC_URL;
 	private String date= Tool.time_YYYY_MM_DD_HH_MM_NOW();
-	private Integer tag=0;
-	private String ownerName;
-	private String ownerXh;
-	private String ownerPhone;
-	private String ownerQq;
+	private String xh;
 	private Integer seeCount=0;
 
 	@Id
@@ -97,53 +89,13 @@ public class ShopItemsEntity {
 	}
 
 	@Basic
-	@Column(name = "tag", nullable = true, insertable = true, updatable = true)
-	public Integer getTag() {
-		return tag;
+	@Column(name = "XH", nullable = true, insertable = true, updatable = true, length = 255)
+	public String getXh() {
+		return xh;
 	}
 
-	public void setTag(Integer tag) {
-		this.tag = tag;
-	}
-
-	@Basic
-	@Column(name = "ownerName", nullable = true, insertable = true, updatable = true, length = 255)
-	public String getOwnerName() {
-		return ownerName;
-	}
-
-	public void setOwnerName(String ownerName) {
-		this.ownerName = ownerName;
-	}
-
-	@Basic
-	@Column(name = "ownerXH", nullable = true, insertable = true, updatable = true, length = 255)
-	public String getOwnerXh() {
-		return ownerXh;
-	}
-
-	public void setOwnerXh(String ownerXh) {
-		this.ownerXh = ownerXh;
-	}
-
-	@Basic
-	@Column(name = "ownerPhone", nullable = true, insertable = true, updatable = true, length = 255)
-	public String getOwnerPhone() {
-		return ownerPhone;
-	}
-
-	public void setOwnerPhone(String ownerPhone) {
-		this.ownerPhone = ownerPhone;
-	}
-
-	@Basic
-	@Column(name = "ownerQQ", nullable = true, insertable = true, updatable = true, length = 255)
-	public String getOwnerQq() {
-		return ownerQq;
-	}
-
-	public void setOwnerQq(String ownerQq) {
-		this.ownerQq = ownerQq;
+	public void setXh(String xh) {
+		this.xh = xh;
 	}
 
 	@Basic
@@ -167,14 +119,10 @@ public class ShopItemsEntity {
 		if (date != null ? !date.equals(that.date) : that.date != null) return false;
 		if (des != null ? !des.equals(that.des) : that.des != null) return false;
 		if (name != null ? !name.equals(that.name) : that.name != null) return false;
-		if (ownerName != null ? !ownerName.equals(that.ownerName) : that.ownerName != null) return false;
-		if (ownerPhone != null ? !ownerPhone.equals(that.ownerPhone) : that.ownerPhone != null) return false;
-		if (ownerQq != null ? !ownerQq.equals(that.ownerQq) : that.ownerQq != null) return false;
-		if (ownerXh != null ? !ownerXh.equals(that.ownerXh) : that.ownerXh != null) return false;
 		if (picUrl != null ? !picUrl.equals(that.picUrl) : that.picUrl != null) return false;
 		if (price != null ? !price.equals(that.price) : that.price != null) return false;
 		if (seeCount != null ? !seeCount.equals(that.seeCount) : that.seeCount != null) return false;
-		if (tag != null ? !tag.equals(that.tag) : that.tag != null) return false;
+		if (xh != null ? !xh.equals(that.xh) : that.xh != null) return false;
 
 		return true;
 	}
@@ -187,11 +135,7 @@ public class ShopItemsEntity {
 		result = 31 * result + (des != null ? des.hashCode() : 0);
 		result = 31 * result + (picUrl != null ? picUrl.hashCode() : 0);
 		result = 31 * result + (date != null ? date.hashCode() : 0);
-		result = 31 * result + (tag != null ? tag.hashCode() : 0);
-		result = 31 * result + (ownerName != null ? ownerName.hashCode() : 0);
-		result = 31 * result + (ownerXh != null ? ownerXh.hashCode() : 0);
-		result = 31 * result + (ownerPhone != null ? ownerPhone.hashCode() : 0);
-		result = 31 * result + (ownerQq != null ? ownerQq.hashCode() : 0);
+		result = 31 * result + (xh != null ? xh.hashCode() : 0);
 		result = 31 * result + (seeCount != null ? seeCount.hashCode() : 0);
 		return result;
 	}

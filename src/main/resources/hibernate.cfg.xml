@@ -70,12 +70,12 @@
 		<mapping resource="MyclassroomEntity.hbm.xml" class="study.classroom.MyclassroomEntity"/>
 		<!--二手商城-->
 		<mapping resource="ShopitemsEntity.hbm.xml" class="play.shop.ShopItemsEntity"/>
-		<mapping resource="ShoptagsEntity.hbm.xml" class="play.shop.ShopTagsEntity"/>
 		<!--学生信息-->
-		<mapping resource="StudentbasicinfoEntity.hbm.xml"
-		         class="tool.studentInfo.StudentBasicInfoEntity"/>
+		<mapping resource="StudentbasicinfoEntity.hbm.xml" class="tool.studentInfo.StudentBasicInfoEntity"/>
 		<mapping class="tool.studentInfo.StudentInfoEntity" resource="StudentinfoEntity.hbm.xml"/>
-
+		<!--投票-->
+		<mapping resource="MycampaignerEntity.hbm.xml" class="play.vote.MyCampaignerEntity"/>
+		<mapping resource="MyvoteEntity.hbm.xml" class="play.vote.MyVoteEntity"/>
 	</session-factory>
 
 </hibernate-configuration>

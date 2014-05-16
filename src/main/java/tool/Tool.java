@@ -1,8 +1,9 @@
 package tool;
 
-import tool.studentInfo.MainEntity;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import tool.studentInfo.ManageStudentInfo;
+import tool.studentInfo.StudentInfoEntity;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +22,7 @@ import java.util.Date;
  */
 public class Tool {
 	private static Calendar calendar = Calendar.getInstance();
-	private static int Week_NOW=calendar.get(Calendar.DAY_OF_WEEK);
+	private static int Week_NOW = calendar.get(Calendar.DAY_OF_WEEK);
 	private static final int CookiesStoreTime = 3600 * 24 * 30 * 12;//12个月
 	public static final SimpleDateFormat DateFormat_YYYY_MM_DD = new SimpleDateFormat("yyyy-MM-dd");
 	private static String nowDate = DateFormat_YYYY_MM_DD.format(new Date(System.currentTimeMillis()));
@@ -30,7 +31,7 @@ public class Tool {
 
 	static {
 		calendar.setTime(new Date(System.currentTimeMillis()));
-		Week_NOW=calendar.get(Calendar.DAY_OF_WEEK);
+		Week_NOW = calendar.get(Calendar.DAY_OF_WEEK);
 	}
 
 	/**
@@ -44,7 +45,7 @@ public class Tool {
 
 		//今天是星期几
 		calendar.setTime(new Date(System.currentTimeMillis()));
-		Week_NOW=calendar.get(Calendar.DAY_OF_WEEK);
+		Week_NOW = calendar.get(Calendar.DAY_OF_WEEK);
 	}
 
 	/**
@@ -77,9 +78,10 @@ public class Tool {
 
 	/**
 	 * 获得今天是星期几
+	 *
 	 * @return
 	 */
-	public static int week_NOW(){
+	public static int week_NOW() {
 		return Week_NOW;
 	}
 
@@ -131,9 +133,9 @@ public class Tool {
 	public static boolean XHMMisTrue(String XHMM[]) {
 		try {//首先去数据库中看有没有
 			Session session = HibernateUtil.getSession();
-			Query query = session.createQuery("from MainEntity where studentId=?");
+			Query query = session.createQuery("from StudentInfoEntity where xh=?");
 			query.setString(0, XHMM[0]);
-			MainEntity one = (MainEntity) query.uniqueResult();
+			StudentInfoEntity one = (StudentInfoEntity) query.uniqueResult();
 			HibernateUtil.closeSession(session);
 			String password = one.getPassword();
 			if (password != null) {
@@ -211,25 +213,19 @@ public class Tool {
 	}
 
 	/**
+	 * 先从教务处下载信息
 	 * 学号密码保存到数据库中
 	 *
 	 * @param XH
 	 * @param MM
 	 */
 	public static void setXHMMtoSQL(String XH, String MM) {
-		Session session = HibernateUtil.getSession();
-		Query query = session.createQuery("from MainEntity where studentId=?");
-		query.setString(0, XH);
-		try {//如果数据库中已经存在
-			MainEntity mainEntity = (MainEntity) query.uniqueResult();
-			mainEntity.setPassword(MM);
-			session.update(mainEntity);
-		} catch (Exception e) {//数据库中不存在该记录,插入新的
-			MainEntity mainEntity = new MainEntity(XH);
-			mainEntity.setPassword(MM);
-			HibernateUtil.addEntity(mainEntity);
+		StudentInfoEntity studentInfoEntity = ManageStudentInfo.DownloadFromJWC(XH, MM);
+		if (studentInfoEntity==null){
+			studentInfoEntity=new StudentInfoEntity(XH);
+			studentInfoEntity.setPassword(MM);
 		}
-		HibernateUtil.closeSession(session);
+		HibernateUtil.addOrUpdateEntity(studentInfoEntity);
 	}
 
 	/**
@@ -325,7 +321,7 @@ public class Tool {
 						"var begin = Number($(btn).attr('begin'));\n" +
 						"begin += " + ChangeCount + ";\n" +
 						"$.ajax({\n" +
-						"type: 'POST',\n"+
+						"type: 'POST',\n" +
 						"url: '" + targetURL + "',\n" +
 						"data: { begin: begin" + datas + "},\n" +
 						"contentType: \"application/x-www-form-urlencoded; charset=utf-8\"\n" +
@@ -351,17 +347,17 @@ public class Tool {
 	 * @param ChangeCount **分页查询时每次取出多少个
 	 * @param targetURL   **目标URL
 	 * @param datas       **传入的参数   如果没有就传入 "" **如果有先加一个,然后dataName:dateValue,dataName:dateValue
-	 * @param javastript 如果这次执行加载更多信息成功后执行会  javastript语句
+	 * @param javastript  如果这次执行加载更多信息成功后执行会  javastript语句
 	 * @return
 	 */
-	public static String makeAJAXLoadMoreJS_appendJS(int ChangeCount, String targetURL, String datas,String javastript) {
+	public static String makeAJAXLoadMoreJS_appendJS(int ChangeCount, String targetURL, String datas, String javastript) {
 		StringBuilder re = new StringBuilder(
 				"function ajaxMore(btn) {\n" +
 						"$(btn).addClass('loading');\n" +
 						"var begin = Number($(btn).attr('begin'));\n" +
 						"begin += " + ChangeCount + ";\n" +
 						"$.ajax({\n" +
-						"type: 'POST',\n"+
+						"type: 'POST',\n" +
 						"url: '" + targetURL + "',\n" +
 						"data: { begin: begin" + datas + "},\n" +
 						"contentType: \"application/x-www-form-urlencoded; charset=utf-8\"\n" +
@@ -374,7 +370,7 @@ public class Tool {
 						"$(btn).before(data);\n" +
 						"$(btn).text(\"更多\");\n" +
 						"$(btn).attr('begin', begin);\n" +
-						javastript+"\n"+
+						javastript + "\n" +
 						"}\n" +
 						"});\n" +
 						"}"
@@ -384,14 +380,15 @@ public class Tool {
 
 	/**
 	 * 读取http请求中的Cookies的值
+	 *
 	 * @param request
 	 * @param CookiesName Cookies的名字
 	 * @return 如果不存在该名字的Cookies就返回null
 	 */
-	public static String getCookieValue(HttpServletRequest request,String CookiesName){
-		Cookie cookies[]= request.getCookies();
-		for (Cookie one:cookies){
-			if (one.getName().equals(CookiesName)){
+	public static String getCookieValue(HttpServletRequest request, String CookiesName) {
+		Cookie cookies[] = request.getCookies();
+		for (Cookie one : cookies) {
+			if (one.getName().equals(CookiesName)) {
 				return one.getValue();
 			}
 		}
@@ -400,24 +397,26 @@ public class Tool {
 
 	/**
 	 * 向http中写入一个Cookies
+	 *
 	 * @param response
 	 * @param cookiesName
 	 * @param cookiesValue
 	 */
-	public static void writeCookies(HttpServletResponse response,String cookiesName,String cookiesValue){
-		response.addCookie(new Cookie(cookiesName,cookiesValue));
+	public static void writeCookies(HttpServletResponse response, String cookiesName, String cookiesValue) {
+		response.addCookie(new Cookie(cookiesName, cookiesValue));
 	}
 
 	/**
 	 * 把很长的文字折叠起来,通过点击 更多 按钮显示出剩下的文字
-	 * @param orgText 要被处理的文字
+	 *
+	 * @param orgText   要被处理的文字
 	 * @param maxLength 最多被显示出来的文字的数量
 	 * @return 如果 最多被显示出来的文字的数量 < 要被处理的文字的长度 就返回原文字
 	 */
-	public static String limitTextByJSShowMore(String orgText,int maxLength){
-		if (maxLength<orgText.length()){
-			return orgText.substring(0,maxLength)+"\t\t<button class=\"ui button mini circular\" onclick='$(this).next().fadeIn();$(this).remove();'>more</button><span style=\"display: none\">"+orgText.substring(maxLength,orgText.length())+"</span>\n";
-		}else {
+	public static String limitTextByJSShowMore(String orgText, int maxLength) {
+		if (maxLength < orgText.length()) {
+			return orgText.substring(0, maxLength) + "\t\t<button class=\"ui button mini circular\" onclick='$(this).next().fadeIn();$(this).remove();'>more</button><span style=\"display: none\">" + orgText.substring(maxLength, orgText.length()) + "</span>\n";
+		} else {
 			return orgText;
 		}
 	}

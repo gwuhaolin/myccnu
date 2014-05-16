@@ -24,20 +24,8 @@
 		<property name="date">
 			<column name="date" sql-type="varchar"/>
 		</property>
-		<property name="tag">
-			<column name="tag" sql-type="int"/>
-		</property>
-		<property name="ownerName">
-			<column name="ownerName" sql-type="varchar"/>
-		</property>
-		<property name="ownerXh">
-			<column name="ownerXH" sql-type="varchar"/>
-		</property>
-		<property name="ownerPhone">
-			<column name="ownerPhone" sql-type="varchar"/>
-		</property>
-		<property name="ownerQq">
-			<column name="ownerQQ" sql-type="varchar"/>
+		<property name="xh">
+			<column name="XH" sql-type="varchar"/>
 		</property>
 		<property name="seeCount">
 			<column name="seeCount" sql-type="int"/>
