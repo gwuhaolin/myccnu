@@ -80,9 +80,8 @@ public class MyShuDongEntity {
 		if (seeCount != that.seeCount) return false;
 		if (content != null ? !content.equals(that.content) : that.content != null) return false;
 		if (date != null ? !date.equals(that.date) : that.date != null) return false;
-		if (xh != null ? !xh.equals(that.xh) : that.xh != null) return false;
+		return !(xh != null ? !xh.equals(that.xh) : that.xh != null);
 
-		return true;
 	}
 
 	@Override

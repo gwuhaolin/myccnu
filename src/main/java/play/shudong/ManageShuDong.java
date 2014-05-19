@@ -1,8 +1,9 @@
 package play.shudong;
 
-import tool.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import tool.HibernateUtil;
+import tool.R;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -19,7 +20,6 @@ public class ManageShuDong {
 	public static final String CMD_Delete = "delete";//删除树洞
 	public static final String CMD_Add = "add";//添加树洞
 	public static final String PASSWORD = "SHUDONG";//密码
-	public static final int ChangeCount = 5;
 
 	/**
 	 * 判断密码是否正确
@@ -62,7 +62,7 @@ public class ManageShuDong {
 		Query query = session.createQuery("from MyShuDongEntity where xh=? order by id desc ");
 		query.setString(0, XH);
 		query.setFirstResult(from);
-		query.setMaxResults(ChangeCount);
+		query.setMaxResults(R.ChangeCount);
 		List<MyShuDongEntity> re = query.list();
 		HibernateUtil.closeSession(session);
 		return re;
@@ -79,7 +79,7 @@ public class ManageShuDong {
 		Session session = HibernateUtil.getSession();
 		Query query = session.createQuery("from MyShuDongEntity order by id desc ");
 		query.setFirstResult(from);
-		query.setMaxResults(ChangeCount);
+		query.setMaxResults(R.ChangeCount);
 		List<MyShuDongEntity> re = query.list();
 		HibernateUtil.closeSession(session);
 		return re;
@@ -96,7 +96,7 @@ public class ManageShuDong {
 		Session session = HibernateUtil.getSession();
 		Query query = session.createQuery("from MyShuDongEntity order by seeCount desc ");
 		query.setFirstResult(from);
-		query.setMaxResults(ChangeCount);
+		query.setMaxResults(R.ChangeCount);
 		List<MyShuDongEntity> re = query.list();
 		HibernateUtil.closeSession(session);
 		return re;

@@ -1,6 +1,6 @@
-<%--登入一卡通后进入的页面--%>
 <%@ page import="life.YKT.ManageYKT" %>
 <%@ page import="tool.Tool" %>
+<%--登入一卡通后进入的页面--%>
 <%--
   Created by Intellij IDEA.
   User: WuHaoLin
@@ -14,11 +14,11 @@
 	<meta charset="utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="/lib/css/semantic.min.css">
-	<link rel="stylesheet" type="text/css" href="/lib/css/main.css">
-	<script src="/lib/js/jquery-1.11.2.min.js"></script>
-	<script src="/lib/js/semantic.min.js"></script>
-	<script src="/lib/js/main.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../lib/css/semantic.min.css">
+	<link rel="stylesheet" type="text/css" href="../../lib/css/main.css">
+	<script src="../../lib/js/jquery-1.11.2.min.js"></script>
+	<script src="../../lib/js/semantic.min.js"></script>
+	<script src="../../lib/js/main.js"></script>
 	<title>我的一卡通</title>
 </head>
 <body>
@@ -58,6 +58,16 @@
 			</a>
 
 			<div class="ui label circular green">补助明细</div>
+		</div>
+	</div>
+
+	<div class="column">
+		<div class="ui header icon center aligned huge">
+			<a href="myKaoQin.jsp">
+				<i class="icon tags huge circular inverted black"></i>
+			</a>
+
+			<div class="ui label circular black">刷卡考勤</div>
 		</div>
 	</div>
 

@@ -66,7 +66,7 @@
 
 </div>
 <script>
-	<%=Tool.makeAJAXLoadMoreJS(ManageJob.ChangeCount,"GetAJAXServlet.jsp",",target:'"+ManageJob.TARGET_PartTimeJob+"'")%>
+	<%=Tool.makeAJAXLoadMoreJS("GetAJAXServlet.jsp",",target:'"+ManageJob.TARGET_PartTimeJob+"'")%>
 </script>
 <jsp:include page="searchBox.jsp"/>
 

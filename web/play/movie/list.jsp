@@ -43,7 +43,7 @@
 <a href="iWantMovie.jsp" style="position: fixed;bottom: 5px;left: 5px" class="ui button red inverted icon"><i class="icon heart"></i></a>
 
 <script>
-	<%=Tool.makeAJAXLoadMoreJS(ManageMovie.ChangeCount,"GetMovieForAJAX.jsp",",target:'"+target+"'")%>
+	<%=Tool.makeAJAXLoadMoreJS("GetMovieForAJAX.jsp",",target:'"+target+"'")%>
 </script>
 </body>
 </html>

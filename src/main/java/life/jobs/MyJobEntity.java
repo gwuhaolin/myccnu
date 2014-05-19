@@ -126,9 +126,8 @@ public class MyJobEntity {
 		if (money != null ? !money.equals(that.money) : that.money != null) return false;
 		if (name != null ? !name.equals(that.name) : that.name != null) return false;
 		if (otherInfo != null ? !otherInfo.equals(that.otherInfo) : that.otherInfo != null) return false;
-		if (target != null ? !target.equals(that.target) : that.target != null) return false;
+		return !(target != null ? !target.equals(that.target) : that.target != null);
 
-		return true;
 	}
 
 	@Override

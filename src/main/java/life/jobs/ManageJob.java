@@ -1,13 +1,14 @@
 package life.jobs;
 
-import tool.AutoUpdate;
-import tool.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import tool.AutoUpdate;
+import tool.HibernateUtil;
+import tool.R;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -26,7 +27,6 @@ public class ManageJob {
 	public static final String CMD_Change="change";
 	public static final String CMD_Add="add";
 	public static final String CMD_Delete="delete";
-	public static final int ChangeCount =5;
 
 	static {
 		update();
@@ -90,11 +90,7 @@ public class ManageJob {
 //		query.setString(4,jobEntity.getJobTime());
 		int reSize= query.list().size();
 		HibernateUtil.closeSession(session);
-		if (reSize>=1){
-			return true;
-		}else {
-			return false;
-		}
+		return reSize >= 1;
 	}
 
 	/**
@@ -125,7 +121,7 @@ public class ManageJob {
 		query.setString(0, "%" + want + "%");
 		query.setString(1,"%"+want+"%");
 		query.setFirstResult(from);
-		query.setMaxResults(ChangeCount);
+		query.setMaxResults(R.ChangeCount);
 		List<MyJobEntity> re = query.list();
 		HibernateUtil.closeSession(session);
 		return re;
@@ -143,7 +139,7 @@ public class ManageJob {
 		Query query = session.createQuery("from MyJobEntity where target=? order by id desc ");
 		query.setInteger(0,target);
 		query.setFirstResult(from);
-		query.setMaxResults(ChangeCount);
+		query.setMaxResults(R.ChangeCount);
 		List<MyJobEntity> re = query.list();
 		HibernateUtil.closeSession(session);
 		return re;
@@ -161,7 +157,7 @@ public class ManageJob {
 		Query query = session.createQuery("from MyJobEntity where target=? order by id desc ");
 		query.setInteger(0,target);
 		query.setFirstResult(from);
-		query.setMaxResults(ChangeCount);
+		query.setMaxResults(R.ChangeCount);
 		List<MyJobEntity> re = query.list();
 		HibernateUtil.closeSession(session);
 		return re;

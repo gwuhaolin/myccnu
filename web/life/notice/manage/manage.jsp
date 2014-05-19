@@ -81,7 +81,7 @@
 </div>
 
 <script>
-	<%=Tool.makeAJAXLoadMoreJS(ManageNotice.ChangeCount,"GetNoticeManageFormForAJAX.jsp","")%>
+	<%=Tool.makeAJAXLoadMoreJS("GetNoticeManageFormForAJAX.jsp","")%>
 </script>
 
 </body>

@@ -1,6 +1,6 @@
 <%@ page import="study.classroom.ManageClassroom" %>
 <%@ page import="java.util.List" %>
-<%@ page import="study.classroom.MyclassroomEntity" %>
+<%@ page import="study.classroom.MyClassroomEntity" %>
 <%--
   Created by Intellij IDEA.
   User: WuHaoLin
@@ -35,8 +35,8 @@
 		</tr>
 		</thead>
 		<%
-			List<MyclassroomEntity> all = ManageClassroom.all();
-			for (MyclassroomEntity one : all) {
+			List<MyClassroomEntity> all = ManageClassroom.all();
+			for (MyClassroomEntity one : all) {
 		%>
 		<tr>
 			<td><%=one.getJiHaoLou()%>

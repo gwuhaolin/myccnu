@@ -104,9 +104,8 @@ public class MyNoticeEntity {
 		if (fromSite != null ? !fromSite.equals(that.fromSite) : that.fromSite != null) return false;
 		if (isOk != null ? !isOk.equals(that.isOk) : that.isOk != null) return false;
 		if (orgUrl != null ? !orgUrl.equals(that.orgUrl) : that.orgUrl != null) return false;
-		if (title != null ? !title.equals(that.title) : that.title != null) return false;
+		return !(title != null ? !title.equals(that.title) : that.title != null);
 
-		return true;
 	}
 
 	@Override

@@ -67,9 +67,10 @@
 		<!--CET-->
 		<mapping resource="Cet46Entity.hbm.xml" class="study.CET.Cet46Entity"/>
 		<!--教室-->
-		<mapping resource="MyclassroomEntity.hbm.xml" class="study.classroom.MyclassroomEntity"/>
+		<mapping resource="MyclassroomEntity.hbm.xml" class="study.classroom.MyClassroomEntity"/>
 		<!--二手商城-->
 		<mapping resource="ShopitemsEntity.hbm.xml" class="play.shop.ShopItemsEntity"/>
+		<mapping resource="ShopsearchtagEntity.hbm.xml" class="play.shop.ShopSearchTagEntity"/>
 		<!--学生信息-->
 		<mapping resource="StudentbasicinfoEntity.hbm.xml" class="tool.studentInfo.StudentBasicInfoEntity"/>
 		<mapping class="tool.studentInfo.StudentInfoEntity" resource="StudentinfoEntity.hbm.xml"/>

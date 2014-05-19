@@ -7,13 +7,13 @@ package life.YKT;
  * Time: 下午5:43
  */
 
-import tool.CCNUPortal;
-import tool.R;
-import tool.Tool;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import tool.CCNUPortal;
+import tool.R;
+import tool.Tool;
 
 import java.io.IOException;
 import java.util.Date;
@@ -79,7 +79,7 @@ public class ManageYKT {
 		try {
 			connection.cookies(getCookies(XH,MM));
 			connection.data("start_date", getBeforeDate(4));//起始时间
-			connection.data("end_date",Tool.time_YYYY_MM_DD());//结束时间
+			connection.data("end_date", Tool.time_YYYY_MM_DD());//结束时间
 			connection.timeout(R.ConnectTimeout*10);
 			Document document= connection.post();
 			Elements trs= document.getElementsByClass("baseTable").first().getElementsByTag("tr");
@@ -154,6 +154,46 @@ public class ManageYKT {
 	}
 
 	/**
+	 * 获得最近一个星期内的考勤
+	 * @param XH
+	 * @param MM
+	 * @return
+	 * @throws Exception
+	 */
+	public static List<OneChange> getKaoQin(String XH,String MM) throws Exception{
+		Connection connection=Jsoup.connect("http://192.168.44.7:10000/sisms/index.php/person/timer");
+		try {
+			connection.cookies(getCookies(XH,MM));
+			String curDate= Tool.time_YYYY_MM_DD();
+			connection.data("start_date",Tool.DateFormat_YYYY_MM_DD.format(new Date(System.currentTimeMillis()-604800000)));//起始时间,一周前
+			connection.data("end_date",curDate);//结束时间
+			connection.timeout(R.ConnectTimeout*10);
+			Document document= connection.post();
+			Elements trs= document.getElementsByClass("baseTable").first().getElementsByTag("tr");
+			List<OneChange> re=new LinkedList<OneChange>();
+			//prase
+			for (int i=1;i<trs.size();i++){
+				try {
+					Elements tds=trs.get(i).getElementsByTag("td");
+					String date=tds.get(1).text();
+					String location=tds.get(2).text();
+					OneChange oneChange=new OneChange();
+					oneChange.setTime(date);
+					oneChange.setLocation(location);
+					re.add(oneChange);
+				}catch (Exception e){
+//					e.printStackTrace();
+					continue;
+				}
+			}
+			return re;
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new Exception("学校一卡通服务器繁忙");
+		}
+	}
+
+	/**
 	 * 挂失解挂
 	 * TODO
 	 * @param XH
@@ -186,7 +226,7 @@ public class ManageYKT {
 	 * @return
 	 */
 	public static Map<String,String> getCookies(String XH,String MM) throws Exception{
-		Map<String,String> CCNUPORATLcookies= CCNUPortal.getCookie(XH,MM);
+		Map<String,String> CCNUPORATLcookies= CCNUPortal.getCookie(XH, MM);
 		Connection connection= Jsoup.connect("http://portal.ccnu.edu.cn/roamingAction.do?appId=ECARD");
 		connection.cookies(CCNUPORATLcookies);
 		connection.timeout(R.ConnectTimeout);

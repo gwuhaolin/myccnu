@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-	<class name="study.classroom.MyclassroomEntity" table="myclassroom" schema="" catalog="weixin">
+	<class name="study.classroom.MyClassroomEntity" table="myclassroom" schema="" catalog="weixin">
 		<composite-id mapped="true" class="study.classroom.MyclassroomEntityPK">
 			<key-property name="jiHaoLou">
 				<column name="JiHaoLou" sql-type="varchar" length="10" not-null="true"/>

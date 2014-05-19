@@ -22,7 +22,7 @@
 	<script src="/lib/js/main.js"></script>
 	<title>招领平台搜索结果</title>
 	<script>
-		var changeCount = Number(<%=ManageLose.ChangeCount%>);
+		var changeCount = Number(<%=ManageLose.R.ChangeCount%>);
 		<%--ajax加载更多--%>
 		function ajaxMore(btn) {
 			$(btn).addClass('active');

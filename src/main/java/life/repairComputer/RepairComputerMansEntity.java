@@ -102,9 +102,8 @@ public class RepairComputerMansEntity {
 		if (name != null ? !name.equals(that.name) : that.name != null) return false;
 		if (org != null ? !org.equals(that.org) : that.org != null) return false;
 		if (phone != null ? !phone.equals(that.phone) : that.phone != null) return false;
-		if (qq != null ? !qq.equals(that.qq) : that.qq != null) return false;
+		return !(qq != null ? !qq.equals(that.qq) : that.qq != null);
 
-		return true;
 	}
 
 	@Override

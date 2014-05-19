@@ -1,8 +1,9 @@
 package life.lose;
 
-import tool.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import tool.HibernateUtil;
+import tool.R;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,7 +15,6 @@ import java.util.List;
  * Time: 7:29 PM
  */
 public class ManageLose {
-	public static final int ChangeCount = 5;//变化数
 	public static final byte TYPE_Lose = 1;//掉了东西
 	public static final byte TYPE_Update = 2;//捡到东西
 	public static final byte STATE_Finding = 1;//正在寻找
@@ -30,7 +30,7 @@ public class ManageLose {
 		Query query = session.createQuery("from MyLoseEntity where myType=? order by myState asc ,id desc ");
 		query.setByte(0, type);
 		query.setFirstResult(from);
-		query.setMaxResults(ChangeCount);
+		query.setMaxResults(R.ChangeCount);
 		List<MyLoseEntity> re=query.list();
 		HibernateUtil.closeSession(session);
 		return re;
@@ -64,7 +64,7 @@ public class ManageLose {
 		query.setString(0,"%"+want+"%");
 		query.setByte(1,type);
 		query.setFirstResult(from);
-		query.setMaxResults(ChangeCount);
+		query.setMaxResults(R.ChangeCount);
 		List<MyLoseEntity> re=query.list();
 		HibernateUtil.closeSession(session);
 		return re;

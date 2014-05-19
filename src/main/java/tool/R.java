@@ -17,4 +17,9 @@ public class R {
 	 * RESTful API 的JSONP时的callback函数名称
 	 */
 	public static final String JSONP_CALLBACK="callback";
+
+	/**
+	 * 分页浏览时每次出现几条
+	 */
+	public static final int ChangeCount = 5;
 }

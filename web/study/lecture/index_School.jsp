@@ -1,4 +1,5 @@
 <%@ page import="study.lecture.ManageEvent" %>
+<%@ page import="tool.R" %>
 <%@ page import="tool.Tool" %>
 <%--通知列表--%>
 <%--
@@ -38,7 +39,7 @@
 </div>
 <script>
 	<%--ajax加载更多--%>
-	<%=Tool.makeAJAXLoadMoreJS(ManageEvent.ChangeCount,"GetAJAXServlet.jsp",", target:"+ManageEvent.TARGET_School)%>
+	<%=Tool.makeAJAXLoadMoreJS("GetAJAXServlet.jsp",", target:"+ManageEvent.TARGET_School)%>
 
 	closeWeiXinBtn();
 

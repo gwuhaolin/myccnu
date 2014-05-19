@@ -1,8 +1,9 @@
 package play.movie;
 
-import tool.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import tool.HibernateUtil;
+import tool.R;
 
 import java.util.List;
 
@@ -23,7 +24,6 @@ public class ManageMovie {
 	public static final String Cmd_add = "add";
 	public static final String Cmd_change = "change";
 	public static final String Cmd_delete="delete";
-	public static final int ChangeCount=5;
 
 	/**
 	 * 向数据库中添加一电影
@@ -86,7 +86,7 @@ public class ManageMovie {
 		Query query= session.createQuery("from MyMovieEntity as movie where movie.target=? order by id desc ");
 		query.setString(0,target);
 		query.setFirstResult(from);
-		query.setMaxResults(ChangeCount);
+		query.setMaxResults(R.ChangeCount);
 		List<MyMovieEntity> re=query.list();
 		HibernateUtil.closeSession(session);
 		return re;
@@ -119,23 +119,11 @@ public class ManageMovie {
 	 */
 	public static boolean ManagePasswordisOk(String password, String target){
 		if (target.equalsIgnoreCase(Target_HDQNJC)){
-			if (password.equals(Password_HDQNJC)){
-				return true;
-			}else {
-				return false;
-			}
+			return password.equals(Password_HDQNJC);
 		}else if (target.equalsIgnoreCase(Target_LTDYC)){
-			if (password.equals(Password_LTDYC)){
-				return true;
-			}else {
-				return false;
-			}
+			return password.equals(Password_LTDYC);
 		}else if (target.equals(Target_iWANT)){
-			if (password.equals(Password_iWANT)){
-				return true;
-			}else {
-				return false;
-			}
+			return password.equals(Password_iWANT);
 		}else {
 			return false;
 		}

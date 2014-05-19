@@ -120,9 +120,8 @@ public class StudentBasicInfoEntity {
 		if (phoneNumber != null ? !phoneNumber.equals(that.phoneNumber) : that.phoneNumber != null) return false;
 		if (qq != null ? !qq.equals(that.qq) : that.qq != null) return false;
 		if (sex != null ? !sex.equals(that.sex) : that.sex != null) return false;
-		if (xh != null ? !xh.equals(that.xh) : that.xh != null) return false;
+		return !(xh != null ? !xh.equals(that.xh) : that.xh != null);
 
-		return true;
 	}
 
 	@Override

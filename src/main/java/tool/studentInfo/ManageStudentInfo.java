@@ -191,7 +191,6 @@ public class ManageStudentInfo {
 						String value =trim(tds.get(i).text());
 						method.invoke(reOne, value);
 					}catch (Exception e){
-						continue;
 					}
 				}
 			}

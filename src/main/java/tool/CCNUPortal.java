@@ -44,11 +44,7 @@ public class CCNUPortal {
 		connection.data("userPass",MM);
 		try {
 			Document document=connection.post();
-			if (document.toString().contains("错误")){
-				return false;
-			}else {
-				return true;
-			}
+			return !document.toString().contains("错误");
 //			System.out.println(document);
 		} catch (IOException e) {
 //			e.printStackTrace();

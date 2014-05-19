@@ -123,9 +123,8 @@ public class MyCampaignerEntity {
 		if (other2 != null ? !other2.equals(that.other2) : that.other2 != null) return false;
 		if (other3 != null ? !other3.equals(that.other3) : that.other3 != null) return false;
 		if (picUrl != null ? !picUrl.equals(that.picUrl) : that.picUrl != null) return false;
-		if (voteSum != null ? !voteSum.equals(that.voteSum) : that.voteSum != null) return false;
+		return !(voteSum != null ? !voteSum.equals(that.voteSum) : that.voteSum != null);
 
-		return true;
 	}
 
 	@Override

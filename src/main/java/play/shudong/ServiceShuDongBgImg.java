@@ -7,11 +7,7 @@
 package play.shudong;
 
 import org.glassfish.jersey.server.JSONP;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import tool.HibernateUtil;
 import tool.R;
-import tool.ServiceQiNiu;
 
 import javax.ws.rs.*;
 
@@ -83,17 +79,7 @@ public class ServiceShuDongBgImg {
 	@GET
 	@Path("/deleteOne")
 	public boolean deleteOne(@QueryParam("id") int id) {
-		if(id<0){
-			return false;
-		}
-		Session session = HibernateUtil.getSession();
-		Query query = session.createQuery("from MyShuDongBgImgEntity where id=?");
-		query.setInteger(0, id);
-		MyShuDongBgImgEntity myShuDongEntity = (MyShuDongBgImgEntity) query.uniqueResult();
-		session.delete(myShuDongEntity);
-		ServiceQiNiu.removeOne(ServiceQiNiu.ShuDong_QINIU_BUCKET, myShuDongEntity.getPicUrl());
-		HibernateUtil.closeSession(session);
-		return true;
+		return ManageShuDongBgImg.remove(id);
 	}
 
 	@JSONP(queryParam = R.JSONP_CALLBACK)

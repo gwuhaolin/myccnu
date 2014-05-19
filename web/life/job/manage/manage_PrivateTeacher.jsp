@@ -88,14 +88,14 @@
 	<jsp:include page="GetJobsManageFormForAJAX.jsp">
 		<jsp:param name="target" value="<%=ManageJob.TARGET_PrivateTeacher%>"/>
 		<jsp:param name="begin" value="0"/>
-		<jsp:param name="size" value="<%=ManageJob.ChangeCount%>"/>
+		<jsp:param name="size" value="<%=ManageJob.R.ChangeCount%>"/>
 	</jsp:include>
 	<%--ajax 加载更多--%>
 	<button class="form-control btn-info input-lg" onclick="ajaxMore(this)" begin="0">更多</button>
 	<br>
 </div>
 <script>
-	<%=Tool.makeAJAXLoadMoreJS(ManageJob.ChangeCount,"GetJobsManageFormForAJAX.jsp",", target:"+ManageJob.TARGET_PrivateTeacher)%>
+	<%=Tool.makeAJAXLoadMoreJS(ManageJob.R.ChangeCount,"GetJobsManageFormForAJAX.jsp",", target:"+ManageJob.TARGET_PrivateTeacher)%>
 </script>
 </body>
 </html>

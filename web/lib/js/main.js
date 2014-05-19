@@ -103,6 +103,7 @@ function makeApiUrl(path) {
 	 * @type {string}
 	 */
 	var HostURL = "http://localhost:8080/api/";
+//	var HostURL = "http://my.ccnuyouth.com/api/";
 
 	/**
 	 * 使用jsonp方法跨域获得JSON的回调函数

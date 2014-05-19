@@ -135,9 +135,8 @@ public class Cet46Entity {
 		if (name != null ? !name.equals(that.name) : that.name != null) return false;
 		if (reading != null ? !reading.equals(that.reading) : that.reading != null) return false;
 		if (sumScore != null ? !sumScore.equals(that.sumScore) : that.sumScore != null) return false;
-		if (xh != null ? !xh.equals(that.xh) : that.xh != null) return false;
+		return !(xh != null ? !xh.equals(that.xh) : that.xh != null);
 
-		return true;
 	}
 
 	@Override
@@ -154,11 +153,7 @@ public class Cet46Entity {
 	}
 
 	public boolean isPass() {
-		if (this.sumScore >= 425) {
-			return true;
-		} else {
-			return false;
-		}
+		return this.sumScore >= 425;
 	}
 
 	public String sayToYou() {

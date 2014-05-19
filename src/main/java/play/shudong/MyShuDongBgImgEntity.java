@@ -110,9 +110,8 @@ public class MyShuDongBgImgEntity {
 		if (des != null ? !des.equals(that.des) : that.des != null) return false;
 		if (likeCount != null ? !likeCount.equals(that.likeCount) : that.likeCount != null) return false;
 		if (picUrl != null ? !picUrl.equals(that.picUrl) : that.picUrl != null) return false;
-		if (xh != null ? !xh.equals(that.xh) : that.xh != null) return false;
+		return !(xh != null ? !xh.equals(that.xh) : that.xh != null);
 
-		return true;
 	}
 
 	@Override

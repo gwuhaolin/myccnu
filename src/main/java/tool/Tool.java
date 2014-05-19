@@ -116,11 +116,7 @@ public class Tool {
 	 * @return
 	 */
 	public static boolean XHMMisOK(String XHMM[]) {
-		if (XHMM.length == 2 && XHMM[0] != null && XHMM[0].length() > 0 && XHMM[1] != null && XHMM[1].length() > 0) {
-			return true;
-		} else {
-			return false;
-		}
+		return XHMM.length == 2 && XHMM[0] != null && XHMM[0].length() > 0 && XHMM[1] != null && XHMM[1].length() > 0;
 	}
 
 	/**
@@ -314,12 +310,12 @@ public class Tool {
 	 * @param datas       **传入的参数   如果没有就传入 "" **如果有先加一个,然后dataName:dateValue,dataName:dateValue
 	 * @return
 	 */
-	public static String makeAJAXLoadMoreJS(int ChangeCount, String targetURL, String datas) {
+	public static String makeAJAXLoadMoreJS(String targetURL, String datas) {
 		StringBuilder re = new StringBuilder(
 				"function ajaxMore(btn) {\n" +
 						"$(btn).addClass('loading');\n" +
 						"var begin = Number($(btn).attr('begin'));\n" +
-						"begin += " + ChangeCount + ";\n" +
+						"begin += " + R.ChangeCount + ";\n" +
 						"$.ajax({\n" +
 						"type: 'POST',\n" +
 						"url: '" + targetURL + "',\n" +
@@ -350,12 +346,12 @@ public class Tool {
 	 * @param javastript  如果这次执行加载更多信息成功后执行会  javastript语句
 	 * @return
 	 */
-	public static String makeAJAXLoadMoreJS_appendJS(int ChangeCount, String targetURL, String datas, String javastript) {
+	public static String makeAJAXLoadMoreJS_appendJS( String targetURL, String datas, String javastript) {
 		StringBuilder re = new StringBuilder(
 				"function ajaxMore(btn) {\n" +
 						"$(btn).addClass('loading');\n" +
 						"var begin = Number($(btn).attr('begin'));\n" +
-						"begin += " + ChangeCount + ";\n" +
+						"begin += " + R.ChangeCount + ";\n" +
 						"$.ajax({\n" +
 						"type: 'POST',\n" +
 						"url: '" + targetURL + "',\n" +

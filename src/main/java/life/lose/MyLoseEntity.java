@@ -116,9 +116,8 @@ public class MyLoseEntity {
 		if (myPhone != null ? !myPhone.equals(that.myPhone) : that.myPhone != null) return false;
 		if (myState != null ? !myState.equals(that.myState) : that.myState != null) return false;
 		if (myType != null ? !myType.equals(that.myType) : that.myType != null) return false;
-		if (myXh != null ? !myXh.equals(that.myXh) : that.myXh != null) return false;
+		return !(myXh != null ? !myXh.equals(that.myXh) : that.myXh != null);
 
-		return true;
 	}
 
 	@Override

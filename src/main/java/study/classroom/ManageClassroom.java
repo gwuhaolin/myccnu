@@ -1,9 +1,8 @@
 package study.classroom;
 
-import tool.HibernateUtil;
-import tool.Tool;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import tool.HibernateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,6 @@ import java.util.List;
 public class ManageClassroom {
 	public static String JIHAOLOU[] = {"9", "8", "7"};
 
-
 	/**
 	 * 按照给的条件查询出空余教室结果
 	 *
@@ -25,22 +23,19 @@ public class ManageClassroom {
 	 * @param time
 	 * @return
 	 */
-	public static List<OneQueryResult> query(String XinQiJi, String JiHaoLou) {
-		int XinQiJi_int;
+	public static List<OneQueryResult> query(int XinQiJi, String JiHaoLou) {
 		//当他们的值为空时设置为默认值
-		try {
-			XinQiJi_int = Integer.parseInt(XinQiJi);
-		} catch (Exception e) {
-			XinQiJi_int = Tool.week_NOW();
+		if (XinQiJi<1){
+			XinQiJi=1;
 		}
 		if (JiHaoLou == null) {
 			JiHaoLou = JIHAOLOU[0];
 		}
 		Session session = HibernateUtil.getSession();
-		Query query = session.createQuery("from MyclassroomEntity where xinQiJi=? and jiHaoLou=? order by diJiJieKe");
-		query.setInteger(0, XinQiJi_int);
+		Query query = session.createQuery("from MyClassroomEntity where xinQiJi=? and jiHaoLou=? order by diJiJieKe");
+		query.setInteger(0, XinQiJi);
 		query.setString(1, JiHaoLou);
-		List<MyclassroomEntity> all = query.list();
+		List<MyClassroomEntity> all = query.list();
 		HibernateUtil.closeSession(session);
 
 		OneQueryResult re[] = new OneQueryResult[7];
@@ -48,7 +43,7 @@ public class ManageClassroom {
 			re[i] = new OneQueryResult(i + 1);
 		}
 
-		for (MyclassroomEntity myclassroomEntity : all) {
+		for (MyClassroomEntity myclassroomEntity : all) {
 			re[myclassroomEntity.getDiJiJieKe() - 1].addOneClassroom(myclassroomEntity);
 		}
 
@@ -63,7 +58,7 @@ public class ManageClassroom {
 
 	public static boolean add(String jiHaoLou, String XinQiJi, String DiJiJie, String classroom) {
 		try {
-			MyclassroomEntity newone = new MyclassroomEntity(jiHaoLou, Integer.parseInt(XinQiJi), Integer.parseInt(DiJiJie), classroom);
+			MyClassroomEntity newone = new MyClassroomEntity(jiHaoLou, Integer.parseInt(XinQiJi), Integer.parseInt(DiJiJie), classroom);
 			HibernateUtil.addEntity(newone);
 			return true;
 		} catch (Exception e) {
@@ -74,7 +69,7 @@ public class ManageClassroom {
 
 	public static boolean delete(String jiHaoLou, String XinQiJi, String DiJiJie, String classroom) {
 		try {
-			MyclassroomEntity newone = new MyclassroomEntity(jiHaoLou, Integer.parseInt(XinQiJi), Integer.parseInt(DiJiJie), classroom);
+			MyClassroomEntity newone = new MyClassroomEntity(jiHaoLou, Integer.parseInt(XinQiJi), Integer.parseInt(DiJiJie), classroom);
 			HibernateUtil.removeEntity(newone);
 			return true;
 		} catch (Exception e) {
@@ -83,16 +78,11 @@ public class ManageClassroom {
 		}
 	}
 
-	public static List<MyclassroomEntity> all(){
+	public static List<MyClassroomEntity> all(){
 		Session session=HibernateUtil.getSession();
-		List<MyclassroomEntity> re= session.createQuery("from MyclassroomEntity ").list();
+		List<MyClassroomEntity> re= session.createQuery("from MyClassroomEntity ").list();
 		HibernateUtil.closeSession(session);
 		return re;
-	}
-
-
-	public static void main(String[] args) {
-		System.out.println(query(null, null));
 	}
 
 }

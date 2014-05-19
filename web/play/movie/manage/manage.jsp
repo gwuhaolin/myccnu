@@ -1,5 +1,5 @@
-<%@ page import="tool.Tool" %>
 <%@ page import="play.movie.ManageMovie" %>
+<%@ page import="tool.Tool" %>
 <%--
   Created by Intellij IDEA.
   User: WuHaoLin
@@ -91,7 +91,7 @@
 </div>
 <script>
 
-	<%=Tool.makeAJAXLoadMoreJS(ManageMovie.ChangeCount,"GetMovieManageFormForAJAX.jsp"," ,target:'"+target+"'")%>
+	<%=Tool.makeAJAXLoadMoreJS("GetMovieManageFormForAJAX.jsp"," ,target:'"+target+"'")%>
 
 	//重新加载图片
 	function reloadPic(input) {

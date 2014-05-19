@@ -1,4 +1,4 @@
-<%@ page import="life.notice.ManageNotice" %>
+<%@ page import="tool.R" %>
 <%@ page import="tool.Tool" %>
 <%--通知列表--%>
 <%--
@@ -48,7 +48,7 @@
 <script>
 	showHighLight('<%=want%>');
 	closeWeiXinBtn();
-	<%=Tool.makeAJAXLoadMoreJS_appendJS(ManageNotice.ChangeCount,"GetAJAXServlet.jsp",",want:'"+want+"'","showHighLight('"+want+"');")%>
+	<%=Tool.makeAJAXLoadMoreJS_appendJS("GetAJAXServlet.jsp",",want:'"+want+"'","showHighLight('"+want+"');")%>
 </script>
 
 </body>

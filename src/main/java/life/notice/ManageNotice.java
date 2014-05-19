@@ -1,13 +1,14 @@
 package life.notice;
 
-import tool.AutoUpdate;
-import tool.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import tool.AutoUpdate;
+import tool.HibernateUtil;
+import tool.R;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -25,7 +26,6 @@ public class ManageNotice {
 	public static final String CMD_Delete = "delete";
 	public static final String CMD_Change = "change";
 	public static final String ManagePassword = "NOTICE";
-	public static final int ChangeCount = 5;
 	public static final int IsOK_YES = 0;//用于标准人工筛选后的信息删除,该信息ok
 	public static final int IsOK_NO = 1;//用于标准人工筛选后的信息删除,该信息不符合要求不能被显示
 	public static final String[][] FromSiteName={
@@ -92,11 +92,7 @@ public class ManageNotice {
 		query.setString(1, date);
 		int re = query.list().size();
 		HibernateUtil.closeSession(session);
-		if (re >= 1) {
-			return true;
-		} else {
-			return false;
-		}
+		return re >= 1;
 	}
 
 	/**
@@ -174,7 +170,7 @@ public class ManageNotice {
 		query.setString(0,"%"+want+"%");
 		query.setString(1,"%"+want+"%");
 		query.setFirstResult(from);
-		query.setMaxResults(ChangeCount);
+		query.setMaxResults(R.ChangeCount);
 		List<MyNoticeEntity> re = query.list();
 		HibernateUtil.closeSession(session);
 		return re;
@@ -191,7 +187,7 @@ public class ManageNotice {
 		Session session = HibernateUtil.getSession();
 		Query query = session.createQuery("from MyNoticeEntity as notice where isOk=0 order by notice.date desc ,id desc");
 		query.setFirstResult(from);
-		query.setMaxResults(ChangeCount);
+		query.setMaxResults(R.ChangeCount);
 		List<MyNoticeEntity> re = query.list();
 		HibernateUtil.closeSession(session);
 		return re;
@@ -209,7 +205,7 @@ public class ManageNotice {
 		Query query = session.createQuery("from MyNoticeEntity as notice where isOk=0 and orgUrl like ? order by notice.date desc ,id desc");
 		query.setString(0,FromSiteName[12][1]);
 		query.setFirstResult(from);
-		query.setMaxResults(ChangeCount);
+		query.setMaxResults(R.ChangeCount);
 		List<MyNoticeEntity> re = query.list();
 		HibernateUtil.closeSession(session);
 		return re;
@@ -411,7 +407,6 @@ public class ManageNotice {
 						re.add(new MyNoticeEntity(title, dateStr, orgUrl, content, form));
 					} catch (Exception e) {
 						System.out.println(form + "ERROR!");
-						continue;
 					}
 				}
 			}
@@ -452,7 +447,6 @@ public class ManageNotice {
 						re.add(new MyNoticeEntity(title, dateStr, orgUrl, content, form));
 					} catch (Exception e) {
 						System.out.println(form + "ERROR!");
-						continue;
 					}
 				}
 			}
@@ -493,7 +487,6 @@ public class ManageNotice {
 						re.add(new MyNoticeEntity(title, dateStr, orgUrl, content, form));
 					} catch (Exception e) {
 						System.out.println(form + "ERROR!");
-						continue;
 					}
 				}
 			}
@@ -534,7 +527,6 @@ public class ManageNotice {
 						re.add(new MyNoticeEntity(title, dateStr, orgUrl, content, form));
 					} catch (Exception e) {
 						System.out.println(form + "ERROR!");
-						continue;
 					}
 				}
 			}
@@ -575,7 +567,6 @@ public class ManageNotice {
 						re.add(new MyNoticeEntity(title, dateStr, orgUrl, content, form));
 					} catch (Exception e) {
 						System.out.println(form + "ERROR!");
-						continue;
 					}
 				}
 			}
@@ -616,7 +607,6 @@ public class ManageNotice {
 						re.add(new MyNoticeEntity(title, dateStr, orgUrl, content, form));
 					} catch (Exception e) {
 						System.out.println(form + "ERROR!");
-						continue;
 					}
 				}
 			}
@@ -657,7 +647,6 @@ public class ManageNotice {
 						re.add(new MyNoticeEntity(title, dateStr, orgUrl, content, form));
 					} catch (Exception e) {
 						System.out.println(form + "ERROR!");
-						continue;
 					}
 				}
 			}
@@ -696,11 +685,10 @@ public class ManageNotice {
 						re.add(new MyNoticeEntity(title, dateStr, orgUrl, content, form));
 					} catch (Exception e) {
 						System.out.println(form + "ERROR!");
-						continue;
 					}
 				}
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return re;
@@ -735,7 +723,6 @@ public class ManageNotice {
 						re.add(new MyNoticeEntity(title, dateStr, orgUrl, content, form));
 					} catch (Exception e) {
 						System.out.println(form + "ERROR!");
-						continue;
 					}
 				}
 			}
@@ -774,7 +761,6 @@ public class ManageNotice {
 						re.add(new MyNoticeEntity(title, dateStr, orgUrl, content, form));
 					} catch (Exception e) {
 						System.out.println(form + "ERROR!");
-						continue;
 					}
 				}
 			}
@@ -814,7 +800,6 @@ public class ManageNotice {
 						re.add(new MyNoticeEntity(title, dateStr, orgUrl, content, form));
 					} catch (Exception e) {
 						System.out.println(form + "ERROR!");
-						continue;
 					}
 				}
 			}
@@ -856,7 +841,6 @@ public class ManageNotice {
 					} catch (Exception e) {
 						e.printStackTrace();
 						System.out.println(form + "ERROR!");
-						continue;
 					}
 				}
 			}
@@ -898,7 +882,6 @@ public class ManageNotice {
 					} catch (Exception e) {
 						System.out.println(form + "ERROR!");
 						e.printStackTrace();
-						continue;
 					}
 				}
 			}

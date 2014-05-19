@@ -1,13 +1,14 @@
 package study.lecture;
 
-import tool.AutoUpdate;
-import tool.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import tool.AutoUpdate;
+import tool.HibernateUtil;
+import tool.R;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,7 +28,6 @@ public class ManageEvent {
 	public static final String CMD_Change="change";
 	public static final String CMD_Add="add";
 	public static final String CMD_Delete="delete";
-	public static final int ChangeCount =5;
 
 	static {
 		update();
@@ -71,7 +71,7 @@ public class ManageEvent {
 		Query query = session.createQuery("from MyEventEntity where target=? order by id desc ");
 		query.setInteger(0,target);
 		query.setFirstResult(from);
-		query.setMaxResults(ChangeCount);
+		query.setMaxResults(R.ChangeCount);
 		List<MyEventEntity> re = query.list();
 		HibernateUtil.closeSession(session);
 		return re;
@@ -90,7 +90,7 @@ public class ManageEvent {
 		query.setInteger(0,target);
 		query.setString(1,"%"+want+"%");
 		query.setFirstResult(from);
-		query.setMaxResults(ChangeCount);
+		query.setMaxResults(R.ChangeCount);
 		List<MyEventEntity> re = query.list();
 		HibernateUtil.closeSession(session);
 		return re;
@@ -164,11 +164,7 @@ public class ManageEvent {
 		query.setString(2, myEventEntity.getRunDate());
 		int reSize= query.list().size();
 		HibernateUtil.closeSession(session);
-		if (reSize>=1){
-			return true;
-		}else {
-			return false;
-		}
+		return reSize >= 1;
 	}
 
 	/////////////////////////////////////////////////////
@@ -197,7 +193,6 @@ public class ManageEvent {
 					String detial=le.getElementsByClass("text").first().text();re.setIntro(detial);
 					allLectures.add(re);
 				} catch (Exception e) {
-					continue;
 				}
 			}
 		} catch (IOException e) {

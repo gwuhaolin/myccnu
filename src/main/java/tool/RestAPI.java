@@ -5,7 +5,6 @@ package tool; /**
  */
 
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
-import org.glassfish.jersey.filter.LoggingFilter;
 import org.glassfish.jersey.server.ResourceConfig;
 import play.shop.ServiceShop;
 import play.shudong.ServiceShuDong;
@@ -36,7 +35,7 @@ public class RestAPI extends ResourceConfig {
 		register(JacksonJsonProvider.class);
 
 		// Logging.
-		register(LoggingFilter.class);
+//		register(LoggingFilter.class);
 
 	}
 }

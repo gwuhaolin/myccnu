@@ -2,6 +2,10 @@
 <html>
 <head>
 	<meta charset="utf-8"/>
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+	<meta name="keywords" content="二手,市场,华中师范大学,掌上华师,青淘网">
+	<meta name="description" content="华中师范大学二手交易平台">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 	<script src="../../lib/js/jquery-1.11.2.min.js"></script>
@@ -12,11 +16,12 @@
 	<script src="../../lib/js/plupload.full.min.js"></script>
 	<script src="../../lib/js/qiniu.min.js"></script>
 	<script src="../../lib/js/main.js"></script>
+	<title>青淘网-华师二手市场</title>
 </head>
-<body style="background-color: #f4f3ff">
+<body style="background: url('http://myccnushop.qiniudn.com/bg.gif') repeat">
 
 <!--显示所有商品的容器-->
-<div class="ui stackable three column page grid  center aligned " id="AllItemsHolder">
+<div class="ui stackable four column page grid  center aligned " id="AllItemsHolder">
 
 </div>
 
@@ -39,7 +44,7 @@
 		<div class="ui form">
 
 			<div class="field">
-				<div class="ui button fluid MSG" id="UpImgBtn">
+				<div class="ui blue button fluid MSG circular" id="UpImgBtn">
 					点击我上传物品的图片
 				</div>
 			</div>
@@ -54,73 +59,68 @@
 				</div>
 			</div>
 
-			<div class="ui accordion fluid">
-				<div class="active title">
-					<i class="dropdown icon"></i>
-					物品信息
+
+			<input type="hidden" class="PICURL" value="">
+
+			<div class="field">
+				<div class="ui input icon">
+					<i class="icon yen"></i>
+					<input type="text" placeholder="要价多少(数字,人民币元)" class="PRICE" name="PRICE"
+					       onchange="MyBasicInfoIsChange=true">
 				</div>
-				<div class="active content">
-
-					<input type="hidden" class="PICURL" value="">
-
-					<div class="field">
-						<div class="ui input icon">
-							<i class="icon yen"></i>
-							<input type="text" placeholder="要价多少(人民币元)" class="PRICE" name="PRICE"
-							       onchange="MyBasicInfoIsChange=true">
-						</div>
-					</div>
-
-					<div class="field">
-						<div class="ui input icon">
-							<i class="icon star"></i>
-							<input type="text" placeholder="怎么称呼它" class="NAME" name="NAME"
-							       onchange="MyBasicInfoIsChange=true">
-						</div>
-					</div>
-
-					<div class="field">
-						<div class="ui input icon">
-							<i class="icon file"></i>
-							<textarea placeholder="介绍下它" class="DES" onchange="MyBasicInfoIsChange=true"></textarea>
-						</div>
-					</div>
-
-				</div>
-
-				<div class="title">
-					<i class="dropdown icon"></i>
-					怎么联系你
-				</div>
-				<div class="content">
-
-					<div class="field">
-						<div class="ui input icon">
-							<i class="icon user"></i>
-							<input type="text" placeholder="你的姓名" class="OWNER-NAME">
-						</div>
-					</div>
-
-					<div class="field">
-						<div class="ui input icon">
-							<i class="icon user"></i>
-							<input type="text" placeholder="你的电话" class="OWNER-PHONE">
-						</div>
-					</div>
-
-					<div class="field">
-						<div class="ui input icon">
-							<i class="icon user"></i>
-							<input type="text" placeholder="你的QQ" class="OWNER-QQ">
-						</div>
-					</div>
-
-				</div>
-
 			</div>
 
 			<div class="field">
-				<button class="ui button circular fluid" onclick="addItem()">添加物品</button>
+				<div class="ui input icon">
+					<i class="icon star"></i>
+					<input type="text" placeholder="怎么称呼它" class="NAME" name="NAME"
+					       onchange="MyBasicInfoIsChange=true">
+				</div>
+			</div>
+
+			<div class="field">
+				<div class="ui input icon">
+					<i class="icon file"></i>
+					<textarea placeholder="介绍下它" class="DES" onchange="MyBasicInfoIsChange=true"></textarea>
+				</div>
+			</div>
+
+			<div class="field">
+				<div class="ui accordion fluid">
+					<div class="title">
+						<i class="dropdown icon"></i>
+						怎么联系你
+					</div>
+					<div class="content">
+
+						<div class="field">
+							<div class="ui input icon">
+								<i class="icon user"></i>
+								<input type="text" placeholder="你的姓名" class="OWNER-NAME">
+							</div>
+						</div>
+
+						<div class="field">
+							<div class="ui input icon">
+								<i class="icon phone"></i>
+								<input type="text" placeholder="你的电话" class="OWNER-PHONE">
+							</div>
+						</div>
+
+						<div class="field">
+							<div class="ui input icon">
+								<i class="icon">Q</i>
+								<input type="text" placeholder="你的QQ" class="OWNER-QQ">
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+
+			<div class="field">
+				<button class="ui button circular fluid" onclick="addItem()">上传物品</button>
 			</div>
 
 		</div>
@@ -149,7 +149,7 @@
 	</div>
 
 	<!--展开发商品按钮-->
-	<a onclick="toggleAddBox(this)" class="ui button icon circular mini POPUP"
+	<a onclick="toggleAddBox(this)" class="ui red button icon circular mini POPUP"
 	   style="position: fixed;bottom: 5px;left: 5px" title="上传你的物品">
 		<i class="icon gift"></i>
 	</a>
@@ -186,12 +186,14 @@
 				</div>
 			</div>
 
+			<div class="field" id="SearchTagCon">
+			</div>
 		</div>
 
 	</div>
 
 	<!--展开筛选功能bar按钮-->
-	<div onclick="toggleSearchBarCon(this)" class="ui button circular mini icon POPUP"
+	<div onclick="toggleSearchBarCon(this)" class="ui red button circular mini icon POPUP"
 	     style="position: fixed;bottom: 5px;right: 5px"
 	     title="筛选物品">
 		<i class="icon search"></i>
@@ -204,7 +206,7 @@
 <div onclick="sortResult()" class="ui button circular mini icon POPUP"
      style="position: fixed;top: 5px;right: 5px;z-index: 10"
      title="价格排序">
-	<i class="icon sort order descending"></i>
+	<i class="icon sort order descending red"></i>
 </div>
 
 
@@ -251,6 +253,11 @@ var nowCount = 0;
 var nowSearchWant = "";
 
 /**
+ * 获得学号为XH的同学所有的发的物品
+ */
+var nowQueryXH = "";
+
+/**
  * 获得商品apiURL
  */
 var url_GetItems = makeApiUrl('shop/getPage');
@@ -268,6 +275,7 @@ var url_LikeIt = makeApiUrl('shop/likeIt');
 $(document).ready(function () {
 	loadMyInfo();
 	loadMore();
+	loadSearchTags();
 	$('.POPUP').popup();
 	$('.accordion').accordion();
 });
@@ -281,11 +289,12 @@ function loadMore() {
 			{
 				from: nowCount,
 				cmd: nowCmd,
-				want: nowSearchWant
+				want: nowSearchWant,
+				xh: nowQueryXH
 			}
 	).done(function (data) {
-				$(data).each(function(){//图片处理
-					this.picUrl+='?imageView/1/w/300/h/300/q';
+				$(data).each(function () {//图片处理
+					this.picUrl += '?imageView/1/w/300/h/300/q';
 				});
 				$(MoreBtn).toggleClass('loading');
 				if (data.length > 0) {
@@ -295,6 +304,8 @@ function loadMore() {
 					$(AllItemsHolder).find('.image.fluid').dimmer({
 						on: 'hover'
 					});
+					$(MoreBtn).removeClass('loading');
+					$(MoreBtn).removeClass('disabled');
 				} else {
 					$(MoreBtn).addClass('disabled');
 				}
@@ -333,8 +344,10 @@ function doShowHot() {
 /**
  * 执行关键字搜索
  */
-function doSearch() {
-	var want = $(SearchBarCon).find('.WANT').first().val();
+function doSearch(want) {
+	if (!want) {
+		want = $(SearchBarCon).find('.WANT').first().val();
+	}
 	nowCmd = 'search';
 	nowSearchWant = want;
 	reloadAllItems();
@@ -345,6 +358,15 @@ function doSearch() {
  */
 function doShowMyUp() {
 	nowCmd = 'my';
+	reloadAllItems();
+}
+
+/**
+ *  重新所有学号为XH的同学发的
+ */
+function doShowXH(xh) {
+	nowCmd = 'xh';
+	nowQueryXH = xh;
 	reloadAllItems();
 }
 
@@ -365,22 +387,24 @@ function likeIt(id, likeBtn) {
  * 显示添加商品bar
  */
 function toggleAddBox(btn) {
-
-	$(AddItemBarCon).find('.OWNER-NAME').first().val(MyInfo.name);
-	$(AddItemBarCon).find('.OWNER-PHONE').first().val(MyInfo.phoneNumber);
-	$(AddItemBarCon).find('.OWNER-QQ').first().val(MyInfo.qq);
-
-	$(btn).toggleClass('red');
-	$(AddItemBarCon).sidebar({
-		overlay: true
-	}).sidebar('toggle');
+	try {
+		$(AddItemBarCon).find('.OWNER-NAME').first().val(MyInfo.name);
+		$(AddItemBarCon).find('.OWNER-PHONE').first().val(MyInfo.phoneNumber);
+		$(AddItemBarCon).find('.OWNER-QQ').first().val(MyInfo.qq);
+		$(btn).toggleClass('blue');
+		$(AddItemBarCon).sidebar({
+			overlay: true
+		}).sidebar('toggle');
+	} catch (e) {
+		shouldBind('为防止诈骗我们必须验证你的身份');
+	}
 }
 
 /**
  * 显示筛选商品bar
  */
 function toggleSearchBarCon(btn) {
-	$(btn).toggleClass('red');
+	$(btn).toggleClass('blue');
 	$(SearchBarCon).sidebar({
 		overlay: true
 	}).sidebar('toggle');
@@ -408,7 +432,7 @@ function addItem() {
 				MyBasicInfoIsChange = false;
 				updateMyInfo();
 			}
-
+			$(AddItemBarCon).find('input').val('');
 			one.id = data;
 			var html = toHTML('OneItem_TEMP', one);
 			$(html).prependTo(AllItemsHolder);
@@ -417,7 +441,6 @@ function addItem() {
 			$(AllItemsHolder).find('.image.fluid').dimmer({
 				on: 'hover'
 			});
-			$(AddItemBarCon).find('input').val('');
 
 		} else if (data == -1) {
 			alertMsg('还有信息需要完善哦');
@@ -425,6 +448,26 @@ function addItem() {
 			shouldBind('为防止诈骗我们必须验证你的身份');
 		} else if (data == -3) {
 			showError();
+		}
+	});
+}
+
+Handlebars.registerHelper('myself', function (xh, id) {
+	if (MyInfo && xh == MyInfo.xh) {
+		return '<div class="ui button circular mini red" onclick="removeOne(' + id + ')">下架该物品</div>';
+	}
+});
+var RemoveOne_URL = makeApiUrl('shop/remove');
+/**
+ * 删除一个物品,下架
+ * @param id 物品的id
+ */
+function removeOne(id) {
+	$.getJSON(RemoveOne_URL, {id: id}).done(function (data) {
+		if (data) {
+			$('#' + id).remove();
+		} else {
+			alertMsg('删除失败');
 		}
 	});
 }
@@ -461,6 +504,16 @@ function showDetail(id, btn, xh) {
 			$(infoCon).html(html);
 		});
 	}
+}
+
+/**
+ * 获得所有的搜热门索标签
+ */
+function loadSearchTags() {
+	$.getJSON(makeApiUrl('shop/getSearchTag')).done(function (data) {
+		var html = toHTML('OneSearchTag_TEMP', data);
+		$('#SearchTagCon').html(html);
+	});
 }
 
 </script>
@@ -514,31 +567,43 @@ function showDetail(id, btn, xh) {
 <!--模版-->
 <div class="hidden">
 
+	<!--热门词条-->
+	<div id="OneSearchTag_TEMP">
+		{{#.}}
+		<div class="ui button mini circular" onclick="doSearch('{{value}}')" style="margin: 3px">{{name}}</div>
+		{{/.}}
+	</div>
+
 	<!--一条商品-->
 	<div id="OneItem_TEMP">
 		{{#.}}
-		<div class="column">
-			<div class="ui image labeled rounded fluid" style="min-height: 200px">
+		<div class="column" id="{{id}}">
+			<div class="ui image labeled rounded fluid" style="min-height: 200px" onclick="$(this).dimmer('show')">
 				<!--dimmer-->
 				<div class="ui dimmer">
 					<div class="content">
 						<div class="center">
 							<div class="ui header center aligned">
-								<p>{{des}}</p>
 
 								<div class="ui button circular mini"
 								     onclick="showDetail({{id}},this,'{{xh}}')">
 									查看详情
 								</div>
+
+								{{#myself xh id}}
+								{{/myself}}
+
+								<p>{{des}}</p>
+
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="ui label corner icon small">
-					<i class="icon">{{seeCount}}</i>
+				<div class="ui bottom left attached label small">
+					<i class="icon gift"></i>{{name}}&nbsp;
+					<i class="icon yen blue"></i>{{price}}&nbsp;
+					<i class="icon heart" style="color: #ffb7da"></i>{{seeCount}}
 				</div>
-				<div class="ui bottom left attached label small">{{name}}</div>
-				<div class="ui bottom right attached label small"><i class="icon yen"></i>{{price}}</div>
 				<img src="{{picUrl}}" alt="{{name}}:{{des}}">
 			</div>
 			<div class="ui page dimmer inverted">
@@ -547,7 +612,7 @@ function showDetail(id, btn, xh) {
 					<div class="ui header center aligned">
 						<h3>{{name}}</h3>
 
-						<div class="ui relaxed divided selection list">
+						<div class=" ui relaxed divided selection list small animated">
 							<div class="item">
 								<i class="icon yen"></i>
 
@@ -581,10 +646,9 @@ function showDetail(id, btn, xh) {
 							</div>
 							{{/if}}
 
-						</div>
+							<div class="OWNER_INFO">
 
-						<div class="OWNER_INFO ui relaxed divided selection list small animated">
-
+							</div>
 						</div>
 
 					</div>
@@ -648,6 +712,10 @@ function showDetail(id, btn, xh) {
 			</div>
 		</div>
 		{{/if}}
+
+		<div class="item">
+			<div class="ui button circular mini blue" onclick="doShowXH({{xh}})">查看该同学发布的更多物品</div>
+		</div>
 
 	</div>
 </div>

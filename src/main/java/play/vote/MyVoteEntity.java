@@ -39,9 +39,8 @@ public class MyVoteEntity {
 
 		MyVoteEntity that = (MyVoteEntity) o;
 
-		if (xh != null ? !xh.equals(that.xh) : that.xh != null) return false;
+		return !(xh != null ? !xh.equals(that.xh) : that.xh != null);
 
-		return true;
 	}
 
 	@Override

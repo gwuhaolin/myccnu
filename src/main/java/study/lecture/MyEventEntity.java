@@ -114,9 +114,8 @@ public class MyEventEntity {
 		if (otherInfo != null ? !otherInfo.equals(that.otherInfo) : that.otherInfo != null) return false;
 		if (runDate != null ? !runDate.equals(that.runDate) : that.runDate != null) return false;
 		if (runLocation != null ? !runLocation.equals(that.runLocation) : that.runLocation != null) return false;
-		if (target != null ? !target.equals(that.target) : that.target != null) return false;
+		return !(target != null ? !target.equals(that.target) : that.target != null);
 
-		return true;
 	}
 
 	@Override

@@ -1,4 +1,5 @@
 <%@ page import="study.lecture.ManageEvent" %>
+<%@ page import="tool.R" %>
 <%--通知列表--%>
 <%--
   Created by Intellij IDEA.
@@ -21,7 +22,7 @@
 	<title>管理讲座信息</title>
 
 	<script>
-		var changeCount = Number(<%=ManageEvent.ChangeCount%>);
+		var changeCount = Number(<%=R.ChangeCount%>);
 		<%--ajax加载更多--%>
 		function ajaxMore(btn) {
 			$(btn).addClass('active');
@@ -104,7 +105,7 @@
 	<jsp:include page="GetEventsManageFormForAJAX.jsp">
 		<jsp:param name="target" value="<%=ManageEvent.TARGET_Lecture%>"/>
 		<jsp:param name="begin" value="0"/>
-		<jsp:param name="size" value="<%=ManageEvent.ChangeCount%>"/>
+		<jsp:param name="size" value="<%=R.ChangeCount%>"/>
 	</jsp:include>
 	<%--ajax 加载更多--%>
 	<button class="form-control btn-info input-lg" onclick="ajaxMore(this)" begin="0">更多</button>

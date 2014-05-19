@@ -1,4 +1,3 @@
-<%@ page import="life.notice.ManageNotice" %>
 <%@ page import="tool.Tool" %>
 <%--通知列表--%>
 <%--
@@ -38,7 +37,7 @@
 
 
 <script>
-	<%=Tool.makeAJAXLoadMoreJS(ManageNotice.ChangeCount,"GetAJAXServlet.jsp","")%>
+	<%=Tool.makeAJAXLoadMoreJS("GetAJAXServlet.jsp","")%>
 
 	function openOneAJAX(id) {
 		$.get('GetOneAJAX.jsp?id=' + id,function(data){

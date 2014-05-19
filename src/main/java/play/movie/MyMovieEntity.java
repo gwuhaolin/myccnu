@@ -132,9 +132,8 @@ public class MyMovieEntity {
 		if (other != null ? !other.equals(that.other) : that.other != null) return false;
 		if (pay != null ? !pay.equals(that.pay) : that.pay != null) return false;
 		if (picUrl != null ? !picUrl.equals(that.picUrl) : that.picUrl != null) return false;
-		if (target != null ? !target.equals(that.target) : that.target != null) return false;
+		return !(target != null ? !target.equals(that.target) : that.target != null);
 
-		return true;
 	}
 
 	@Override

@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "myclassroom", schema = "", catalog = "weixin")
 @IdClass(MyclassroomEntityPK.class)
-public class MyclassroomEntity {
+public class MyClassroomEntity {
 	private String jiHaoLou;
 	private int xinQiJi;
 	private int diJiJieKe;
@@ -62,14 +62,13 @@ public class MyclassroomEntity {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		MyclassroomEntity that = (MyclassroomEntity) o;
+		MyClassroomEntity that = (MyClassroomEntity) o;
 
 		if (diJiJieKe != that.diJiJieKe) return false;
 		if (xinQiJi != that.xinQiJi) return false;
 		if (classroom != null ? !classroom.equals(that.classroom) : that.classroom != null) return false;
-		if (jiHaoLou != null ? !jiHaoLou.equals(that.jiHaoLou) : that.jiHaoLou != null) return false;
+		return !(jiHaoLou != null ? !jiHaoLou.equals(that.jiHaoLou) : that.jiHaoLou != null);
 
-		return true;
 	}
 
 	@Override
@@ -81,13 +80,13 @@ public class MyclassroomEntity {
 		return result;
 	}
 
-	public MyclassroomEntity(String jiHaoLou, int xinQiJi, int diJiJieKe, String classroom) {
+	public MyClassroomEntity(String jiHaoLou, int xinQiJi, int diJiJieKe, String classroom) {
 		this.jiHaoLou = jiHaoLou;
 		this.xinQiJi = xinQiJi;
 		this.diJiJieKe = diJiJieKe;
 		this.classroom = classroom;
 	}
 
-	public MyclassroomEntity() {
+	public MyClassroomEntity() {
 	}
 }

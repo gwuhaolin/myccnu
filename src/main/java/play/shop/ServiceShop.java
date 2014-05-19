@@ -22,6 +22,11 @@ import java.util.List;
 public class ServiceShop {
 
 	/**
+	 * 后台管理密码
+	 */
+	final String ManagePassword = "SHOP";
+
+	/**
 	 * HttpServletRequest请求
 	 */
 	@Context
@@ -55,8 +60,8 @@ public class ServiceShop {
 		} else if (XH == null) {
 			return -2;//没有绑定
 		}
-		if (picUrl==null){
-			picUrl=ManageShop.DEFAULT_PIC_URL;
+		if (picUrl == null) {
+			picUrl = ManageShopItem.DEFAULT_PIC_URL;
 		}
 		try {
 			ShopItemsEntity one = new ShopItemsEntity();
@@ -65,7 +70,7 @@ public class ServiceShop {
 			one.setDes(des);
 			one.setPicUrl(picUrl);
 			one.setXh(XH);
-			ManageShop.add(one);
+			ManageShopItem.add(one);
 			return one.getId();//成功,返回获得的Id
 		} catch (Exception e) {
 			return -3;//发生异常
@@ -101,8 +106,8 @@ public class ServiceShop {
 		if (name == null || price == 0) {
 			return false;
 		}
-		if (picUrl==null){
-			picUrl=ManageShop.DEFAULT_PIC_URL;
+		if (picUrl == null) {
+			picUrl = ManageShopItem.DEFAULT_PIC_URL;
 		}
 		ShopItemsEntity one = new ShopItemsEntity();
 		one.setId(id);
@@ -111,7 +116,7 @@ public class ServiceShop {
 		one.setDes(des);
 		one.setPicUrl(picUrl);
 		one.setXh(XH);
-		return ManageShop.update(one);
+		return ManageShopItem.update(one);
 	}
 
 	/**
@@ -124,7 +129,7 @@ public class ServiceShop {
 	@GET
 	@Path("/remove")
 	public boolean remove(@QueryParam("id") int id) {
-		return ManageShop.remove(id);
+		return ManageShopItem.remove(id);
 	}
 
 	/**
@@ -137,7 +142,7 @@ public class ServiceShop {
 	@GET
 	@Path("/getOne")
 	public ShopItemsEntity getOne(@QueryParam("id") int id) {
-		return ManageShop.get(id);
+		return ManageShopItem.get(id);
 	}
 
 	/**
@@ -160,14 +165,16 @@ public class ServiceShop {
 	) {
 		List<ShopItemsEntity> re = null;
 		if (cmd.equals("new")) {
-			re = ManageShop.get_Page(from);
+			re = ManageShopItem.get_Page(from);
 		} else if (cmd.equals("hot")) {
-			re = ManageShop.get_page_hot(from);
+			re = ManageShopItem.get_page_hot(from);
 		} else if (cmd.equals("my")) {
-			re = ManageShop.get_page_XH(from, XH);
+			re = ManageShopItem.get_page_XH(from, XH);
 		} else if (cmd.equals("search")) {
 			String want = request.getParameter("want");
-			re = ManageShop.search_page(from, want);
+			re = ManageShopItem.search_page(from, want);
+		}else if (cmd.equals("xh")){
+			re=ManageShopItem.get_page_XH(from,request.getParameter("xh"));
 		}
 		return re;
 	}
@@ -176,7 +183,14 @@ public class ServiceShop {
 	@GET
 	@Path("/likeIt")
 	public int likeIt(@QueryParam("id") int id) {
-		return ManageShop.likeIt(id);
+		return ManageShopItem.likeIt(id);
+	}
+
+	@JSONP(queryParam = R.JSONP_CALLBACK)
+	@GET
+	@Path("/getSearchTag")
+	public List<ShopSearchTagEntity> getSearchTag() {
+		return ManageShopItem.getSearchTag();
 	}
 
 }

@@ -69,9 +69,8 @@ public class MyclassroomEntityPK implements Serializable {
 		if (diJiJieKe != that.diJiJieKe) return false;
 		if (xinQiJi != that.xinQiJi) return false;
 		if (classroom != null ? !classroom.equals(that.classroom) : that.classroom != null) return false;
-		if (jiHaoLou != null ? !jiHaoLou.equals(that.jiHaoLou) : that.jiHaoLou != null) return false;
+		return !(jiHaoLou != null ? !jiHaoLou.equals(that.jiHaoLou) : that.jiHaoLou != null);
 
-		return true;
 	}
 
 	@Override

@@ -38,7 +38,7 @@ public class OneQueryResult {
 		return allClassRoom;
 	}
 
-	public void addOneClassroom(MyclassroomEntity myclassroomEntity){
+	public void addOneClassroom(MyClassroomEntity myclassroomEntity){
 		allClassRoom.add(myclassroomEntity.getClassroom());
 	}
 

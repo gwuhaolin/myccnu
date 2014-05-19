@@ -23,7 +23,7 @@ public class ShopItemsEntity {
 	private String name;
 	private Float price;
 	private String des;
-	private String picUrl=ManageShop.DEFAULT_PIC_URL;
+	private String picUrl= ManageShopItem.DEFAULT_PIC_URL;
 	private String date= Tool.time_YYYY_MM_DD_HH_MM_NOW();
 	private String xh;
 	private Integer seeCount=0;
@@ -122,9 +122,8 @@ public class ShopItemsEntity {
 		if (picUrl != null ? !picUrl.equals(that.picUrl) : that.picUrl != null) return false;
 		if (price != null ? !price.equals(that.price) : that.price != null) return false;
 		if (seeCount != null ? !seeCount.equals(that.seeCount) : that.seeCount != null) return false;
-		if (xh != null ? !xh.equals(that.xh) : that.xh != null) return false;
+		return !(xh != null ? !xh.equals(that.xh) : that.xh != null);
 
-		return true;
 	}
 
 	@Override

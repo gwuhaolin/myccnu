@@ -30,11 +30,6 @@ import javax.ws.rs.QueryParam;
 @Produces({"application/javascript"})
 public class ServiceQiNiu {
 
-	public static final String ShuDong_QINIU_BUCKET = "myccnushudong";
-	public static final String Shop_QINIU_BUCKET = "myccnushop";
-	public static final String Vote_QINIU_BUCKET = "myccnuvote";
-	public static final String Test_QINIU_BUCKET = "myccnutest";
-
 	static {
 		//配置七牛
 		Config.ACCESS_KEY = "m6OXWa6rNQMvPg9OyN_cFEaAR_uI6s03PJMGD5OM";
@@ -62,15 +57,16 @@ public class ServiceQiNiu {
 
 	/**
 	 * 删除七牛云存储上的一个文件
-	 *
-	 * @param bucket
-	 * @param key    文件的key
+	 * @param url 七牛云存储上的一个文件的完整的url
+	 * @return
 	 */
 	@JSONP(queryParam = R.JSONP_CALLBACK)
 	@GET
 	@Path("/removeOne")
-	public static boolean removeOne(@QueryParam("bucket") String bucket, @QueryParam("key") String key) {
+	public static boolean removeOne(@QueryParam("url") String url) {
 		RSClient client = new RSClient(mac);
+		String bucket=url.substring(7,url.indexOf('.'));
+		String key=url.substring(url.indexOf("com/")+4);
 		CallRet callRet = client.delete(bucket, key);
 		return callRet.ok();
 	}

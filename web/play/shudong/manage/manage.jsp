@@ -1,4 +1,4 @@
-<%@ page import="play.shudong.ManageShuDong" %>
+<%@ page import="tool.R" %>
 <%@ page import="tool.Tool" %>
 <%--管理树洞--%>
 <%--
@@ -35,14 +35,14 @@
 	<%--默认拿出前changeCount通知--%>
 	<jsp:include page="GetShuDongManageFormForAJAX.jsp">
 		<jsp:param name="begin" value="0"/>
-		<jsp:param name="size" value="<%=ManageShuDong.ChangeCount%>"/>
+		<jsp:param name="size" value="<%=R.ChangeCount%>"/>
 	</jsp:include>
 	<%--ajax 加载更多--%>
 	<button class="form-control btn-info input-lg" onclick="ajaxMore(this)" begin="0">更多</button>
 	<br>
 </div>
 <script>
-	<%=Tool.makeAJAXLoadMoreJS(ManageShuDong.ChangeCount,"GetShuDongManageFormForAJAX.jsp","")%>
+	<%=Tool.makeAJAXLoadMoreJS(R.ChangeCount,"GetShuDongManageFormForAJAX.jsp","")%>
 </script>
 </body>
 </html>
