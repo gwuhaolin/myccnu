@@ -63,6 +63,31 @@
 				<button class="ui button fluid" onclick="addShuDong()">扔进树洞</button>
 			</div>
 		</div>
+
+		<div class="ui accordion fluid">
+			<div class="title">
+				<i class="dropdown icon"></i>
+				看看你有没有被表白
+			</div>
+			<div class="content">
+				<div class="ui form">
+					<div class="field">
+						<div class="ui input icon">
+							<i class="icon search"></i>
+							<input type="text" placeholder="输入关键字搜索" class="WANT">
+						</div>
+					</div>
+
+					<div class="field">
+						<div class="ui button circular fluid"
+						     onclick="doSearch($(this).parent().prev().find('.WANT').val())">搜索
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
 	</div>
 
 	<!--发树洞按钮-->
@@ -104,7 +129,7 @@
 	/**
 	 * 所有的模式
 	 */
-	var allCmd = ['new', 'hot', 'my'];
+	var allCmd = ['new', 'hot', 'my', 'search'];
 
 	/**
 	 * 当前的模式
@@ -115,6 +140,11 @@
 	 * 当前分页数
 	 */
 	var nowCount = 0;
+
+	/**
+	 *  当前搜索内容
+	 */
+	var nowWant = '';
 
 	/**
 	 * 活动树洞apiURL
@@ -134,17 +164,20 @@
 	$(document).ready(function () {
 		loadMore(ShuDongMoreBtn);
 		$('.POPUP').popup();
+		$('.accordion').accordion();
 	});
 
 	/**
 	 * 加载更多树洞
 	 */
 	function loadMore() {
+		$(ShuDongMoreBtn).removeClass('disabled');
 		$(ShuDongMoreBtn).toggleClass('loading');
 		$.getJSON(url_GetShuDong,
 				{
 					begin: nowCount,
-					cmd: allCmd[nowCmd]
+					cmd: allCmd[nowCmd],
+					want: nowWant
 				}
 		).done(function (data) {
 					$(ShuDongMoreBtn).toggleClass('loading');
@@ -160,6 +193,7 @@
 					showError();
 				});
 	}
+
 
 	/**
 	 * 点赞
@@ -180,7 +214,7 @@
 	 */
 	function switchShuDongModel(btn) {
 		nowCmd++;
-		nowCmd = nowCmd % allCmd.length;
+		nowCmd = nowCmd % 3;
 		$(ShuDongHolder).html('');
 		nowCount = 0;
 		loadMore();
@@ -188,6 +222,15 @@
 		document.title = allCmd[nowCmd] + '树洞';
 	}
 
+
+	function doSearch(want) {
+		nowCmd = allCmd.length - 1;
+		nowWant = want;
+		$(ShuDongHolder).html('');
+		nowCount = 0;
+		loadMore();
+		document.title = allCmd[nowCmd] + '树洞';
+	}
 
 	/**
 	 * 显示出发树洞框
@@ -203,10 +246,11 @@
 	 * 向服务器发送一条树洞
 	 */
 	function addShuDong() {
-		var say = $(AddShuDongBarCon).find('.SAY').first().val();
-		console.log(say);
+		var sayInput = $(AddShuDongBarCon).find('.SAY').first();
+		var say = $(sayInput).val();
+		$(sayInput).val('');//清空输入框
 		if (say.length < 1) {//检查非空
-			$(AddShuDongBarCon).find('.SAY').first().transition('shake');
+			$(sayInput).transition('shake');
 			return;
 		}
 		$.getJSON(url_AddShuDong, {
@@ -216,7 +260,6 @@
 			$(html).prependTo(ShuDongHolder);
 			toggleAddShuDongBox();//收起发树洞bar
 			goTop();//滚到顶部
-			$(AddShuDongBarCon).find('.SAY').first().val('');//清空输入框
 		}).error(function () {
 			alert('Sorry,树洞暂时被塞满了~');
 		});

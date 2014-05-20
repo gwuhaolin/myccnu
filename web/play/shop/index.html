@@ -65,23 +65,21 @@
 			<div class="field">
 				<div class="ui input icon">
 					<i class="icon yen"></i>
-					<input type="text" placeholder="要价多少(数字,人民币元)" class="PRICE" name="PRICE"
-					       onchange="MyBasicInfoIsChange=true">
+					<input type="text" placeholder="要价多少(数字,人民币元)" class="PRICE" name="PRICE">
 				</div>
 			</div>
 
 			<div class="field">
 				<div class="ui input icon">
 					<i class="icon star"></i>
-					<input type="text" placeholder="怎么称呼它" class="NAME" name="NAME"
-					       onchange="MyBasicInfoIsChange=true">
+					<input type="text" placeholder="怎么称呼它" class="NAME" name="NAME">
 				</div>
 			</div>
 
 			<div class="field">
 				<div class="ui input icon">
 					<i class="icon file"></i>
-					<textarea placeholder="介绍下它" class="DES" onchange="MyBasicInfoIsChange=true"></textarea>
+					<textarea placeholder="介绍下它" class="DES"></textarea>
 				</div>
 			</div>
 
@@ -96,21 +94,21 @@
 						<div class="field">
 							<div class="ui input icon">
 								<i class="icon user"></i>
-								<input type="text" placeholder="你的姓名" class="OWNER-NAME">
+								<input type="text" placeholder="你的姓名" class="OWNER-NAME"  onchange="MyBasicInfoIsChange=true">
 							</div>
 						</div>
 
 						<div class="field">
 							<div class="ui input icon">
 								<i class="icon phone"></i>
-								<input type="text" placeholder="你的电话" class="OWNER-PHONE">
+								<input type="text" placeholder="你的电话" class="OWNER-PHONE" onchange="MyBasicInfoIsChange=true">
 							</div>
 						</div>
 
 						<div class="field">
 							<div class="ui input icon">
 								<i class="icon">Q</i>
-								<input type="text" placeholder="你的QQ" class="OWNER-QQ">
+								<input type="text" placeholder="你的QQ" class="OWNER-QQ" onchange="MyBasicInfoIsChange=true">
 							</div>
 						</div>
 
@@ -187,6 +185,14 @@
 			</div>
 
 			<div class="field" id="SearchTagCon">
+			</div>
+
+			<div class="field">
+				<div class="2 ui buttons fluid mini">
+					<div class="ui button red" onclick="doSearch('油,乳,液,露,裙,靴,可爱,女,高跟,妹子')"><i class="icon female"></i>女神</div>
+					<div class="or"></div>
+					<div class="ui button blue" onclick="doSearch('吉他,琴,票,劵,球,轮,机,车')"><i class="icon male"></i>屌丝</div>
+				</div>
 			</div>
 		</div>
 

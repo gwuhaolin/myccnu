@@ -7,6 +7,8 @@
 package play.shop;
 
 import org.glassfish.jersey.server.JSONP;
+import org.hibernate.Session;
+import tool.HibernateUtil;
 import tool.R;
 
 import javax.servlet.http.HttpServletRequest;
@@ -63,6 +65,7 @@ public class ServiceShop {
 		if (picUrl == null) {
 			picUrl = ManageShopItem.DEFAULT_PIC_URL;
 		}
+
 		try {
 			ShopItemsEntity one = new ShopItemsEntity();
 			one.setName(name);
@@ -120,7 +123,7 @@ public class ServiceShop {
 	}
 
 	/**
-	 * 删除一个物品
+	 * 上传者删除一个物品
 	 *
 	 * @param id 物品的Id
 	 * @return 成功与否
@@ -128,8 +131,29 @@ public class ServiceShop {
 	@JSONP(queryParam = R.JSONP_CALLBACK)
 	@GET
 	@Path("/remove")
-	public boolean remove(@QueryParam("id") int id) {
-		return ManageShopItem.remove(id);
+	public boolean remove(@QueryParam("id") int id, @CookieParam("XH") String xh) {
+		Session session = HibernateUtil.getSession();
+		ShopItemsEntity one = (ShopItemsEntity) session.get(ShopItemsEntity.class, id);
+		boolean re = false;
+		if (xh!=null && xh.equals(one.getXh())) {
+			session.delete(one);
+			re = true;
+		}
+		HibernateUtil.closeSession(session);
+		return re;
+	}
+
+	/**
+	 * 管理员删除一个物品
+	 *
+	 * @param id 物品的Id
+	 * @return 成功与否
+	 */
+	@JSONP(queryParam = R.JSONP_CALLBACK)
+	@GET
+	@Path("/removeManage")
+	public boolean removeManage(@QueryParam("id") int id, @QueryParam("password") String password) {
+		return password.equals(ManagePassword) && ManageShopItem.remove(id);
 	}
 
 	/**
@@ -173,8 +197,8 @@ public class ServiceShop {
 		} else if (cmd.equals("search")) {
 			String want = request.getParameter("want");
 			re = ManageShopItem.search_page(from, want);
-		}else if (cmd.equals("xh")){
-			re=ManageShopItem.get_page_XH(from,request.getParameter("xh"));
+		} else if (cmd.equals("xh")) {
+			re = ManageShopItem.get_page_XH(from, request.getParameter("xh"));
 		}
 		return re;
 	}

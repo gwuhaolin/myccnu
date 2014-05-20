@@ -3,7 +3,9 @@ package play.shudong;
 import org.glassfish.jersey.server.JSONP;
 import tool.R;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import java.util.List;
 
 /**
@@ -13,8 +15,11 @@ import java.util.List;
  * Time: 15:17
  */
 @Path("/shudong")
-@Produces({ "application/javascript"})
+@Produces({"application/javascript"})
 public class ServiceShuDong {
+	@Context
+	HttpServletRequest request;
+
 	/**
 	 * 通过一条树洞的ID获得树洞
 	 *
@@ -30,9 +35,10 @@ public class ServiceShuDong {
 
 	/**
 	 * 获得多条树洞(分页的方式获得)按照发布时间排序
+	 *
 	 * @param begin 起始位置
-	 * @param cmd 树洞类型
-	 * @param XH 请求者的学号
+	 * @param cmd   树洞类型
+	 * @param XH    请求者的学号
 	 * @return 5条树洞
 	 */
 	@JSONP(queryParam = R.JSONP_CALLBACK)
@@ -49,6 +55,8 @@ public class ServiceShuDong {
 			re = ManageShuDong.get_page_hot(begin);
 		} else if (cmd.equals("my")) {//请求者发的树洞
 			re = ManageShuDong.get_page_XH(begin, XH);
+		} else if (cmd.equals("search")) {//关键字搜索
+			re = ManageShuDong.search_page(begin, request.getParameter("want"));
 		}
 		return re;
 	}

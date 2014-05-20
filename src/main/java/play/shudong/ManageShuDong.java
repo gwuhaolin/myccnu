@@ -103,6 +103,28 @@ public class ManageShuDong {
 	}
 
 	/**
+	 * 根据 关键字搜索 来查询物品
+	 *
+	 * @param from 从这里开始
+	 * @param want 关键字
+	 * @return
+	 */
+	public static List<MyShuDongEntity> search_page(int from, String want) {
+		if (want==null){
+			return null;
+		}
+		Session session = HibernateUtil.getSession();
+		Query query = session.createQuery("from MyShuDongEntity where content like ? order by id desc ");
+		query.setString(0, "%" + want + "%");
+		query.setFirstResult(from);
+		query.setMaxResults(R.ChangeCount);
+		List<MyShuDongEntity> re = query.list();
+		HibernateUtil.closeSession(session);
+		return re;
+	}
+
+
+	/**
 	 * 点赞
 	 *
 	 * @param id
@@ -138,7 +160,7 @@ public class ManageShuDong {
 		try {
 			HibernateUtil.updateEntity(shuDongEntity);
 			return true;
-		}catch (Exception e){
+		} catch (Exception e) {
 			return false;
 		}
 	}
@@ -147,12 +169,12 @@ public class ManageShuDong {
 	 * 删除一条树洞,如果不存在就不管了
 	 *
 	 * @param id
-	 * @return 如果删除成功,返回true,失败返回false
+	 * @return 如果删除成功, 返回true, 失败返回false
 	 */
 	public static boolean delete(int id) {
 		Session session = HibernateUtil.getSession();
 		Query query = session.createQuery("DELETE MyShuDongEntity WHERE id = " + id);
-		int result= query.executeUpdate();
+		int result = query.executeUpdate();
 		HibernateUtil.closeSession(session);
 		return result > 0;
 	}

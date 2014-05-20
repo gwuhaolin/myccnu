@@ -24,10 +24,6 @@ public class ServiceShopTest {
 	}
 
 
-	@Test
-	public void testRemove() throws Exception {
-		Assert.assertTrue(serviceShop.remove(1));
-	}
 
 	@Test
 	public void testGetOne() throws Exception {

@@ -64,11 +64,15 @@ public class ServiceQiNiu {
 	@GET
 	@Path("/removeOne")
 	public static boolean removeOne(@QueryParam("url") String url) {
-		RSClient client = new RSClient(mac);
-		String bucket=url.substring(7,url.indexOf('.'));
-		String key=url.substring(url.indexOf("com/")+4);
-		CallRet callRet = client.delete(bucket, key);
-		return callRet.ok();
+		try {
+			RSClient client = new RSClient(mac);
+			String bucket=url.substring(7,url.indexOf('.'));
+			String key=url.substring(url.indexOf("com/")+4);
+			CallRet callRet = client.delete(bucket, key);
+			return callRet.ok();
+		}catch (Exception e){
+			return false;
+		}
 	}
 
 }
