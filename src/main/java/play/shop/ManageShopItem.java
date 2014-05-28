@@ -9,6 +9,8 @@ package play.shop;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import tool.HibernateUtil;
+import tool.R;
+import tool.ServiceQiNiu;
 
 import java.util.List;
 
@@ -22,22 +24,12 @@ import java.util.List;
 /**
  * 逻辑业务层,操作数据库
  */
-public class ManageShop {
-
-	/**
-	 * 分页浏览时每次出现几条
-	 */
-	public static final int ChangeCount = 5;
-
-	/**
-	 * 后台管理密码
-	 */
-	public static final String ManagePassword = "SHOP";
+public class ManageShopItem {
 
 	/**
 	 * 当物品的图片URL为空时的默认URL
 	 */
-	public static final String DEFAULT_PIC_URL = "SHOP";
+	public static final String DEFAULT_PIC_URL = "http://myccnushop.qiniudn.com/default.png";
 
 	/**
 	 * 向数据库中添加一个物品,且自动为其分类
@@ -76,17 +68,23 @@ public class ManageShop {
 
 	/**
 	 * 向数据库中删除一个物品的信息
+	 * 同时删除了七牛云存储上的文件
 	 *
 	 * @param id 物品的Id
 	 * @return 成功与否
 	 */
 	public static boolean remove(int id) {
 		Session session = HibernateUtil.getSession();
-		Query query = session.createQuery("delete from ShopItemsEntity where id=?");
+		Query query = session.createQuery("from ShopItemsEntity where id=?");
 		query.setInteger(0, id);
-		int re = query.executeUpdate();
+		ShopItemsEntity one = (ShopItemsEntity) query.uniqueResult();
+		String picUrl = one.getPicUrl();
+		if (picUrl!=null && !picUrl.equals(DEFAULT_PIC_URL)) {
+			ServiceQiNiu.removeOne(one.getPicUrl());
+		}
+		session.delete(one);
 		HibernateUtil.closeSession(session);
-		return re > 0;
+		return true;
 	}
 
 
@@ -101,7 +99,7 @@ public class ManageShop {
 		Session session = HibernateUtil.getSession();
 		Query query = session.createQuery("from ShopItemsEntity order by id desc ");
 		query.setFirstResult(from);
-		query.setMaxResults(ChangeCount);
+		query.setMaxResults(R.ChangeCount);
 		List<ShopItemsEntity> re = query.list();
 		HibernateUtil.closeSession(session);
 		return re;
@@ -118,7 +116,7 @@ public class ManageShop {
 		Session session = HibernateUtil.getSession();
 		Query query = session.createQuery("from ShopItemsEntity order by seeCount desc ");
 		query.setFirstResult(from);
-		query.setMaxResults(ChangeCount);
+		query.setMaxResults(R.ChangeCount);
 		List<ShopItemsEntity> re = query.list();
 		HibernateUtil.closeSession(session);
 		return re;
@@ -139,7 +137,7 @@ public class ManageShop {
 		Query query = session.createQuery("from ShopItemsEntity where xh=? order by id desc ");
 		query.setString(0, XH);
 		query.setFirstResult(from);
-		query.setMaxResults(ChangeCount);
+		query.setMaxResults(R.ChangeCount);
 		List<ShopItemsEntity> re = query.list();
 		HibernateUtil.closeSession(session);
 		return re;
@@ -148,18 +146,25 @@ public class ManageShop {
 	/**
 	 * 根据 关键字搜索 来查询物品
 	 * 获得多条物品的信息,用于分页查询
+	 * 搜索值,如果有多个就以逗号隔开,搜索结果为所有的值相加
 	 *
 	 * @param from 从这里开始
 	 * @param want 关键字
 	 * @return
 	 */
 	public static List<ShopItemsEntity> search_page(int from, String want) {
+		String[] all = want.split(",");
+		String sql = "from ShopItemsEntity as item where ";
+		for (int i = 0; i < all.length - 1; i++) {
+			String one = all[i];
+			sql += " name like '%" + one + "%' or des like '%" + one + "%' or ";
+		}
+		sql += " name like '%" + all[all.length - 1] + "%' or des like '%" + all[all.length - 1] + "%'";
+		sql += " order by id desc";
 		Session session = HibernateUtil.getSession();
-		Query query = session.createQuery("from ShopItemsEntity as item where name like ? or des like ? order by id desc");
-		query.setString(0, "%" + want + "%");
-		query.setString(1, "%" + want + "%");
+		Query query = session.createQuery(sql);
 		query.setFirstResult(from);
-		query.setMaxResults(ChangeCount);
+		query.setMaxResults(R.ChangeCount);
 		List<ShopItemsEntity> re = query.list();
 		HibernateUtil.closeSession(session);
 		return re;
@@ -180,6 +185,17 @@ public class ManageShop {
 		session.update(one);
 		HibernateUtil.closeSession(session);
 		return one.getSeeCount();
+	}
+
+	/**
+	 * 获得所有的搜索标签
+	 * 按照权值排序
+	 *
+	 * @return
+	 */
+	public static List<ShopSearchTagEntity> getSearchTag() {
+		Session session = HibernateUtil.getSession();
+		return session.createQuery("from ShopSearchTagEntity order by weight desc ").list();
 	}
 
 }
