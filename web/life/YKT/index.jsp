@@ -24,7 +24,7 @@
 <body>
 <%
 	String XHMM[] = Tool.getXHMMfromCookie(request);
-	Object[] result = null;
+	String result = null;
 	if (Tool.XHMMisOK(XHMM)) {
 		try {
 			result = ManageYKT.getRemain(XHMM[0], XHMM[1]);
@@ -34,7 +34,7 @@
 	<div class="column center aligned">
 
 		<div class="ui statistic">
-			<div class="number"><%=(String) result[0]%>
+			<div class="number"><%=result%>
 			</div>
 		</div>
 		<div class="ui label circular black">余额</div>

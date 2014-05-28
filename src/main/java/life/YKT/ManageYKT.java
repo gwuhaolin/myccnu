@@ -32,17 +32,14 @@ public class ManageYKT {
 	 * @param MM
 	 * @return 返回一个2个元素的数组第一个是余额的字符串形式,第二个是该一卡通是否在用
 	 */
-	public static Object[] getRemain(String XH, String MM) throws Exception{
+	public static String getRemain(String XH, String MM) throws Exception{
 		Connection connection= Jsoup.connect("http://192.168.44.7:10000/sisms/index.php/person/cardinfo");
-		Object re[]=new Object[2];
 		try {
 			connection.cookies(getCookies(XH,MM));
-			connection.timeout(R.ConnectTimeout*10);
+			connection.timeout(R.ConnectTimeout*100);
 			Document document= connection.get();
 			Elements tds= document.getElementsByClass("baseTable").first().getElementsByTag("tr").last().getElementsByTag("td");
-			re[0]= tds.last().text();
-			re[1]=tds.get(5).text().equals("在用");
-			return re;
+			return tds.last().text();
 		} catch (Exception e) {
 //			e.printStackTrace();
 			throw new Exception("学校一卡通服务器繁忙");
@@ -59,7 +56,7 @@ public class ManageYKT {
 		Connection connection= Jsoup.connect("http://192.168.44.7:10000/sisms/index.php/person/cardinfo");
 		try {
 			connection.cookies(getCookies(XH,MM));
-			connection.timeout(R.ConnectTimeout*10);
+			connection.timeout(R.ConnectTimeout*100);
 			Document document= connection.get();
 			return document.getElementsByClass("baseTable").first().getElementsByTag("tr").last().getElementsByTag("td").first().text();
 		} catch (Exception e) {
@@ -80,7 +77,7 @@ public class ManageYKT {
 			connection.cookies(getCookies(XH,MM));
 			connection.data("start_date", getBeforeDate(4));//起始时间
 			connection.data("end_date", Tool.time_YYYY_MM_DD());//结束时间
-			connection.timeout(R.ConnectTimeout*10);
+			connection.timeout(R.ConnectTimeout*100);
 			Document document= connection.post();
 			Elements trs= document.getElementsByClass("baseTable").first().getElementsByTag("tr");
 			List<OneChange> re=new LinkedList<OneChange>();
@@ -123,7 +120,7 @@ public class ManageYKT {
 			String curDate= Tool.time_YYYY_MM_DD();
 			connection.data("start_date",curDate.split("-")[0]+"-01-01");//起始时间
 			connection.data("end_date",curDate);//结束时间
-			connection.timeout(R.ConnectTimeout*10);
+			connection.timeout(R.ConnectTimeout*100);
 			Document document= connection.post();
 			Elements trs= document.getElementsByClass("baseTable").first().getElementsByTag("tr");
 			List<OneChange> re=new LinkedList<OneChange>();
@@ -167,7 +164,7 @@ public class ManageYKT {
 			String curDate= Tool.time_YYYY_MM_DD();
 			connection.data("start_date",Tool.DateFormat_YYYY_MM_DD.format(new Date(System.currentTimeMillis()-604800000)));//起始时间,一周前
 			connection.data("end_date",curDate);//结束时间
-			connection.timeout(R.ConnectTimeout*10);
+			connection.timeout(R.ConnectTimeout*100);
 			Document document= connection.post();
 			Elements trs= document.getElementsByClass("baseTable").first().getElementsByTag("tr");
 			List<OneChange> re=new LinkedList<OneChange>();
@@ -247,11 +244,5 @@ public class ManageYKT {
 		return Tool.DateFormat_YYYY_MM_DD.format(reDate);
 	}
 
-	public static void main(String[] args) {
-//		System.out.println(getRemain("2012210817", "930820"));
-		Date fromDate=new Date(System.currentTimeMillis());
-		fromDate.setYear(fromDate.getYear() - 1);
-		System.out.println(fromDate);
-	}
 
 }
