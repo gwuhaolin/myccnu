@@ -1,4 +1,5 @@
 <%@ page import="life.lose.ManageLose" %>
+<%@ page import="tool.R" %>
 <%--
   Created by Intellij IDEA.
   User: WuHaoLin
@@ -18,7 +19,7 @@
 	<script src="/lib/js/main.js"></script>
 	<title>招领平台</title>
 	<script>
-		var changeCount = Number(<%=ManageLose.R.ChangeCount%>);
+		var changeCount = Number(<%=R.ChangeCount%>);
 		<%--ajax加载更多--%>
 		function ajaxMore(btn) {
 			$(btn).addClass('active');

@@ -12,29 +12,32 @@
 	<script src="lib/js/plupload.full.min.js"></script>
 	<script src="lib/js/qiniu.min.js"></script>
 	<script src="lib/js/main.js"></script>
+	<script src="lib/js/cookies.js"></script>
 </head>
 <body>
 
-<div class="ui basic modal hidden" id="modal_bind"><i class="close icon red circular inverted"></i>
 
-	<div class="ui header icon center aligned"><i class="icon user inverted red circular" id="icon_bind"></i><em
-			id="msg_bind"></em></div>
-	<div class="ui form">
-		<div class="two fields">
-			<div class="field">
-				<div class="ui icon input"><input type="text" value="" id="XH_bind" placeholder="你的学号"><i
-						class="user icon"></i></div>
-			</div>
-			<div class="field">
-				<div class="ui icon input"><input type="password" value="" id="MM_bind" placeholder="你的信息门户登入密码"><i
-						class="lock icon"></i></div>
-			</div>
+<div>
+	<div class="ui modal transition" id="AD">
+		<i class="close icon red circular inverted"></i>
+
+		<div class="header">
+			Tip
 		</div>
-		<div class="field">
-			<div id="btn_bind" class="ui button blue" onclick="executeAJAXBind()">GO</div>
+		<div class="content">
+			1237890
 		</div>
 	</div>
+	<script>
+
+		var know = $.cookie('know');
+		if (!know) {
+			$('#AD').modal('show');
+			$.cookie('know', true, { expires: 7 });
+		}
+	</script>
 </div>
+
 
 </body>
 </html>
