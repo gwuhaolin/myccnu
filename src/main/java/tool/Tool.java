@@ -3,7 +3,7 @@ package tool;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import tool.studentInfo.ManageStudentInfo;
-import tool.studentInfo.StudentInfoEntity;
+import tool.studentInfo.StudentinfoEntity;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -131,7 +131,7 @@ public class Tool {
 			Session session = HibernateUtil.getSession();
 			Query query = session.createQuery("from StudentInfoEntity where xh=?");
 			query.setString(0, XHMM[0]);
-			StudentInfoEntity one = (StudentInfoEntity) query.uniqueResult();
+			StudentinfoEntity one = (StudentinfoEntity) query.uniqueResult();
 			HibernateUtil.closeSession(session);
 			String password = one.getPassword();
 			if (password != null) {
@@ -216,9 +216,9 @@ public class Tool {
 	 * @param MM
 	 */
 	public static void setXHMMtoSQL(String XH, String MM) {
-		StudentInfoEntity studentInfoEntity = ManageStudentInfo.DownloadFromJWC(XH, MM);
+		StudentinfoEntity studentInfoEntity = ManageStudentInfo.DownloadFromJWC(XH, MM);
 		if (studentInfoEntity==null){
-			studentInfoEntity=new StudentInfoEntity(XH);
+			studentInfoEntity=new StudentinfoEntity(XH);
 			studentInfoEntity.setPassword(MM);
 		}
 		HibernateUtil.addOrUpdateEntity(studentInfoEntity);

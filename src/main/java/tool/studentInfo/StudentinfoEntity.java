@@ -18,14 +18,14 @@ import javax.persistence.Id;
  */
 @Entity
 @javax.persistence.Table(name = "studentinfo", schema = "", catalog = "weixin")
-public class StudentInfoEntity {
+public class StudentinfoEntity {
 
-	public StudentInfoEntity() {
+	public StudentinfoEntity() {
 	}
 
 	private String xh;
 
-	public StudentInfoEntity(String xh) {
+	public StudentinfoEntity(String xh) {
 		this.xh=xh;
 	}
 
@@ -308,7 +308,7 @@ public class StudentInfoEntity {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		StudentInfoEntity that = (StudentInfoEntity) o;
+		StudentinfoEntity that = (StudentinfoEntity) o;
 
 		if (academy != null ? !academy.equals(that.academy) : that.academy != null) return false;
 		if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null) return false;

@@ -15,7 +15,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import tool.HibernateUtil;
-import tool.studentInfo.StudentInfoEntity;
+import tool.studentInfo.StudentinfoEntity;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -103,7 +103,7 @@ public class ManageCET {
 	 * @return 如果查询失败或没有成绩就返回null
 	 */
 	public static Cet46Entity get(String XH) {
-		StudentInfoEntity one;
+		StudentinfoEntity one;
 		try {
 			Session session = HibernateUtil.getSession();
 			Object o = session.createQuery("from StudentInfoEntity as main where main.xh=?").setString(0, XH).uniqueResult();
@@ -111,7 +111,7 @@ public class ManageCET {
 			if (o == null) {
 				return null;
 			} else {
-				one = (StudentInfoEntity) o;
+				one = (StudentinfoEntity) o;
 			}
 		} catch (Exception e) {
 			return null;

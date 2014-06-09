@@ -46,11 +46,11 @@ public class ManageStudentInfo {
 	 * @param XH
 	 * @return
 	 */
-	public static StudentInfoEntity get_XH(String XH) {
+	public static StudentinfoEntity get_XH(String XH) {
 		Session session = HibernateUtil.getSession();
 		Query query = session.createQuery("from StudentInfoEntity where xh=?");
 		query.setString(0, XH);
-		StudentInfoEntity re = (StudentInfoEntity) query.uniqueResult();
+		StudentinfoEntity re = (StudentinfoEntity) query.uniqueResult();
 		HibernateUtil.closeSession(session);
 		return re;
 	}
@@ -61,10 +61,10 @@ public class ManageStudentInfo {
 	 * @param keyWord
 	 * @return
 	 */
-	public static List<StudentInfoEntity> get_Name(String keyWord) {
+	public static List<StudentinfoEntity> get_Name(String keyWord) {
 		Session session = HibernateUtil.getSession();
 		Query query = session.createQuery("from StudentInfoEntity where name like '%" + keyWord + "%'");
-		List<StudentInfoEntity> re = query.list();
+		List<StudentinfoEntity> re = query.list();
 		HibernateUtil.closeSession(session);
 		return re;
 	}
@@ -75,10 +75,10 @@ public class ManageStudentInfo {
 	 * @param keyWord
 	 * @return
 	 */
-	public static List<StudentInfoEntity> get_Birthday(String keyWord) {
+	public static List<StudentinfoEntity> get_Birthday(String keyWord) {
 		Session session = HibernateUtil.getSession();
 		Query query = session.createQuery("from StudentInfoEntity where birthday like '%" + keyWord + "%'");
-		List<StudentInfoEntity> re = query.list();
+		List<StudentinfoEntity> re = query.list();
 		HibernateUtil.closeSession(session);
 		return re;
 	}
@@ -89,10 +89,10 @@ public class ManageStudentInfo {
 	 * @param keyWord
 	 * @return
 	 */
-	public static List<StudentInfoEntity> get_HighSchool(String keyWord) {
+	public static List<StudentinfoEntity> get_HighSchool(String keyWord) {
 		Session session = HibernateUtil.getSession();
 		Query query = session.createQuery("from StudentInfoEntity where highSchool like '%" + keyWord + "%'");
-		List<StudentInfoEntity> re = query.list();
+		List<StudentinfoEntity> re = query.list();
 		HibernateUtil.closeSession(session);
 		return re;
 	}
@@ -103,10 +103,10 @@ public class ManageStudentInfo {
 	 * @param keyWord
 	 * @return
 	 */
-	public static List<StudentInfoEntity> get_Address(String keyWord) {
+	public static List<StudentinfoEntity> get_Address(String keyWord) {
 		Session session = HibernateUtil.getSession();
 		Query query = session.createQuery("from StudentInfoEntity where familyAddress like '%" + keyWord + "%'");
-		List<StudentInfoEntity> re = query.list();
+		List<StudentinfoEntity> re = query.list();
 		HibernateUtil.closeSession(session);
 		return re;
 	}
@@ -117,10 +117,10 @@ public class ManageStudentInfo {
 	 * @param keyWord
 	 * @return
 	 */
-	public static List<StudentInfoEntity> get_Education(String keyWord) {
+	public static List<StudentinfoEntity> get_Education(String keyWord) {
 		Session session = HibernateUtil.getSession();
 		Query query = session.createQuery("from StudentInfoEntity where educationInfo like '%" + keyWord + "%'");
-		List<StudentInfoEntity> re = query.list();
+		List<StudentinfoEntity> re = query.list();
 		HibernateUtil.closeSession(session);
 		return re;
 	}
@@ -132,8 +132,8 @@ public class ManageStudentInfo {
 	 * @param keyWord
 	 * @return
 	 */
-	public static List<StudentInfoEntity> get(String keyWord) {
-		List<StudentInfoEntity> re = new LinkedList<StudentInfoEntity>();
+	public static List<StudentinfoEntity> get(String keyWord) {
+		List<StudentinfoEntity> re = new LinkedList<StudentinfoEntity>();
 		re.addAll(get_Name(keyWord));
 		re.addAll(get_Birthday(keyWord));
 		re.addAll(get_HighSchool(keyWord));
@@ -148,11 +148,11 @@ public class ManageStudentInfo {
 	 * @param MM 密码
 	 * @return 如果成功获取且保存到数据库就返回获得的对象,否则返回null
 	 */
-	public static StudentInfoEntity DownloadFromJWC(String XH,String MM){
+	public static StudentinfoEntity DownloadFromJWC(String XH,String MM){
 		Document document;
 		try {
 			document = CCNUPortal.getStudentInfo(XH, MM);
-			StudentInfoEntity re=parse(document);
+			StudentinfoEntity re=parse(document);
 			if (re!=null){
 				HibernateUtil.addOrUpdateEntity(re);
 				return re;
@@ -169,9 +169,9 @@ public class ManageStudentInfo {
 	 * @param document
 	 * @return
 	 */
-	private static StudentInfoEntity parse(Document document){
-		StudentInfoEntity reOne = new StudentInfoEntity();
-		Class clazz = StudentInfoEntity.class;
+	private static StudentinfoEntity parse(Document document){
+		StudentinfoEntity reOne = new StudentinfoEntity();
+		Class clazz = StudentinfoEntity.class;
 		try {
 			//基本信息
 			Elements tds = document.getElementById("tdId_baseinfo").select("table").first().select("td");

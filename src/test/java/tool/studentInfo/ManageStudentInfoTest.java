@@ -4,8 +4,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
-
 public class ManageStudentInfoTest {
 
 	@Before
@@ -55,7 +53,7 @@ public class ManageStudentInfoTest {
 
 	@Test
 	public void testDownloadFromJWC() throws Exception {
-		StudentInfoEntity studentInfoEntity= ManageStudentInfo.DownloadFromJWC("2012210817","930820");
+		StudentinfoEntity studentInfoEntity= ManageStudentInfo.DownloadFromJWC("2012210817","930820");
 		System.out.println(studentInfoEntity);
 	}
 }

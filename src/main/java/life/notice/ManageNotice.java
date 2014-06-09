@@ -28,26 +28,26 @@ public class ManageNotice {
 	public static final String ManagePassword = "NOTICE";
 	public static final int IsOK_YES = 0;//用于标准人工筛选后的信息删除,该信息ok
 	public static final int IsOK_NO = 1;//用于标准人工筛选后的信息删除,该信息不符合要求不能被显示
-	public static final String[][] FromSiteName={
-			{"教务处-教学教务","http://jwc.ccnu.edu.cn/"},//0
-			{"学生资助","http://xgb.ccnu.edu.cn/"},//1
-			{"勤工之家","http://xgb.ccnu.edu.cn/"},//2
-			{"奖助学金","http://xgb.ccnu.edu.cn/"},//3
-			{"助学贷款","http://xgb.ccnu.edu.cn/"},//4
-			{"网络中心","http://nisc.ccnu.edu.cn/"},//5
-			{"华师官网","http://www.ccnu.edu.cn/"},//6
-			{"研究生会","http://gsu.ccnu.edu.cn/"},//7
-			{"后勤集团","http://houqin.ccnu.edu.cn/"},//8
-			{"一卡通中心","http://ecard.ccnu.edu.cn/"},//9
-			{"校图书馆","http://lib.ccnu.edu.cn/"},//10
-			{"学工动态","http://www.guisheng.net/"},//11
-			{"华大青年网","http://www.ccnuyouth.com/"},//12
+	public static final String[][] FromSiteName = {
+			{"教务处-教学教务", "http://jwc.ccnu.edu.cn/"},//0
+			{"学生资助", "http://xgb.ccnu.edu.cn/"},//1
+			{"勤工之家", "http://xgb.ccnu.edu.cn/"},//2
+			{"奖助学金", "http://xgb.ccnu.edu.cn/"},//3
+			{"助学贷款", "http://xgb.ccnu.edu.cn/"},//4
+			{"网络中心", "http://nisc.ccnu.edu.cn/"},//5
+			{"华师官网", "http://www.ccnu.edu.cn/"},//6
+			{"研究生会", "http://gsu.ccnu.edu.cn/"},//7
+			{"后勤集团", "http://houqin.ccnu.edu.cn/"},//8
+			{"一卡通中心", "http://ecard.ccnu.edu.cn/"},//9
+			{"校图书馆", "http://lib.ccnu.edu.cn/"},//10
+			{"学工动态", "http://www.guisheng.net/"},//11
+			{"华大青年网", "http://www.ccnuyouth.com/"},//12
 
 	};
 
-	public static final String[][] FromSiteName1={
-			{"1","2"},
-			{"2","3"},
+	public static final String[][] FromSiteName1 = {
+			{"1", "2"},
+			{"2", "3"},
 	};
 
 
@@ -163,12 +163,12 @@ public class ManageNotice {
 	 * @param size 拿出多少个
 	 * @return
 	 */
-	public static List<MyNoticeEntity> search_page(int from,String want) {
-		System.out.println("form="+from+" want="+want);
+	public static List<MyNoticeEntity> search_page(int from, String want) {
+		System.out.println("form=" + from + " want=" + want);
 		Session session = HibernateUtil.getSession();
 		Query query = session.createQuery("from MyNoticeEntity as notice where isOk=0 and content like ? or orgUrl like ? order by notice.date desc ,id desc");
-		query.setString(0,"%"+want+"%");
-		query.setString(1,"%"+want+"%");
+		query.setString(0, "%" + want + "%");
+		query.setString(1, "%" + want + "%");
 		query.setFirstResult(from);
 		query.setMaxResults(R.ChangeCount);
 		List<MyNoticeEntity> re = query.list();
@@ -203,7 +203,7 @@ public class ManageNotice {
 	public static List<MyNoticeEntity> get_page_ccnuyouth(int from) {
 		Session session = HibernateUtil.getSession();
 		Query query = session.createQuery("from MyNoticeEntity as notice where isOk=0 and orgUrl like ? order by notice.date desc ,id desc");
-		query.setString(0,FromSiteName[12][1]);
+		query.setString(0, FromSiteName[12][1]);
 		query.setFirstResult(from);
 		query.setMaxResults(R.ChangeCount);
 		List<MyNoticeEntity> re = query.list();
@@ -234,10 +234,10 @@ public class ManageNotice {
 	 * @param document
 	 * @return
 	 */
-	public static Document semanticUI(Document document,String baseURL) {
+	public static Document semanticUI(Document document, String baseURL) {
 		//关键字去除
-		String tempStr= document.html().replaceAll(";&nbsp|<br>|</br>","");
-		document=Jsoup.parse(tempStr);
+		String tempStr = document.html().replaceAll(";&nbsp|<br>|</br>", "");
+		document = Jsoup.parse(tempStr);
 
 		//Bootstrap修饰
 		document.getAllElements()
@@ -252,15 +252,15 @@ public class ManageNotice {
 				.addClass("segment");
 //				.wrap("<div class='table-responsive'></div>");
 
-		Elements imgs=document.getElementsByTag("img");
-		for (Element one:imgs){
+		Elements imgs = document.getElementsByTag("img");
+		for (Element one : imgs) {
 			one.addClass("ui").addClass("image");//把所有的图片全都加上Bootstrap响应式图片类
 			//图片的URL处理
-			String url=one.attr("src");
-			if (!url.contains("http://")){
-				url=baseURL+url;
+			String url = one.attr("src");
+			if (!url.contains("http://")) {
+				url = baseURL + url;
 			}
-			one.attr("src",url);
+			one.attr("src", url);
 		}
 
 		return document;
@@ -397,7 +397,7 @@ public class ManageNotice {
 					try {
 						String orgUrl = checkURL(link, "http://jwc.ccnu.edu.cn/");
 						document = Jsoup.connect(orgUrl).get();
-						document = semanticUI(document,"http://jwc.ccnu.edu.cn/");
+						document = semanticUI(document, "http://jwc.ccnu.edu.cn/");
 
 						String dateStr = document.getElementById("date").text().split("：", 2)[1];
 						dateStr = parseDateStr(dateStr);
@@ -463,7 +463,7 @@ public class ManageNotice {
 	 * @return
 	 */
 	public static List<MyNoticeEntity> get2() {
-		String form =FromSiteName[2][0];
+		String form = FromSiteName[2][0];
 		LinkedList<MyNoticeEntity> re = new LinkedList<MyNoticeEntity>();
 		try {
 			Document document = Jsoup.connect("http://xgb.ccnu.edu.cn/zz/list.asp?id=213").get();
@@ -857,7 +857,7 @@ public class ManageNotice {
 	 * @return
 	 */
 	public static List<MyNoticeEntity> get12() {
-		String form =  FromSiteName[12][0];
+		String form = FromSiteName[12][0];
 		LinkedList<MyNoticeEntity> re = new LinkedList<MyNoticeEntity>();
 		try {
 			Document document = Jsoup.connect("http://www.ccnuyouth.com/plus/list.php?tid=14").get();
@@ -866,26 +866,21 @@ public class ManageNotice {
 				Element link = links.get(i);
 				String title = getLinkTitle(link);
 				if (isNotice(title)) {
-					try {
-						String orgUrl = checkURL(link, "http://www.ccnuyouth.com/");
-						document = Jsoup.connect(orgUrl).get();
-						document = semanticUI(document, "http://www.ccnuyouth.com/");
+					String orgUrl = checkURL(link, "http://www.ccnuyouth.com/");
+					document = Jsoup.connect(orgUrl).get();
+					document = semanticUI(document, "http://www.ccnuyouth.com/");
 
-						String dateStr = document.getElementById("newsInfo").text();
-						int tempIndex = dateStr.indexOf("时间:");
-						dateStr = dateStr.substring(tempIndex + 3, dateStr.indexOf("来", tempIndex) - 4);
-						dateStr = parseDateStr(dateStr);
+					String dateStr = document.getElementById("newsInfo").text();
+					int tempIndex = dateStr.indexOf("时间:");
+					dateStr = dateStr.substring(tempIndex + 3, dateStr.indexOf("来", tempIndex) - 4);
+					dateStr = parseDateStr(dateStr);
 
-						String content = document.getElementsByClass("newsBody").first().html();
+					String content = document.getElementsByClass("newsBody").first().html();
 
-						re.add(new MyNoticeEntity(title, dateStr, orgUrl, content, form));
-					} catch (Exception e) {
-						System.out.println(form + "ERROR!");
-						e.printStackTrace();
-					}
+					re.add(new MyNoticeEntity(title, dateStr, orgUrl, content, form));
 				}
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return re;

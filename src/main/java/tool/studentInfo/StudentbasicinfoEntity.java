@@ -16,7 +16,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "studentbasicinfo", schema = "", catalog = "weixin")
-public class StudentBasicInfoEntity {
+class StudentBasicInfoEntity {
 	private String xh;
 	private String major;
 	private Byte sex;

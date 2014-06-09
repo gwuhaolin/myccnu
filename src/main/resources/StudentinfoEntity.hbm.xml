@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-	<class name="tool.studentInfo.StudentInfoEntity" table="studentinfo" schema="" catalog="weixin">
+	<class name="tool.studentInfo.StudentinfoEntity" table="studentinfo" schema="" catalog="weixin">
 		<id name="xh">
 			<column name="XH" sql-type="varchar" length="20" not-null="true"/>
 		</id>

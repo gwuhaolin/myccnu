@@ -13,7 +13,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "shopsearchtag", schema = "", catalog = "weixin")
-public class ShopSearchTagEntity {
+class ShopSearchTagEntity {
 	private int id;
 	private String name;//热门词汇的名称
 	private String value;//搜索值,如果有多个就以逗号隔开,搜索结果为所有的值相加
