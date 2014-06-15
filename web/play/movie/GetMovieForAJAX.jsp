@@ -117,12 +117,12 @@
 
 
 		<%--评论框--%>
-		<div class="ui button icon circular inverted blue mini" onclick="toggleComment(this)">
-			<i class="icon comment"></i>
-		</div>
-		<iframe src="comment.jsp?id=<%=one.getId()%>"
-		        style="z-index:10;border: none;display: none;opacity: 0.9;position: absolute;width: 100%;left: 0;bottom: -300px;height: 300px;">
-		</iframe>
+		<%--<div class="ui button icon circular inverted blue mini" onclick="toggleComment(this)">--%>
+			<%--<i class="icon comment"></i>--%>
+		<%--</div>--%>
+		<%--<iframe src="comment.jsp?id=<%=one.getId()%>"--%>
+		        <%--style="z-index:10;border: none;display: none;opacity: 0.9;position: absolute;width: 100%;left: 0;bottom: -300px;height: 300px;">--%>
+		<%--</iframe>--%>
 	</div>
 </div>
 <%

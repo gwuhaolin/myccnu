@@ -15,17 +15,17 @@
 	<meta charset="utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="/lib/css/semantic.min.css">
-	<link rel="stylesheet" type="text/css" href="/lib/css/main.css">
-	<script src="/lib/js/jquery-1.11.2.min.js"></script>
-	<script src="/lib/js/semantic.min.js"></script>
-	<script src="/lib/js/main.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../lib/css/semantic.min.css">
+	<link rel="stylesheet" type="text/css" href="../../lib/css/main.css">
+	<script src="../../lib/js/jquery-1.11.2.min.js"></script>
+	<script src="../../lib/js/semantic.min.js"></script>
+	<script src="../../lib/js/main.js"></script>
 	<title>我的图书馆</title>
 </head>
 <body>
 <%
 	boolean passwordIsOk = false;
-	List<MyLib.MyLibBook> myLibBooks = null;
+	List<MyLib.MyLibBook> myLibBooks;
 	String XHMM[] = Tool.getXHMMfromCookie(request);
 	String tempMM = request.getParameter("MM");
 	if (tempMM != null) {
@@ -98,10 +98,10 @@
 			</div>
 
 			<%--续借--%>
-			<%--<button class="ui button circular inverted icon teal" id="<%=one.getIndex()%>"--%>
-			        <%--onclick="<%=one.getXJJavaStriptFunction()%>">--%>
-				<%--<i class="icon refresh"></i>续借--%>
-			<%--</button>--%>
+			<button class="ui button circular inverted icon teal" id="<%=one.getIndex()%>"
+			        onclick="<%=one.getXJJavaStriptFunction()%>">
+				<i class="icon refresh"></i>续借
+			</button>
 
 			<a href="<%=one.getBookInfoURL()%>">
 				<div class="ui label attached right bottom small green"><i class="icon tags"> 详细信息</i></div>

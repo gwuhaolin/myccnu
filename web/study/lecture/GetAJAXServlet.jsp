@@ -22,7 +22,7 @@
 <div class="column">
 	<div class="ui stacked segment">
 
-		<div class="ui label corner inverted red icon"><i class="icon empty heart"></i></div>
+		<%--<div class="ui label corner inverted red icon"><i class="icon empty heart"></i></div>--%>
 
 		<!--标题-->
 		<div class="ui header">
@@ -128,11 +128,11 @@
 		</div>
 
 		<!--评论-->
-		<div class="ui button icon circular inverted teal mini" onclick="toggleComment(this)"><i
-				class="icon comment"></i></div>
-		<!--评论框-->
-		<iframe src="comment.jsp?id=<%=one.getId()%>">
-		</iframe>
+		<%--<div class="ui button icon circular inverted teal mini" onclick="toggleComment(this)"><i--%>
+				<%--class="icon comment"></i></div>--%>
+		<%--<!--评论框-->--%>
+		<%--<iframe src="comment.jsp?id=<%=one.getId()%>">--%>
+		<%--</iframe>--%>
 
 	</div>
 </div>

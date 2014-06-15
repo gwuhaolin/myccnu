@@ -45,12 +45,6 @@ public class ManageNotice {
 
 	};
 
-	public static final String[][] FromSiteName1 = {
-			{"1", "2"},
-			{"2", "3"},
-	};
-
-
 	/**
 	 * 用来判断该标题的文章是一个通知的筛选器,如果包含了该关键字就认为是文明想要的
 	 */
@@ -59,6 +53,7 @@ public class ManageNotice {
 			"安排",
 			"说明",
 			"启事",
+			"公示",
 	};
 
 	/**
