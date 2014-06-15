@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<class name="life.repairComputer.RepairComputerMansEntity" table="repaircomputermans" schema=""
+	       catalog="weixin">
+		<id name="id">
+			<column name="id" sql-type="int" not-null="true"/>
+		</id>
+		<property name="name">
+			<column name="Name" sql-type="varchar"/>
+		</property>
+		<property name="phone">
+			<column name="Phone" sql-type="varchar" length="30"/>
+		</property>
+		<property name="qq">
+			<column name="QQ" sql-type="varchar" length="20"/>
+		</property>
+		<property name="jobsCount">
+			<column name="JobsCount" sql-type="int"/>
+		</property>
+		<property name="address">
+			<column name="Address" sql-type="varchar"/>
+		</property>
+		<property name="org">
+			<column name="org" sql-type="varchar" length="20"/>
+		</property>
+	</class>
+</hibernate-mapping>

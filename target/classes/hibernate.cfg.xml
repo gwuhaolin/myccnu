@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+	<session-factory>
+		<!--编码为UTF8-->
+		<property name="connection.useUnicode">true</property>
+		<property name="connection.characterEncoding">UTF8</property>
+
+		<!-- 数据库连接驱动 -->
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+
+		<!--数据库连接URL-->
+		<property name="connection.url">jdbc:mysql://localhost:3306/weixin</property>
+
+		<!--数据库帐号-->
+		<property name="connection.username">root</property>
+
+		<!--数据库密码-->
+		<property name="connection.password">ccnuyouth</property>
+
+		<!-- JDBC connection pool (use the built-in) -->
+		<property name="connection.pool_size">
+			1000
+		</property>
+
+		<!-- SQL 方言-->
+		<property name="dialect">
+			org.hibernate.dialect.MySQLInnoDBDialect
+		</property>
+
+		<!-- Enable Hibernate's automatic session context management -->
+		<property name="current_session_context_class">
+			thread
+		</property>
+
+		<!-- Echo all executed SQL to stdout -->
+		<property name="show_sql">
+			false
+		</property>
+
+		<!-- Drop and re-create the database schema on startup -->
+		<property name="hbm2ddl.auto">
+			update
+		</property>
+
+		<!-- 以下设置对象与数据库表的映像文件 -->
+		<!--电影-->
+		<mapping resource="MymovieEntity.hbm.xml" class="play.movie.MyMovieEntity"/>
+		<!--电脑维修队员-->
+		<mapping resource="RepaircomputermansEntity.hbm.xml"
+		         class="life.repairComputer.RepairComputerMansEntity"/>
+		<!--重要通知-->
+		<mapping resource="MynoticeEntity.hbm.xml" class="life.notice.MyNoticeEntity"/>
+		<!--树洞-->
+		<mapping resource="MyshudongEntity.hbm.xml" class="play.shudong.MyShuDongEntity"/>
+		<mapping resource="MyshudongbgimgEntity.hbm.xml" class="play.shudong.MyShuDongBgImgEntity"/>
+		<!--兼职家教-->
+		<mapping resource="MyjobEntity.hbm.xml" class="life.jobs.MyJobEntity"/>
+		<!--讲座-->
+		<mapping resource="MyeventEntity.hbm.xml" class="study.lecture.MyEventEntity"/>
+		<!--失物招领-->
+		<mapping resource="MyloseEntity.hbm.xml" class="life.lose.MyLoseEntity"/>
+		<!--CET-->
+		<mapping resource="Cet46Entity.hbm.xml" class="study.CET.Cet46Entity"/>
+		<!--教室-->
+		<mapping resource="MyclassroomEntity.hbm.xml" class="study.classroom.MyClassroomEntity"/>
+		<!--二手商城-->
+		<mapping resource="ShopitemsEntity.hbm.xml" class="play.shop.ShopItemsEntity"/>
+		<mapping resource="ShopsearchtagEntity.hbm.xml" class="play.shop.ShopSearchTagEntity"/>
+		<!--学生信息-->
+		<mapping resource="StudentbasicinfoEntity.hbm.xml" class="tool.studentInfo.StudentBasicInfoEntity"/>
+		<mapping class="tool.studentInfo.StudentinfoEntity" resource="StudentinfoEntity.hbm.xml"/>
+		<!--投票-->
+		<mapping resource="MycampaignerEntity.hbm.xml" class="play.vote.MyCampaignerEntity"/>
+		<mapping resource="MyvoteEntity.hbm.xml" class="play.vote.MyVoteEntity"/>
+	</session-factory>
+
+</hibernate-configuration>
