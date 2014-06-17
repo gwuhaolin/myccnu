@@ -17,7 +17,6 @@
 
 	if (kh == null || name==null) {
 		response.sendRedirect("queryByKH?info=Your name and id has Problem!");return;
-		return;
 	}
 	Cet46Entity cet = ManageCET.get_KH(kh, name);
 %>
@@ -26,11 +25,11 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link href="/lib/css/bootstrap.min.css" rel="stylesheet">
-	<script src="/lib/js/jquery-2.0.2.min.js"></script>
-	<script src="/lib/js/bootstrap.min.js"></script>
-	<link href="/lib/css/main.css" rel='stylesheet'>
-	<script src="/lib/js/main.js"></script>
+	<link href="../../lib/css/bootstrap.min.css" rel="stylesheet">
+	<script src="../../lib/js/jquery.min.js"></script>
+	<script src="../../lib/js/bootstrap.min.js"></script>
+	<link href="../../lib/css/main.css" rel='stylesheet'>
+	<script src="../../lib/js/main.js"></script>
 	<title>Query Result</title>
 </head>
 <body>

@@ -260,7 +260,7 @@ public class Tool {
 						"\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0\">\n" +
 						"\t<link rel=\"stylesheet\" type=\"text/css\" href=\"/lib/css/semantic.min.css\">\n" +
 						"\t<link rel=\"stylesheet\" type=\"text/css\" href=\"/lib/css/main.css\">\n" +
-						"\t<script src=\"/lib/js/jquery-1.11.2.min.js\"></script>\n" +
+						"\t<script src=\"/lib/js/jquery.min.js\"></script>\n" +
 						"\t<script src=\"/lib/js/semantic.min.js\"></script>\n" +
 						"\t<script src=\"/lib/js/main.js\"></script>\n" +
 						"</head>\n" +

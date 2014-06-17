@@ -1,392 +1,392 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8"/>
-	<link rel="icon" href="/favicon.ico">
-	<meta name="keywords" content="微信,服务平台,掌上华师,华中师范大学,myccnu">
-	<meta name="description" content="华中师范大学微信服务号掌上华师">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="lib/css/semantic.min.css">
-	<link rel="stylesheet" type="text/css" href="lib/css/main.css">
-	<script src="lib/js/jquery-1.11.2.min.js"></script>
-	<script src="lib/js/semantic.min.js"></script>
-	<script src="lib/js/main.js"></script>
-	<title>掌上华师</title>
-	<style>
-		a:link {
-			text-decoration: none;
-		}
+    <meta charset="utf-8"/>
+    <link rel="icon" href="/favicon.ico">
+    <meta name="keywords" content="微信,服务平台,掌上华师,华中师范大学,myccnu">
+    <meta name="description" content="华中师范大学微信服务号掌上华师">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="lib/css/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="lib/css/main.css">
+    <script src="lib/js/jquery.min.js"></script>
+    <script src="lib/js/semantic.min.js"></script>
+    <script src="lib/js/main.js"></script>
+    <title>掌上华师</title>
+    <style>
+        a:link {
+            text-decoration: none;
+        }
 
-		body {
-			background-color: #ffffff;
-		}
-	</style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
 
 </head>
 <body style="margin: 0;padding: 0;overflow-x: hidden">
 
 <!--底部导航条-->
 <div class="ui top overlay sidebar" style="overflow: visible">
-	<div class="ui three item fluid menu">
-		<div class="item ui dropdown pointing red" id="life_drop">
-			爱生活<i class="icon heart"></i>
+    <div class="ui three item fluid menu">
+        <div class="item ui dropdown pointing red" id="life_drop">
+            爱生活<i class="icon heart"></i>
 
-			<div class="ui menu selection">
-				<a class="item blue" href="life/notice/index.jsp"><i class="icon tags"></i>最新通知</a>
-				<a class="item red" href="life/job/index.jsp"><i class="icon pencil"></i>兼职家教</a>
-				<a class="item green" href="life/YKT/index.jsp"><i class="icon money"></i>查一卡通</a>
-				<a class="item orange" href="life/computer/index.jsp"><i class="icon desktop"></i>电脑维修</a>
-				<a class="item teal" href="life/lose/index.jsp"><i class="icon heart empty"></i>失物招领</a>
-			</div>
-		</div>
-		<div class="item ui dropdown pointing green" id="life_study">
-			做学霸<i class="icon book"></i>
+            <div class="ui menu selection">
+                <a class="item blue" href="life/notice/index.jsp"><i class="icon tags"></i>最新通知</a>
+                <a class="item red" href="life/job/index.jsp"><i class="icon pencil"></i>兼职家教</a>
+                <a class="item green" href="life/YKT/index.jsp"><i class="icon money"></i>查一卡通</a>
+                <a class="item orange" href="life/computer/index.jsp"><i class="icon desktop"></i>电脑维修</a>
+                <a class="item teal" href="life/lose/index.jsp"><i class="icon heart empty"></i>失物招领</a>
+            </div>
+        </div>
+        <div class="item ui dropdown pointing green" id="life_study">
+            做学霸<i class="icon book"></i>
 
-			<div class="ui menu ">
-				<a class="item teal" href="study/book/index.jsp"><i class="icon book"></i>校图书馆</a>
-				<a class="item orange" href="study/CET/index.jsp"><i class="icon">C</i>CET成绩</a>
-				<a class="item purple" href="study/score/index.jsp"><i class="icon list"></i>期末成绩</a>
-				<a class="item blue" href="study/lecture/index_Lecture.jsp"><i class="icon bullhorn"></i>讲座信息</a>
-				<a class="item blue" href="study/classroom/index.jsp"><i class="icon room"></i>查空教室</a>
-			</div>
+            <div class="ui menu ">
+                <a class="item teal" href="study/book/index.jsp"><i class="icon book"></i>校图书馆</a>
+                <a class="item orange" href="study/CET/index.jsp"><i class="icon">C</i>CET成绩</a>
+                <a class="item purple" href="study/score/index.jsp"><i class="icon list"></i>期末成绩</a>
+                <a class="item blue" href="study/lecture/index_Lecture.jsp"><i class="icon bullhorn"></i>讲座信息</a>
+                <a class="item blue" href="study/classroom/index.jsp"><i class="icon room"></i>查空教室</a>
+            </div>
 
-		</div>
-		<div class="item ui dropdown pointing purple" id="life_play">
-			找乐子<i class="icon gamepad"></i>
+        </div>
+        <div class="item ui dropdown pointing purple" id="life_play">
+            找乐子<i class="icon gamepad"></i>
 
-			<div class="ui menu ">
-				<a class="item teal" href="play/shop/index.html"><i class="icon gift"></i>二手市场</a>
-				<a class="item purple" href="study/lecture/index_School.jsp"><i class="icon smile"></i>校园活动</a>
-				<a class="item green" href="play/movie/index.jsp"><i class="icon play sign"></i>校园电影</a>
-				<a class="item red" href="play/shudong/index.html"><i class="icon mail"></i>秘密树洞</a>
-				<a class="item blue" href="http://wx.wsq.qq.com/188514346"><i class="icon facebook"></i>掌上社区</a>
-				<a class="item teal" href="play/vote/index.html"><i class="icon star"></i>投票活动</a>
-			</div>
-		</div>
-	</div>
+            <div class="ui menu ">
+                <a class="item teal" href="play/shop/index.html"><i class="icon gift"></i>二手市场</a>
+                <a class="item purple" href="study/lecture/index_School.jsp"><i class="icon smile"></i>校园活动</a>
+                <a class="item green" href="play/movie/index.jsp"><i class="icon play sign"></i>校园电影</a>
+                <a class="item red" href="play/shudong/index.html"><i class="icon mail"></i>秘密树洞</a>
+                <a class="item blue" href="http://wx.wsq.qq.com/188514346"><i class="icon facebook"></i>掌上社区</a>
+                <a class="item teal" href="play/vote/index.html"><i class="icon star"></i>投票活动</a>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!--大标题-->
 <div class="ui grid" style="color: #ffffff;background: url('lib/images/tile-bg.png')">
-	<div class="column">
-		<div class="ui row" style="padding: 5px"></div>
+    <div class="column">
+        <div class="ui row" style="padding: 5px"></div>
 
-		<div class="ui header center aligned">
-			<h1 class="ui header" style="margin: 0;font-size: 70px;">掌上华师</h1>
+        <div class="ui header center aligned">
+            <h1 class="ui header" style="margin: 0;font-size: 70px;">掌上华师</h1>
 
-			<h2 class="ui header">校园如此简单</h2>
+            <h2 class="ui header">校园如此简单</h2>
 
-			<p>我们专注于为大家简化学校生活,为大家提供方便简洁的校园服务.</p>
+            <p>我们专注于为大家简化学校生活,为大家提供方便简洁的校园服务.</p>
 
-			<div class="ui button massive animated" onclick="f();">
-				<div class="visible content"> 开始使用
-				</div>
-				<div class="hidden content"><i class="icon right arrow"></i>
-				</div>
-			</div>
+            <div class="ui button massive animated" onclick="f();">
+                <div class="visible content"> 开始使用
+                </div>
+                <div class="hidden content"><i class="icon right arrow"></i>
+                </div>
+            </div>
 
-			<div class="ui row" style="padding: 20px"></div>
+            <div class="ui row" style="padding: 20px"></div>
 
-		</div>
-	</div>
+        </div>
+    </div>
 </div>
 
 <!--大概功能介绍-->
 <div class="ui three column stackable grid" style="background-color: #ffffff ;color: #000000">
 
-	<div class="sixteen wide column">
-		<div class="ui header center aligned">
-			<h2>校园学习生活的好助手</h2>
-		</div>
-	</div>
+    <div class="sixteen wide column">
+        <div class="ui header center aligned">
+            <h2>校园学习生活的好助手</h2>
+        </div>
+    </div>
 
 
-	<div class="column">
-		<div class="ui header icon center aligned huge">
-			<i class="icon heart circular red  inverted" onmouseover="$(this).transition('shake')"></i>
+    <div class="column">
+        <div class="ui header icon center aligned huge">
+            <i class="icon heart circular red  inverted" onmouseover="$(this).transition('shake')"></i>
 
-			<div class="ui label circular red huge">爱生活</div>
-		</div>
-	</div>
-	<div class="column">
-		<div class="ui header icon center aligned huge">
-			<i class="icon book circular green inverted" onmouseover="$(this).transition('tada')"></i>
+            <div class="ui label circular red huge">爱生活</div>
+        </div>
+    </div>
+    <div class="column">
+        <div class="ui header icon center aligned huge">
+            <i class="icon book circular green inverted" onmouseover="$(this).transition('tada')"></i>
 
-			<div class="ui label circular green huge">做学霸</div>
-		</div>
-	</div>
-	<div class="column">
-		<div class="ui header icon center aligned huge">
-			<i class="icon gamepad circular purple inverted" onmouseover="$(this).transition('bounce')"></i>
+            <div class="ui label circular green huge">做学霸</div>
+        </div>
+    </div>
+    <div class="column">
+        <div class="ui header icon center aligned huge">
+            <i class="icon gamepad circular purple inverted" onmouseover="$(this).transition('bounce')"></i>
 
-			<div class="ui label circular purple huge">找乐子</div>
-		</div>
-	</div>
+            <div class="ui label circular purple huge">找乐子</div>
+        </div>
+    </div>
 
-	<div class="ui row" style="margin: 5px"></div>
+    <div class="ui row" style="margin: 5px"></div>
 
 </div>
 
 <!--使用最新的技术-->
 <div class="ui three column stackable grid" style="background-color: #a4e0eb;color: #ffffff">
 
-	<div class="sixteen wide column">
-		<div class="ui header center aligned">
-			<h2>使用最新的技术</h2>
-		</div>
-	</div>
+    <div class="sixteen wide column">
+        <div class="ui header center aligned">
+            <h2>使用最新的技术</h2>
+        </div>
+    </div>
 
-	<div class="column">
-		<div class="ui header icon center aligned huge">
-			<i class="icon css3 circular green"></i>
+    <div class="column">
+        <div class="ui header icon center aligned huge">
+            <i class="icon css3 circular green"></i>
 
-			<div class="ui label circular blue">CSS3</div>
-		</div>
-	</div>
-	<div class="column">
-		<div class="ui header icon center aligned huge">
-			<i class="icon html5 circular red"></i>
+            <div class="ui label circular blue">CSS3</div>
+        </div>
+    </div>
+    <div class="column">
+        <div class="ui header icon center aligned huge">
+            <i class="icon html5 circular red"></i>
 
-			<div class="ui label circular blue">HTML5</div>
-		</div>
-	</div>
-	<div class="column">
-		<div class="ui header icon center aligned huge">
-			<i class="icon trello circular black"></i>
+            <div class="ui label circular blue">HTML5</div>
+        </div>
+    </div>
+    <div class="column">
+        <div class="ui header icon center aligned huge">
+            <i class="icon trello circular black"></i>
 
-			<div class="ui label circular blue">Response</div>
-		</div>
-	</div>
+            <div class="ui label circular blue">Response</div>
+        </div>
+    </div>
 
-	<div class="ui row" style="margin: 5px"></div>
+    <div class="ui row" style="margin: 5px"></div>
 
 </div>
 
 <!--优势-->
 <div class="ui three column stackable grid" style="background-color:#fbf65a ;color: #ffffff">
 
-	<div class="sixteen wide column">
-		<div class="ui header center aligned">
-			<h2>任何平台地点设备</h2>
-		</div>
-	</div>
+    <div class="sixteen wide column">
+        <div class="ui header center aligned">
+            <h2>任何平台地点设备</h2>
+        </div>
+    </div>
 
-	<div class="column">
-		<div class="ui header icon center aligned huge">
-			<i class="icon globe circular red"></i>
+    <div class="column">
+        <div class="ui header icon center aligned huge">
+            <i class="icon globe circular red"></i>
 
-			<div class="content">
-				任何地点
-				<div class="sub header">无校园内网限制,那任何地方都可以使用这些功能</div>
-			</div>
-		</div>
-	</div>
-	<div class="column">
-		<div class="ui header center aligned huge">
+            <div class="content">
+                任何地点
+                <div class="sub header">无校园内网限制,那任何地方都可以使用这些功能</div>
+            </div>
+        </div>
+    </div>
+    <div class="column">
+        <div class="ui header center aligned huge">
 
-			<div class="ui two column grid center aligned">
-				<div class="row">
-					<div class="column">
-						<i class="icon android circular large green inverted"></i>
-					</div>
-					<div class="column">
-						<i class="icon apple circular large black inverted"></i>
-					</div>
-				</div>
-				<div class="row">
-					<div class="column">
-						<i class="icon windows circular large purple inverted"></i>
-					</div>
-					<div class="column">
-						<i class="icon browser circular large blue inverted"></i>
-					</div>
-				</div>
-			</div>
-			<div class="ui row" style="padding: 12px"></div>
+            <div class="ui two column grid center aligned">
+                <div class="row">
+                    <div class="column">
+                        <i class="icon android circular large green inverted"></i>
+                    </div>
+                    <div class="column">
+                        <i class="icon apple circular large black inverted"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column">
+                        <i class="icon windows circular large purple inverted"></i>
+                    </div>
+                    <div class="column">
+                        <i class="icon browser circular large blue inverted"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="ui row" style="padding: 12px"></div>
 
-			<div class="content">任何平台
-				<div class="sub header">不管你系统是Android,IOS还是WP.不管你的设备是手机,平板还是PC</div>
-			</div>
-		</div>
-	</div>
-	<div class="column">
-		<div class="ui header icon center aligned huge">
-			<i class="icon browser circular purple"></i>
+            <div class="content">任何平台
+                <div class="sub header">不管你系统是Android,IOS还是WP.不管你的设备是手机,平板还是PC</div>
+            </div>
+        </div>
+    </div>
+    <div class="column">
+        <div class="ui header icon center aligned huge">
+            <i class="icon browser circular purple"></i>
 
-			<div class="content">只需要浏览器
-				<div class="sub header">我们的功能全部在浏览器里实现,只要有浏览器就可以使用掌上华师</div>
-			</div>
-		</div>
-	</div>
+            <div class="content">只需要浏览器
+                <div class="sub header">我们的功能全部在浏览器里实现,只要有浏览器就可以使用掌上华师</div>
+            </div>
+        </div>
+    </div>
 
-	<div class="ui row" style="padding: 10px"></div>
+    <div class="ui row" style="padding: 10px"></div>
 
 </div>
 
 <!--所以功能列表-->
 <div class="ui page grid" style="background-color: #86ff80;color: #fef6ff">
-	<div class="column">
-		<h2 class="ui center aligned icon header huge">
-			<i class="circular emphasized users icon"></i>
+    <div class="column">
+        <h2 class="ui center aligned icon header huge">
+            <i class="circular emphasized users icon"></i>
 
-			<div class="content">我们每天都在成长
-				<div class="sub header">我们每天都在不停的发现新的Idea,累此不彼的开发新功能</div>
-			</div>
-		</h2>
+            <div class="content">我们每天都在成长
+                <div class="sub header">我们每天都在不停的发现新的Idea,累此不彼的开发新功能</div>
+            </div>
+        </h2>
 
-		<div class="ui row" style="padding: 10px"></div>
+        <div class="ui row" style="padding: 10px"></div>
 
-		<div class="ui stackable grid" data-demo="true">
-			<div class="three column center aligned row">
-				<div class="column">
-					<div class="ui stacked segment red ">
-						<div class="ui icon header">
-							<i class="icon heart circular inverted red"></i>
-							爱生活
-						</div>
-						<div class="ui divided selection list animated">
+        <div class="ui stackable grid" data-demo="true">
+            <div class="three column center aligned row">
+                <div class="column">
+                    <div class="ui stacked segment red ">
+                        <div class="ui icon header">
+                            <i class="icon heart circular inverted red"></i>
+                            爱生活
+                        </div>
+                        <div class="ui divided selection list animated">
 
-							<a class="item blue" href="life/notice/index.jsp"><i class="icon tags"></i>最新通知</a>
-							<a class="item red" href="life/job/index.jsp"><i class="icon pencil"></i>兼职家教</a>
-							<a class="item green" href="life/YKT/index.jsp"><i class="icon money"></i>查一卡通</a>
-							<a class="item orange" href="life/computer/index.jsp"><i class="icon desktop"></i>电脑维修</a>
-							<a class="item teal" href="life/lose/index.jsp"><i class="icon heart empty"></i>失物招领</a>
+                            <a class="item blue" href="life/notice/index.jsp"><i class="icon tags"></i>最新通知</a>
+                            <a class="item red" href="life/job/index.jsp"><i class="icon pencil"></i>兼职家教</a>
+                            <a class="item green" href="life/YKT/index.jsp"><i class="icon money"></i>查一卡通</a>
+                            <a class="item orange" href="life/computer/index.jsp"><i class="icon desktop"></i>电脑维修</a>
+                            <a class="item teal" href="life/lose/index.jsp"><i class="icon heart empty"></i>失物招领</a>
 
-						</div>
-					</div>
-				</div>
+                        </div>
+                    </div>
+                </div>
 
-				<div class="column">
-					<div class="ui stacked segment green">
-						<div class="ui icon header">
-							<i class="icon book circular inverted green"></i>
-							做学霸
-						</div>
-						<div class="ui divided selection list animated">
+                <div class="column">
+                    <div class="ui stacked segment green">
+                        <div class="ui icon header">
+                            <i class="icon book circular inverted green"></i>
+                            做学霸
+                        </div>
+                        <div class="ui divided selection list animated">
 
-							<a class="item teal" href="study/book/index.jsp"><i class="icon book"></i>校图书馆</a>
-							<a class="item orange" href="study/CET/index.jsp"><i class="icon">C</i>CET成绩</a>
-							<a class="item purple" href="study/score/index.jsp"><i class="icon list"></i>期末成绩</a>
-							<a class="item blue" href="study/lecture/index_Lecture.jsp"><i class="icon bullhorn"></i>讲座信息</a>
-							<a class="item blue" href="study/classroom/index.jsp"><i class="icon room"></i>查空教室</a>
+                            <a class="item teal" href="study/book/index.jsp"><i class="icon book"></i>校图书馆</a>
+                            <a class="item orange" href="study/CET/index.jsp"><i class="icon">C</i>CET成绩</a>
+                            <a class="item purple" href="study/score/index.jsp"><i class="icon list"></i>期末成绩</a>
+                            <a class="item blue" href="study/lecture/index_Lecture.jsp"><i class="icon bullhorn"></i>讲座信息</a>
+                            <a class="item blue" href="study/classroom/index.jsp"><i class="icon room"></i>查空教室</a>
 
-						</div>
-					</div>
-				</div>
+                        </div>
+                    </div>
+                </div>
 
-				<div class="column">
-					<div class="ui stacked segment purple">
-						<div class="ui icon header">
-							<i class="icon gamepad circular inverted purple"></i>
-							找乐子
-						</div>
-						<div class="ui divided selection list animated">
-							<a class="item teal" href="play/shop/index.html"><i class="icon gift"></i>二手市场</a>
-							<a class="item purple" href="study/lecture/index_School.jsp"><i class="icon smile"></i>校园活动</a>
-							<a class="item green" href="play/movie/index.jsp"><i class="icon play sign"></i>校园电影</a>
-							<a class="item red" href="play/shudong/index.html"><i class="icon mail"></i>秘密树洞</a>
-							<a class="item blue" href="http://wx.wsq.qq.com/188514346"><i class="icon facebook"></i>掌上社区</a>
-							<a class="item teal" href="play/vote/index.html"><i class="icon star"></i>投票活动</a>
+                <div class="column">
+                    <div class="ui stacked segment purple">
+                        <div class="ui icon header">
+                            <i class="icon gamepad circular inverted purple"></i>
+                            找乐子
+                        </div>
+                        <div class="ui divided selection list animated">
+                            <a class="item teal" href="play/shop/index.html"><i class="icon gift"></i>二手市场</a>
+                            <a class="item purple" href="study/lecture/index_School.jsp"><i class="icon smile"></i>校园活动</a>
+                            <a class="item green" href="play/movie/index.jsp"><i class="icon play sign"></i>校园电影</a>
+                            <a class="item red" href="play/shudong/index.html"><i class="icon mail"></i>秘密树洞</a>
+                            <a class="item blue" href="http://wx.wsq.qq.com/188514346"><i class="icon facebook"></i>掌上社区</a>
+                            <a class="item teal" href="play/vote/index.html"><i class="icon star"></i>投票活动</a>
 
-						</div>
-					</div>
-				</div>
+                        </div>
+                    </div>
+                </div>
 
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!--展望未来-->
 <div class="ui two column page grid" style="background-color: #ffffff;color: #000000">
 
-	<div class="sixteen wide column center aligned">
-		<i class="icon question massive circular black"></i>
-	</div>
+    <div class="sixteen wide column center aligned">
+        <i class="icon question massive circular black"></i>
+    </div>
 
 
-	<div class="column">
-		<div class="ui header horizontal red huge">
-			<i class="icon food circular"></i>
+    <div class="column">
+        <div class="ui header horizontal red huge">
+            <i class="icon food circular"></i>
 
-			<div class="content">外卖
-				<div class="sub header">和学校周边餐厅合作,专门针对我们学校的外卖平台
-				</div>
-			</div>
-		</div>
-	</div>
+            <div class="content">外卖
+                <div class="sub header">和学校周边餐厅合作,专门针对我们学校的外卖平台
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<div class="column">
-		<div class="ui header horizontal green huge">
-			<i class="icon gift circular"></i>
+    <div class="column">
+        <div class="ui header horizontal green huge">
+            <i class="icon gift circular"></i>
 
-			<div class="content">二手
-				<div class="sub header">校园二手交易平台,让二手交易更加可信,更加方便快速
-				</div>
-			</div>
-		</div>
-	</div>
+            <div class="content">二手
+                <div class="sub header">校园二手交易平台,让二手交易更加可信,更加方便快速
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<div class="column">
-		<div class="ui header horizontal blue huge">
-			<i class="icon book circular"></i>
+    <div class="column">
+        <div class="ui header horizontal blue huge">
+            <i class="icon book circular"></i>
 
-			<div class="content">书循环
-				<div class="sub header">学长学姐们把你们不用了的课本低价卖给学弟学妹吧!
-				</div>
-			</div>
-		</div>
-	</div>
+            <div class="content">书循环
+                <div class="sub header">学长学姐们把你们不用了的课本低价卖给学弟学妹吧!
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<div class="column">
-		<div class="ui header horizontal black huge">
-			<i class="icon calendar circular"></i>
+    <div class="column">
+        <div class="ui header horizontal black huge">
+            <i class="icon calendar circular"></i>
 
-			<div class="content">查空教室
-				<div class="sub header">在这里可以快速的看到全校的空余教室情况
-				</div>
-			</div>
-		</div>
-	</div>
+            <div class="content">查空教室
+                <div class="sub header">在这里可以快速的看到全校的空余教室情况
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<div class="sixteen wide column center aligned">
-		<div class="ui button massive black">告诉我们你想要什么</div>
-	</div>
+    <div class="sixteen wide column center aligned">
+        <div class="ui button massive black">告诉我们你想要什么</div>
+    </div>
 
 </div>
 
 <!--底部-->
 <div class="ui page grid" style="background-color: #000000;color: #ffffff">
-	<div class="column">
+    <div class="column">
 
-	</div>
+    </div>
 </div>
 
 <script>
-	function f() {
-		$('.sidebar').sidebar('toggle');
-	}
+    function f() {
+        $('.sidebar').sidebar('toggle');
+    }
 
-	$(document).ready(function () {
-		//要漂浮于上面的sidebar
-		$('.overlay.sidebar').sidebar('setting', {
-			overlay: true
-		});
+    $(document).ready(function () {
+        //要漂浮于上面的sidebar
+        $('.overlay.sidebar').sidebar('setting', {
+            overlay: true
+        });
 
-		//下拉
-		$('.dropdown').dropdown();
+        //下拉
+        $('.dropdown').dropdown();
 
-		//图标的反色
-		$('.circular.icon').mouseenter(function () {
-			$(this).toggleClass('inverted');
-		}).mouseleave(function () {
-			$(this).toggleClass('inverted');
-		});
+        //图标的反色
+        $('.circular.icon').mouseenter(function () {
+            $(this).toggleClass('inverted');
+        }).mouseleave(function () {
+            $(this).toggleClass('inverted');
+        });
 
-		//震动的元素
-		$('.shake').transition('shake');
-	});
+        //震动的元素
+        $('.shake').transition('shake');
+    });
 </script>
 
 </body>
