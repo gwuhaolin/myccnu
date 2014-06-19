@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "myclassroom", schema = "", catalog = "weixin")
 //@IdClass(MyClassroomEntityPK.class)
-public class MyClassroomEntity1 {
+public class MyClassroomEntity {
     private String jiHaoLou;
     private int xinQiJi;
     private int diJiJieKe;
