@@ -26,8 +26,8 @@
 </head>
 <body style="margin: 0;padding: 0;overflow-x: hidden">
 
-<!--底部导航条-->
-<div class="ui top overlay sidebar" style="overflow: visible">
+<!--顶部导航条-->
+<div class="ui top overlay sidebar" style="overflow: visible" id="Menu">
     <div class="ui three item fluid menu">
         <div class="item ui dropdown pointing red" id="life_drop">
             爱生活<i class="icon heart"></i>
@@ -68,18 +68,23 @@
 </div>
 
 <!--大标题-->
-<div class="ui grid" style="color: #ffffff;background: url('lib/images/tile-bg.png')">
+<div class="ui grid" style="color: #ffffff;background: url('lib/images/tile-bg.png');height: 100%">
     <div class="column">
         <div class="ui row" style="padding: 5px"></div>
 
         <div class="ui header center aligned">
+
             <h1 class="ui header" style="margin: 0;font-size: 70px;">掌上华师</h1>
 
             <h2 class="ui header">校园如此简单</h2>
 
-            <p>我们专注于为大家简化学校生活,为大家提供方便简洁的校园服务.</p>
+            <div class="ui image">
+                <img src="http://myccnutest.qiniudn.com/code.jpg">
+            </div>
 
-            <div class="ui button massive animated" onclick="f();">
+            <p>用微信扫描二维码或加微信号myccnu</p>
+
+            <div class="ui button massive animated" onmouseover="showMenu()">
                 <div class="visible content"> 开始使用
                 </div>
                 <div class="hidden content"><i class="icon right arrow"></i>
@@ -364,8 +369,10 @@
 </div>
 
 <script>
-    function f() {
-        $('.sidebar').sidebar('toggle');
+
+    //显示菜单
+    function showMenu() {
+        $('#Menu').sidebar('show');
     }
 
     $(document).ready(function () {
