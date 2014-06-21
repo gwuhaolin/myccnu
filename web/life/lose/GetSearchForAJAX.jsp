@@ -44,18 +44,18 @@
 	<%--目前状态--%>
 	<div class="btn-group btn-group-xs">
 		<button class="btn active"><i class="glyphicon glyphicon-stats"></i></button>
-		<button onclick="completeOne(this);" class="btn <%=one.getBootstapStateString()%>"><%=one.getStateString()%>
+		<button onclick="completeOne(this);" class="btn <%=one.bootstapStateString()%>"><%=one.stateString()%>
 		</button>
 	</div>
 	<%--失物还是招领--%>
 	<div class="btn-group btn-group-xs">
-		<button class="btn active btn-info"><i class="glyphicon <%=one.getLoseOrUpdateGl()%>"></i></button>
-		<button class="btn active"><%=one.getLoseOrUpdateChinese()%>
+		<button class="btn active btn-info"><i class="glyphicon <%=one.loseOrUpdateGl()%>"></i></button>
+		<button class="btn active"><%=one.loseOrUpdateChinese()%>
 		</button>
 	</div>
 	<%--是否是今天的--%>
 	<%
-		if (one.isToday()) {
+		if (one.today()) {
 	%>
 	<button class="btn btn-success btn-xs active">Today</button>
 	<%

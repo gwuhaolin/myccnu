@@ -1,6 +1,7 @@
 package study.classroom;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created with Intellij IDEA.
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "myclassroom", schema = "", catalog = "weixin")
 //@IdClass(MyClassroomEntityPK.class)
-public class MyClassroomEntity {
+public class MyClassroomEntity implements Serializable{
     private String jiHaoLou;
     private int xinQiJi;
     private int diJiJieKe;

@@ -152,7 +152,7 @@ public class Cet46Entity {
 		return result;
 	}
 
-	public boolean isPass() {
+	public boolean pass() {
 		return this.sumScore >= 425;
 	}
 
@@ -184,7 +184,7 @@ public class Cet46Entity {
 	 *
 	 * @return
 	 */
-	public int getRank() {
+	public int rank() {
 		double bfb=0;
 		if (sumScore>500){
 			bfb=calc((sumScore-500)/70);

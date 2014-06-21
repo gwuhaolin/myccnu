@@ -48,7 +48,7 @@
 
 			<%--是否是今天的--%>
 			<%
-				if (one.isTaday()) {
+				if (one.taday()) {
 			%>
 			<button class="btn btn-success btn-xs active">Today</button>
 			<%

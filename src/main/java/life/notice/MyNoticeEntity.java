@@ -140,7 +140,7 @@ public class MyNoticeEntity {
 		return this.title;
 	}
 
-	public String getBaseUrl(){
+	public String baseUrl(){
 		String ss[]= this.orgUrl.split("/");
 		return ss[0]+"//"+ss[2];
 	}
@@ -149,7 +149,7 @@ public class MyNoticeEntity {
 	 * 判断是否是今天的消息
 	 * @return
 	 */
-	public boolean isTaday(){
+	public boolean taday(){
 		return this.date.equals(Tool.time_YYYY_MM_DD());
 	}
 }

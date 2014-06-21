@@ -38,7 +38,7 @@
 		if (cet != null) {//查询成功
 	%>
 	<%
-		if (cet.isPass()) {//通过考试
+		if (cet.pass()) {//通过考试
 	%>
 	<img src="img/heart.png" class="img-responsive center-block">
 	<br>
@@ -65,7 +65,7 @@
 		</div>
 		<div class="btn-group btn-group-lg btn-group-justified">
 			<a class="btn btn-info active">Rank</a>
-			<a class="btn btn-warning active"><%=cet.getRank()%></a>
+			<a class="btn btn-warning active"><%=cet.rank()%></a>
 		</div>
 	</div>
 	<%
@@ -96,7 +96,7 @@
 		</div>
 		<div class="btn-group btn-group-lg btn-group-justified">
 			<a class="btn btn-danger active">Rank</a>
-			<a class="btn btn-info active"><%=cet.getRank()%></a>
+			<a class="btn btn-info active"><%=cet.rank()%></a>
 		</div>
 	</div>
 	<%

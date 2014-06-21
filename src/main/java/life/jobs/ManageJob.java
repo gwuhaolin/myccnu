@@ -52,7 +52,6 @@ public class ManageJob {
 
 	/**
 	 * 向数据库中添加很多工作
-	 * @param jobEntity
 	 */
 	public static void add(List<MyJobEntity> jobEntitys){
 		for (MyJobEntity jobEntity:jobEntitys){
@@ -62,7 +61,6 @@ public class ManageJob {
 
 	/**
 	 * 向数据库中添加工作要求内容不能一样
-	 * @param jobEntity
 	 */
 	public static void add_NotSame(List<MyJobEntity> jobEntitys){
 		for (MyJobEntity jobEntity:jobEntitys){
@@ -74,7 +72,6 @@ public class ManageJob {
 
 	/**
 	 * 数据库中是否有内容一样的记录
-	 * @param name
 	 * @return 如果有返回true
 	 */
 	private static boolean DBhasThisOne(MyJobEntity jobEntity){
@@ -111,7 +108,6 @@ public class ManageJob {
 	 * 用于分页查询,关键字搜索
 	 *
 	 * @param from 从这个开始
-	 * @param size 拿出多少个
 	 * @return
 	 */
 	public static List<MyJobEntity> search_page(int from,String want) {
@@ -131,7 +127,6 @@ public class ManageJob {
 	 * 用于分页查询,按照发布时间排序
 	 *
 	 * @param from 从这个开始
-	 * @param size 拿出多少个
 	 * @return
 	 */
 	public static List<MyJobEntity> get_page(int from, int target) {
@@ -149,7 +144,6 @@ public class ManageJob {
 	 * 用于分页查询,按照id排序
 	 *
 	 * @param from 从这个开始
-	 * @param size 拿出多少个
 	 * @return
 	 */
 	public static List<MyJobEntity> get_OrderByID(int from, int target) {

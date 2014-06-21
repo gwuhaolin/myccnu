@@ -24,7 +24,7 @@
 
 		<!-- JDBC connection pool (use the built-in) -->
 		<property name="connection.pool_size">
-			1000
+			100
 		</property>
 
 		<!-- SQL 方言-->
@@ -49,34 +49,33 @@
 
 		<!-- 以下设置对象与数据库表的映像文件 -->
 		<!--电影-->
-		<mapping resource="MymovieEntity.hbm.xml" class="play.movie.MyMovieEntity"/>
+		<mapping class="play.movie.MyMovieEntity"/>
 		<!--电脑维修队员-->
-		<mapping resource="RepaircomputermansEntity.hbm.xml"
-		         class="life.repairComputer.RepairComputerMansEntity"/>
+		<mapping class="life.repairComputer.RepairComputerMansEntity"/>
 		<!--重要通知-->
-		<mapping resource="MynoticeEntity.hbm.xml" class="life.notice.MyNoticeEntity"/>
+		<mapping class="life.notice.MyNoticeEntity"/>
 		<!--树洞-->
-		<mapping resource="MyshudongEntity.hbm.xml" class="play.shudong.MyShuDongEntity"/>
-		<mapping resource="MyshudongbgimgEntity.hbm.xml" class="play.shudong.MyShuDongBgImgEntity"/>
+		<mapping class="play.shudong.MyShuDongEntity"/>
+		<mapping class="play.shudong.MyShuDongBgImgEntity"/>
 		<!--兼职家教-->
-		<mapping resource="MyjobEntity.hbm.xml" class="life.jobs.MyJobEntity"/>
+		<mapping class="life.jobs.MyJobEntity"/>
 		<!--讲座-->
-		<mapping resource="MyeventEntity.hbm.xml" class="study.lecture.MyEventEntity"/>
+		<mapping class="study.lecture.MyEventEntity"/>
 		<!--失物招领-->
-		<mapping resource="MyloseEntity.hbm.xml" class="life.lose.MyLoseEntity"/>
+		<mapping class="life.lose.MyLoseEntity"/>
 		<!--CET-->
-		<mapping resource="Cet46Entity.hbm.xml" class="study.CET.Cet46Entity"/>
+		<mapping class="study.CET.Cet46Entity"/>
 		<!--教室-->
-		<mapping resource="MyclassroomEntity.hbm.xml" class="study.classroom.MyClassroomEntity"/>
+		<mapping class="study.classroom.MyClassroomEntity"/>
 		<!--二手商城-->
-		<mapping resource="ShopitemsEntity.hbm.xml" class="play.shop.ShopItemsEntity"/>
-		<mapping resource="ShopsearchtagEntity.hbm.xml" class="play.shop.ShopSearchTagEntity"/>
+		<mapping class="play.shop.ShopItemsEntity"/>
+		<mapping class="play.shop.ShopSearchTagEntity"/>
 		<!--学生信息-->
-		<mapping resource="StudentbasicinfoEntity.hbm.xml" class="tool.studentInfo.StudentBasicInfoEntity"/>
-		<mapping class="tool.studentInfo.StudentinfoEntity" resource="StudentinfoEntity.hbm.xml"/>
+		<mapping class="tool.studentInfo.StudentBasicInfoEntity"/>
+		<mapping class="tool.studentInfo.StudentinfoEntity"/>
 		<!--投票-->
-		<mapping resource="MycampaignerEntity.hbm.xml" class="play.vote.MyCampaignerEntity"/>
-		<mapping resource="MyvoteEntity.hbm.xml" class="play.vote.MyVoteEntity"/>
+		<mapping class="play.vote.MyCampaignerEntity"/>
+		<mapping class="play.vote.MyVoteEntity"/>
 	</session-factory>
 
 </hibernate-configuration>

@@ -145,11 +145,11 @@ public class MyLoseEntity {
 	public MyLoseEntity() {
 	}
 
-	public boolean isToday(){
+	public boolean today(){
 		return this.myDate.equals(Tool.time_YYYY_MM_DD());
 	}
 
-	public String getBootstapStateString(){
+	public String bootstapStateString(){
 		if (this.myState==ManageLose.STATE_Finding){
 			return "btn-warning";
 		}else if (this.myState==ManageLose.STATE_Complete){
@@ -158,7 +158,7 @@ public class MyLoseEntity {
 		return "";
 	}
 
-	public String getStateString(){
+	public String stateString(){
 		if (this.myState==ManageLose.STATE_Finding){
 			return "正在招领中...";
 		}else if (this.myState==ManageLose.STATE_Complete){
@@ -167,7 +167,7 @@ public class MyLoseEntity {
 		return "";
 	}
 
-	public String getLoseOrUpdateChinese(){
+	public String loseOrUpdateChinese(){
 		if (this.myType==ManageLose.TYPE_Lose){
 			return "掉了";
 		}else if (this.myType==ManageLose.TYPE_Update){
@@ -176,7 +176,7 @@ public class MyLoseEntity {
 		return "";
 	}
 
-	public String getLoseOrUpdateGl(){
+	public String loseOrUpdateGl(){
 		if (this.myType==ManageLose.TYPE_Lose){
 			return "glyphicon-arrow-down";
 		}else if (this.myType==ManageLose.TYPE_Update){
