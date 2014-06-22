@@ -1,11 +1,7 @@
 package play.movie;
 
 
-import tool.Tool;
-import org.hibernate.annotations.*;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created with Intellij IDEA.
@@ -14,7 +10,7 @@ import javax.persistence.Id;
  * Time: 10:22 PM
  */
 @Entity
-//@Table(name = "mymovie", schema = "", catalog = "ccnu")
+@Table(name = "mymovie", schema = "", catalog = "weixin")
 public class MyMovieEntity {
 	private int id;
 	private String name;
@@ -149,11 +145,4 @@ public class MyMovieEntity {
 		return result;
 	}
 
-	/**
-	 * 判断是否是今天的消息
-	 * @return
-	 */
-	public boolean isTaday(){
-		return this.date.split(" ",2)[0].equals(Tool.time_YYYY_MM_DD());
-	}
 }

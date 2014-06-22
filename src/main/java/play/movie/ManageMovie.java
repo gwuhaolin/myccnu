@@ -78,7 +78,6 @@ public class ManageMovie {
 	/**
 	 * 用于分页查询
 	 * @param from 从这个开始
-	 * @param size 拿出多少个
 	 * @return
 	 */
 	public static List<MyMovieEntity> get_page(int from, String target){
@@ -141,25 +140,4 @@ public class ManageMovie {
 		return re;
 	}
 
-	public static void main(String[] args) {
-		MyMovieEntity movieEntity=new MyMovieEntity();
-		movieEntity.setName("你");
-		movieEntity.setPicUrl("picUrl");
-		movieEntity.setPay("pay");
-		movieEntity.setOther("other");
-		movieEntity.setDes("des");
-		movieEntity.setDate("dedefdeep");
-		movieEntity.setTarget(Target_HDQNJC);
-		add(movieEntity);
-
-
-		get(Target_HDQNJC);
-//		MyMovieEntity movieEntity=getRemain(2);
-//		movieEntity.setDes("newDes");
-//		movieEntity.setName("newMane");
-//		movieEntity.setOther("newOther");
-//		movieEntity.setPay("newPay");
-//		movieEntity.setPicUrl("newPicUrl");
-//		change(movieEntity);
-	}
 }
