@@ -53,7 +53,7 @@ public class ManageStudentInfoTest {
 
 	@Test
 	public void testDownloadFromJWC() throws Exception {
-		StudentinfoEntity studentInfoEntity= ManageStudentInfo.DownloadFromJWC("2012210817","930820");
+		StudentInfoEntity studentInfoEntity= ManageStudentInfo.DownloadFromJWC("2012210817","930820");
 		System.out.println(studentInfoEntity);
 	}
 }

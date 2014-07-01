@@ -10,6 +10,7 @@ import play.shop.ServiceShop;
 import play.shudong.ServiceShuDong;
 import play.shudong.ServiceShuDongBgImg;
 import play.vote.ServiceVote;
+import study.score.ServiceScore;
 import tool.studentInfo.ServiceStudentInfo;
 
 /**
@@ -20,7 +21,7 @@ import tool.studentInfo.ServiceStudentInfo;
  */
 public class RestAPI extends ResourceConfig {
 
-	public RestAPI(){
+	public RestAPI() {
 
 		//加载Resource
 		register(ServiceShuDong.class);
@@ -29,6 +30,7 @@ public class RestAPI extends ResourceConfig {
 		register(ServiceShop.class);
 		register(ServiceStudentInfo.class);
 		register(ServiceVote.class);
+		register(ServiceScore.class);
 
 
 		//注册数据转换器

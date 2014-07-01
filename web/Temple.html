@@ -1,42 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8"/>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-	<script src="lib/js/jquery.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="lib/css/semantic.min.css">
-	<script src="lib/js/semantic.min.js"></script>
-	<script src="lib/js/handlebars-v1.3.0.js"></script>
-	<link rel="stylesheet" type="text/css" href="lib/css/main.css">
-	<script src="lib/js/plupload.full.min.js"></script>
-	<script src="lib/js/qiniu.min.js"></script>
-	<script src="lib/js/main.js"></script>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <script src="lib/js/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="lib/css/semantic.min.css">
+    <script src="lib/js/semantic.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="lib/css/main.css">
 </head>
 <body>
 
-
-<div>
-	<div class="ui modal transition" id="AD">
-		<i class="close icon red circular inverted"></i>
-
-		<div class="header">
-			Tip
-		</div>
-		<div class="content">
-			1237890
-		</div>
-	</div>
-	<script>
-
-		var know = $.cookie('know');
-		if (!know) {
-			$('#AD').modal('show');
-			$.cookie('know', true, { expires: 7 });
-		}
-	</script>
+<div class="ui segment stacked center aligned">
+    <div class="ui header">
+        12345678876543
+    </div>
+    <div class="ui divider icon horizontal">
+        <i class="icon time"></i>
+    </div>
+    <div class="ui description">1234567887654</div>
+    <div class="ui divider icon horizontal">
+        <i class="icon location"></i>
+    </div>
+    <div class="ui divided selection list animated small">
+        <a class="item"><%=oneClassroom%>
+        </a>
+        <a class="item"><%=oneClassroom%>
+        </a>
+        <a class="item"><%=oneClassroom%>
+        </a>
+    </div>
 </div>
-
 
 </body>
 </html>

@@ -30,7 +30,7 @@ public class ShopItemsEntity {
 
 	@Id
 	@Column(name = "id", nullable = false, insertable = true, updatable = true)
-	public int getId() {
+    public int getId() {
 		return id;
 	}
 

@@ -36,5 +36,7 @@ dependencies() {
 	//Junit
 	testCompile 'junit:junit:4.11'
 
+	//SLF4j
+	compile 'org.slf4j:slf4j-simple:1.6.2'
 
 }

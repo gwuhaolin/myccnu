@@ -72,10 +72,12 @@
 		<mapping class="play.shop.ShopSearchTagEntity"/>
 		<!--学生信息-->
 		<mapping class="tool.studentInfo.StudentBasicInfoEntity"/>
-		<mapping class="tool.studentInfo.StudentinfoEntity"/>
+		<mapping class="tool.studentInfo.StudentInfoEntity"/>
 		<!--投票-->
 		<mapping class="play.vote.MyCampaignerEntity"/>
 		<mapping class="play.vote.MyVoteEntity"/>
+		<!--期末成绩-->
+		<mapping class="study.score.MyScoreEntity"/>
 	</session-factory>
 
 </hibernate-configuration>

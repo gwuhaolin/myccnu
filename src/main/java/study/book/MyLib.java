@@ -5,6 +5,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import tool.R;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class MyLib {
 	 */
 	public static String getCookie(String XH, String MM) throws Exception {
 		Connection connection = Jsoup.connect(URL_Login);
+		connection.userAgent(R.USER_AGENT);
 		connection.data("number", XH);
 		connection.data("passwd", MM);
 		connection.data("select", "cert_no");
@@ -54,6 +56,7 @@ public class MyLib {
 		try {
 			String cookie = getCookie(XH, MM);
 			Connection connection = Jsoup.connect(URL_MyLibBooks);
+			connection.userAgent(R.USER_AGENT);
 			connection.cookie(CookieName, cookie);
 			Document document = connection.get();
 //			System.out.println(document);
@@ -90,6 +93,7 @@ public class MyLib {
 	public static String renew(String barcode, String check, String time, String cookie) {
 //		System.out.println("B="+barcode+";C="+check+";Cookie="+cookie);
 		Connection connection = Jsoup.connect("http://202.114.34.15/reader/ajax_renew.php");
+		connection.userAgent(R.USER_AGENT);
 		connection.cookie(CookieName, cookie);
 		connection.data("bar_code", barcode);
 		connection.data("check", check);
@@ -113,6 +117,7 @@ public class MyLib {
 		try {
 			String cookie = getCookie(XH, MM);
 			Connection connection = Jsoup.connect(URL_MyLibBooks);
+			connection.userAgent(R.USER_AGENT);
 			connection.cookie(CookieName, cookie);
 			Document document = connection.get();
 			String location = document.location();
@@ -202,6 +207,7 @@ public class MyLib {
 			Connection connection = Jsoup.connect("http://202.114.34.15/asord/asord_redr.php");
 			String cookie = getCookie(XH, MM);
 			connection.cookie(CookieName, cookie);
+			connection.userAgent(R.USER_AGENT);
 			connection.data("click_type","commit");
 			connection.data("title", bookName);
 			connection.data("a_name","学号:"+XH);

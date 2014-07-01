@@ -40,7 +40,7 @@
 </div>
 
 <%--分享链接--%>
-<a href="iWantMovie.jsp" style="position: fixed;bottom: 5px;left: 5px" class="ui button red inverted icon"><i class="icon heart"></i></a>
+<a href="iWantMovie.jsp" style="position: fixed;bottom: 5px;left: 5px" class="ui button red inverted icon circular"><i class="icon heart"></i></a>
 
 <script>
 	<%=Tool.makeAJAXLoadMoreJS("GetMovieForAJAX.jsp",",target:'"+target+"'")%>

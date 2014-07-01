@@ -140,7 +140,7 @@ var MyInfo;
 /**
  * 加载访问者基本信息
  */
-var GetStuInfo_URL=makeApiUrl('studentInfo/getOne');
+var GetStuInfo_URL = makeApiUrl('studentInfo/getOne');
 function loadMyInfo() {
 	$.getJSON(GetStuInfo_URL).done(function (data) {
 		MyInfo = data;
@@ -153,5 +153,22 @@ function updateMyInfo() {
 	$.getJSON(makeApiUrl('studentInfo/updateOne'), MyInfo).done(function (data) {
 		MyInfo = data;
 	});
+}
+
+/**
+ * 读取cookies的值
+ * 如果不存在就返回""
+ */
+function getCookie(c_name) {
+	if (document.cookie.length > 0) {
+		var c_start = document.cookie.indexOf(c_name + "=");
+		if (c_start != -1) {
+			c_start = c_start + c_name.length + 1;
+			var c_end = document.cookie.indexOf(";", c_start);
+			if (c_end == -1) c_end = document.cookie.length;
+			return unescape(document.cookie.substring(c_start, c_end))
+		}
+	}
+	return "";
 }
 

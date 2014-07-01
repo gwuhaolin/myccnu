@@ -37,6 +37,7 @@ public class SearchBook {
 			System.out.println(want + page);
 			Connection connection = Jsoup.connect(URL);
 			connection.timeout(R.ConnectTimeout);
+			connection.userAgent(R.USER_AGENT);
 			connection
 					.data("strSearchType", "title")
 					.data("match_flag", "forward")
