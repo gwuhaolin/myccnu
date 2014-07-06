@@ -13,8 +13,12 @@ public class ManageScoreTest {
 
 	@Test
 	public void testGet() throws Exception {
-		List<MyScoreEntity> myScoreEntities = ManageScore.get(xh, mm);
-		Assert.assertTrue(myScoreEntities.size() > 0);
+		for (int i = 0; i < 100; i++) {
+			List<MyScoreEntity> myScoreEntities = ManageScore.get(xh, mm);
+			Assert.assertTrue(myScoreEntities.size() > 0);
+			myScoreEntities = ManageScore.get("2012210008", "2012210008");
+			Assert.assertTrue(myScoreEntities.size() > 0);
+		}
 	}
 
 	@Test
@@ -33,5 +37,11 @@ public class ManageScoreTest {
 	public void testGet_ClassNo() throws Exception {
 		List<MyScoreEntity> myScoreEntities = ManageScore.get_ClassNo(classNo);
 		Assert.assertTrue(myScoreEntities.size() > 0);
+	}
+
+	@Test
+	public void testUpdateStudentsScore() throws Exception {
+		int re = ManageScore.updateAllStudentsScore();
+		Assert.assertTrue(re > 0);
 	}
 }

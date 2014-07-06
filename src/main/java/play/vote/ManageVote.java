@@ -85,7 +85,6 @@ public class ManageVote {
 	 *
 	 * @param voterXH
 	 * @param voterMM
-	 * @param campaignerID
 	 * @return 如果投票失败就回滚事务
 	 * 0=成功
 	 * 1=帐号密码错误

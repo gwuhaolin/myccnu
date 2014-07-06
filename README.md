@@ -25,5 +25,5 @@ myccnu
       - [秘密树洞](http://my.ccnuyouth.com/play/shudong/index.html)
       - [掌上社区](http://my.ccnuyouth.com/http://wx.wsq.qq.com/188514346)
       - [投票活动](http://my.ccnuyouth.com/play/vote/index.html)
-      
+
 #####从2014年寒假期间开始开发,2014年3月20号开上线始推广,到现在已经有7500+用户

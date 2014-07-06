@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * Created by wuhaolin on 6/30/14.
+ * Created by wuhaolin on 7/3/14.
  * :
  */
 public class MyScoreEntityPK implements Serializable {

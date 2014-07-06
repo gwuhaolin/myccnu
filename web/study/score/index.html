@@ -19,6 +19,15 @@
 
 </div>
 
+<!--提示-->
+<div class="ui page grid one column">
+	<div class="ui column">
+		<div class="ui message floating info">
+			单击你的一门成绩单可以看到全校的成绩统计哦
+		</div>
+	</div>
+</div>
+
 <!--page正在加载中-->
 <div class="ui page dimmer" id="Page_Dimmer">
 	<div class="content">
@@ -33,21 +42,64 @@
 
 <script>
 	var GetMyScore_URL = makeApiUrl("score/get");
-	$(document).ready(function () {
+	var Score_Con = $('#Score_Con');
+	var TempHTML = '';
+	$(document).ready(function () {//进入页面时加载本人的信息
 		if (getCookie('XH').length > 0) {
 			$('#Page_Dimmer').dimmer('show');
-			//加载基本信息
 			$.getJSON(GetMyScore_URL).done(function (data) {
-				$('#Score_Con').append(toHTML('Score_TEMP', data));
+				TempHTML = toHTML('Score_TEMP', data);//保存原来的
+				Score_Con.append(TempHTML);
 				$('#Page_Dimmer').dimmer('hide');
 				if (data.length < 1) {
 					showError();
 				}
 			});
-		} else {
+		} else {//还没有绑定
 			shouldBind();
 		}
 	});
+
+	var GetScore_ClassID_URL = makeApiUrl('score/get_ClassId');
+	/**
+	 *  查看一门课程的统计情况
+	 */
+	function getScore_ClassID(classID) {
+		$.getJSON(GetScore_ClassID_URL, {classId: classID}).done(function (data) {
+			//求平均值,挂科数
+			var basic = {
+				pinshiScore: 0,
+				qimoScore: 0,
+				sumScore: 0,
+				guakeCount: 0
+			};
+			$(data).each(function () {
+				basic.pinshiScore += this.pinshiScore;
+				basic.qimoScore += this.qimoScore;
+				basic.sumScore += this.sumScore;
+				if (this.sumScore < 60) {
+					basic.guakeCount++;
+				}
+			});
+			basic.pinshiScore /= data.length;
+			basic.qimoScore /= data.length;
+			basic.sumScore /= data.length;
+			console.log(basic);
+			Score_Con.html('');//清空原来的
+			Score_Con.append(toHTML('Basic_TEMP', basic));
+			Score_Con.append(toHTML('Score_TEMP', data));
+			goTop();
+		});
+	}
+
+	/**
+	 * 退回到自己的成绩列表
+	 */
+	function goBack() {
+		Score_Con.html(TempHTML);
+		goTop();
+	}
+
 </script>
 
 <!--模版-->
@@ -68,7 +120,7 @@
 	<div id="Score_TEMP">
 		{{#.}}
 		<div class="column">
-			<div class="ui stacked segment {{color sumScore}}">
+			<div class="ui stacked segment {{color sumScore}}" onclick="getScore_ClassID({{classNo}})">
 
 				<div class="ui statistic">
 					<div class="number">{{sumScore}}
@@ -102,7 +154,7 @@
 						<i class="tint icon circular inverted"></i>
 
 						<div class="content">
-							<a class="header">{{pinshiSocre}}</a>
+							<a class="header">{{pinshiScore}}</a>
 
 							<div class="description">平时
 							</div>
@@ -123,6 +175,68 @@
 			</div>
 		</div>
 
+		{{/.}}
+	</div>
+
+	<!--一个基本统计信息-->
+	<div id="Basic_TEMP">
+		{{#.}}
+		<div class="column">
+			<div class="ui stacked segment green inverted">
+
+				<div class="ui statistic">
+					<div class="number">统计报表
+					</div>
+					<div class="ui button circular" onclick="goBack()">返回</div>
+				</div>
+
+				<div class="ui relaxed divided list">
+
+					<div class="item">
+						<i class="building icon circular inverted"></i>
+
+						<div class="content">
+							<a class="header">{{sumScore}}</a>
+
+							<div class="description">总评平均
+							</div>
+						</div>
+					</div>
+
+					<div class="item">
+						<i class="screenshot icon circular inverted"></i>
+
+						<div class="content">
+							<a class="header">{{qimoScore}}</a>
+
+							<div class="description">期末平均
+							</div>
+						</div>
+					</div>
+					<div class="item">
+						<i class="tint icon circular inverted"></i>
+
+						<div class="content">
+							<a class="header">{{pinshiScore}}</a>
+
+							<div class="description">平时平均
+							</div>
+						</div>
+					</div>
+					<div class="item">
+						<i class="frown icon circular inverted"></i>
+
+						<div class="content">
+							<a class="header">{{guakeCount}}</a>
+
+							<div class="description">有多少同学跪
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
 		{{/.}}
 	</div>
 

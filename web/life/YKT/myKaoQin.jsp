@@ -79,7 +79,7 @@
 	} catch (Exception e) {
 	%>
 	<script>
-		alertMsg('<%=e.getMessage()%>');
+		alertMsg('等等再试试吧,现在人太多服务器都反应不过来了');
 	</script>
 	<%
 			}
