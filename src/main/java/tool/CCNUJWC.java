@@ -71,11 +71,11 @@ public class CCNUJWC {
 			connection.cookies(cookies).get();
 		} catch (IOException e) {
 			log.error(Arrays.toString(e.getStackTrace()));
-			throw new NetworkException(e);
+			throw new NetworkException("教务处服务器繁忙");
 		}
 		Map<String, String> reCookies = connection.response().cookies();
 		if (reCookies.size() < 1) {
-			throw new NetworkException("学校封锁了我们的请求");
+			throw new NetworkException("学校封锁了我们的请求,等下再试试吧");
 		}
 		return reCookies;
 	}

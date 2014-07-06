@@ -18,6 +18,14 @@ public class ManageScoreTest {
 			Assert.assertTrue(myScoreEntities.size() > 0);
 			myScoreEntities = ManageScore.get("2012210008", "2012210008");
 			Assert.assertTrue(myScoreEntities.size() > 0);
+			myScoreEntities = ManageScore.get("2013213766", "190124");
+			Assert.assertTrue(myScoreEntities.size() > 0);
+			myScoreEntities = ManageScore.get("2013213760", "666895");
+			Assert.assertTrue(myScoreEntities.size() > 0);
+			myScoreEntities = ManageScore.get("2013213756", "081994");
+			Assert.assertTrue(myScoreEntities.size() > 0);
+			myScoreEntities = ManageScore.get("2013213752", "004817");
+			Assert.assertTrue(myScoreEntities.size() > 0);
 		}
 	}
 

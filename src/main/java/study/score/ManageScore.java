@@ -73,7 +73,6 @@ public class ManageScore {
 			connection.data("Button1", "查询");
 		} catch (IndexOutOfBoundsException e) {
 			log.error(Arrays.toString(e.getStackTrace()));
-
 			log.error(document.toString());
 			return get_XH(XH);
 		}
@@ -156,7 +155,7 @@ public class ManageScore {
 	 */
 	public static int updateAllStudentsScore() {
 		Session session = HibernateUtil.getSession();
-		Query query = session.createQuery("from StudentInfoEntity where password!=null and xh!=null order by xh desc ");
+		Query query = session.createQuery("from StudentInfoEntity where password!=null and xh!=null");
 		List<StudentInfoEntity> studentInfoEntities = query.list();
 		HibernateUtil.closeSession(session);
 		for (StudentInfoEntity studentInfoEntity : studentInfoEntities) {
