@@ -8,15 +8,17 @@
   Time: 7:40 PM
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page errorPage="../../tool/error/index.jsp" %>
 <%
 	request.setCharacterEncoding("UTF-8");
 	response.setCharacterEncoding("UTF-8");
 	String kh = request.getParameter("kh");
 //	String name= URLDecoder.decode(request.getParameter("name"),"UTF8");
-	String name= request.getParameter("name");
+	String name = request.getParameter("name");
 
-	if (kh == null || name==null) {
-		response.sendRedirect("queryByKH?info=Your name and id has Problem!");return;
+	if (kh == null || name == null) {
+		response.sendRedirect("queryByKH?info=Your name and id has Problem!");
+		return;
 	}
 	Cet46Entity cet = ManageCET.get_KH(kh, name);
 %>
@@ -42,30 +44,37 @@
 	%>
 	<img src="img/heart.png" class="img-responsive center-block">
 	<br>
+
 	<div class="center-block">
 		<div class="btn-group btn-group-lg btn-group-justified">
 			<a class="btn btn-info active">Total</a>
-			<a class="btn btn-success active"><%=cet.getSumScore()%></a>
+			<a class="btn btn-success active"><%=cet.getSumScore()%>
+			</a>
 		</div>
 		<div class="btn-group btn-group-sm btn-group-justified">
 			<a class="btn btn-info active">Listening</a>
-			<a class="btn btn-success active"><%=cet.getListening()%></a>
+			<a class="btn btn-success active"><%=cet.getListening()%>
+			</a>
 		</div>
 		<div class="btn-group btn-group-sm btn-group-justified">
 			<a class="btn btn-info active">Reading</a>
-			<a class="btn btn-success active"><%=cet.getReading()%></a>
+			<a class="btn btn-success active"><%=cet.getReading()%>
+			</a>
 		</div>
 		<div class="btn-group btn-group-sm btn-group-justified">
 			<a class="btn btn-info active">Composite</a>
-			<a class="btn btn-success active"><%=cet.getCompre()%></a>
+			<a class="btn btn-success active"><%=cet.getCompre()%>
+			</a>
 		</div>
 		<div class="btn-group btn-group-sm btn-group-justified">
 			<a class="btn btn-info active">Essay</a>
-			<a class="btn btn-success active"><%=cet.getEssay()%></a>
+			<a class="btn btn-success active"><%=cet.getEssay()%>
+			</a>
 		</div>
 		<div class="btn-group btn-group-lg btn-group-justified">
 			<a class="btn btn-info active">Rank</a>
-			<a class="btn btn-warning active"><%=cet.rank()%></a>
+			<a class="btn btn-warning active"><%=cet.rank()%>
+			</a>
 		</div>
 	</div>
 	<%
@@ -73,43 +82,53 @@
 	%>
 	<img src="img/x.png" class="img-responsive center-block">
 	<br>
+
 	<div class="center-block">
 		<div class="btn-group btn-group-lg btn-group-justified">
 			<a class="btn btn-danger active">Total</a>
-			<a class="btn btn-warning active"><%=cet.getSumScore()%></a>
+			<a class="btn btn-warning active"><%=cet.getSumScore()%>
+			</a>
 		</div>
 		<div class="btn-group btn-group-sm btn-group-justified">
 			<a class="btn btn-danger active">Listening</a>
-			<a class="btn btn-warning active"><%=cet.getListening()%></a>
+			<a class="btn btn-warning active"><%=cet.getListening()%>
+			</a>
 		</div>
 		<div class="btn-group btn-group-sm btn-group-justified">
 			<a class="btn btn-danger active">Reading</a>
-			<a class="btn btn-warning active"><%=cet.getReading()%></a>
+			<a class="btn btn-warning active"><%=cet.getReading()%>
+			</a>
 		</div>
 		<div class="btn-group btn-group-sm btn-group-justified">
 			<a class="btn btn-danger active">Composite</a>
-			<a class="btn btn-warning active"><%=cet.getCompre()%></a>
+			<a class="btn btn-warning active"><%=cet.getCompre()%>
+			</a>
 		</div>
 		<div class="btn-group btn-group-sm btn-group-justified">
 			<a class="btn btn-danger active">Essay</a>
-			<a class="btn btn-warning active"><%=cet.getEssay()%></a>
+			<a class="btn btn-warning active"><%=cet.getEssay()%>
+			</a>
 		</div>
 		<div class="btn-group btn-group-lg btn-group-justified">
 			<a class="btn btn-danger active">Rank</a>
-			<a class="btn btn-info active"><%=cet.rank()%></a>
+			<a class="btn btn-info active"><%=cet.rank()%>
+			</a>
 		</div>
 	</div>
 	<%
 		}
 	%>
-	<div class="alert alert-danger">Hi,<em><%=cet.getName()%></em>.<%=cet.sayToYou()%></div>
+	<div class="alert alert-danger">Hi,<em><%=cet.getName()%>
+	</em>.<%=cet.sayToYou()%>
+	</div>
 	<%
 	} else {//查询不到该学号的成绩或查询失败
 	%>
 	<img src="img/caution.png" class="img-responsive center-block">
 	<br>
 
-	<div class="alert alert-danger">Sorry! I can't find you CET score,you can <a href="http://www.chsi.com.cn/cet/"><em>go here</em></a></div>
+	<div class="alert alert-danger">Sorry! I can't find you CET score,you can <a href="http://www.chsi.com.cn/cet/"><em>go
+		here</em></a></div>
 	<%
 		}
 	%>

@@ -21,7 +21,7 @@ public class AutoUpdate {
 	/**
 	 * 内容的自动更新的周期
 	 */
-	public static final long UpdatePeriod = 1000 * 3600;//1小时
+	private static final long UpdatePeriod = 1000 * 3600;//1小时
 	//TODO
 
 	private static Timer timer = new Timer();
@@ -39,9 +39,6 @@ public class AutoUpdate {
 		}
 	};
 
-
-
-
 	/**
 	 * 从UpdatePeriod秒后,每隔UpdatePeriod秒更新内容一次
 	 */
@@ -53,20 +50,15 @@ public class AutoUpdate {
 		}
 	}
 
+	/**
+	 * 暂停计时器
+	 */
 	public static void stop() {
 		try {
 			timer.cancel();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	public static void main(String[] args) {
-		start();
-		start();
-		start();
-		start();
-
 	}
 
 }

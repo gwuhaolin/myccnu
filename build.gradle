@@ -1,5 +1,11 @@
 apply plugin: 'java'
-
+apply plugin: 'idea'
+idea {
+	module {
+		downloadJavadoc = true
+		downloadSources = true
+	}
+}
 version='1.0'
 
 repositories {

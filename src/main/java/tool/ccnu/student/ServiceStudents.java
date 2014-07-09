@@ -4,11 +4,10 @@
  * Time: 16:00
  */
 
-package tool.studentInfo;
+package tool.ccnu.student;
 
 import org.glassfish.jersey.server.JSONP;
-import org.hibernate.Session;
-import tool.CCNUPortal;
+import tool.ccnu.CCNUPortal;
 import tool.HibernateUtil;
 import tool.R;
 import tool.Tool;
@@ -26,7 +25,7 @@ import javax.ws.rs.core.Context;
  */
 @Path("/studentInfo")
 @Produces({"application/javascript"})
-public class ServiceStudentInfo {
+public class ServiceStudents {
 
 	@Context
 	HttpServletRequest request;
@@ -38,34 +37,41 @@ public class ServiceStudentInfo {
 	 * 查询一个同学的信息
 	 *
 	 * @param XH 如果URL参数中没有XH参数就从Cookies中获得
-	 * @return
+	 * @return 一个学生的信息, 如果没有返回null
 	 */
 	@JSONP(queryParam = R.JSONP_CALLBACK)
 	@GET
 	@Path("/getOne")
-	public StudentBasicInfoEntity getOneByXH_Query(@QueryParam("XH") String XH) {
+	public StudentsEntity getOneByXH_Query(@QueryParam("XH") String XH) {
 		if (XH == null) {
 			XH = Tool.getXHMMfromCookie(request)[0];
 		}
-		return ManageStudentBasicInfo.get_XH(XH);
+		StudentsEntity re = ManageStudents.get(XH);
+		if (re != null) {
+			re.setPassword("");//掩盖密码
+			re.setIdNumber("");//掩盖身份证号
+		}
+		return re;
 	}
 
 	@JSONP(queryParam = R.JSONP_CALLBACK)
 	@GET
 	@Path("/updateOne")
-	public StudentBasicInfoEntity updateBasicInfo(
+	public StudentsEntity updateBasicInfo(
 			@QueryParam("name") String name,
 			@QueryParam("phoneNumber") String phoneNumber,
 			@QueryParam("qq") String qq,
 			@CookieParam("XH") String XH) {
-		Session session= HibernateUtil.getSession();
-		StudentBasicInfoEntity one=(StudentBasicInfoEntity) session.get(StudentBasicInfoEntity.class,XH);
-		one.setName(name);
-		one.setQq(qq);
-		one.setPhoneNumber(phoneNumber);
-		session.update(one);
-		HibernateUtil.closeSession(session);
-		return one;
+		StudentsEntity one = ManageStudents.get(XH);
+		if (one == null) {
+			return null;
+		} else {
+			one.setName(name);
+			one.setQq(qq);
+			one.setPhoneNumber(phoneNumber);
+			HibernateUtil.updateEntity(one);
+			return one;
+		}
 	}
 
 	@JSONP(queryParam = R.JSONP_CALLBACK)
@@ -77,7 +83,6 @@ public class ServiceStudentInfo {
 		}
 		if (CCNUPortal.XHMMisTrue(XH, MM)) {//密码正确
 			Tool.setXHMMtoCookies(response, XH, MM);//保存帐号密码到cookies
-			Tool.setXHMMtoSQL(XH, MM);//保存帐号密码到数据库
 			return 1;//成功
 		} else {//密码错误
 			return -2;//密码错误

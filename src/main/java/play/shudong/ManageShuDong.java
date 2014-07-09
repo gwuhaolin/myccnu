@@ -19,7 +19,7 @@ public class ManageShuDong {
 	public static final String CMD_Change = "change";//修改树洞
 	public static final String CMD_Delete = "delete";//删除树洞
 	public static final String CMD_Add = "add";//添加树洞
-	public static final String PASSWORD = "SHUDONG";//密码
+	private static final String PASSWORD = "SHUDONG";//密码
 
 	/**
 	 * 判断密码是否正确

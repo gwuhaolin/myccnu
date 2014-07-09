@@ -108,7 +108,7 @@
 	<script>
 		//60分以上绿色,以下红色
 		Handlebars.registerHelper('color', function (object) {
-			if (object > 60) {
+			if (object >= 60) {
 				return 'green';
 			} else {
 				return 'red';

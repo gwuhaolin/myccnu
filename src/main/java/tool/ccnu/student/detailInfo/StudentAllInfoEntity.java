@@ -4,7 +4,7 @@
  * Time: 15:16
  */
 
-package tool.studentInfo;
+package tool.ccnu.student.detailInfo;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
@@ -14,19 +14,16 @@ import javax.persistence.Id;
  * User: WuHaoLin
  * Date: 2014/5/15
  * Time: 15:16
+ * 信息门户详细版信息
  */
 @Entity
 @javax.persistence.Table(name = "studentinfo", schema = "", catalog = "weixin")
-public class StudentInfoEntity {
+public class StudentAllInfoEntity {
 
-	public StudentInfoEntity() {
+	public StudentAllInfoEntity() {
 	}
 
 	private String xh;
-
-	public StudentInfoEntity(String xh) {
-		this.xh = xh;
-	}
 
 	@Id
 	@javax.persistence.Column(name = "XH", nullable = false, insertable = true, updatable = true, length = 20)
@@ -108,6 +105,13 @@ public class StudentInfoEntity {
 
 	public void setIdNumber(String idNumber) {
 		this.idNumber = idNumber;
+		//从身份证号码中解析出 生日 和 性别
+		try {
+			this.setBirthday(idNumber.substring(6, 14));
+			int sex = Integer.parseInt(idNumber.substring(14, 17)) % 2;
+			this.setSex((byte) sex);
+		} catch (Exception e) {
+		}
 	}
 
 	private String password;
@@ -307,7 +311,7 @@ public class StudentInfoEntity {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		StudentInfoEntity that = (StudentInfoEntity) o;
+		StudentAllInfoEntity that = (StudentAllInfoEntity) o;
 
 		if (academy != null ? !academy.equals(that.academy) : that.academy != null) return false;
 		if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null) return false;

@@ -18,6 +18,7 @@
 	<div class="sixteen wide column">
 		<div class="ui huge center aligned header icon">
 			<i class="circular setting icon inverted"></i>
+
 			<div class="content">掌上华师
 				<div class="sub header">后台信息发布管理系统</div>
 			</div>
@@ -35,9 +36,6 @@
 				<div class="ui divided selection list">
 					<a class="item" href="life/notice/manage/login.jsp">最新通知</a>
 					<a class="item" href="life/job/manage/login.jsp">兼职家教</a>
-					<a class="item" href="life/YKT/index.jsp">一卡通</a>
-					<a class="item" href="life/computer/index.jsp">电脑维修</a>
-					<a class="item" href="life/lose/index.jsp">失物招领</a>
 				</div>
 			</div>
 		</div>
@@ -50,9 +48,6 @@
 				</div>
 				<div class="ui divided selection list">
 					<a class="item" href="study/lecture/manage/login_School.jsp">校园活动</a>
-					<a class="item" href="study/book/index.jsp">图书馆</a>
-					<a class="item" href="study/CET/index.jsp">CET</a>
-					<a class="item" href="study/score/index.jsp">期末成绩</a>
 					<a class="item" href="study/lecture/manage/login.jsp">讲座</a>
 				</div>
 			</div>

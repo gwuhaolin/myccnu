@@ -8,13 +8,14 @@
   Time: 7:40 PM
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page errorPage="../../tool/error/index.jsp" %>
 <%
 	String id=request.getParameter("id");
 	String grade=request.getParameter("grade");
 	if (id==null || id.length()!=18) {
 		response.sendRedirect("queryByIDNAME.jsp?info=Your ID-Card-Number have Problem!");return;
 	}
-	Cet46Entity cet = ManageCET.get(grade, id);
+	Cet46Entity cet = ManageCET.scan(grade, id);
 %>
 <!DOCTYPE html>
 <html>

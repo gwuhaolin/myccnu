@@ -6,6 +6,7 @@
   Time: 10:21 AM
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page errorPage="../../tool/error/index.jsp" %>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String want = request.getParameter("W");
@@ -33,7 +34,7 @@
 		<jsp:param name="page" value="1"/>
 	</jsp:include>
 	<%--ajax 加载更多--%>
-	<button class="ui button fluid circular" onclick="ajaxMore(this)" page="0" style="margin-top: 10px">更多
+	<button class="ui button fluid circular" onclick="ajaxMore(this)" data-page="1" style="margin-top: 10px">更多
 	</button>
 	<div class="ui divider horizontal icon inverted"><a href="JianGou.jsp"><i class="icon book"></i></a></div>
 
@@ -43,12 +44,12 @@
 	<%--ajax加载更多--%>
 	function ajaxMore(btn) {
 		$(btn).addClass('loading');
-		var page = Number($(btn).attr('page'));
+		var page = Number($(btn).data('page'));
 		page++;
 		$.ajax({
 			type: 'POST',
 			url: "GetSearchBooksForAJAX.jsp",
-			data: { W: '<%=want%>', page: page},
+			data: {W: '<%=want%>', page: page},
 			contentType: "application/x-www-form-urlencoded; charset=utf-8"
 		}).done(function (data) {
 			$(btn).removeClass('loading');
@@ -58,7 +59,7 @@
 			} else {
 				$(btn).before(data);
 				$(btn).text("更多");
-				$(btn).attr('page', page);
+				$(btn).data('page', page);
 			}
 		});
 	}

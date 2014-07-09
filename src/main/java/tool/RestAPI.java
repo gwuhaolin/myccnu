@@ -11,7 +11,7 @@ import play.shudong.ServiceShuDong;
 import play.shudong.ServiceShuDongBgImg;
 import play.vote.ServiceVote;
 import study.score.ServiceScore;
-import tool.studentInfo.ServiceStudentInfo;
+import tool.ccnu.student.ServiceStudents;
 
 /**
  * Created with Intellij IDEA.
@@ -28,7 +28,7 @@ public class RestAPI extends ResourceConfig {
 		register(ServiceShuDongBgImg.class);
 		register(ServiceQiNiu.class);
 		register(ServiceShop.class);
-		register(ServiceStudentInfo.class);
+		register(ServiceStudents.class);
 		register(ServiceVote.class);
 		register(ServiceScore.class);
 

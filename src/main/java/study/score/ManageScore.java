@@ -16,7 +16,8 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tool.*;
-import tool.studentInfo.StudentInfoEntity;
+import tool.ccnu.CCNUJWC;
+import tool.ccnu.student.StudentsEntity;
 
 import java.io.IOException;
 import java.util.*;
@@ -24,17 +25,17 @@ import java.util.*;
 /**
  * 从教务处网站获得成绩
  */
-public class ManageScore {
+class ManageScore {
 
 	private static final Logger log = LoggerFactory.getLogger(ManageScore.class);
 
 	/**
 	 * 查成绩
 	 */
-	public static final String URL_CJ = "http://jwc.ccnu.edu.cn/stuScore.aspx";
+	private static final String URL_CJ = "http://jwc.ccnu.edu.cn/stuScore.aspx";
 
 	/**
-	 * 查询成绩,获得这学期的最新的成绩结果
+	 * 去教务处抓取查询成绩,获得这学期的最新的成绩结果
 	 * 查询结果按照总分大小排序
 	 * 结果会更新的数据库
 	 *
@@ -73,7 +74,6 @@ public class ManageScore {
 			connection.data("Button1", "查询");
 		} catch (IndexOutOfBoundsException e) {
 			log.error(Arrays.toString(e.getStackTrace()));
-			log.error(document.toString());
 			return get_XH(XH);
 		}
 
@@ -82,7 +82,6 @@ public class ManageScore {
 			document = connection.post();
 		} catch (IOException e) {
 			log.error(Arrays.toString(e.getStackTrace()));
-			log.error(document.toString());
 			return get_XH(XH);
 		}
 		//解析数据
@@ -111,9 +110,7 @@ public class ManageScore {
 	 * @param scoreEntities 所有获得的成绩
 	 */
 	public static void saveOrUpdateScores(List<MyScoreEntity> scoreEntities) {
-		for (MyScoreEntity myScoreEntity : scoreEntities) {
-			HibernateUtil.addOrUpdateEntity(myScoreEntity);
-		}
+		scoreEntities.forEach(HibernateUtil::addOrUpdateEntity);
 	}
 
 	/**
@@ -149,16 +146,16 @@ public class ManageScore {
 	}
 
 	/**
-	 * 对于数据库中所有已经知道了帐号密码的同学,主动去教务处抓取数据
+	 * 对于数据库中所有已经知道了帐号密码的同学,主动去教务处抓取成绩的数据并把成功查询到的保存到数据库
 	 *
 	 * @return 更新了的人数
 	 */
 	public static int updateAllStudentsScore() {
 		Session session = HibernateUtil.getSession();
-		Query query = session.createQuery("from StudentInfoEntity where password!=null and xh!=null");
-		List<StudentInfoEntity> studentInfoEntities = query.list();
+		Query query = session.createQuery("from StudentsEntity where password!=null and xh!=null");
+		List<StudentsEntity> studentInfoEntities = query.list();
 		HibernateUtil.closeSession(session);
-		for (StudentInfoEntity studentInfoEntity : studentInfoEntities) {
+		for (StudentsEntity studentInfoEntity : studentInfoEntities) {
 			get(studentInfoEntity.getXh(), studentInfoEntity.getPassword());
 		}
 		return studentInfoEntities.size();

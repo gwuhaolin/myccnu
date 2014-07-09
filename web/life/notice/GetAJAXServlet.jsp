@@ -23,7 +23,7 @@
     <div class="ui stacked segment" onclick="openOneAJAX(<%=one.getId()%>)">
         <%--是否是今天的--%>
         <%
-            if (one.taday()) {
+            if (one.today()) {
         %>
         <div class="ui label corner inverted red left icon"><i class="icon">N</i></div>
         <%

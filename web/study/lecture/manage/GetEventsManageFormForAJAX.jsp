@@ -9,7 +9,6 @@
 	response.setCharacterEncoding("UTF-8");
 	try {
 		int begin = Integer.parseInt(request.getParameter("begin"));
-		int size = Integer.parseInt(request.getParameter("size"));
 		int target = Integer.parseInt(request.getParameter("target"));
 		List<MyEventEntity> jobEntities = ManageEvent.get_page(begin, target);
 		for (MyEventEntity one : jobEntities) {
@@ -30,7 +29,6 @@
 			<input type="text" name="name" class="form-control" value="<%=one.getName()%>">
 		</div>
 
-
 		<%--简介--%>
 		<div class="input-group">
 			<span class="input-group-addon">简介</span>
@@ -49,7 +47,6 @@
 			<span class="input-group-addon">地点</span>
 			<input type="text" name="runLocation" class="form-control" value="<%=one.getRunLocation()%>">
 		</div>
-
 
 		<%--来自--%>
 		<div class="input-group">

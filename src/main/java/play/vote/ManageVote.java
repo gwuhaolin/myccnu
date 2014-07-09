@@ -4,7 +4,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import tool.CCNUPortal;
+import tool.ccnu.CCNUPortal;
 import tool.HibernateUtil;
 
 import java.util.Collections;
@@ -16,7 +16,7 @@ import java.util.List;
  * Date: 3/13/14
  * Time: 8:25 PM
  */
-public class ManageVote {
+class ManageVote {
 
 	public static VoteBasicInfo voteBasicInfo=new VoteBasicInfo();
 

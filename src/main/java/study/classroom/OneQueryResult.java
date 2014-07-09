@@ -19,12 +19,12 @@ public class OneQueryResult {
 	/**
 	 * 第几节课的时候
 	 */
-	int diJiJieke;
+	private int diJiJieke;
 
 	/**
 	 * 该段时间类的 所有的空余的教室的名称
 	 */
-	List<String> allClassRoom=new ArrayList<String>();
+	private final List<String> allClassRoom=new ArrayList<String>();
 
 	public int getDiJiJieke() {
 		return diJiJieke;

@@ -9,6 +9,7 @@
   Time: 下午12:11
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page errorPage="../../tool/error/index.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,7 +48,7 @@
 	<%
 		if (XHMM[1].equals("123456")) {
 	%>
-	<div class="ui message warning fluid column">我发现了你的密码为初始密码123456哦!赶快<a href="http://202.114.34.15/reader/login.php">点击这里</a>登入后修改密码!(绿色的修改密码按钮)
+	<div class="ui message warning fluid column">我发现了你的密码为初始密码123456!赶快<a href="http://202.114.34.15/reader/login.php">点击这里</a>登入后修改密码!(绿色的修改密码按钮)
 	</div>
 	<%
 		}
@@ -99,7 +100,7 @@
 
 			<%--续借--%>
 			<button class="ui button circular inverted icon teal" id="<%=one.getIndex()%>"
-			        onclick="<%=one.getXJJavaStriptFunction()%>">
+			        onclick="<%=one.getXJJavaScriptFunction()%>">
 				<i class="icon refresh"></i>续借
 			</button>
 

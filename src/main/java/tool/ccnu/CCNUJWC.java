@@ -1,4 +1,4 @@
-package tool;
+package tool.ccnu;
 
 /**
  * Created with Intellij IDEA.
@@ -12,6 +12,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import tool.NetworkException;
+import tool.R;
+import tool.ValidateException;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -28,7 +31,7 @@ public class CCNUJWC {
 	/**
 	 * 查课表
 	 */
-	public static final String URL_KB = "http://jwc.ccnu.edu.cn/stuClass.aspx";
+	private static final String URL_KB = "http://jwc.ccnu.edu.cn/stuClass.aspx";
 
 
 	/**
@@ -37,18 +40,20 @@ public class CCNUJWC {
 	 * @param XH 学号
 	 * @param MM 密码
 	 * @return 课表的HTML
+	 * @throws tool.NetworkException
+	 * @throws tool.ValidateException
 	 */
-	public static String getKB(String XH, String MM) throws Exception {
+	public static String getKB(String XH, String MM) throws NetworkException, ValidateException {
 		Map<String, String> cookies = getCookie(XH, MM);
 		Connection connection = Jsoup.connect(URL_KB);
 		connection.userAgent(R.USER_AGENT);
 		connection.timeout(R.ConnectTimeout);
 		connection.cookies(cookies);
-		Document document = null;
+		Document document;
 		try {
 			document = connection.get();
 		} catch (IOException e) {
-			throw new Exception("学校教务处服务器繁忙");
+			throw new NetworkException("学校教务处服务器繁忙");
 		}
 		return document.getElementById("GridView1").toString();
 	}

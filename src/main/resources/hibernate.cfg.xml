@@ -16,12 +16,6 @@
 		<!--数据库连接URL-->
 		<property name="connection.url">jdbc:mysql://localhost:3306/weixin</property>
 
-		<!--数据库帐号-->
-		<property name="connection.username">root</property>
-
-		<!--数据库密码-->
-		<property name="connection.password">ccnuyouth</property>
-
 		<!-- JDBC connection pool (use the built-in) -->
 		<property name="connection.pool_size">
 			100
@@ -47,6 +41,11 @@
 			update
 		</property>
 
+		<!--数据库帐号-->
+		<property name="connection.username">root</property>
+		<!--数据库密码-->
+		<property name="connection.password">ccnuyouth</property>
+
 		<!-- 以下设置对象与数据库表的映像文件 -->
 		<!--电影-->
 		<mapping class="play.movie.MyMovieEntity"/>
@@ -70,14 +69,18 @@
 		<!--二手商城-->
 		<mapping class="play.shop.ShopItemsEntity"/>
 		<mapping class="play.shop.ShopSearchTagEntity"/>
-		<!--学生信息-->
-		<mapping class="tool.studentInfo.StudentBasicInfoEntity"/>
-		<mapping class="tool.studentInfo.StudentInfoEntity"/>
+		<!--所有的学院-->
+		<mapping class="tool.ccnu.academy.AcademyEntity"/>
+		<!--用于myccnu应用的学生的信息-->
+		<mapping class="tool.ccnu.student.StudentsEntity"/>
+		<!--从信息门户抓取的信息-->
+		<mapping class="tool.ccnu.student.detailInfo.StudentAllInfoEntity"/>
 		<!--投票-->
 		<mapping class="play.vote.MyCampaignerEntity"/>
 		<mapping class="play.vote.MyVoteEntity"/>
 		<!--期末成绩-->
 		<mapping class="study.score.MyScoreEntity"/>
+		<mapping class="life.YKT.MyYktEntity"/>
 	</session-factory>
 
 </hibernate-configuration>

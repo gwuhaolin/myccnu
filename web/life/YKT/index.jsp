@@ -1,5 +1,6 @@
 <%@ page import="life.YKT.ManageYKT" %>
 <%@ page import="tool.Tool" %>
+<%@ page import="life.YKT.MyYktEntity" %>
 <%--登入一卡通后进入的页面--%>
 <%--
   Created by Intellij IDEA.
@@ -8,6 +9,7 @@
   Time: 5:12 PM
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page errorPage="../../tool/error/index.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,20 +26,21 @@
 <body>
 <%
 	String XHMM[] = Tool.getXHMMfromCookie(request);
-	String result = null;
+	MyYktEntity result;
 	if (Tool.XHMMisOK(XHMM)) {
 		try {
-			result = ManageYKT.getRemain(XHMM[0], XHMM[1]);
+			result = ManageYKT.getState(XHMM[0], XHMM[1]);
 %>
 <div class="ui stackable three column page grid center aligned">
 
 	<div class="column center aligned">
 
 		<div class="ui statistic">
-			<div class="number"><%=result%>
+			<div class="number"><%=result.getRemainMoney()%>
 			</div>
 		</div>
-		<div class="ui label circular black">余额</div>
+		<div class="ui label circular black">余额
+		</div>
 
 	</div>
 

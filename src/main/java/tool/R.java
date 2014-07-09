@@ -28,4 +28,9 @@ public class R {
 	 */
 	public static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:5.0) Gecko/20100101 Firefox/5.0";
 
+	/**
+	 * cookies的保存日期
+	 */
+	public static final int CookiesStoreTime = 3600 * 24 * 30 * 12;//12个月
+
 }

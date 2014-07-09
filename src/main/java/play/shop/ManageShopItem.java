@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * 逻辑业务层,操作数据库
  */
-public class ManageShopItem {
+class ManageShopItem {
 
 	/**
 	 * 当物品的图片URL为空时的默认URL

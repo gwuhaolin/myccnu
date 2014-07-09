@@ -10,7 +10,7 @@ import java.io.Serializable;
  * Date: 2014/3/31
  * Time: 20:56
  */
-public class MyclassroomEntityPK implements Serializable {
+class MyclassroomEntityPK implements Serializable {
 	private String jiHaoLou;
 
 	@Column(name = "JiHaoLou", nullable = false, insertable = true, updatable = true, length = 10)

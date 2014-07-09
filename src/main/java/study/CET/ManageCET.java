@@ -8,52 +8,65 @@ package study.CET;
  */
 
 import org.apache.commons.io.IOUtils;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import tool.HibernateUtil;
 import tool.R;
-import tool.studentInfo.StudentInfoEntity;
+import tool.ccnu.student.StudentsEntity;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * 华中师范大学全国英语等级考试(CET)查询
  */
 public class ManageCET {
 
-	/**
-	 * 查询成绩
-	 */
-	public static final String URL_Query = "http://cet.tinyin.net/scshow.asp";
+	private static final Logger log = LoggerFactory.getLogger(ManageCET.class);
 
 	/**
-	 * 要查询的CET考试的时间
+	 * 华师的查询成绩网址
 	 */
-	public static final String DATE[] = {"201312", "201306", "201212", "201206", "201112", "201106"};
+	private static final String URL_Query = "http://cet.tinyin.net/scshow.asp";
 
 	/**
-	 * 查询成绩
+	 * 要查询的CET考试的时间,用于从学校抓取数据时提交的数据
+	 */
+	private static final String[] DATE = {"201312", "201306", "201212", "201206", "201112", "201106"};
+
+	/**
+	 * 查询时的所有的等级
+	 */
+	private static final String[] GRADE = {"4", "6"};
+
+	/**
+	 * 从学校的网站抓取成绩
 	 *
-	 * @param grade  等级
-	 * @param IDcard 身份证
-	 * @param date   考试时间
+	 * @param grade    46等级
+	 * @param IdNumber 身份证
+	 * @param date     考试时间
 	 * @return 如果查询成功正常返回, 否则返回null
 	 */
-	public static Cet46Entity get(String grade, String IDcard, String date) {
+	private static Cet46Entity spider(String grade, String IdNumber, String date) {
 		try {
 			//http获得数据
 			URL url = new URL(URL_Query);
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setDoOutput(true);
 			connection.setDoInput(true);
-
 			connection.setRequestProperty("Referer", "http://cet.tinyin.net/scqry.asp");
 
 			//构造参数
@@ -61,10 +74,10 @@ public class ManageCET {
 			pa.append("dt=").append(date);//只查询这次的46级结果
 			pa.append("&lang=").append(URLEncoder.encode("英语", "GB2312"));//只查询英语
 			pa.append("&gd=").append(grade);//等级
-			pa.append("&idn=").append(IDcard);//身份证
+			pa.append("&idn=").append(IdNumber);//身份证
 
 			connection.getOutputStream().write(pa.toString().getBytes());
-			String html = null;
+			String html;
 			try {
 				html = IOUtils.toString(connection.getInputStream(), "GB2312");
 			} catch (IOException e) {
@@ -81,88 +94,59 @@ public class ManageCET {
 			String essay = all.get(4).text();
 			return new Cet46Entity(sum, listen, read, com, essay, grade);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(Arrays.toString(e.getStackTrace()));
 			return null;
 		}
 	}
 
-	/**
-	 * 查询最近一次考试的成绩
-	 *
-	 * @param grade  等级
-	 * @param IDcard 身份证
-	 * @return 如果查询成功正常返回, 否则返回null
-	 */
-	public static Cet46Entity get(String grade, String IDcard) {
-		return get(grade, IDcard, DATE[0]);
-	}
 
 	/**
-	 * 用学号去数据库里获得身份证密码,根据年级去获得成绩
-	 *
-	 * @param XH
-	 * @return 如果查询失败或没有成绩就返回null
+	 * 根据学号去数据库里获得身份证密码,根据年级自动判断应该查询哪次的成绩
+	 * 如果数据库中没有该学号的信息,就直接返回null
+	 * 根据该同学的年级和今年是哪年自动判断查询那次的成绩
 	 */
 	public static Cet46Entity get(String XH) {
-		StudentInfoEntity one;
-		try {
-			Session session = HibernateUtil.getSession();
-			Object o = session.createQuery("from StudentInfoEntity as main where main.xh=?").setString(0, XH).uniqueResult();
-			HibernateUtil.closeSession(session);
-			if (o == null) {
-				return null;
-			} else {
-				one = (StudentInfoEntity) o;
-			}
-		} catch (Exception e) {
+		//用学号去学生信息数据库中获取数据用于查询
+		Session session = HibernateUtil.getSession();
+		Query query = session.createQuery("from StudentsEntity as main where main.xh=?");
+		query.setString(0, XH);
+		Object o = query.uniqueResult();
+		HibernateUtil.closeSession(session);
+		StudentsEntity studentsEntity;
+		if (o != null) {
+			studentsEntity = (StudentsEntity) o;
+		} else {//数据库中没有该同学的信息
 			return null;
 		}
-		String name = one.getName();
-		String IdCard = one.getIdNumber();
-		String grade = XH.substring(0, 4);
-		Cet46Entity re = null;
-		if (grade.compareTo("2012") == 0) {//2012级,查4级
-			for (String date : DATE) {
-				re = get("4", IdCard, date);
-				if (re != null) {
-					re.setDate(date);
-					break;
+		String name = studentsEntity.getName();
+		String IdCard = studentsEntity.getIdNumber();//身份证号
+		List<Cet46Entity> re = new LinkedList<>();
+		for (String date : DATE) {
+			for (String grade : GRADE) {
+				Cet46Entity cet46Entity = spider(grade, IdCard, date);
+				if (cet46Entity != null) {
+					cet46Entity.setXh(XH);
+					cet46Entity.setName(name);
+					cet46Entity.setDate(date);
+					re.add(cet46Entity);
 				}
 			}
-		} else if (grade.compareTo("2012") < 0) {//2011,2010级;先查6级再四级
-			for (String date : DATE) {
-				re = get("6", IdCard, date);
-				if (re != null) {
-					re.setDate(date);
-					break;
-				}
-			}
-			if (re == null) {
-				for (String date : DATE) {
-					re = get("4", IdCard, date);
-					if (re != null) {
-						re.setDate(date);
-						break;
-					}
-				}
-			}
-		} else {//2013级,没有参加考试
-			return null;
 		}
-		if (re != null) {
-			re.setXh(XH);
-			re.setName(name);
-//			HibernateUtil.addEntity(re);
+		if (re.size() > 0) {//如果查询成功
+			Collections.sort(re);
+			HibernateUtil.addOrUpdateEntitys(re);//把所有抓取到的都保存到数据库
+		} else {//没有抓取到任何一次成绩
+			re = get_XH_fromSQL(XH);
 		}
-		return re;
+		return re.get(0);//返回第一个,即他最关系的那个
 	}
 
 	/**
-	 * 从全国官方获得
+	 * 从全国官方抓取成绩
 	 *
-	 * @param KH
-	 * @param name
-	 * @return
+	 * @param KH   考号
+	 * @param name 姓名
+	 * @return 成绩, 如果失败返回null
 	 */
 	public static Cet46Entity get_KH(String KH, String name) {
 		System.out.println(KH + name);
@@ -186,6 +170,22 @@ public class ManageCET {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	/**
+	 * 从数据库中去获取学号为XH同学的成绩
+	 * 按照最优程序来排序
+	 *
+	 * @param xh 学号
+	 * @return 成绩, 如果没有记录就返回0个
+	 */
+	private static List<Cet46Entity> get_XH_fromSQL(String xh) {
+		Session session = HibernateUtil.getSession();
+		Query query = session.createQuery("from Cet46Entity where xh=?");
+		query.setString(0, xh);
+		List<Cet46Entity> re = query.list();
+		Collections.sort(re);
+		return re;
 	}
 
 }

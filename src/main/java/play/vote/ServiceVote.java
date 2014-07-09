@@ -20,7 +20,7 @@ public class ServiceVote {
 	/**
 	 * RESTful API 的JSONP时的callback函数名称
 	 */
-	public static final String JSONP_CALLBACK="callback";
+	private static final String JSONP_CALLBACK="callback";
 
 	@JSONP(queryParam = JSONP_CALLBACK)
 	@GET

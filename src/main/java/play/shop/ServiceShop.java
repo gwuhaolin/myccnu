@@ -26,7 +26,7 @@ public class ServiceShop {
 	/**
 	 * 后台管理密码
 	 */
-	final String ManagePassword = "SHOP";
+	private final String ManagePassword = "SHOP";
 
 	/**
 	 * HttpServletRequest请求

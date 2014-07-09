@@ -14,14 +14,11 @@ import java.util.List;
  * Time: 19:06
  */
 public class ManageClassroom {
-	public static String JIHAOLOU[] = {"9", "8", "7"};
+	public static final String[] JIHAOLOU = {"9", "8", "7"};
 
 	/**
 	 * 按照给的条件查询出空余教室结果
 	 *
-	 * @param location
-	 * @param time
-	 * @return
 	 */
 	public static List<OneQueryResult> query(int XinQiJi, String JiHaoLou) {
 		//当他们的值为空时设置为默认值

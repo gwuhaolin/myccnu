@@ -7,12 +7,18 @@ package study.book;
  * Time: 10:13 AM
  */
 
-import tool.R;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import study.CET.ManageCET;
+import tool.NetworkException;
+import tool.R;
 
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,38 +28,45 @@ import java.util.List;
  * http://202.114.34.15/opac/openlink.php
  */
 public class SearchBook {
+	private static final Logger log = LoggerFactory.getLogger(ManageCET.class);
+
 	private static final String URL = "http://202.114.34.15/opac/openlink.php/";
 
 	/**
-	 * 如果出现异常返回null,
-	 * 没有书返回size=0
+	 * 搜索图书
 	 *
-	 * @param want
-	 * @param page
-	 * @return
+	 * @param want 搜索关键字
+	 * @param page 第几页,学校图书查询网站是从1开始计数的
+	 * @return 查到的书
+	 * @throws tool.NetworkException
 	 */
-	public static List<MyBook> get(String want, String page) {
+	public static List<MyBook> get(String want, String page) throws NetworkException {
+		System.out.println(want + page);
+		Connection connection = Jsoup.connect(URL);
+		connection.timeout(R.ConnectTimeout);
+		connection.userAgent(R.USER_AGENT);
+		connection
+				.data("strSearchType", "title")
+				.data("match_flag", "forward")
+				.data("historyCount", "1")
+				.data("doctype", "ALL")
+				.data("displaypg", "20")
+				.data("showmode", "list")
+				.data("sort", "CATA_DATE")
+				.data("orderby", "desc")
+				.data("dept", "ALL")
+				.data("strText", want)
+				.data("page", page);//分页查询
+		Elements books;
 		try {
-			System.out.println(want + page);
-			Connection connection = Jsoup.connect(URL);
-			connection.timeout(R.ConnectTimeout);
-			connection.userAgent(R.USER_AGENT);
-			connection
-					.data("strSearchType", "title")
-					.data("match_flag", "forward")
-					.data("historyCount", "1")
-					.data("doctype", "ALL")
-					.data("displaypg", "20")
-					.data("showmode", "list")
-					.data("sort", "CATA_DATE")
-					.data("orderby", "desc")
-					.data("dept", "ALL")
-					.data("strText", want)
-					.data("page", page);//分页查询
-			List<MyBook> re = new LinkedList<MyBook>();
-			Elements books = connection.get().getElementById("search_book_list").getElementsByTag("li");
-			for (int i = 0; i < books.size(); i++) {
-				Element li = books.get(i);
+			books = connection.get().getElementById("search_book_list").getElementsByTag("li");
+		} catch (IOException e) {
+			log.error(Arrays.toString(e.getStackTrace()));
+			throw new NetworkException("学校图书查询系统繁忙");
+		}
+		List<MyBook> re = new LinkedList<>();
+		try {
+			for (Element li : books) {
 				MyBook book = new MyBook();
 				book.setTitle(li.getElementsByTag("h3").first().getElementsByTag("a").first().text());
 				book.setBookDetailInfoUrl("http://202.114.34.15/opac/" + li.getElementsByTag("h3").first().getElementsByTag("a").attr("href"));
@@ -67,12 +80,10 @@ public class SearchBook {
 				book.setPress(temp[1]);
 				re.add(book);
 			}
-			Collections.sort(re);
-			return re;
-		} catch (Exception e) {
-//			e.printStackTrace();
-			return null;
+		} catch (Exception ignored) {
 		}
+		Collections.sort(re);//按照剩余书量排序
+		return re;
 	}
 
 	public static class MyBook implements Comparable<MyBook> {
@@ -149,11 +160,6 @@ public class SearchBook {
 		public int compareTo(MyBook o) {
 			return o.getLeaveBookCount() - this.leaveBookCount;
 		}
-	}
-
-	public static void main(String[] args) {
-		List<MyBook> books = get("爱", "1");
-		System.out.println(books);
 	}
 
 }

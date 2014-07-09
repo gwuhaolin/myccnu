@@ -19,7 +19,7 @@ import java.util.List;
  * Date: 2014/5/10
  * Time: 14:28
  */
-public class ManageShuDongBgImg {
+class ManageShuDongBgImg {
 
 	/**
 	 * 获得最新的一个

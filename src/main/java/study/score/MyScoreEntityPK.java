@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by wuhaolin on 7/3/14.
  * :
  */
-public class MyScoreEntityPK implements Serializable {
+class MyScoreEntityPK implements Serializable {
 	private String xh;
 	private String classNo;
 

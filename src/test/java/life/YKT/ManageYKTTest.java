@@ -8,22 +8,22 @@ import java.util.Map;
 
 public class ManageYKTTest {
 
-	String XH = "2012210817";
-	String MM = "930820";
-	int TIMES = 100;
+	private final String XH = "2012210817";
+	private final String MM = "930820";
+	private final int TIMES = 100;
 
 	@Test
 	public void testGetRemain() throws Exception {
 		for (int i = 0; i < TIMES; i++) {
-			String re = ManageYKT.getRemain(XH, MM);
-			System.out.println(re);
+			MyYktEntity re = ManageYKT.getState(XH, MM);
+			System.out.println(re.getRemainMoney());
 		}
 	}
 
 	@Test
 	public void testGetDetail() throws Exception {
 		for (int i = 0; i < TIMES; i++) {
-			List<OneChange> re = ManageYKT.getDetail(XH, MM);
+			List<MyYktEntity> re = ManageYKT.getDetail(XH, MM);
 			Assert.assertTrue(re.size() > 0);
 		}
 	}
@@ -31,7 +31,7 @@ public class ManageYKTTest {
 	@Test
 	public void testGetHelpMoney() throws Exception {
 		for (int i = 0; i < TIMES; i++) {
-			List<OneChange> re = ManageYKT.getHelpMoney(XH, MM);
+			List<MyYktEntity> re = ManageYKT.getHelpMoney(XH, MM);
 			Assert.assertTrue(re.size() > 0);
 		}
 	}
@@ -39,14 +39,9 @@ public class ManageYKTTest {
 	@Test
 	public void testGetKaoQin() throws Exception {
 		for (int i = 0; i < TIMES; i++) {
-			List<OneChange> re = ManageYKT.getKaoQin(XH, MM);
+			List<MyYktEntity> re = ManageYKT.getKaoQin(XH, MM);
 			Assert.assertTrue(re.size() > 0);
 		}
-	}
-
-	@Test
-	public void testGsjg() throws Exception {
-
 	}
 
 	@Test

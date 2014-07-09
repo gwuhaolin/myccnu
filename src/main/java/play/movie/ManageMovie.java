@@ -18,9 +18,9 @@ public class ManageMovie {
 	public static final String Target_HDQNJC = "HDQNJC";
 	public static final String Target_LTDYC = "LTDYC";
 	public static final String Target_iWANT="iWANT";
-	public static final String Password_HDQNJC = "HDQNJC";
-	public static final String Password_LTDYC = "LTDYC";
-	public static final String Password_iWANT = "iWANT";
+	private static final String Password_HDQNJC = "HDQNJC";
+	private static final String Password_LTDYC = "LTDYC";
+	private static final String Password_iWANT = "iWANT";
 	public static final String Cmd_add = "add";
 	public static final String Cmd_change = "change";
 	public static final String Cmd_delete="delete";

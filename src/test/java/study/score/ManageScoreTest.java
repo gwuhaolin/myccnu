@@ -7,9 +7,9 @@ import java.util.List;
 
 public class ManageScoreTest {
 
-	String xh = "2012210817";
-	String mm = "930820";
-	String classNo = "33104901";
+	final String xh = "2012210817";
+	final String mm = "930820";
+	final String classNo = "33104901";
 
 	@Test
 	public void testGet() throws Exception {

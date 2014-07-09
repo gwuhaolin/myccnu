@@ -36,7 +36,7 @@ public class ServiceQiNiu {
 		Config.SECRET_KEY = "OI0ako8butjkUEP81BPEFDpkDehxdVqL8e0FWJhG";
 	}
 
-	static Mac mac = new Mac(Config.ACCESS_KEY, Config.SECRET_KEY);
+	private static final Mac mac = new Mac(Config.ACCESS_KEY, Config.SECRET_KEY);
 
 
 	@JSONP(queryParam = R.JSONP_CALLBACK)
@@ -47,9 +47,7 @@ public class ServiceQiNiu {
 		String uptoken = null;
 		try {
 			uptoken = "'" + putPolicy.token(mac) + "'";
-		} catch (AuthException e) {
-			e.printStackTrace();
-		} catch (JSONException e) {
+		} catch (AuthException | JSONException e) {
 			e.printStackTrace();
 		}
 		return uptoken;
@@ -57,8 +55,9 @@ public class ServiceQiNiu {
 
 	/**
 	 * 删除七牛云存储上的一个文件
+	 *
 	 * @param url 七牛云存储上的一个文件的完整的url
-	 * @return
+	 * @return 是否删除成功
 	 */
 	@JSONP(queryParam = R.JSONP_CALLBACK)
 	@GET
@@ -66,11 +65,11 @@ public class ServiceQiNiu {
 	public static boolean removeOne(@QueryParam("url") String url) {
 		try {
 			RSClient client = new RSClient(mac);
-			String bucket=url.substring(7,url.indexOf('.'));
-			String key=url.substring(url.indexOf("com/")+4);
+			String bucket = url.substring(7, url.indexOf('.'));
+			String key = url.substring(url.indexOf("com/") + 4);
 			CallRet callRet = client.delete(bucket, key);
 			return callRet.ok();
-		}catch (Exception e){
+		} catch (Exception e) {
 			return false;
 		}
 	}

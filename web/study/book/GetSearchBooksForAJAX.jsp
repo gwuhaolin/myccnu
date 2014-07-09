@@ -7,6 +7,7 @@
   Time: 10:34 PM
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page errorPage="../../tool/error/index.jsp" %>
 <%
 	request.setCharacterEncoding("UTF-8");
 	response.setCharacterEncoding("UTF-8");
@@ -72,12 +73,12 @@
 </div>
 <%
 	}
-	if (books.size() < 10) {
+	if (books.size() < 10) {//如果学校的书太少,就荐购提示
 %>
 <a href="JianGou.jsp" class="ui button fluid black circular" style="margin-top: 10px">向学校荐购你想要的书</a>
 <%
 	}
-} else {//没有找到
+} else {//没有找到,直接去荐购页
 %>
 <script>
 	window.location="JianGou.jsp";

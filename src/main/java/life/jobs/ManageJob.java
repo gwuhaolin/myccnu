@@ -23,7 +23,7 @@ public class ManageJob {
 
 	public static final int TARGET_PartTimeJob=1;
 	public static final int TARGET_PrivateTeacher=2;
-	public static final String ManagePassword ="JOBS";
+	private static final String ManagePassword ="JOBS";
 	public static final String CMD_Change="change";
 	public static final String CMD_Add="add";
 	public static final String CMD_Delete="delete";
@@ -62,7 +62,7 @@ public class ManageJob {
 	/**
 	 * 向数据库中添加工作要求内容不能一样
 	 */
-	public static void add_NotSame(List<MyJobEntity> jobEntitys){
+	private static void add_NotSame(List<MyJobEntity> jobEntitys){
 		for (MyJobEntity jobEntity:jobEntitys){
 			if (!DBhasThisOne(jobEntity)){
 				HibernateUtil.addEntity(jobEntity);
@@ -181,7 +181,7 @@ public class ManageJob {
 	 * 扫描自动抓取兼职信息
 	 * @return
 	 */
-	public static List<MyJobEntity> scanPartTimeJobs(){
+	private static List<MyJobEntity> scanPartTimeJobs(){
 		List<MyJobEntity> re=new LinkedList<MyJobEntity>();
 		try {
 			//找出最新的一张网页
@@ -233,7 +233,7 @@ public class ManageJob {
 	 * 扫描自动抓取家教信息
 	 * @return
 	 */
-	public static List<MyJobEntity> scanPrivateTeacher(){
+	private static List<MyJobEntity> scanPrivateTeacher(){
 		List<MyJobEntity> re=new LinkedList<MyJobEntity>();
 		try {
 			//找出最新的一张网页

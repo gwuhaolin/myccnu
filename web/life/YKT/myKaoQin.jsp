@@ -1,6 +1,6 @@
 <%--一卡通消费明细--%>
 <%@ page import="life.YKT.ManageYKT" %>
-<%@ page import="life.YKT.OneChange" %>
+<%@ page import="life.YKT.MyYktEntity" %>
 <%@ page import="tool.Tool" %>
 <%@ page import="java.util.List" %>
 <%--
@@ -10,6 +10,7 @@
   Time: 2:13 PM
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page errorPage="../../tool/error/index.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,15 +30,15 @@
 		String XHMM[] = Tool.getXHMMfromCookie(request);
 		if (Tool.XHMMisOK(XHMM)) {
 			try {
-				List<OneChange> changes = ManageYKT.getKaoQin(XHMM[0], XHMM[1]);
+				List<MyYktEntity> changes = ManageYKT.getKaoQin(XHMM[0], XHMM[1]);
 				for (int i = 0; i < changes.size(); i++) {
-					OneChange one = changes.get(i);
+					MyYktEntity one = changes.get(i);
 	%>
 	<div class="column">
 		<div class="ui stacked segment">
 			<%--是否是今天的--%>
 			<%
-				if (one.isTaday()) {
+				if (one.today()) {
 			%>
 			<div class="ui label corner icon inverted red">
 				<i class="icon">N</i>

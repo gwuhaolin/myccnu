@@ -16,10 +16,10 @@ public class MyNoticeEntity {
 	private int id;
 	private String title;
 	private String date;
-	private String orgUrl;
+	private String orgUrl;//文章原地址
 	private String content;
-	private String fromSite;
-	private Integer isOk=ManageNotice.IsOK_YES;//用于标准人工筛选后的信息删除
+	private String fromSite;//来自哪个网?
+	private Integer isOk = ManageNotice.IsOK_YES;//用于标准人工筛选后的信息删除
 
 	@Id
 	@Column(name = "id", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
@@ -134,22 +134,15 @@ public class MyNoticeEntity {
 
 	/**
 	 * 显示文章的标题和发布时间
-	 * @return
 	 */
-	public String toString(){
+	public String toString() {
 		return this.title;
-	}
-
-	public String baseUrl(){
-		String ss[]= this.orgUrl.split("/");
-		return ss[0]+"//"+ss[2];
 	}
 
 	/**
 	 * 判断是否是今天的消息
-	 * @return
 	 */
-	public boolean taday(){
+	public boolean today() {
 		return this.date.equals(Tool.time_YYYY_MM_DD());
 	}
 }

@@ -2,14 +2,15 @@ package tool;
 
 import org.junit.Assert;
 import org.junit.Test;
+import tool.ccnu.CCNUJWC;
 
 import java.util.Map;
 
 public class CCNUJWCTest {
 
-	String xh = "2012210817";
-	String mm = "930820";
-	int time = 50;
+	final String xh = "2012210817";
+	final String mm = "930820";
+	final int time = 50;
 
 	@Test
 	public void testGetCookie_True() throws Exception {

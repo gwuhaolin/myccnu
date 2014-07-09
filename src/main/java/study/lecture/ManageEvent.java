@@ -24,7 +24,7 @@ public class ManageEvent {
 
 	public static final int TARGET_Lecture =1;
 	public static final int TARGET_School=2;
-	public static final String PASSWORD="EVENT";
+	private static final String PASSWORD="EVENT";
 	public static final String CMD_Change="change";
 	public static final String CMD_Add="add";
 	public static final String CMD_Delete="delete";
@@ -134,13 +134,13 @@ public class ManageEvent {
 		}
 	}
 
-	public static final String URL_Lecture ="http://lecture.guisheng.net/";
+	private static final String URL_Lecture ="http://lecture.guisheng.net/";
 
 	/**
 	 * 向数据库中添加工作要求内容不能一样
 	 * @param jobEntity
 	 */
-	public static void add_NotSame(List<MyEventEntity> jobEntitys){
+	private static void add_NotSame(List<MyEventEntity> jobEntitys){
 		for (MyEventEntity myEventEntity:jobEntitys){
 			if (!DBhasThisOne(myEventEntity)){
 				HibernateUtil.addEntity(myEventEntity);

@@ -14,7 +14,4 @@ public class NetworkException extends IOException {
 		super(message);
 	}
 
-	public NetworkException(IOException e) {
-		super(e);
-	}
 }

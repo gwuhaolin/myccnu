@@ -1,4 +1,5 @@
 <%@ page import="life.jobs.ManageJob" %>
+<%@ page import="tool.R" %>
 <%@ page import="tool.Tool" %>
 <%--通知列表--%>
 <%--
@@ -13,11 +14,11 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link href="../../lib/css/bootstrap.min.css" rel="stylesheet">
-	<script src="../../lib/js/jquery.min.js"></script>
-	<script src="../../lib/js/bootstrap.min.js"></script>
-	<link href="../../lib/css/main.css" rel='stylesheet'>
-	<script src="../../lib/js/main.js"></script>
+	<link href="../../../lib/css/bootstrap.min.css" rel="stylesheet">
+	<script src="../../../lib/js/jquery.min.js"></script>
+	<script src="../../../lib/js/bootstrap.min.js"></script>
+	<link href="../../../lib/css/main.css" rel='stylesheet'>
+	<script src="../../../lib/js/main.js"></script>
 	<title>管理家教信息</title>
 
 
@@ -88,14 +89,14 @@
 	<jsp:include page="GetJobsManageFormForAJAX.jsp">
 		<jsp:param name="target" value="<%=ManageJob.TARGET_PrivateTeacher%>"/>
 		<jsp:param name="begin" value="0"/>
-		<jsp:param name="size" value="<%=ManageJob.R.ChangeCount%>"/>
+		<jsp:param name="size" value="<%=R.ChangeCount%>"/>
 	</jsp:include>
 	<%--ajax 加载更多--%>
 	<button class="form-control btn-info input-lg" onclick="ajaxMore(this)" begin="0">更多</button>
 	<br>
 </div>
 <script>
-	<%=Tool.makeAJAXLoadMoreJS(ManageJob.R.ChangeCount,"GetJobsManageFormForAJAX.jsp",", target:"+ManageJob.TARGET_PrivateTeacher)%>
+	<%=Tool.makeAJAXLoadMoreJS(R.ChangeCount,"GetJobsManageFormForAJAX.jsp",", target:"+ManageJob.TARGET_PrivateTeacher)%>
 </script>
 </body>
 </html>

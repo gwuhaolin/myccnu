@@ -2,15 +2,16 @@ package tool;
 
 import org.junit.Assert;
 import org.junit.Test;
+import tool.ccnu.CCNUPortal;
 
 public class CCNUPortalTest {
 
-	String xh = "2012210817";
-	String mm = "930820";
-	String xh2 = "2012210008";
-	String mm2 = "2012210008";
-	String errorPassword = "error";
-	int TIME = 100;
+	final String xh = "2012210817";
+	final String mm = "930820";
+	final String xh2 = "2012210008";
+	final String mm2 = "2012210008";
+	final String errorPassword = "error";
+	final int TIME = 100;
 
 	@Test
 	public void testXHMMisTrue() throws Exception {
@@ -41,13 +42,4 @@ public class CCNUPortalTest {
 		}
 	}
 
-	@Test
-	public void testGetStudentInfo() throws Exception {
-
-	}
-
-	@Test
-	public void testGetTeacherInfo() throws Exception {
-
-	}
 }

@@ -7,22 +7,7 @@ import org.junit.Test;
 
 public class ServiceShopTest {
 
-	ServiceShop serviceShop = new ServiceShop();
-
-	@Before
-	public void setUp() throws Exception {
-
-	}
-
-	@After
-	public void tearDown() throws Exception {
-
-	}
-
-	@Test
-	public void testAddOne() throws Exception {
-	}
-
+	private final ServiceShop serviceShop = new ServiceShop();
 
 
 	@Test
@@ -30,17 +15,4 @@ public class ServiceShopTest {
 		Assert.assertNotNull(serviceShop.getOne(1));
 	}
 
-	@Test
-	public void testGetPage() throws Exception {
-	}
-
-	@Test
-	public void testSearch() throws Exception {
-
-	}
-
-	@Test
-	public void testLikeIt() throws Exception {
-
-	}
 }

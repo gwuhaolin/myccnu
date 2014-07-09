@@ -8,10 +8,10 @@ import java.util.List;
  * 一门考试
  */
 public class OneExamin implements Comparable<OneExamin> {
-    String name;
-    String teacher;
-    String time="";
-    List<String> locations = new ArrayList<>();
+    private String name;
+    private String teacher;
+    private String time="";
+    private List<String> locations = new ArrayList<>();
 
     public OneExamin() {
     }
