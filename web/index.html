@@ -17,7 +17,6 @@
 		a:link {
 			text-decoration: none;
 		}
-
 		body {
 			background-color: #ffffff;
 			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -146,21 +145,21 @@
 	</div>
 
 	<div class="column">
-		<div class="ui header icon center aligned huge">
+		<div class="ui header icon center aligned huge POPUP" title="CSS3带来更赞的视觉特效">
 			<i class="icon css3 circular green"></i>
 
 			<div class="ui label circular blue">CSS3</div>
 		</div>
 	</div>
 	<div class="column">
-		<div class="ui header icon center aligned huge">
+		<div class="ui header icon center aligned huge POPUP" title="HTML5构建更炫更丰富的web应用">
 			<i class="icon html5 circular red"></i>
 
 			<div class="ui label circular blue">HTML5</div>
 		</div>
 	</div>
 	<div class="column">
-		<div class="ui header icon center aligned huge">
+		<div class="ui header icon center aligned huge POPUP" title="响应式网页设计,对所有屏幕友好适配">
 			<i class="icon trello circular black"></i>
 
 			<div class="ui label circular blue">Response</div>
@@ -387,6 +386,9 @@
 		//下拉
 		$('.dropdown').dropdown();
 
+		//popup
+		$('.POPUP').popup();
+
 		//图标的反色
 		$('.circular.icon').mouseenter(function () {
 			$(this).toggleClass('inverted');
@@ -396,6 +398,8 @@
 
 		//震动的元素
 		$('.shake').transition('shake');
+
+
 	});
 </script>
 

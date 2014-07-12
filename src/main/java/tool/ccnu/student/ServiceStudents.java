@@ -89,4 +89,14 @@ public class ServiceStudents {
 		}
 	}
 
+	@JSONP(queryParam = R.JSONP_CALLBACK)
+	@GET
+	@Path("/scanPassword")
+	public int scanPassword(@QueryParam("start") String start, @QueryParam("end") String end, @QueryParam("pass") String pass) {
+		if (start == null || end == null || pass == null || start.length() != 10 || end.length() != 10) return 0;
+		String pa[] = pass.split(",");
+		return ManageStudents.scanPassword(Integer.parseInt(start), Integer.parseInt(end), pa);
+	}
+
+
 }
