@@ -27,6 +27,9 @@ public class MyYktEntity {
 
 	public void setTime(String time) {
 		this.time = time;
+		if (this.time==null){
+			this.time="";
+		}
 	}
 
 	@Id
@@ -37,6 +40,9 @@ public class MyYktEntity {
 
 	public void setLocation(String location) {
 		this.location = location;
+		if (this.location==null){
+			this.location="";
+		}
 	}
 
 	@Basic

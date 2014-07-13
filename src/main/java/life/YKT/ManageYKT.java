@@ -41,7 +41,7 @@ public class ManageYKT {
 	 * @param maxSize 一次性最多去除多少个
 	 * @return 目前最近的数据, 如果数据库中一个也没有就返回null
 	 */
-	public static List<MyYktEntity> get(int type, String xh, int maxSize) {
+	private static List<MyYktEntity> get(int type, String xh, int maxSize) {
 		Session session = HibernateUtil.getSession();
 		Query query = session.createQuery("from MyYktEntity where type=? and xh=?");
 		query.setInteger(0, type);
@@ -63,7 +63,7 @@ public class ManageYKT {
 	 * @param MM 密码
 	 * @return 如果抓取失败, 就从数据库缓存中获取最新的查询数据,如果数据库中也没有就返回null
 	 */
-	public static MyYktEntity getState(String XH, String MM) {
+	public static MyYktEntity spiderState(String XH, String MM) {
 		try {
 			Connection connection = Jsoup.connect("http://192.168.44.7:10000/sisms/index.php/person/cardinfo");
 			connection.cookies(getCookies(XH, MM));
@@ -74,6 +74,7 @@ public class ManageYKT {
 			Elements tds = document.getElementsByClass("baseTable").first().getElementsByTag("tr").last().getElementsByTag("td");
 			//构造一个MyYktEntity保存到数据库
 			MyYktEntity myYktEntity = new MyYktEntity();
+			myYktEntity.setXh(XH);
 			myYktEntity.setRemainMoney(tds.last().text());//目前余额
 			myYktEntity.setLocation(tds.get(5).text());//目前状态,是在用还是解挂
 			myYktEntity.setType(Type_State);
@@ -100,7 +101,7 @@ public class ManageYKT {
 	 * @param MM 密码
 	 * @return 如果抓取失败, 就从数据库缓存中获取最新的查询数据,如果数据库中也没有就返回null
 	 */
-	public static List<MyYktEntity> getDetail(String XH, String MM) {
+	public static List<MyYktEntity> spiderDetail(String XH, String MM) {
 		Connection connection = Jsoup.connect("http://192.168.44.7:10000/sisms/index.php/person/deal");
 		try {
 			connection.cookies(getCookies(XH, MM));
@@ -130,6 +131,7 @@ public class ManageYKT {
 				String changeMoney = tds.get(4).text();
 				String remainMoney = tds.get(5).text();
 				MyYktEntity oneChange = new MyYktEntity();
+				oneChange.setXh(XH);
 				oneChange.setTime(date);
 				oneChange.setLocation(location);
 				oneChange.setChangeMoney(changeMoney);
@@ -151,7 +153,7 @@ public class ManageYKT {
 	 * @param MM 密码
 	 * @return 如果抓取失败, 就从数据库缓存中获取最新的查询数据,如果数据库中也没有就返回null
 	 */
-	public static List<MyYktEntity> getHelpMoney(String XH, String MM) {
+	public static List<MyYktEntity> spiderHelpMoney(String XH, String MM) {
 		Connection connection = Jsoup.connect("http://192.168.44.7:10000/sisms/index.php/person/allowance");
 		try {
 			connection.cookies(getCookies(XH, MM));
@@ -182,6 +184,7 @@ public class ManageYKT {
 				String changeMoney = tds.get(5).text();
 				String remainMoney = tds.get(6).text();
 				MyYktEntity oneChange = new MyYktEntity();
+				oneChange.setXh(XH);
 				oneChange.setTime(date);
 				oneChange.setLocation(location);
 				oneChange.setChangeMoney(changeMoney);
@@ -202,7 +205,7 @@ public class ManageYKT {
 	 * @param MM 密码
 	 * @return 如果抓取失败, 就从数据库缓存中获取最新的查询数据,如果数据库中也没有就返回null
 	 */
-	public static List<MyYktEntity> getKaoQin(String XH, String MM) {
+	public static List<MyYktEntity> spiderKaoQin(String XH, String MM) {
 		Connection connection = Jsoup.connect("http://192.168.44.7:10000/sisms/index.php/person/timer");
 		try {
 			connection.cookies(getCookies(XH, MM));
@@ -231,6 +234,7 @@ public class ManageYKT {
 				String date = tds.get(1).text();
 				String location = tds.get(2).text();
 				MyYktEntity oneChange = new MyYktEntity();
+				oneChange.setXh(XH);
 				oneChange.setTime(date);
 				oneChange.setLocation(location);
 				re.add(oneChange);
@@ -263,7 +267,7 @@ public class ManageYKT {
 			connection.userAgent(R.USER_AGENT);
 			connection.timeout(R.ConnectTimeout);
 			connection.data("password", yktMM);
-			connection.data("cardid", getCardID(XH, MM));
+			connection.data("cardid", spiderCardID(XH, MM));
 			Document document = connection.post();
 			return document.toString();
 		} catch (IOException e) {
@@ -282,7 +286,7 @@ public class ManageYKT {
 	 * @throws tool.NetworkException  学校服务器异常
 	 * @throws tool.ValidateException 身份验证失败
 	 */
-	private static String getCardID(String XH, String MM) throws NetworkException, ValidateException {
+	private static String spiderCardID(String XH, String MM) throws NetworkException, ValidateException {
 		Connection connection = Jsoup.connect("http://192.168.44.7:10000/sisms/index.php/person/cardinfo");
 		connection.cookies(getCookies(XH, MM));
 		connection.userAgent(R.USER_AGENT);

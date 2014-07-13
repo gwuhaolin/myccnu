@@ -30,7 +30,7 @@
 		String XHMM[] = Tool.getXHMMfromCookie(request);
 		if (Tool.XHMMisOK(XHMM)) {
 			try {
-				List<MyYktEntity> changes = ManageYKT.getDetail(XHMM[0], XHMM[1]);
+				List<MyYktEntity> changes = ManageYKT.spiderDetail(XHMM[0], XHMM[1]);
 				for (int i = 0; i < changes.size(); i++) {
 					MyYktEntity one = changes.get(i);
 	%>

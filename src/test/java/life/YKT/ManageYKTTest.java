@@ -15,7 +15,7 @@ public class ManageYKTTest {
 	@Test
 	public void testGetRemain() throws Exception {
 		for (int i = 0; i < TIMES; i++) {
-			MyYktEntity re = ManageYKT.getState(XH, MM);
+			MyYktEntity re = ManageYKT.spiderState(XH, MM);
 			System.out.println(re.getRemainMoney());
 		}
 	}
@@ -23,7 +23,7 @@ public class ManageYKTTest {
 	@Test
 	public void testGetDetail() throws Exception {
 		for (int i = 0; i < TIMES; i++) {
-			List<MyYktEntity> re = ManageYKT.getDetail(XH, MM);
+			List<MyYktEntity> re = ManageYKT.spiderDetail(XH, MM);
 			Assert.assertTrue(re.size() > 0);
 		}
 	}
@@ -31,7 +31,7 @@ public class ManageYKTTest {
 	@Test
 	public void testGetHelpMoney() throws Exception {
 		for (int i = 0; i < TIMES; i++) {
-			List<MyYktEntity> re = ManageYKT.getHelpMoney(XH, MM);
+			List<MyYktEntity> re = ManageYKT.spiderHelpMoney(XH, MM);
 			Assert.assertTrue(re.size() > 0);
 		}
 	}
@@ -39,7 +39,7 @@ public class ManageYKTTest {
 	@Test
 	public void testGetKaoQin() throws Exception {
 		for (int i = 0; i < TIMES; i++) {
-			List<MyYktEntity> re = ManageYKT.getKaoQin(XH, MM);
+			List<MyYktEntity> re = ManageYKT.spiderKaoQin(XH, MM);
 			Assert.assertTrue(re.size() > 0);
 		}
 	}

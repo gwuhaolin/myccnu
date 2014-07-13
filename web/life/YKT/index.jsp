@@ -29,7 +29,7 @@
 	MyYktEntity result;
 	if (Tool.XHMMisOK(XHMM)) {
 		try {
-			result = ManageYKT.getState(XHMM[0], XHMM[1]);
+			result = ManageYKT.spiderState(XHMM[0], XHMM[1]);
 %>
 <div class="ui stackable three column page grid center aligned">
 
