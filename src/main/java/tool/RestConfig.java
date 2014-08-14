@@ -4,6 +4,7 @@ package tool; /**
  * Time: 22:34
  */
 
+import life.notice.ServiceNotice;
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 import org.glassfish.jersey.server.ResourceConfig;
 import play.shop.ServiceShop;
@@ -19,9 +20,9 @@ import tool.ccnu.student.ServiceStudents;
  * Date: 2014/5/6
  * Time: 22:34
  */
-public class RestAPI extends ResourceConfig {
+public class RestConfig extends ResourceConfig {
 
-	public RestAPI() {
+	public RestConfig() {
 
 		//加载Resource
 		register(ServiceShuDong.class);
@@ -31,7 +32,7 @@ public class RestAPI extends ResourceConfig {
 		register(ServiceStudents.class);
 		register(ServiceVote.class);
 		register(ServiceScore.class);
-
+		register(ServiceNotice.class);
 
 		//注册数据转换器
 		register(JacksonJsonProvider.class);

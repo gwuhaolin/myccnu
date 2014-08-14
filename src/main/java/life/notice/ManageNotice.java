@@ -172,6 +172,23 @@ public class ManageNotice {
 	}
 
 	/**
+	 * 简化要返回的内容,去除content和orgUrl
+	 *
+	 * @param list 要简化的内容
+	 * @return 简化后的内容
+	 */
+	public static MyNoticeEntity[] simpleList(List<MyNoticeEntity> list) {
+		MyNoticeEntity[] re = new MyNoticeEntity[list.size()];
+		for (int i = 0; i < list.size(); i++) {
+			MyNoticeEntity one = list.get(i);
+			one.setContent(null);
+			one.setOrgUrl(null);
+			re[i] = one;
+		}
+		return re;
+	}
+
+	/**
 	 * 对从html里提起到的文章的原链接进行检查处理,如果他包含http即是完整的url就原样返回.如果不是完整的url即不包含http://就求得原url然后返回
 	 *
 	 * @param BasicUrl 该文章来源网站的根URL

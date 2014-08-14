@@ -23,7 +23,7 @@
 <div class="ui page grid one column">
 	<div class="ui column">
 		<div class="ui message floating info">
-			单击你的一门成绩单可以看到全校的成绩统计哦
+			单击你的一门成绩单可以看到全校的成绩统计
 		</div>
 	</div>
 </div>
@@ -64,19 +64,23 @@
 	/**
 	 *  查看一门课程的统计情况
 	 */
-	function getScore_ClassID(classID) {
+	function getScore_ClassID(classID, xh) {
 		$.getJSON(GetScore_ClassID_URL, {classId: classID}).done(function (data) {
 			//求平均值,挂科数
 			var basic = {
 				pinshiScore: 0,
 				qimoScore: 0,
 				sumScore: 0,
-				guakeCount: 0
+				guakeCount: 0,
+				rank: 0
 			};
 			$(data).each(function () {
 				basic.pinshiScore += this.pinshiScore;
 				basic.qimoScore += this.qimoScore;
 				basic.sumScore += this.sumScore;
+				if (this.xh == xh) {
+					basic.rank = $.index;
+				}
 				if (this.sumScore < 60) {
 					basic.guakeCount++;
 				}
@@ -84,7 +88,6 @@
 			basic.pinshiScore /= data.length;
 			basic.qimoScore /= data.length;
 			basic.sumScore /= data.length;
-			console.log(basic);
 			Score_Con.html('');//清空原来的
 			Score_Con.append(toHTML('Basic_TEMP', basic));
 			Score_Con.append(toHTML('Score_TEMP', data));
@@ -120,7 +123,7 @@
 	<div id="Score_TEMP">
 		{{#.}}
 		<div class="column">
-			<div class="ui stacked segment {{color sumScore}}" onclick="getScore_ClassID({{classNo}})">
+			<div class="ui stacked segment {{color sumScore}}" onclick="getScore_ClassID({{classNo}},{{xh}})">
 
 				<div class="ui statistic">
 					<div class="number">{{sumScore}}
@@ -191,6 +194,17 @@
 				</div>
 
 				<div class="ui relaxed divided list">
+
+					<div class="item">
+						<i class="building icon circular inverted"></i>
+
+						<div class="content">
+							<a class="header">{{rank}}</a>
+
+							<div class="description">你的排名
+							</div>
+						</div>
+					</div>
 
 					<div class="item">
 						<i class="building icon circular inverted"></i>
