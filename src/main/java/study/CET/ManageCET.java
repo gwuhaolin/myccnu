@@ -25,7 +25,10 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * 华中师范大学全国英语等级考试(CET)查询
@@ -41,13 +44,15 @@ public class ManageCET {
 
 	/**
 	 * 要查询的CET考试的时间,用于从学校抓取数据时提交的数据
+	 * 会按照顺序依次抓取,把优先的写在前面
 	 */
-	private static final String[] DATE = {"201312", "201306", "201212", "201206", "201112", "201106"};
+	private static final String[] DATE = {"201406", "201312"};
 
 	/**
 	 * 查询时的所有的等级
+	 * 会按照顺序依次抓取,把优先的写在前面
 	 */
-	private static final String[] GRADE = {"4", "6"};
+	private static final String[] GRADE = {"6", "4"};
 
 	/**
 	 * 从学校的网站抓取成绩

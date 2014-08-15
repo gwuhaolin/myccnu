@@ -8,11 +8,11 @@
 	<meta name="description" content="华中师范大学树洞">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-	<script src="../../lib/js/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="../../lib/css/semantic.min.css">
+	<link rel="stylesheet" type="text/css" href="../../lib/css/main.css">
+	<script src="../../lib/js/jquery.min.js"></script>
 	<script src="../../lib/js/semantic.min.js"></script>
 	<script src="../../lib/js/handlebars-v1.3.0.js"></script>
-	<link rel="stylesheet" type="text/css" href="../../lib/css/main.css">
 	<script src="../../lib/js/plupload.full.min.js"></script>
 	<script src="../../lib/js/qiniu.min.js"></script>
 	<script src="../../lib/js/main.js"></script>
@@ -521,7 +521,7 @@
 </div>
 
 <!--模版-->
-<div class="hidden">
+<div style="display: none">
 
 	<!--一条树洞-->
 	<div id="OneShuDong">
@@ -533,11 +533,11 @@
 				<!--分割线-->
 				<div class="ui divider"></div>
 
-				<!--评论按钮-->
-				<i class="ui icon comment blue link" onclick="$(this).next().toggle()"></i>
-				<!--评论框-->
-				<iframe src="comment.html?id={{id}}" style="display: none">
-				</iframe>
+				<!--&lt;!&ndash;评论按钮&ndash;&gt;-->
+				<!--<i class="ui icon comment blue link" onclick="$(this).next().toggle()"></i>-->
+				<!--&lt;!&ndash;评论框&ndash;&gt;-->
+				<!--<iframe src="comment.html?id={{id}}" style="display: none">-->
+				<!--</iframe>-->
 
 				<!--时间-->
 				<i class="ui small label circular" style="font-size: xx-small">{{date}}</i>

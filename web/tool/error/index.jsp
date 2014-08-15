@@ -19,8 +19,14 @@
 </head>
 <body>
 
-<div class="ui button">
-	<div>error</div>
+<div class="ui page dimmer visible active">
+	<div class="content">
+		<div class="center">
+			<h2 class="ui inverted icon header"><i class="icon circular inverted bug blue"></i>出现点小问题
+				<div class="sub header">我们会尽快清理这只bug</div>
+			</h2>
+		</div>
+	</div>
 </div>
 
 </body>

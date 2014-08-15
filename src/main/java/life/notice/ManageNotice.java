@@ -43,7 +43,6 @@ public class ManageNotice {
 			{"校图书馆", "http://lib.ccnu.edu.cn/"},//10
 			{"学工动态", "http://www.guisheng.net/"},//11
 			{"华大青年网", "http://www.ccnuyouth.com/"},//12
-
 	};
 
 	/**
@@ -140,6 +139,7 @@ public class ManageNotice {
 
 	/**
 	 * 用于分页查询加关键字搜索
+	 * 会用关键字去匹配文章正文和orgUrl
 	 *
 	 * @param from 从这个开始
 	 */
@@ -867,27 +867,6 @@ public class ManageNotice {
 			e.printStackTrace();
 		}
 		return re;
-	}
-
-	public static void main(String[] args) {
-//		get0();//ok
-//		get1();//ok
-//		get2();//ok
-//		get3();//ok
-//		get4();//ok
-//		get5();//ok
-//		get6();//ok
-//		get7();//ok
-//		get8();//ok
-//		get9();//ok
-//		get10();//ok
-//		get11();//ok
-//		get12();
-//		change();//ok
-//		System.out.println(get_page_XH(1));//ok
-//		System.out.println(getSome(2));//ok
-//		System.out.println(getSome(200000));//ok
-//		System.out.println(search_page(0,"http://jwc.ccnu.edu.cn/"));
 	}
 
 }

@@ -13,7 +13,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import study.CET.ManageCET;
 import tool.NetworkException;
 import tool.R;
 
@@ -28,7 +27,7 @@ import java.util.List;
  * http://202.114.34.15/opac/openlink.php
  */
 public class SearchBook {
-	private static final Logger log = LoggerFactory.getLogger(ManageCET.class);
+	private static final Logger log = LoggerFactory.getLogger(SearchBook.class);
 
 	private static final String URL = "http://202.114.34.15/opac/openlink.php/";
 
