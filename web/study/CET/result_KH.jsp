@@ -1,4 +1,4 @@
-<%--用考号查询CET.查询结果界面--%>
+<%--用考号去全国查询网站抓取--%>
 <%@ page import="study.CET.Cet46Entity" %>
 <%@ page import="study.CET.ManageCET" %>
 <%--
@@ -47,32 +47,27 @@
 
 	<div class="center-block">
 		<div class="btn-group btn-group-lg btn-group-justified">
-			<a class="btn btn-info active">Total</a>
+			<a class="btn btn-info active">总分</a>
 			<a class="btn btn-success active"><%=cet.getSumScore()%>
 			</a>
 		</div>
 		<div class="btn-group btn-group-sm btn-group-justified">
-			<a class="btn btn-info active">Listening</a>
+			<a class="btn btn-info active">听力</a>
 			<a class="btn btn-success active"><%=cet.getListening()%>
 			</a>
 		</div>
 		<div class="btn-group btn-group-sm btn-group-justified">
-			<a class="btn btn-info active">Reading</a>
+			<a class="btn btn-info active">阅读</a>
 			<a class="btn btn-success active"><%=cet.getReading()%>
 			</a>
 		</div>
 		<div class="btn-group btn-group-sm btn-group-justified">
-			<a class="btn btn-info active">Composite</a>
-			<a class="btn btn-success active"><%=cet.getCompre()%>
-			</a>
-		</div>
-		<div class="btn-group btn-group-sm btn-group-justified">
-			<a class="btn btn-info active">Essay</a>
+			<a class="btn btn-info active">写作</a>
 			<a class="btn btn-success active"><%=cet.getEssay()%>
 			</a>
 		</div>
 		<div class="btn-group btn-group-lg btn-group-justified">
-			<a class="btn btn-info active">Rank</a>
+			<a class="btn btn-info active">排名</a>
 			<a class="btn btn-warning active"><%=cet.rank()%>
 			</a>
 		</div>
@@ -85,32 +80,27 @@
 
 	<div class="center-block">
 		<div class="btn-group btn-group-lg btn-group-justified">
-			<a class="btn btn-danger active">Total</a>
+			<a class="btn btn-danger active">总分</a>
 			<a class="btn btn-warning active"><%=cet.getSumScore()%>
 			</a>
 		</div>
 		<div class="btn-group btn-group-sm btn-group-justified">
-			<a class="btn btn-danger active">Listening</a>
+			<a class="btn btn-danger active">听力</a>
 			<a class="btn btn-warning active"><%=cet.getListening()%>
 			</a>
 		</div>
 		<div class="btn-group btn-group-sm btn-group-justified">
-			<a class="btn btn-danger active">Reading</a>
+			<a class="btn btn-danger active">阅读</a>
 			<a class="btn btn-warning active"><%=cet.getReading()%>
 			</a>
 		</div>
 		<div class="btn-group btn-group-sm btn-group-justified">
-			<a class="btn btn-danger active">Composite</a>
-			<a class="btn btn-warning active"><%=cet.getCompre()%>
-			</a>
-		</div>
-		<div class="btn-group btn-group-sm btn-group-justified">
-			<a class="btn btn-danger active">Essay</a>
+			<a class="btn btn-danger active">写作</a>
 			<a class="btn btn-warning active"><%=cet.getEssay()%>
 			</a>
 		</div>
 		<div class="btn-group btn-group-lg btn-group-justified">
-			<a class="btn btn-danger active">Rank</a>
+			<a class="btn btn-danger active">排名</a>
 			<a class="btn btn-info active"><%=cet.rank()%>
 			</a>
 		</div>
@@ -127,12 +117,10 @@
 	<img src="img/caution.png" class="img-responsive center-block">
 	<br>
 
-	<div class="alert alert-danger">Sorry! I can't find you CET score,you can <a href="http://www.chsi.com.cn/cet/"><em>go
-		here</em></a></div>
+	<div class="alert alert-danger">很抱歉,找不到你的成绩<a href="queryByIdNumber_school.jsp">再试试这里</a></div>
 	<%
 		}
 	%>
-	<em class="text-center center-block">myccnu is so easy</em>
 </div>
 </body>
 </html>

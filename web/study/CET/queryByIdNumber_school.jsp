@@ -1,13 +1,13 @@
-<%--用考号查询CET.查询界面--%>
+<%--由于数据库里没有该同学的信息就直接用身份证号去学校的网站抓取--%>
 <%--
   Created by Intellij IDEA.
   User: WuHaoLin
-  Date: 2/19/14
-  Time: 9:41 PM
+  Date: 2/18/14
+  Time: 9:25 PM
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-	String info=request.getParameter("info");
+	String info = request.getParameter("info");
 %>
 <!DOCTYPE html>
 <html>
@@ -19,28 +19,37 @@
 	<script src="../../lib/js/bootstrap.min.js"></script>
 	<link href="../../lib/css/main.css" rel='stylesheet'>
 	<script src="../../lib/js/main.js"></script>
-	<title>CET QUERY</title>
+	<title>查询结果</title>
+
 </head>
 <body>
 <div class="container">
 	<img src="img/rocket.png" class="img-responsive center-block">
 	<br>
-	<form class="form-group" action="result_KH.jsp" method="post">
-		<input type="text" maxlength="20" name="kh" class="form-control input-lg" placeholder="输入你的考号">
+
+	<form class="form-group" action="result_IdNumber.jsp" method="get">
+		<%--<input type="text" maxlength="10" name="name" class="form-control input-lg" placeholder="Enter Your Name here!">--%>
+		<%--<br>--%>
+		<input type="text" maxlength="20" name="id" class="form-control input-lg"
+		       placeholder="Tell Me Your ID Card Number">
 		<br>
-		<input type="text" maxlength="8" name="name" class="form-control input-lg" placeholder="输入你的姓名">
+		<label>
+			<input type="radio" name="grade" value="4" checked>CET4
+		</label>
+		<label>
+			<input type="radio" name="grade" value="6">CET6
+		</label>
 		<br>
 		<input type="submit" value="GO" class="form-control btn-info input-lg">
 	</form>
 	<%
-		if(info!=null){
+		if (info != null) {
 	%>
-	<div class="alert alert-info"><%=info%></div>
+	<div class="alert alert-info"><%=info%>
+	</div>
 	<%
 		}
 	%>
-	<a class="text-center center-block" href="http://cet.99sushe.com/faq/#find"><em>忘记考号?</em></a>
-	<em class="text-center center-block">myccnu is so easy</em>
 </div>
 </body>
 </html>

@@ -25,10 +25,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * 华中师范大学全国英语等级考试(CET)查询
@@ -57,7 +54,7 @@ public class ManageCET {
 	 *
 	 * @param grade    46等级
 	 * @param IdNumber 身份证
-	 * @param date     考试时间
+	 * @param date     考试时间,在DATE里的一个
 	 * @return 如果查询成功正常返回, 否则返回null
 	 */
 	private static Cet46Entity spider(String grade, String IdNumber, String date) {
@@ -90,15 +87,33 @@ public class ManageCET {
 			float sum = Float.parseFloat(all.get(0).text());
 			String listen = all.get(1).text();
 			String read = all.get(2).text();
-			String com = all.get(3).text();
 			String essay = all.get(4).text();
-			return new Cet46Entity(sum, listen, read, com, essay, grade);
+			return new Cet46Entity(sum, listen, read, essay, grade);
 		} catch (Exception e) {
 			log.error(Arrays.toString(e.getStackTrace()));
 			return null;
 		}
 	}
 
+	/**
+	 * 去学校抓取
+	 * 调用这个函数的原因是网页数据库中没有这个同学的信息,所以直接去用身份证号抓取
+	 * 去学校网站按照DATE[]里的开始时间依次去直接抓取数据,知道成功抓到一个为止,并且抓到的会保存到数据库
+	 *
+	 * @param grade    4还是6级
+	 * @param idNumber 身份证号码
+	 * @return 如果查询成功就返回一个成绩,
+	 */
+	public static Cet46Entity scan(String grade, String idNumber) {
+		for (String date : DATE) {
+			Cet46Entity one = spider(grade, idNumber, date);
+			if (one != null) {
+				HibernateUtil.addEntity(one);
+				return one;
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * 根据学号去数据库里获得身份证密码,根据年级自动判断应该查询哪次的成绩
@@ -142,6 +157,7 @@ public class ManageCET {
 	}
 
 	/**
+	 * 从全国官网抓取
 	 * 从全国官方抓取成绩
 	 *
 	 * @param KH   考号
@@ -165,7 +181,9 @@ public class ManageCET {
 			String listen = all[3];
 			String read = all[5];
 			String essay = all[7];
-			return new Cet46Entity(sum, listen, read, " ", essay, " ");
+			Cet46Entity re = new Cet46Entity(sum, listen, read, essay, " ");
+			HibernateUtil.addEntity(re);
+			return re;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -173,6 +191,7 @@ public class ManageCET {
 	}
 
 	/**
+	 * 去数据库里获取
 	 * 从数据库中去获取学号为XH同学的成绩
 	 * 按照最优程序来排序
 	 *

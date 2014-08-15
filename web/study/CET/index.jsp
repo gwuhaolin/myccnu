@@ -1,4 +1,4 @@
-<%--用学号查询CET.查询结果界面--%>
+<%--用Cookies里的学号查询,去数据库里查询缓存去学校抓取--%>
 <%@ page import="study.CET.Cet46Entity" %>
 <%@ page import="study.CET.ManageCET" %>
 <%@ page import="tool.Tool" %>
@@ -9,7 +9,6 @@
   Time: 7:40 PM
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page errorPage="../../tool/error/index.jsp" %>
 <%
 	String XHMM[] = Tool.getXHMMfromCookie(request);
 	Cet46Entity cet;
@@ -30,7 +29,7 @@
 	<script src="../../lib/js/bootstrap.min.js"></script>
 	<link href="../../lib/css/main.css" rel='stylesheet'>
 	<script src="../../lib/js/main.js"></script>
-	<title>Query Result</title>
+	<title>查询结果</title>
 </head>
 <body>
 <div class="container">
@@ -45,32 +44,27 @@
 
 	<div class="center-block">
 		<div class="btn-group btn-group-lg btn-group-justified">
-			<a class="btn btn-info active">Total</a>
+			<a class="btn btn-info active">总分</a>
 			<a class="btn btn-success active"><%=cet.getSumScore()%>
 			</a>
 		</div>
 		<div class="btn-group btn-group-sm btn-group-justified">
-			<a class="btn btn-info active">Listening</a>
+			<a class="btn btn-info active">听力</a>
 			<a class="btn btn-success active"><%=cet.getListening()%>
 			</a>
 		</div>
 		<div class="btn-group btn-group-sm btn-group-justified">
-			<a class="btn btn-info active">Reading</a>
+			<a class="btn btn-info active">阅读</a>
 			<a class="btn btn-success active"><%=cet.getReading()%>
 			</a>
 		</div>
 		<div class="btn-group btn-group-sm btn-group-justified">
-			<a class="btn btn-info active">Composite</a>
-			<a class="btn btn-success active"><%=cet.getCompre()%>
-			</a>
-		</div>
-		<div class="btn-group btn-group-sm btn-group-justified">
-			<a class="btn btn-info active">Essay</a>
+			<a class="btn btn-info active">写作</a>
 			<a class="btn btn-success active"><%=cet.getEssay()%>
 			</a>
 		</div>
 		<div class="btn-group btn-group-lg btn-group-justified">
-			<a class="btn btn-info active">Rank</a>
+			<a class="btn btn-info active">排名</a>
 			<a class="btn btn-warning active"><%=cet.rank()%>
 			</a>
 		</div>
@@ -83,32 +77,27 @@
 
 	<div class="center-block">
 		<div class="btn-group btn-group-lg btn-group-justified">
-			<a class="btn btn-danger active">Total</a>
+			<a class="btn btn-danger active">总分</a>
 			<a class="btn btn-warning active"><%=cet.getSumScore()%>
 			</a>
 		</div>
 		<div class="btn-group btn-group-sm btn-group-justified">
-			<a class="btn btn-danger active">Listening</a>
+			<a class="btn btn-danger active">听力</a>
 			<a class="btn btn-warning active"><%=cet.getListening()%>
 			</a>
 		</div>
 		<div class="btn-group btn-group-sm btn-group-justified">
-			<a class="btn btn-danger active">Reading</a>
+			<a class="btn btn-danger active">阅读</a>
 			<a class="btn btn-warning active"><%=cet.getReading()%>
 			</a>
 		</div>
 		<div class="btn-group btn-group-sm btn-group-justified">
-			<a class="btn btn-danger active">Composite</a>
-			<a class="btn btn-warning active"><%=cet.getCompre()%>
-			</a>
-		</div>
-		<div class="btn-group btn-group-sm btn-group-justified">
-			<a class="btn btn-danger active">Essay</a>
+			<a class="btn btn-danger active">写作</a>
 			<a class="btn btn-warning active"><%=cet.getEssay()%>
 			</a>
 		</div>
 		<div class="btn-group btn-group-lg btn-group-justified">
-			<a class="btn btn-danger active">Rank</a>
+			<a class="btn btn-danger active">排名</a>
 			<a class="btn btn-info active"><%=cet.rank()%>
 			</a>
 		</div>
@@ -119,18 +108,18 @@
 	<div class="alert alert-danger">Hi,<em><%=cet.getName()%>
 	</em>.<%=cet.sayToYou()%>
 	</div>
+	<div class="alert alert-info">没有猜对你想要的?<a href="queryByIdNumber_school.jsp">点这里</a>
+	</div>
 	<%
 	} else {//查询不到该学号的成绩或查询失败
 	%>
 	<img src="img/caution.png" class="img-responsive center-block">
 	<br>
 
-	<div class="alert alert-danger">Sorry! I can't find you CET score,you can <a href="queryByIDNAME.jsp"><em>try
-		this</em></a></div>
+	<div class="alert alert-danger">很抱歉,没获得到你的成绩<a href="queryByKH_nation.jsp">再试试这里</a></div>
 	<%
 		}
 	%>
-	<em class="text-center center-block">myccnu is so easy</em>
 </div>
 </body>
 </html>

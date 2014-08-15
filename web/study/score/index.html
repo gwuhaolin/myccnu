@@ -72,14 +72,16 @@
 				qimoScore: 0,
 				sumScore: 0,
 				guakeCount: 0,
-				rank: 0
+				rank: 0,
+				sumCount: data.length
 			};
-			$(data).each(function () {
+			$(data).each(function (index) {
 				basic.pinshiScore += this.pinshiScore;
 				basic.qimoScore += this.qimoScore;
 				basic.sumScore += this.sumScore;
+
 				if (this.xh == xh) {
-					basic.rank = $.index;
+					basic.rank = index;
 				}
 				if (this.sumScore < 60) {
 					basic.guakeCount++;
@@ -88,6 +90,7 @@
 			basic.pinshiScore /= data.length;
 			basic.qimoScore /= data.length;
 			basic.sumScore /= data.length;
+			basic.rank = data.length - basic.rank;
 			Score_Con.html('');//清空原来的
 			Score_Con.append(toHTML('Basic_TEMP', basic));
 			Score_Con.append(toHTML('Score_TEMP', data));
@@ -199,7 +202,7 @@
 						<i class="building icon circular inverted"></i>
 
 						<div class="content">
-							<a class="header">{{rank}}</a>
+							<a class="header">{{rank}}/{{sumCount}}</a>
 
 							<div class="description">你的排名
 							</div>

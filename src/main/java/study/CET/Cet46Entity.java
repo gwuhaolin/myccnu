@@ -13,7 +13,6 @@ public class Cet46Entity implements Comparable<Cet46Entity> {
 	private Float sumScore;
 	private String listening;
 	private String reading;
-	private String compre;
 	private String essay;
 	private String grade;
 	private String name;
@@ -48,16 +47,6 @@ public class Cet46Entity implements Comparable<Cet46Entity> {
 
 	public void setReading(String reading) {
 		this.reading = reading;
-	}
-
-	@Basic
-	@Column(name = "compre", nullable = true, insertable = true, updatable = true, length = 255)
-	public String getCompre() {
-		return compre;
-	}
-
-	public void setCompre(String compre) {
-		this.compre = compre;
 	}
 
 	@Basic
@@ -117,7 +106,6 @@ public class Cet46Entity implements Comparable<Cet46Entity> {
 
 		Cet46Entity that = (Cet46Entity) o;
 
-		if (compre != null ? !compre.equals(that.compre) : that.compre != null) return false;
 		if (date != null ? !date.equals(that.date) : that.date != null) return false;
 		if (essay != null ? !essay.equals(that.essay) : that.essay != null) return false;
 		if (grade != null ? !grade.equals(that.grade) : that.grade != null) return false;
@@ -135,7 +123,6 @@ public class Cet46Entity implements Comparable<Cet46Entity> {
 		int result = sumScore != null ? sumScore.hashCode() : 0;
 		result = 31 * result + (listening != null ? listening.hashCode() : 0);
 		result = 31 * result + (reading != null ? reading.hashCode() : 0);
-		result = 31 * result + (compre != null ? compre.hashCode() : 0);
 		result = 31 * result + (essay != null ? essay.hashCode() : 0);
 		result = 31 * result + (grade != null ? grade.hashCode() : 0);
 		result = 31 * result + (name != null ? name.hashCode() : 0);
@@ -150,26 +137,21 @@ public class Cet46Entity implements Comparable<Cet46Entity> {
 	}
 
 	public String sayToYou() {
-//		String re="That's your <em>CET"+this.garde+"</em> score in <em>"+this.date+"</em>,";
-		String re = "这是你在" + em(this.date) + "学期的" + em("CET" + this.grade) + "的成绩.";
+		String re = "这是你在" + this.date + "学期的" + "CET" + this.grade + "的成绩.";
 		if (this.sumScore > 600) {//学霸
-			re += em("学霸") + ",膜拜啊!快点截屏分享炫耀下吧.";
+			re += "膜拜!快点截屏分享炫耀下吧.";
 		} else if (this.sumScore > 500) {//一般
 //			re+= "一般般";
 		} else if (this.sumScore >= 425) {//低分飘过
-			re += "<em>低分飘过</em>的你是不是心里窃喜呢?快截屏分享给你的小伙伴们看看吧.";
+			re += "低分飘过的你快截屏分享给你的小伙伴们看看吧!";
 		} else if (this.sumScore > 400) {//可惜了差点
-			re += "<em>就差那么一点</em>啊!快去一吐为快,求安慰吧.";
+			re += "就差那么一点";
 		} else if (this.sumScore > 350) {//没过!
-			re += "明年还是一条好汉!";
+			re += "明年还是一条好汉";
 		} else {//学杂啊
-			re += "<em>学杂</em>!你还是快回家种田算了";
+			re += "学杂,快戒撸!";
 		}
 		return re;
-	}
-
-	private static String em(String str) {
-		return "<em>" + str + "</em>";
 	}
 
 	/**
@@ -221,11 +203,10 @@ public class Cet46Entity implements Comparable<Cet46Entity> {
 		return p;
 	}
 
-	public Cet46Entity(Float sumScore, String listening, String reading, String compre, String essay, String garde) {
+	public Cet46Entity(Float sumScore, String listening, String reading, String essay, String garde) {
 		this.sumScore = sumScore;
 		this.listening = listening;
 		this.reading = reading;
-		this.compre = compre;
 		this.essay = essay;
 		this.grade = garde;
 	}
