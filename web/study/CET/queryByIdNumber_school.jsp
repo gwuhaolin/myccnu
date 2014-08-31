@@ -28,10 +28,8 @@
 	<br>
 
 	<form class="form-group" action="result_IdNumber.jsp" method="get">
-		<%--<input type="text" maxlength="10" name="name" class="form-control input-lg" placeholder="Enter Your Name here!">--%>
-		<%--<br>--%>
 		<input type="text" maxlength="20" name="id" class="form-control input-lg"
-		       placeholder="Tell Me Your ID Card Number">
+		       placeholder="你的身份证号码">
 		<br>
 		<label>
 			<input type="radio" name="grade" value="4" checked>CET4

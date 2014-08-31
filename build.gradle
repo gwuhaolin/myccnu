@@ -32,10 +32,11 @@ dependencies() {
 	//Servlet3.0
 	compile 'javax.servlet:servlet-api:3.0-alpha-1'
 
+  //SLF4j
+  compile 'org.slf4j:slf4j-simple:1.6.2'
+
 	//Junit
 	testCompile 'junit:junit:4.11'
 
-	//SLF4j
-	compile 'org.slf4j:slf4j-simple:1.6.2'
 
 }

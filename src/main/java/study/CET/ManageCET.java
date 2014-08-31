@@ -62,7 +62,7 @@ public class ManageCET {
 	 * @param date     考试时间,在DATE里的一个
 	 * @return 如果查询成功正常返回, 否则返回null
 	 */
-	private static Cet46Entity spider(String grade, String IdNumber, String date) {
+	public static Cet46Entity spider(String grade, String IdNumber, String date) {
 		try {
 			//http获得数据
 			URL url = new URL(URL_Query);

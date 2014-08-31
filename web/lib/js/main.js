@@ -58,12 +58,6 @@ function executeAJAXBind() {
 	}
 }
 
-//评论框打开关闭
-function toggleComment(btn) {
-	var comment = $(btn).next();
-	$(comment).toggle();
-}
-
 //关闭微信下方条
 function closeWeiXinBtn() {
 	document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {

@@ -50,7 +50,6 @@ public class ManageShuDong {
 	 * 获得学号为XH的同学发的树洞
 	 *
 	 * @param from
-	 * @param size
 	 * @param XH
 	 * @return
 	 */
@@ -72,7 +71,6 @@ public class ManageShuDong {
 	 * 用发布时间排序来获得用于分页查询
 	 *
 	 * @param from 从这个开始
-	 * @param size 拿出多少个
 	 * @return
 	 */
 	public static List<MyShuDongEntity> get_page(int from) {
@@ -89,7 +87,6 @@ public class ManageShuDong {
 	 * 用热度排序来获得用于分页查询
 	 *
 	 * @param from 从这个开始
-	 * @param size 拿出多少个
 	 * @return
 	 */
 	public static List<MyShuDongEntity> get_page_hot(int from) {

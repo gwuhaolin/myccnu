@@ -14,17 +14,9 @@ import java.util.List;
 @Produces({"application/javascript"})
 public class ServiceScore {
 
-
 	@JSONP(queryParam = R.JSONP_CALLBACK)
 	@GET
 	@Path("/get")
-	public List<MyScoreEntity> get(@CookieParam("XH") String xh, @CookieParam("MM") String mm) {
-		return ManageScore.get(xh, mm);
-	}
-
-	@JSONP(queryParam = R.JSONP_CALLBACK)
-	@GET
-	@Path("/get_XH")
 	public List<MyScoreEntity> get_XH(@QueryParam("XH") String xh) {
 		return ManageScore.get_XH(xh);
 	}
