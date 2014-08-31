@@ -303,16 +303,7 @@
             </div>
           </div>
         </div>
-        <div class="item">
-          <i class="tint icon circular inverted"></i>
 
-          <div class="content">
-            <a class="header">{{pinshiScore}}</a>
-
-            <div class="description">平时平均
-            </div>
-          </div>
-        </div>
         <div class="item">
           <i class="frown icon circular inverted"></i>
 
@@ -323,12 +314,26 @@
             </div>
           </div>
         </div>
+
+        <div class="item">
+          <i class="tint icon circular inverted"></i>
+
+          <div class="content">
+            <a class="header">{{pinshiScore}}</a>
+
+            <div class="description">平时平均
+            </div>
+          </div>
+
+        </div>
+
       </div>
 
     </div>
+    {{/.}}
   </div>
-  {{/.}}
 </div>
+
 
 <!--一条平均学分成绩-自己的-->
 <div id="PJXF-self_TEMP">
@@ -337,8 +342,8 @@
     <div class="ui stacked segment green inverted">
 
       <div class="ui statistic">
-        <div class="number">平均学分绩
-        </div>
+        <div class="number">{{score}}</div>
+        <div class="text center aligned">平均学分绩</div>
       </div>
 
       <div class="ui relaxed divided list">
@@ -355,12 +360,12 @@
         </div>
 
         <div class="item">
-          <i class="screenshot icon circular inverted"></i>
+          <i class="building icon user inverted circular"></i>
 
           <div class="content">
-            <a class="header">{{score}}</a>
+            <a class="header">{{xh}}</a>
 
-            <div class="description">分数
+            <div class="description">学号
             </div>
           </div>
         </div>
