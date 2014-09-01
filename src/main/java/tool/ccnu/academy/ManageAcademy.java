@@ -69,10 +69,14 @@ public class ManageAcademy {
    * 判断该学号的同学是哪个院的
    *
    * @param xh 学号
-   * @return 院系的id
+   * @return 院系的id, 如果不知道该学号的同学是哪个院就返回0
    */
   public static int isWhichAcademy(String xh) {
     StudentsEntity studentsEntity = ManageStudents.get(xh);
-    return studentsEntity.getAcademyByAcademy().getId();
+    AcademyEntity academyEntity = studentsEntity.getAcademyByAcademy();
+    if (academyEntity == null) {
+      return 0;
+    }
+    return academyEntity.getId();
   }
 }

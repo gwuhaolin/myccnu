@@ -42,7 +42,7 @@
 			</div>
 
 			<div class="field">
-				<input type="submit" class="ui black fluid button"/>
+				<input type="submit" class="ui black fluid button" value="搜索"/>
 			</div>
 			<div class="ui error message"></div>
 

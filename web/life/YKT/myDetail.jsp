@@ -87,6 +87,15 @@
   </div>
   <%
     }
+    if (changes.size() == 0) {
+  %>
+  <script>
+    alertMsg('最近一星期没有消费记录');
+  </script>
+  <%
+  %>
+  <%
+    }
   } catch (Exception e) {
   %>
   <script>

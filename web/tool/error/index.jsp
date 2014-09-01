@@ -28,8 +28,17 @@
   <div class="content">
     <div class="center">
       <h2 class="ui inverted icon header"><i class="icon circular inverted bug blue"></i>出现点小问题
-        <div class="sub header">我们会尽快清理这只bug</div>
+        <span class="sub header" style="display: block">我们会尽快清理这只bug</span>
       </h2>
+
+      <div class="ui divider icon horizontal inverted"><i class="ui icon smile"></i></div>
+      <div class="ui column">
+        <a class="ui button blue small" href="/tool/joinUs/index.html">来和我们一起修BUG</a>
+      </div>
+      <div style="margin: 5px"></div>
+      <div class="ui column">
+        <a class="ui button green small" href="/tool/feedback/index.html">告诉我们你的建议或好点子</a>
+      </div>
     </div>
   </div>
 </div>

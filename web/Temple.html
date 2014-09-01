@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8"/>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-	<script src="lib/js/jquery.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="lib/css/semantic.min.css">
-	<script src="lib/js/semantic.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="lib/css/main.css">
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <script src="lib/js/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="lib/css/semantic.min.css">
+  <script src="lib/js/semantic.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="lib/css/main.css">
 </head>
 <body>
 
-<div class="ui button">
-	<div>123</div>
-</div>
+<div class="ui dimmer"><div class="content"><div class="center">{{# if name}}<div class="item">{{# if sex}}<i class="icon male blue"></i>{{else}}<i class="icon female red"></i>{{/if}}<div class="content"><div class="header">{{name}}</div></div></div>{{/if}}{{# if phoneNumber}}<div class="item"><i class="icon phone"></i><div class="content"><div class="header">{{phoneNumber}}</div></div></div>{{/if}}{{# if qq}}<div class="item"><i class="icon">Q</i><div class="content"><div class="header">{{qq}}</div></div></div>{{/if}}{{# if dormitory}}<div class="item"><i class="icon map marker"></i><div class="content"><div class="header">{{dormitory}}</div></div></div>{{/if}}{{# if academyByAcademy.academyName}}<div class="item"><i class="icon book"></i><div class="content"><div class="header">{{academyByAcademy.academyName}}</div></div></div>{{/if}}</div></div></div>
+
 
 </body>
 </html>

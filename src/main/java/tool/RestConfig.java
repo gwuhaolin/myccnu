@@ -14,6 +14,7 @@ import play.vote.ServiceVote;
 import study.score.ServicePjxfScore;
 import study.score.ServiceScore;
 import tool.ccnu.student.ServiceStudents;
+import tool.feedback.ServiceFeedback;
 
 /**
  * Created with Intellij IDEA.
@@ -35,6 +36,7 @@ public class RestConfig extends ResourceConfig {
     register(ServiceScore.class);
     register(ServiceNotice.class);
     register(ServicePjxfScore.class);
+    register(ServiceFeedback.class);
 
     //注册数据转换器
     register(JacksonJsonProvider.class);

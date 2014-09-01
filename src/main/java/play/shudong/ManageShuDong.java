@@ -176,9 +176,4 @@ public class ManageShuDong {
 		return result > 0;
 	}
 
-	public static void main(String[] args) {
-		System.out.println(get_page(0));
-		System.out.println(get_page(6));
-	}
-
 }

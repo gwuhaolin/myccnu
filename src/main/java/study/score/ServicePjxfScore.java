@@ -31,19 +31,19 @@ public class ServicePjxfScore {
    */
   @JSONP(queryParam = R.JSONP_CALLBACK)
   @GET
-  @Path("/updatePjxf")
-  public void updatePjxf() {
+  @Path("/updateAll")
+  public void updateAll() {
     Session session = HibernateUtil.getSession();
-    Query query = session.createQuery("from MyPjxfScoreEntity");
-    List<MyPjxfScoreEntity> list = query.list();
-    HashSet<MyPjxfScoreEntity> set = new HashSet<>();
-    for (MyPjxfScoreEntity one : list) {
-      set.add(one);
-    }
-    for (MyPjxfScoreEntity one : set) {
-      ManageMyPjxfScore.update(one.getXh());
-    }
+    Query query = session.createQuery("from MyScoreEntity ");
+    List<MyScoreEntity> list = query.list();
     HibernateUtil.closeSession(session);
+    HashSet<String> set = new HashSet<>();
+    for (MyScoreEntity one : list) {
+      set.add(one.getXh());
+    }
+    for (String one : set) {
+      ManageMyPjxfScore.update(one);
+    }
   }
 
 }
