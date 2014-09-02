@@ -72,7 +72,7 @@ public class ManageMyPjxfScore {
     for (MyScoreEntity one : allScore) {
       //所有的非任选的成绩才计入
       if (!isRenXuan(one.getClassNo())) {
-        scoreSum += one.getSumScore();
+        scoreSum += one.getSumScore()*one.getXuefen();
         xuefenSum += one.getXuefen();
       }
     }

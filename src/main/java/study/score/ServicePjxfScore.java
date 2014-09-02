@@ -3,10 +3,15 @@ package study.score;
 import org.glassfish.jersey.server.JSONP;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import tool.HibernateUtil;
 import tool.R;
 
-import javax.ws.rs.*;
+import javax.ws.rs.CookieParam;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import java.util.HashSet;
 import java.util.List;
 
@@ -17,6 +22,9 @@ import java.util.List;
 @Path("/pjxfScore")
 @Produces({"application/javascript"})
 public class ServicePjxfScore {
+
+  private static final Logger log = LoggerFactory.getLogger(ServicePjxfScore.class);
+
 
   @JSONP(queryParam = R.JSONP_CALLBACK)
   @GET
@@ -42,6 +50,7 @@ public class ServicePjxfScore {
       set.add(one.getXh());
     }
     for (String one : set) {
+      log.info("成功更新" + one + "的平均学分成绩");
       ManageMyPjxfScore.update(one);
     }
   }
