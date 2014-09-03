@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import tool.ccnu.student.ManageStudents;
 
+import java.util.List;
+
 public class ManageMyPjxfScoreTest {
 
   /**
@@ -24,7 +26,8 @@ public class ManageMyPjxfScoreTest {
   @Test
   public void testList() throws Exception {
     for (String xh : XHS) {
-      Assert.assertTrue(ManageMyPjxfScore.list(xh).size() > 0);
+	    List<MyPjxfScoreEntity> re=ManageMyPjxfScore.list(xh);
+	    Assert.assertTrue(re.size()>0);
     }
   }
 

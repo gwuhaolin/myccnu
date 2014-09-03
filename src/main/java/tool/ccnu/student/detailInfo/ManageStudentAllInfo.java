@@ -141,7 +141,7 @@ public class ManageStudentAllInfo {
 	}
 
 	/**
-	 * 用学号密码去教务处抓取信息,如果抓取成功就把抓取到的信息保存到数据库
+	 * 用学号密码去教务处抓取信息,如果抓取成功就把抓取到的信息保存到数据库,如果抓取失败就不会更新以前现有的信息
 	 * 同时也会生成简易版信息但不会存储到数据库而是直接返回
 	 * 抓取失败hui返回null
 	 *
@@ -156,18 +156,18 @@ public class ManageStudentAllInfo {
 		} catch (NetworkException | ValidateException e) {
 			log.error(Arrays.toString(e.getStackTrace()));
 		}
-		StudentAllInfoEntity student = parse(document);
+		StudentAllInfoEntity studentAllInfoEntity = parse(document);
 		StudentsEntity re = null;
-		if (student != null) {//抓取成功
-			student.setXh(XH);
-			student.setPassword(MM);
-			re = studentsAllInfoEntityToStudentsEntity(student);//转换为简易版用于应用程序
+		if (studentAllInfoEntity != null) {//抓取成功
+			studentAllInfoEntity.setXh(XH);
+			studentAllInfoEntity.setPassword(MM);
+			re = studentsAllInfoEntityToStudentsEntity(studentAllInfoEntity);//转换为简易版用于应用程序
 			Session session = HibernateUtil.getSession();
 			try {
-				session.saveOrUpdate(student);
+				session.saveOrUpdate(studentAllInfoEntity);
 				log.info("成功抓取并且更新到数据库" + XH);
 			} catch (Exception ignored) {
-				log.warn("失败" + XH);
+				log.warn("失败抓取信息" + XH);
 			}
 			HibernateUtil.closeSession(session);
 		}
@@ -175,20 +175,26 @@ public class ManageStudentAllInfo {
 	}
 
 	/**
-	 * 找出所有的身份证号为空但是有账号密码的同学,然后去信息门户抓取保存到信息门户
+	 * 找出所有的(知道账号密码的但是没有抓取到信息的同学)身份证号为空但是有账号密码的同学,然后去信息门户抓取保存到信息门户
 	 *
 	 * @return 抓取到的个数
 	 */
 	public static int downloadAndStoreToSQLFromJWCwhereInfoNull() {
 		Session session = HibernateUtil.getSession();
-		Query query = session.createQuery("from StudentAllInfoEntity where idNumber=null and xh!=null and xh like ? and password!=null order by xh desc ");
+		Query query = session.createQuery("from StudentsEntity where idNumber=null and xh!=null and xh like ? and password!=null order by xh desc ");
 		query.setString(0, "____2_____");//所有本科生的学号的第5位都是2
-		List<StudentAllInfoEntity> allInfoEntities = query.list();
+		List<StudentsEntity> studentsEntities = query.list();
 		HibernateUtil.closeSession(session);
-		for (StudentAllInfoEntity one : allInfoEntities) {
-			downloadAndStoreToSQLFromJWC(one.getXh(), one.getPassword());
+		for (StudentsEntity one : studentsEntities) {
+			StudentsEntity studentsEntity = downloadAndStoreToSQLFromJWC(one.getXh(), one.getPassword());
+			if (studentsEntity==null){
+				continue;
+			}
+			studentsEntity.setXh(one.getXh());
+			studentsEntity.setPassword(one.getPassword());
+			HibernateUtil.addOrUpdateEntity(studentsEntity);
 		}
-		return allInfoEntities.size();
+		return studentsEntities.size();
 	}
 
 
@@ -273,11 +279,11 @@ public class ManageStudentAllInfo {
 				stringBuilder.append(" ");
 			}
 			reOne.setEducationInfo(stringBuilder.toString());
+			return reOne;
 		} catch (Exception e) {
 			log.warn("错误的文档格式:" + document.toString());
-			e.printStackTrace();
+			return null;
 		}
-		return reOne;
 	}
 
 

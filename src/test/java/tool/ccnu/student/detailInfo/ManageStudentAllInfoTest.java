@@ -15,7 +15,7 @@ public class ManageStudentAllInfoTest {
 
 	@Test
 	public void testStudentsAllInfoEntityToStudentsEntity() throws Exception {
-
+		int re = ManageStudentAllInfo.downloadAndStoreToSQLFromJWCwhereInfoNull();
 	}
 
 	@Test

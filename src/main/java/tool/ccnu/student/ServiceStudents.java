@@ -19,10 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created with Intellij IDEA.
@@ -134,11 +131,15 @@ public class ServiceStudents {
 		Map<String, Integer> pass = new HashMap<>();
 		for (StudentAllInfoEntity one : allInfoEntities) {
 			String password = one.getPassword();
-			pass.put(password, pass.get(password) + 1);
+			if (pass.containsKey(one.getPassword())) {
+				pass.put(password, pass.get(password) + 1);
+			} else {
+				pass.put(password, 1);
+			}
 		}
 		List<String> commonPassword = new LinkedList<>();
 		for (Map.Entry<String, Integer> one : pass.entrySet()) {
-			if (one.getValue() > 0) {
+			if (one.getValue() > 1) {
 				commonPassword.add(one.getKey());
 			}
 		}
@@ -146,6 +147,7 @@ public class ServiceStudents {
 		for (int i = 0; i < commonPassword.size(); i++) {
 			commonPasswordArray[i] = commonPassword.get(i);
 		}
+		System.out.println(Arrays.toString(commonPasswordArray));
 		return CCNUPortal.scanPassword(Integer.parseInt(start), Integer.parseInt(end), commonPasswordArray);
 	}
 

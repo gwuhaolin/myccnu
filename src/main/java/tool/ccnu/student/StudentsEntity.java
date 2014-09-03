@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 /**
  * Created by wuhaolin on 7/6/14.
- * :
+ * :以这个为信息中心
  */
 @Entity
 @Table(name = "Students", schema = "", catalog = "weixin")
