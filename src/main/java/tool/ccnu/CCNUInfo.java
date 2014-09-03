@@ -43,14 +43,14 @@ public class CCNUInfo {
 			throw new NetworkException("信息门户异常");
 		}
 		String newURL = connection.response().header("Location");
-		connection = Jsoup.connect(newURL);
-		connection.userAgent(R.USER_AGENT);
-		connection.ignoreHttpErrors(true);
-		connection.followRedirects(false);
 		try {
+			connection = Jsoup.connect(newURL);
+			connection.userAgent(R.USER_AGENT);
+			connection.ignoreHttpErrors(true);
+			connection.followRedirects(false);
 			connection.get();
-		} catch (IOException e) {
-			log.error(Arrays.toString(e.getStackTrace()));
+		} catch (Exception e) {
+			log.error(XH+Arrays.toString(e.getStackTrace()));
 			throw new NetworkException("学工部信息系统异常");
 		}
 		String JsessionIdValue = connection.response().cookie("JSESSIONID");
@@ -68,6 +68,7 @@ public class CCNUInfo {
 	/**
 	 * 获得老师的详细信息
 	 * TODO 连接超时
+	 *
 	 * @param XH 信息门户的账号
 	 * @param MM 信息门户的密码
 	 * @return 返回信息的HTML文档
@@ -87,12 +88,11 @@ public class CCNUInfo {
 			throw new NetworkException("信息门户异常");
 		}
 		String newURL = connection.response().header("Location");
-		connection = Jsoup.connect(newURL);
-		connection.userAgent(R.USER_AGENT);
-		connection.timeout(R.ConnectTimeout);
-		connection.ignoreHttpErrors(true);
-		connection.followRedirects(false);
 		try {
+			connection = Jsoup.connect(newURL);
+			connection.userAgent(R.USER_AGENT);
+			connection.ignoreHttpErrors(true);
+			connection.followRedirects(false);
 			connection.get();
 		} catch (IOException e) {
 			log.error(Arrays.toString(e.getStackTrace()));
@@ -102,6 +102,7 @@ public class CCNUInfo {
 		Document re = null;
 		connection = Jsoup.connect("http://202.114.32.145/ccnurs/rskEmployeeInput.do?method=modifySelfInfo&init=no&send=yes");
 		connection.cookie("JSESSIONID", JsessionIdValue);
+		connection.timeout(R.ConnectTimeout*2);
 		try {
 			re = connection.post();
 		} catch (IOException e) {

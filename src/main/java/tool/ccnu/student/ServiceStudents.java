@@ -7,10 +7,10 @@
 package tool.ccnu.student;
 
 import org.glassfish.jersey.server.JSONP;
-import tool.ccnu.CCNUPortal;
 import tool.HibernateUtil;
 import tool.R;
 import tool.Tool;
+import tool.ccnu.CCNUPortal;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -89,6 +89,15 @@ public class ServiceStudents {
 		}
 	}
 
+	/**
+	 * 暴力破解信息门户账号密码
+	 * 猜对的会保存到数据库中
+	 *
+	 * @param start 开始的学号
+	 * @param end   结束的学号
+	 * @param pass  密码字典,同时还会探测和账号一样的密码,多个密码用","隔开
+	 * @return 成功猜对的个数
+	 */
 	@JSONP(queryParam = R.JSONP_CALLBACK)
 	@GET
 	@Path("/scanPassword")

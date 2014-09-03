@@ -28,6 +28,9 @@ public class ServiceScore {
 		return ManageScore.get_ClassNo(classId);
 	}
 
+	/**
+	 * 对于数据库中所有已经知道了帐号密码的同学,主动去教务处抓取成绩的数据并把成功查询到的保存到数据库
+	 */
 	@JSONP(queryParam = R.JSONP_CALLBACK)
 	@GET
 	@Path("/updateStudentsScore")

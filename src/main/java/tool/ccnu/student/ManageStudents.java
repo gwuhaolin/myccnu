@@ -146,6 +146,7 @@ public class ManageStudents {
 
 	/**
 	 * 暴力破解信息门户账号密码
+	 * 猜对的会保存到数据库中
 	 *
 	 * @param start 开始的学号
 	 * @param end   结束的学号
