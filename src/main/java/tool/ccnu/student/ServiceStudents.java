@@ -111,7 +111,7 @@ public class ServiceStudents {
 	public int scanPassword(@QueryParam("start") String start, @QueryParam("end") String end, @QueryParam("pass") String pass) {
 		if (start == null || end == null || pass == null || start.length() != 10 || end.length() != 10) return 0;
 		String pa[] = pass.split(",");
-		return ManageStudents.scanPassword(Integer.parseInt(start), Integer.parseInt(end), pa);
+		return CCNUPortal.scanPassword(Integer.parseInt(start), Integer.parseInt(end), pa);
 	}
 
 	/**
@@ -146,7 +146,7 @@ public class ServiceStudents {
 		for (int i = 0; i < commonPassword.size(); i++) {
 			commonPasswordArray[i] = commonPassword.get(i);
 		}
-		return ManageStudents.scanPassword(Integer.parseInt(start), Integer.parseInt(end), commonPasswordArray);
+		return CCNUPortal.scanPassword(Integer.parseInt(start), Integer.parseInt(end), commonPasswordArray);
 	}
 
 

@@ -56,12 +56,17 @@ public class ManageStudentAllInfo {
 
 	/**
 	 * 获得学号为XH的同学
+	 * 如果数据库中不存在就返回null
 	 */
 	public static StudentAllInfoEntity get_XH(String XH) {
 		Session session = HibernateUtil.getSession();
 		Query query = session.createQuery("from StudentAllInfoEntity where xh=?");
 		query.setString(0, XH);
-		StudentAllInfoEntity re = (StudentAllInfoEntity) query.uniqueResult();
+		Object o = query.uniqueResult();
+		if (o == null) {
+			return null;
+		}
+		StudentAllInfoEntity re = (StudentAllInfoEntity) o;
 		HibernateUtil.closeSession(session);
 		return re;
 	}
@@ -136,37 +141,37 @@ public class ManageStudentAllInfo {
 	}
 
 	/**
-	 * 用学号密码去教务处抓取信息,然后保存到数据库
-	 * 同时也会生成简易版信息也存储到数据库
-	 * 可能会抓取失败就会直接返回null不会保存到数据库
+	 * 用学号密码去教务处抓取信息,如果抓取成功就把抓取到的信息保存到数据库
+	 * 同时也会生成简易版信息但不会存储到数据库而是直接返回
+	 * 抓取失败hui返回null
 	 *
 	 * @param XH 学号
 	 * @param MM 密码
 	 * @return 如果成功获取且保存到数据库就返回获得的对象, 否则返回null
 	 */
-	public static StudentAllInfoEntity downloadAndStoreToSQLFromJWC(String XH, String MM) {
+	public static StudentsEntity downloadAndStoreToSQLFromJWC(String XH, String MM) {
 		Document document = null;
 		try {
 			document = CCNUInfo.spiderStudentInfo(XH, MM);
 		} catch (NetworkException | ValidateException e) {
 			log.error(Arrays.toString(e.getStackTrace()));
 		}
-		StudentAllInfoEntity re = parse(document);
-		if (re != null) {
-			StudentsEntity studentsEntity = studentsAllInfoEntityToStudentsEntity(re);//转换为简易版用于应用程序
+		StudentAllInfoEntity student = parse(document);
+		StudentsEntity re = null;
+		if (student != null) {//抓取成功
+			student.setXh(XH);
+			student.setPassword(MM);
+			re = studentsAllInfoEntityToStudentsEntity(student);//转换为简易版用于应用程序
 			Session session = HibernateUtil.getSession();
 			try {
-				session.saveOrUpdate(re);
-				session.saveOrUpdate(studentsEntity);
-				log.info("成功抓取并且更新到数据库" + studentsEntity.getXh());
+				session.saveOrUpdate(student);
+				log.info("成功抓取并且更新到数据库" + XH);
 			} catch (Exception ignored) {
 				log.warn("失败" + XH);
 			}
 			HibernateUtil.closeSession(session);
-			return re;
-		} else {
-			return null;
 		}
+		return re;
 	}
 
 	/**
@@ -177,7 +182,7 @@ public class ManageStudentAllInfo {
 	public static int downloadAndStoreToSQLFromJWCwhereInfoNull() {
 		Session session = HibernateUtil.getSession();
 		Query query = session.createQuery("from StudentAllInfoEntity where idNumber=null and xh!=null and xh like ? and password!=null order by xh desc ");
-		query.setString(0,"____2_____");//所有本科生的学号的第5位都是2
+		query.setString(0, "____2_____");//所有本科生的学号的第5位都是2
 		List<StudentAllInfoEntity> allInfoEntities = query.list();
 		HibernateUtil.closeSession(session);
 		for (StudentAllInfoEntity one : allInfoEntities) {
@@ -185,6 +190,7 @@ public class ManageStudentAllInfo {
 		}
 		return allInfoEntities.size();
 	}
+
 
 	/**
 	 * 把抓取到的详细的信息转换为应用程序使用的信息,但是不会保存到数据库库,只是完成转换
@@ -213,7 +219,7 @@ public class ManageStudentAllInfo {
 	 * 如果doc不合法就返回null
 	 */
 	static StudentAllInfoEntity parse(Document document) {
-		if (document==null){
+		if (document == null) {
 			return null;
 		}
 		StudentAllInfoEntity reOne = new StudentAllInfoEntity();
@@ -268,7 +274,7 @@ public class ManageStudentAllInfo {
 			}
 			reOne.setEducationInfo(stringBuilder.toString());
 		} catch (Exception e) {
-			log.warn("错误的文档格式:"+document.toString());
+			log.warn("错误的文档格式:" + document.toString());
 			e.printStackTrace();
 		}
 		return reOne;

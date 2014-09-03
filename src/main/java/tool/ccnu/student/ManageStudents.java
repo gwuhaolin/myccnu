@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tool.HibernateUtil;
 import tool.ccnu.CCNUPortal;
+import tool.ccnu.student.detailInfo.ManageStudentAllInfo;
 
 import java.util.List;
 
@@ -127,26 +128,24 @@ public class ManageStudents {
 
 	/**
 	 * 更新学号为xh的同学的密码到数据库
-	 * 不会重新去数据库抓取信息只更新密码
+	 * 还会去教务处抓取该同学的信息保存的数据库
 	 * 如果数据库中还不存在这个同学的信息就先把账号密码保存到数据库
 	 *
 	 * @param xh       学号
 	 * @param password 新的密码
-	 * @return 是否更新成功
 	 */
-	public static boolean update_PasswordToSQL(String xh, String password) {
-		StudentsEntity studentsEntity = get(xh);
-		if (studentsEntity == null) {//如果数据库中还不存在这个同学的信息就先把账号密码保存到数据库 TODO 需要异步执行去信息门户抓取信息然后解析然后保存都数据库
+	public static void update_PasswordToSQL(String xh, String password) {
+		StudentsEntity studentsEntity = ManageStudentAllInfo.downloadAndStoreToSQLFromJWC(xh, password);
+		if (studentsEntity == null) {
 			studentsEntity = new StudentsEntity();
-			studentsEntity.setXh(xh);
 		}
+		studentsEntity.setXh(xh);
 		studentsEntity.setPassword(password);
-		return HibernateUtil.addOrUpdateEntity(studentsEntity);
+		HibernateUtil.addOrUpdateEntity(studentsEntity);
 	}
 
 	/**
 	 * 暴力破解信息门户账号密码
-	 * 猜对的会保存到数据库中
 	 *
 	 * @param start 开始的学号
 	 * @param end   结束的学号

@@ -98,4 +98,9 @@ public class ManageStudentsTest {
 		int re = ManageStudents.scanPassword(start, end, pass);
 		System.out.println(re);
 	}
+
+	@Test
+	public void testUpdatePasswordToSQL() throws Exception {
+		ManageStudents.update_PasswordToSQL(xh, password);
+	}
 }
