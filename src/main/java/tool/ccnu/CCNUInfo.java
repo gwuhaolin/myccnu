@@ -23,8 +23,6 @@ public class CCNUInfo {
 
 	/**
 	 * 获得同学的详细信息
-	 * TODO 获取信息失败 初步分析为 服务器屏蔽非浏览器端口
-	 * TODO 抓取到信息后还应该保存html文件到本地,因为解析html时会遗失有些信息,如果保存到本地还要考虑同文件已经存在
 	 *
 	 * @param XH 学号
 	 * @param MM 密码
@@ -47,8 +45,6 @@ public class CCNUInfo {
 		String newURL = connection.response().header("Location");
 		connection = Jsoup.connect(newURL);
 		connection.userAgent(R.USER_AGENT);
-		connection.referrer("http://portal.ccnu.edu.cn/item.jsp?groupId=STU_JZD&groupSeq=4");
-		connection.request().cookie("ys-west-panel", "o:collapsed=b%3A1");
 		connection.ignoreHttpErrors(true);
 		connection.followRedirects(false);
 		try {
@@ -57,14 +53,10 @@ public class CCNUInfo {
 			log.error(Arrays.toString(e.getStackTrace()));
 			throw new NetworkException("学工部信息系统异常");
 		}
-		Map<String, String> cookiesFromXGB = connection.response().cookies();
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		connection = Jsoup.connect("http://202.114.32.143/ccnuxg/xg/studentInfo.do?method=getStudentInfo");
-		connection.cookies(cookiesFromXGB);
-//		connection.cookie("SECURE_AUTH_ROOT_COOKIE", "1771d2220bfc52209255b80905ddb0ec");
-//		connection.cookie("SECURITY_AUTHENTICATION_COOKIE", "1771d2220bfc52209255b80905ddb0ec");
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		String JsessionIdValue = connection.response().cookie("JSESSIONID");
 		Document re = null;
+		connection = Jsoup.connect("http://202.114.32.143/ccnuxg/xg/studentInfo.do?method=getStudentInfo");
+		connection.cookie("JSESSIONID", JsessionIdValue);
 		try {
 			re = connection.post();
 		} catch (IOException e) {
@@ -75,28 +67,47 @@ public class CCNUInfo {
 
 	/**
 	 * 获得老师的详细信息
-	 * TODO 待测试
-	 *
-	 * @param XH
+	 * TODO 连接超时
+	 * @param XH 信息门户的账号
+	 * @param MM 信息门户的密码
 	 * @return 返回信息的HTML文档
 	 */
 	public static Document spiderTeacherInfo(String XH, String MM) throws Exception {
 		Connection connection = Jsoup.connect("http://portal.ccnu.edu.cn/roamingAction.do?appId=RSXT");
+		Map<String, String> cookiesFromPortal = CCNUPortal.getCookie(XH, MM);
 		connection.userAgent(R.USER_AGENT);
-		connection.cookies(CCNUPortal.getCookie(XH, MM));
+		connection.cookies(cookiesFromPortal);
 		connection.timeout(R.ConnectTimeout);
+		connection.ignoreHttpErrors(true);
 		connection.followRedirects(false);
-		connection.get();
-		String newUrl = connection.response().header("Location");
-		connection = Jsoup.connect(newUrl);
-		connection.get();
-		Map<String, String> cookies = connection.response().cookies();
-
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		try {
+			connection.get();
+		} catch (IOException e) {
+			log.error(Arrays.toString(e.getStackTrace()));
+			throw new NetworkException("信息门户异常");
+		}
+		String newURL = connection.response().header("Location");
+		connection = Jsoup.connect(newURL);
+		connection.userAgent(R.USER_AGENT);
+		connection.timeout(R.ConnectTimeout);
+		connection.ignoreHttpErrors(true);
+		connection.followRedirects(false);
+		try {
+			connection.get();
+		} catch (IOException e) {
+			log.error(Arrays.toString(e.getStackTrace()));
+			throw new NetworkException("学工部信息系统异常");
+		}
+		String JsessionIdValue = connection.response().cookie("JSESSIONID");
+		Document re = null;
 		connection = Jsoup.connect("http://202.114.32.145/ccnurs/rskEmployeeInput.do?method=modifySelfInfo&init=no&send=yes");
-		connection.cookies(cookies);
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		return connection.post();
+		connection.cookie("JSESSIONID", JsessionIdValue);
+		try {
+			re = connection.post();
+		} catch (IOException e) {
+			log.error(Arrays.toString(e.getStackTrace()));
+		}
+		return re;
 	}
 
 }
