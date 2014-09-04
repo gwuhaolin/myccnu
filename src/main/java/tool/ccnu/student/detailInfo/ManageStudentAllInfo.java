@@ -150,11 +150,12 @@ public class ManageStudentAllInfo {
 	 * @return 如果成功获取且保存到数据库就返回获得的对象, 否则返回null
 	 */
 	public static StudentsEntity downloadAndStoreToSQLFromJWC(String XH, String MM) {
-		Document document = null;
+		Document document;
 		try {
 			document = CCNUInfo.spiderStudentInfo(XH, MM);
 		} catch (NetworkException | ValidateException e) {
 			log.error(Arrays.toString(e.getStackTrace()));
+			return null;
 		}
 		StudentAllInfoEntity studentAllInfoEntity = parse(document);
 		StudentsEntity re = null;

@@ -3,6 +3,7 @@ package tool.ccnu.student;
 import org.junit.Assert;
 import org.junit.Test;
 import tool.HibernateUtil;
+import tool.ccnu.CCNUPortal;
 import tool.ccnu.academy.AcademyEntity;
 import tool.ccnu.academy.ManageAcademy;
 
@@ -95,7 +96,7 @@ public class ManageStudentsTest {
 		int start = 2013210001;
 		int end = 2013214000;
 		String[] pass = new String[]{"123456", "12345678"};
-		int re = ManageStudents.scanPassword(start, end, pass);
+		int re = CCNUPortal.scanPassword(start, end, pass);
 		System.out.println(re);
 	}
 

