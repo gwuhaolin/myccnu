@@ -8,9 +8,9 @@ import java.util.Map;
 
 public class ManageYKTTest {
 
-	private final String XH = "2012210817";
-	private final String MM = "930820";
-	private final int TIMES = 100;
+	private final String XH = "2013214335";
+	private final String MM = "011109";
+	private final int TIMES = 10;
 
 	@Test
 	public void testGetRemain() throws Exception {

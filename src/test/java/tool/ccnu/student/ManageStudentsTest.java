@@ -93,15 +93,15 @@ public class ManageStudentsTest {
 
 	@Test
 	public void testScanPassword() throws Exception {
-		int start = 2013210001;
-		int end = 2013214000;
-		String[] pass = new String[]{"123456", "12345678"};
+		int start = 2014210001;
+		int end = 2014214000;
+		String[] pass = new String[]{"123456"};
 		int re = CCNUPortal.scanPassword(start, end, pass);
 		System.out.println(re);
 	}
 
 	@Test
 	public void testUpdatePasswordToSQL() throws Exception {
-		ManageStudents.update_PasswordToSQL(xh, password);
+		ManageStudents.update_PasswordToSQL(xh, "123456");
 	}
 }
