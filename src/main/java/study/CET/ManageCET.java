@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -93,9 +92,11 @@ public class ManageCET {
 			String listen = all.get(1).text();
 			String read = all.get(2).text();
 			String essay = all.get(4).text();
+			log.info("成功抓取{}的CET成绩={}", IdNumber, sum);
 			return new Cet46Entity(sum, listen, read, essay, grade);
 		} catch (Exception e) {
-			log.error(Arrays.toString(e.getStackTrace()));
+			log.error("抓取CET失败" + IdNumber);
+//			log.error(Arrays.toString(e.getStackTrace()));
 			return null;
 		}
 	}
@@ -158,7 +159,11 @@ public class ManageCET {
 		} else {//没有抓取到任何一次成绩
 			re = get_XH_fromSQL(XH);
 		}
-		return re.get(0);//返回第一个,即他最关系的那个
+		if (re.size() > 0) {
+			return re.get(0);//返回第一个,即他最关系的那个
+		} else {
+			return null;
+		}
 	}
 
 	/**

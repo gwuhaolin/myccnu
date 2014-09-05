@@ -11,6 +11,7 @@ import play.shop.ServiceShop;
 import play.shudong.ServiceShuDong;
 import play.shudong.ServiceShuDongBgImg;
 import play.vote.ServiceVote;
+import study.CET.ServiceCET;
 import study.score.ServicePjxfScore;
 import study.score.ServiceScore;
 import tool.ccnu.student.ServiceStudents;
@@ -39,6 +40,7 @@ public class RestConfig extends ResourceConfig {
 		register(ServicePjxfScore.class);
 		register(ServiceFeedback.class);
 		register(ServiceStudentAllInfo.class);
+		register(ServiceCET.class);
 
 		//注册数据转换器
 		register(JacksonJsonProvider.class);

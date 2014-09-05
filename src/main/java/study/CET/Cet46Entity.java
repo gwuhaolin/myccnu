@@ -219,6 +219,11 @@ public class Cet46Entity implements Comparable<Cet46Entity> {
 	 * 优先按照考试时间来排序,其次按照6,4级
 	 */
 	public int compareTo(Cet46Entity o) {
-		return this.date.compareTo(o.date) * 2 + this.grade.compareTo(o.getGrade());
+		int re;
+		re = -this.date.compareTo(o.date);
+		if (re == 0) {
+			re = -this.grade.compareTo(o.getGrade());
+		}
+		return re;
 	}
 }

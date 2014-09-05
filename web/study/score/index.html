@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="../../lib/css/main.css">
-  <link rel="stylesheet" type="text/css" href="../../lib/css/semantic.min.css">
-  <script src="../../lib/js/jquery.min.js"></script>
-  <script src="../../lib/js/semantic.min.js"></script>
-  <script src="../../lib/js/handlebars-v1.3.0.js"></script>
-  <script src="../../lib/js/main.js"></script>
-  <title>期末成绩</title>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="../../lib/css/main.css">
+	<link rel="stylesheet" type="text/css" href="../../lib/css/semantic.min.css">
+	<script src="../../lib/js/jquery.min.js"></script>
+	<script src="../../lib/js/semantic.min.js"></script>
+	<script src="../../lib/js/handlebars-v1.3.0.js"></script>
+	<script src="../../lib/js/main.js"></script>
+	<title>期末成绩</title>
 </head>
 <body>
 
@@ -22,161 +22,161 @@
 <!--提示-->
 <div class="ui page grid one column center aligned">
 
-  <!--查看平均学分成绩按钮-->
-  <div class="ui column">
-    <div class="ui button circular fluid" onclick="showPjxf()">
-      轻击这查看你的平均学分绩排名
-    </div>
-  </div>
+	<!--查看平均学分成绩按钮-->
+	<div class="ui column">
+		<div class="ui button circular fluid" onclick="showPjxf()">
+			轻击这查看你的平均学分绩排名
+		</div>
+	</div>
 
-  <div class="ui column">
-    <div class="ui message floating info">
-      想对任何一个白块更深入了解,只需点它,你就会知道很多!
-    </div>
-  </div>
+	<div class="ui column">
+		<div class="ui message floating info">
+			想对任何一个白块更深入了解,只需点它,你就会知道很多!
+		</div>
+	</div>
 
 </div>
 
 <!--page正在加载中-->
 <div class="ui page dimmer" id="Page_Dimmer">
-  <div class="content">
-    <div class="center">
-      <h2 class="ui inverted icon header">
-        <i class="icon loading green"></i>
-        正在玩命计算中....
-      </h2>
-    </div>
-  </div>
+	<div class="content">
+		<div class="center">
+			<h2 class="ui inverted icon header">
+				<i class="icon loading green"></i>
+				正在玩命计算中....
+			</h2>
+		</div>
+	</div>
 </div>
 
 <!--当进入非主页模式时显示,用于返回主页-->
 <div id="homeBtn" onclick="showHome()" class="ui button circular icon inverted black"
      style="position: fixed;right: 5px;bottom: 5px;display: none">
-  <i class="icon home"></i>
+	<i class="icon home"></i>
 </div>
 
 <script>
-  var GetScore_URL = makeApiUrl("score/get");
-  var Score_Con = $('#Score_Con');
-  var TempHTML = '';
-  var HomeBtn = $('#homeBtn');
-  var myXH = getCookie('XH');
-  $(document).ready(function () {
-    if (myXH.length > 0) {
-      $('#Page_Dimmer').dimmer('show');
-      //加载自己的成绩,并保存下来用于回到主页
-      getScore_XH(myXH, function (data) {
-        TempHTML = toHTML('Score_TEMP', data);//保存原来的
-        Score_Con.append(TempHTML);
-        $('#Page_Dimmer').dimmer('hide');
-        if (data.length < 1) {
-          showError();
-        }
-      });
-    } else {//还没有绑定
-      shouldBind();
-    }
-  });
+	var GetScore_URL = makeApiUrl("score/get");
+	var Score_Con = $('#Score_Con');
+	var TempHTML = '';
+	var HomeBtn = $('#homeBtn');
+	var myXH = getCookie('XH');
+	$(document).ready(function () {
+		if (myXH.length > 0) {
+			$('#Page_Dimmer').dimmer('show');
+			//加载自己的成绩,并保存下来用于回到主页
+			getScore_XH(myXH, function (data) {
+				TempHTML = toHTML('Score_TEMP', data);//保存原来的
+				Score_Con.append(TempHTML);
+				$('#Page_Dimmer').dimmer('hide');
+				if (data.length < 1) {
+					alertMsg('暂时还没有获得你的成绩,等下再试试吧');
+				}
+			});
+		} else {//还没有绑定
+			shouldBind();
+		}
+	});
 
-  /**
-   * 获得学号为xh的同学的成绩
-   * @param xh 要查看的同学的学号
-   * @param callback 当获得成绩成功时调用的函数
-   */
-  function getScore_XH(xh, callback) {
-    $.getJSON(GetScore_URL, {XH: xh}).done(function (data) {
-      callback(data);
-    });
-  }
+	/**
+	 * 获得学号为xh的同学的成绩
+	 * @param xh 要查看的同学的学号
+	 * @param callback 当获得成绩成功时调用的函数
+	 */
+	function getScore_XH(xh, callback) {
+		$.getJSON(GetScore_URL, {XH: xh}).done(function (data) {
+			callback(data);
+		});
+	}
 
-  /**
-   * 显示学号为学号的同学的成绩
-   * @param xh 学号
-   */
-  function showScore_xh(xh) {
-    getScore_XH(xh, function (data) {
-      Score_Con.html('');//清空原来的
-      Score_Con.append(toHTML('Score_TEMP', data));
-      $(HomeBtn).fadeIn();
-      goTop();
-    });
-  }
+	/**
+	 * 显示学号为学号的同学的成绩
+	 * @param xh 学号
+	 */
+	function showScore_xh(xh) {
+		getScore_XH(xh, function (data) {
+			Score_Con.html('');//清空原来的
+			Score_Con.append(toHTML('Score_TEMP', data));
+			$(HomeBtn).fadeIn();
+			goTop();
+		});
+	}
 
-  var GetScore_ClassID_URL = makeApiUrl('score/get_ClassId');
-  /**
-   *  查看一门课程的统计情况
-   */
-  function showScore_ClassID(classID) {
-    $.getJSON(GetScore_ClassID_URL, {classId: classID}).done(function (data) {
-      //求平均值,挂科数
-      var basic = {
-        pinshiScore: 0,
-        qimoScore: 0,
-        sumScore: 0,
-        guakeCount: 0,
-        rank: -1,
-        sumCount: data.length
-      };
-      $(data).each(function (index) {
-        basic.pinshiScore += this.pinshiScore;
-        basic.qimoScore += this.qimoScore;
-        basic.sumScore += this.sumScore;
+	var GetScore_ClassID_URL = makeApiUrl('score/get_ClassId');
+	/**
+	 *  查看一门课程的统计情况
+	 */
+	function showScore_ClassID(classID) {
+		$.getJSON(GetScore_ClassID_URL, {classId: classID}).done(function (data) {
+			//求平均值,挂科数
+			var basic = {
+				pinshiScore: 0,
+				qimoScore: 0,
+				sumScore: 0,
+				guakeCount: 0,
+				rank: -1,
+				sumCount: data.length
+			};
+			$(data).each(function (index) {
+				basic.pinshiScore += this.pinshiScore;
+				basic.qimoScore += this.qimoScore;
+				basic.sumScore += this.sumScore;
 
-        if (this.xh == myXH) {
-          basic.rank = index;
-        }
-        if (this.sumScore < 60) {
-          basic.guakeCount++;
-        }
-      });
-      basic.pinshiScore /= data.length;
-      basic.qimoScore /= data.length;
-      basic.sumScore /= data.length;
-      basic.rank = data.length - basic.rank;
-      basic.className = data[0].className;
-      Score_Con.html('');//清空原来的
-      Score_Con.append(toHTML('Basic_TEMP', basic));
-      Score_Con.append(toHTML('Score_TEMP', data));
-      $(HomeBtn).fadeIn();
-      goTop();
-    });
-  }
+				if (this.xh == myXH) {
+					basic.rank = index;
+				}
+				if (this.sumScore < 60) {
+					basic.guakeCount++;
+				}
+			});
+			basic.pinshiScore /= data.length;
+			basic.qimoScore /= data.length;
+			basic.sumScore /= data.length;
+			basic.rank = data.length - basic.rank;
+			basic.className = data[0].className;
+			Score_Con.html('');//清空原来的
+			Score_Con.append(toHTML('Basic_TEMP', basic));
+			Score_Con.append(toHTML('Score_TEMP', data));
+			$(HomeBtn).fadeIn();
+			goTop();
+		});
+	}
 
-  var GetPjxf_URL = makeApiUrl('pjxfScore/list');
-  /**
-   *查看该同学的平均学分成绩
-   */
-  function showPjxf() {
-    $.getJSON(GetPjxf_URL).done(function (data) {
-      var my = {};
-      var others = [];
-      $(data).each(function (index) {
-        var newOne = {};
-        newOne.xh = this.xh;
-        newOne.score = this.score;
-        newOne.rank = index + 1;
-        newOne.sumCount = data.length;
-        others.push(newOne);
-        if (this.xh == myXH) {
-          my = newOne;
-        }
-      });
-      Score_Con.html('');//清空原来的
-      Score_Con.append(toHTML('PJXF-self_TEMP', my));
-      Score_Con.append(toHTML('PJXF-one_TEMP', others));
-      $(HomeBtn).fadeIn();
-      goTop();
-    });
-  }
+	var GetPjxf_URL = makeApiUrl('pjxfScore/list');
+	/**
+	 *查看该同学的平均学分成绩
+	 */
+	function showPjxf() {
+		$.getJSON(GetPjxf_URL).done(function (data) {
+			var my = {};
+			var others = [];
+			$(data).each(function (index) {
+				var newOne = {};
+				newOne.xh = this.xh;
+				newOne.score = this.score;
+				newOne.rank = index + 1;
+				newOne.sumCount = data.length;
+				others.push(newOne);
+				if (this.xh == myXH) {
+					my = newOne;
+				}
+			});
+			Score_Con.html('');//清空原来的
+			Score_Con.append(toHTML('PJXF-self_TEMP', my));
+			Score_Con.append(toHTML('PJXF-one_TEMP', others));
+			$(HomeBtn).fadeIn();
+			goTop();
+		});
+	}
 
-  /**
-   * 退回到自己的成绩列表
-   */
-  function showHome() {
-    $(HomeBtn).hide();
-    Score_Con.html(TempHTML);
-    goTop();
-  }
+	/**
+	 * 退回到自己的成绩列表
+	 */
+	function showHome() {
+		$(HomeBtn).hide();
+		Score_Con.html(TempHTML);
+		goTop();
+	}
 
 </script>
 
@@ -184,234 +184,234 @@
 <div class="hidden">
 
 <script>
-  //60分以上绿色,以下红色
-  Handlebars.registerHelper('color', function (object) {
-    if (object >= 60) {
-      return 'green';
-    } else {
-      return 'red';
-    }
-  });
+	//60分以上绿色,以下红色
+	Handlebars.registerHelper('color', function (object) {
+		if (object >= 60) {
+			return 'green';
+		} else {
+			return 'red';
+		}
+	});
 </script>
 
 <!--一条成绩-->
 <div id="Score_TEMP">
-  {{#.}}
-  <div class="column">
-    <div class="ui stacked segment {{color sumScore}}" onclick="showScore_ClassID({{classNo}})">
+	{{#.}}
+	<div class="column">
+		<div class="ui stacked segment {{color sumScore}}" onclick="showScore_ClassID({{classNo}})">
 
-      <div class="ui statistic">
-        <div class="number">{{sumScore}}
-        </div>
-      </div>
+			<div class="ui statistic">
+				<div class="number">{{sumScore}}
+				</div>
+			</div>
 
-      <div class="ui relaxed divided list">
+			<div class="ui relaxed divided list">
 
-        <div class="item">
-          <i class="book icon circular inverted"></i>
+				<div class="item">
+					<i class="book icon circular inverted"></i>
 
-          <div class="content">
-            <a class="header">{{className}}</a>
+					<div class="content">
+						<a class="header">{{className}}</a>
 
-            <div class="description">名称
-            </div>
-          </div>
-        </div>
+						<div class="description">名称
+						</div>
+					</div>
+				</div>
 
-        <div class="item">
-          <i class="screenshot icon circular inverted"></i>
+				<div class="item">
+					<i class="screenshot icon circular inverted"></i>
 
-          <div class="content">
-            <a class="header">{{qimoScore}}</a>
+					<div class="content">
+						<a class="header">{{qimoScore}}</a>
 
-            <div class="description">期末
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <i class="tint icon circular inverted"></i>
+						<div class="description">期末
+						</div>
+					</div>
+				</div>
+				<div class="item">
+					<i class="tint icon circular inverted"></i>
 
-          <div class="content">
-            <a class="header">{{pinshiScore}}</a>
+					<div class="content">
+						<a class="header">{{pinshiScore}}</a>
 
-            <div class="description">平时
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <i class="star icon circular inverted"></i>
+						<div class="description">平时
+						</div>
+					</div>
+				</div>
+				<div class="item">
+					<i class="star icon circular inverted"></i>
 
-          <div class="content">
-            <a class="header">{{xuefen}}</a>
+					<div class="content">
+						<a class="header">{{xuefen}}</a>
 
-            <div class="description">学分
-            </div>
-          </div>
-        </div>
-      </div>
+						<div class="description">学分
+						</div>
+					</div>
+				</div>
+			</div>
 
-    </div>
-  </div>
+		</div>
+	</div>
 
-  {{/.}}
+	{{/.}}
 </div>
 
 <!--一个同学的成绩的基本统计信息-->
 <div id="Basic_TEMP">
-  {{#.}}
-  <div class="column">
-    <div class="ui stacked segment green inverted">
+	{{#.}}
+	<div class="column">
+		<div class="ui stacked segment green inverted">
 
-      <div class="ui statistic">
-        <div class="ui header center aligned">
-          <div class="content">{{className}}</div>
-          <div class="sub header">报表</div>
-        </div>
-      </div>
+			<div class="ui statistic">
+				<div class="ui header center aligned">
+					<div class="content">{{className}}</div>
+					<div class="sub header">报表</div>
+				</div>
+			</div>
 
-      <div class="ui relaxed divided list">
+			<div class="ui relaxed divided list">
 
-        <div class="item">
-          <i class="building icon sort order ascending inverted circular"></i>
+				<div class="item">
+					<i class="building icon sort order ascending inverted circular"></i>
 
-          <div class="content">
-            <a class="header">{{rank}}/{{sumCount}}</a>
+					<div class="content">
+						<a class="header">{{rank}}/{{sumCount}}</a>
 
-            <div class="description">你的排名
-            </div>
-          </div>
-        </div>
+						<div class="description">你的排名
+						</div>
+					</div>
+				</div>
 
-        <div class="item">
-          <i class="building icon circular inverted"></i>
+				<div class="item">
+					<i class="building icon circular inverted"></i>
 
-          <div class="content">
-            <a class="header">{{sumScore}}</a>
+					<div class="content">
+						<a class="header">{{sumScore}}</a>
 
-            <div class="description">总评平均
-            </div>
-          </div>
-        </div>
+						<div class="description">总评平均
+						</div>
+					</div>
+				</div>
 
-        <div class="item">
-          <i class="screenshot icon circular inverted"></i>
+				<div class="item">
+					<i class="screenshot icon circular inverted"></i>
 
-          <div class="content">
-            <a class="header">{{qimoScore}}</a>
+					<div class="content">
+						<a class="header">{{qimoScore}}</a>
 
-            <div class="description">期末平均
-            </div>
-          </div>
-        </div>
+						<div class="description">期末平均
+						</div>
+					</div>
+				</div>
 
-        <div class="item">
-          <i class="frown icon circular inverted"></i>
+				<div class="item">
+					<i class="frown icon circular inverted"></i>
 
-          <div class="content">
-            <a class="header">{{guakeCount}}</a>
+					<div class="content">
+						<a class="header">{{guakeCount}}</a>
 
-            <div class="description">有多少同学跪
-            </div>
-          </div>
-        </div>
+						<div class="description">有多少同学跪
+						</div>
+					</div>
+				</div>
 
-        <div class="item">
-          <i class="tint icon circular inverted"></i>
+				<div class="item">
+					<i class="tint icon circular inverted"></i>
 
-          <div class="content">
-            <a class="header">{{pinshiScore}}</a>
+					<div class="content">
+						<a class="header">{{pinshiScore}}</a>
 
-            <div class="description">平时平均
-            </div>
-          </div>
+						<div class="description">平时平均
+						</div>
+					</div>
 
-        </div>
+				</div>
 
-      </div>
+			</div>
 
-    </div>
-    {{/.}}
-  </div>
+		</div>
+		{{/.}}
+	</div>
 </div>
 
 
 <!--一条平均学分成绩-自己的-->
 <div id="PJXF-self_TEMP">
-  {{#.}}
-  <div class="column">
-    <div class="ui stacked segment green inverted">
+	{{#.}}
+	<div class="column">
+		<div class="ui stacked segment green inverted">
 
-      <div class="ui statistic">
-        <div class="number">{{score}}</div>
-        <div class="text center aligned">平均学分绩</div>
-      </div>
+			<div class="ui statistic">
+				<div class="number">{{score}}</div>
+				<div class="text center aligned">平均学分绩</div>
+			</div>
 
-      <div class="ui relaxed divided list">
+			<div class="ui relaxed divided list">
 
-        <div class="item">
-          <i class="building icon sort order ascending inverted circular"></i>
+				<div class="item">
+					<i class="building icon sort order ascending inverted circular"></i>
 
-          <div class="content">
-            <a class="header">{{rank}}/{{sumCount}}</a>
+					<div class="content">
+						<a class="header">{{rank}}/{{sumCount}}</a>
 
-            <div class="description">排名
-            </div>
-          </div>
-        </div>
+						<div class="description">排名
+						</div>
+					</div>
+				</div>
 
-        <div class="item">
-          <i class="building icon user inverted circular"></i>
+				<div class="item">
+					<i class="building icon user inverted circular"></i>
 
-          <div class="content">
-            <a class="header">{{xh}}</a>
+					<div class="content">
+						<a class="header">{{xh}}</a>
 
-            <div class="description">学号
-            </div>
-          </div>
-        </div>
+						<div class="description">学号
+						</div>
+					</div>
+				</div>
 
-      </div>
+			</div>
 
-    </div>
-  </div>
-  {{/.}}
+		</div>
+	</div>
+	{{/.}}
 </div>
 
 <!--一条平均学分成绩-其他同学的-->
 <div id="PJXF-one_TEMP">
-  {{#.}}
-  <div class="column">
-    <div class="ui stacked segment" onclick="showScore_xh({{xh}})">
+	{{#.}}
+	<div class="column">
+		<div class="ui stacked segment" onclick="showScore_xh({{xh}})">
 
-      <div class="ui relaxed divided list">
+			<div class="ui relaxed divided list">
 
-        <div class="item">
-          <i class="building icon sort order ascending inverted circular"></i>
+				<div class="item">
+					<i class="building icon sort order ascending inverted circular"></i>
 
-          <div class="content">
-            <a class="header">{{rank}}/{{sumCount}}</a>
+					<div class="content">
+						<a class="header">{{rank}}/{{sumCount}}</a>
 
-            <div class="description">排名
-            </div>
-          </div>
-        </div>
+						<div class="description">排名
+						</div>
+					</div>
+				</div>
 
-        <div class="item">
-          <i class="screenshot icon circular inverted"></i>
+				<div class="item">
+					<i class="screenshot icon circular inverted"></i>
 
-          <div class="content">
-            <a class="header">{{score}}</a>
+					<div class="content">
+						<a class="header">{{score}}</a>
 
-            <div class="description">分数
-            </div>
-          </div>
-        </div>
+						<div class="description">分数
+						</div>
+					</div>
+				</div>
 
-      </div>
+			</div>
 
-    </div>
-  </div>
-  {{/.}}
+		</div>
+	</div>
+	{{/.}}
 </div>
 
 </div>
