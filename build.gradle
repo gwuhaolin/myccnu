@@ -31,7 +31,7 @@ dependencies() {
 	compile 'com.qiniu:sdk:6.1.2'
 
 	//Servlet3.0
-	compile 'javax.servlet:servlet-api:3.0-alpha-1'
+	providedCompile 'javax.servlet:servlet-api:3.0-alpha-1'
 
 	//SLF4j
 	compile 'org.slf4j:slf4j-simple:1.6.2'
@@ -45,5 +45,5 @@ dependencies() {
 //设置war打包的目标路径为当前工程下,输出名为ROOT.war
 war {
 	archiveName = 'ROOT.war'
-	destinationDir = new File("/");
+	destinationDir = new File("./");
 }
