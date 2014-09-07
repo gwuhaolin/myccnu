@@ -45,13 +45,13 @@ public class ManageCET {
 	 * 要查询的CET考试的时间,用于从学校抓取数据时提交的数据
 	 * 会按照顺序依次抓取,把优先的写在前面
 	 */
-	private static final String[] DATE = {"201406", "201312"};
+	public static final String[] DATE = {"201406", "201312"};
 
 	/**
 	 * 查询时的所有的等级
 	 * 会按照顺序依次抓取,把优先的写在前面
 	 */
-	private static final String[] GRADE = {"6", "4"};
+	public static final String[] GRADE = {"6", "4"};
 
 	/**
 	 * 从学校的网站抓取成绩
@@ -95,7 +95,7 @@ public class ManageCET {
 			log.info("成功抓取{}的CET成绩={}", IdNumber, sum);
 			return new Cet46Entity(sum, listen, read, essay, grade);
 		} catch (Exception e) {
-			log.error("抓取CET失败" + IdNumber);
+			log.info("抓取CET失败-身份证:{}-{}", IdNumber, date + "-" + grade);
 //			log.error(Arrays.toString(e.getStackTrace()));
 			return null;
 		}

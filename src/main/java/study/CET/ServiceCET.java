@@ -35,8 +35,14 @@ public class ServiceCET {
 		HibernateUtil.closeSession(session);
 		int count = 0;
 		for (StudentAllInfoEntity one : allInfoEntities) {
-			if (ManageCET.get(one.getXh()) != null) {
-				count++;
+			for (String grade : ManageCET.GRADE) {
+				for (String date : ManageCET.DATE) {
+					Cet46Entity cet46Entity = ManageCET.spider(grade, one.getIdNumber(), date);
+					if (cet46Entity != null) {
+						HibernateUtil.addOrUpdateEntity(cet46Entity);
+						count++;
+					}
+				}
 			}
 		}
 		return count;
