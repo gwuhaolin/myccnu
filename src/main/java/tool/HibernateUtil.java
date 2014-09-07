@@ -60,7 +60,9 @@ public class HibernateUtil {
 	 */
 	public static boolean addEntitys(List entitys) {
 		Session session = getSession();
-		entitys.forEach(session::save);
+		for (Object one : entitys) {
+			session.save(one);
+		}
 		HibernateUtil.closeSession(session);
 		return true;
 	}
@@ -80,7 +82,9 @@ public class HibernateUtil {
 	 */
 	public static boolean addOrUpdateEntitys(List entitys) {
 		Session session = getSession();
-		entitys.forEach(session::saveOrUpdate);
+		for (Object one : entitys) {
+			session.saveOrUpdate(one);
+		}
 		closeSession(session);
 		return true;
 	}
