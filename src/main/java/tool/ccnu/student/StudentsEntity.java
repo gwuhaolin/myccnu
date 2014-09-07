@@ -10,7 +10,7 @@ import javax.persistence.*;
  * :以这个为信息中心
  */
 @Entity
-@Table(name = "Students", schema = "", catalog = "weixin")
+@Table(name = "students", schema = "", catalog = "weixin")
 public class StudentsEntity {
 	private String xh;
 	private String name;

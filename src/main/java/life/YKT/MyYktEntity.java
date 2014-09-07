@@ -9,7 +9,7 @@ import javax.persistence.*;
  * :
  */
 @Entity
-@Table(name = "MyYKT", schema = "", catalog = "weixin")
+@Table(name = "myykt", schema = "", catalog = "weixin")
 @IdClass(MyYktEntityPK.class)
 public class MyYktEntity {
 	private String time;//发生时间

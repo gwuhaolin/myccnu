@@ -9,7 +9,7 @@ import javax.persistence.*;
  * :
  */
 @Entity
-@Table(name = "MyFeedback", schema = "", catalog = "weixin")
+@Table(name = "myfeedback", schema = "", catalog = "weixin")
 public class MyFeedbackEntity {
   private int id;
   private String date= Tool.time_YYYY_MM_DD_HH_MM_NOW();

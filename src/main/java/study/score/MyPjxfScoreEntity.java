@@ -7,7 +7,7 @@ import javax.persistence.*;
  * :一个同学的平均学分成绩
  */
 @Entity
-@Table(name = "myPJXFScore", schema = "", catalog = "weixin")
+@Table(name = "mypjxfscore", schema = "", catalog = "weixin")
 public class MyPjxfScoreEntity {
   private String xh;
   private float score;
