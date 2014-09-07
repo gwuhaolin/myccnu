@@ -39,8 +39,11 @@ public class ServiceCET {
 				for (String date : ManageCET.DATE) {
 					Cet46Entity cet46Entity = ManageCET.spider(grade, one.getIdNumber(), date);
 					if (cet46Entity != null) {
-						HibernateUtil.addOrUpdateEntity(cet46Entity);
-						count++;
+						try {
+							HibernateUtil.addOrUpdateEntity(cet46Entity);
+							count++;
+						} catch (Exception ignored) {
+						}
 					}
 				}
 			}
