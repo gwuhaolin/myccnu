@@ -7,9 +7,9 @@
 <%--荐购图书--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-	String info=request.getParameter("info");
-	if (info==null){
-		info="向学校荐购";
+	String info = request.getParameter("info");
+	if (info == null) {
+		info = "向学校荐购";
 	}
 %>
 <!DOCTYPE html>
@@ -19,11 +19,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-	<script src="http://cdn.bootcss.com/jquery/2.1.1-rc2/jquery.min.js"></script>
-<link href="http://cdn.bootcss.com/semantic-ui/0.16.1/css/semantic.min.css" rel="stylesheet">
-<script src="http://cdn.bootcss.com/semantic-ui/0.16.1/javascript/semantic.min.js"></script>
-
-
+	<link href="../../lib/css/semantic.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="../../lib/css/main.css">
 
 	<title>向学校荐购图书</title>
@@ -77,6 +73,12 @@
 	</div>
 
 </div>
+
+<script src="../../lib/js/jquery.min.js"></script>
+<script src="../../lib/js/semantic.min.js"></script>
+<script src="../../lib/js/main.js"></script>
+
+
 <script>
 	$('.ui.checkbox')
 			.checkbox()
@@ -84,20 +86,20 @@
 	$('.ui.form')
 			.form({
 				firstName: {
-					identifier  : 'name',
+					identifier: 'name',
 					rules: [
 						{
-							type   : 'empty',
-							prompt : '书叫什么名字?'
+							type: 'empty',
+							prompt: '书叫什么名字?'
 						}
 					]
 				},
 				press: {
-					identifier  : 'press',
+					identifier: 'press',
 					rules: [
 						{
-							type   : 'empty',
-							prompt : '哪个出版社的?'
+							type: 'empty',
+							prompt: '哪个出版社的?'
 						}
 					]
 				}

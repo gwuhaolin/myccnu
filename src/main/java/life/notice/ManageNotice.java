@@ -709,7 +709,7 @@ public class ManageNotice {
 					}
 				}
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return re;
