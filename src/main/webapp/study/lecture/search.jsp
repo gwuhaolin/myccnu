@@ -1,4 +1,3 @@
-<%@ page import="tool.R" %>
 <%@ page import="tool.Tool" %>
 <%--通知列表--%>
 <%--
@@ -14,9 +13,10 @@
 	<meta charset="utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+	<script src="http://cdn.bootcss.com/jquery/2.1.1-rc2/jquery.min.js"></script>
 	<link href="http://cdn.bootcss.com/semantic-ui/0.16.1/css/semantic.min.css" rel="stylesheet">
 	<script src="http://cdn.bootcss.com/semantic-ui/0.16.1/javascript/semantic.min.js"></script>
-	<script src="http://cdn.bootcss.com/jquery/2.1.1-rc2/jquery.min.js"></script>
+
 	<link rel="stylesheet" type="text/css" href="../../lib/css/main.css">
 	<script src="../../lib/js/main.js"></script>
 	<title>搜索结果</title>
@@ -27,7 +27,7 @@
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		String want = request.getParameter("want");
-		int target= Integer.parseInt(request.getParameter("target"));
+		int target = Integer.parseInt(request.getParameter("target"));
 	%>
 	<%--默认拿出前changeCount通知--%>
 	<jsp:include page="GetAJAXServlet.jsp">

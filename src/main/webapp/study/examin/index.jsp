@@ -1,7 +1,7 @@
-<%@ page import="java.util.List" %>
-<%@ page import="tool.Tool" %>
-<%@ page import="study.examin.OneExamin" %>
 <%@ page import="study.examin.ManageExamin" %>
+<%@ page import="study.examin.OneExamin" %>
+<%@ page import="tool.Tool" %>
+<%@ page import="java.util.List" %>
 <%--
   Created by Intellij IDEA.
   User: WuHaoLin
@@ -16,9 +16,10 @@
 	<meta charset="utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+	<script src="http://cdn.bootcss.com/jquery/2.1.1-rc2/jquery.min.js"></script>
 	<link href="http://cdn.bootcss.com/semantic-ui/0.16.1/css/semantic.min.css" rel="stylesheet">
 	<script src="http://cdn.bootcss.com/semantic-ui/0.16.1/javascript/semantic.min.js"></script>
-	<script src="http://cdn.bootcss.com/jquery/2.1.1-rc2/jquery.min.js"></script>
+
 	<link rel="stylesheet" type="text/css" href="../../lib/css/main.css">
 	<script src="../../lib/js/main.js"></script>
 	<title>考试时间查询</title>
