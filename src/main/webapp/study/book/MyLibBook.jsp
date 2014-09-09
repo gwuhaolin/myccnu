@@ -1,6 +1,8 @@
 <%--我的图书馆--%>
 <%@ page import="study.book.MyLib" %>
+<%@ page import="tool.NetworkException" %>
 <%@ page import="tool.Tool" %>
+<%@ page import="tool.ValidateException" %>
 <%@ page import="java.util.List" %>
 <%--
   Created by Intellij IDEA.
@@ -9,7 +11,7 @@
   Time: 下午12:11
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page errorPage="../../tool/error/index.jsp" %>
+<%--<%@ page errorPage="../../tool/error/index.jsp" %>--%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,17 +25,26 @@
 </head>
 <body>
 <%
-	boolean passwordIsOk = false;
-	List<MyLib.MyLibBook> myLibBooks;
+	List<MyLib.MyLibBook> myLibBooks = null;
 	String XHMM[] = Tool.getXHMMfromCookie(request);
 	String tempMM = request.getParameter("MM");
 	if (tempMM != null) {
 		XHMM[1] = tempMM;
 	}
 	if (Tool.XHMMisOK(XHMM)) {
-		myLibBooks = MyLib.get(XHMM[0], XHMM[1]);
-		if (myLibBooks == null) {
-			passwordIsOk = MyLib.passwordIsOk(XHMM[0], XHMM[1]);
+		try {
+			myLibBooks = MyLib.get(XHMM[0], XHMM[1]);
+		} catch (ValidateException e) {//密码错误
+			if (!XHMM[1].equals("123456")) {//试试123456可以不?
+				response.sendRedirect("MyLibBook.jsp?MM=123456");
+				return;
+			} else if (XHMM[1].equals("123456")) {//123456不对,你告诉我的也不对,那就是你真的不对了!!
+				Tool.jspWriteJSForHTML_shouldBind(response, "密码错误!");
+				return;
+			}
+		} catch (NetworkException e) {//网络异常
+			Tool.jspWriteJSForHTML(response, "让我歇歇,等下再来试试");
+			return;
 		}
 	} else {//去绑定
 		Tool.jspWriteJSForHTML_shouldBind(response, "");
@@ -54,7 +65,7 @@
 
 	<%--已经借图书列表--%>
 	<%
-		if (myLibBooks != null) {//密码正确而且接了书
+		if (myLibBooks.size() > 1) {//密码正确而且接了书
 	%>
 	<%
 		for (int i = 1; i < myLibBooks.size(); i++) {
@@ -111,19 +122,13 @@
 		}
 	%>
 	<%
-	} else if (passwordIsOk) {//没有借书
+	} else {//没有借书
 	%>
 	<script>
-		alert('你目前还没有在接图书哦！也有可能是网络繁忙，等下再试试呗！');
+		alert('你目前还没有在接图书');
 		window.location = 'index.jsp';
 	</script>
 	<%
-		} else if (!XHMM[1].equals("123456")) {//试试123456可以不?
-			response.sendRedirect("MyLibBook.jsp?MM=123456");
-			return;
-		} else if (XHMM[1].equals("123456")) {//123456不对,你告诉我的也不对,那就是你真的不对了!!
-			Tool.jspWriteJSForHTML_shouldBind(response, "密码错误!");
-			return;
 		}
 	%>
 

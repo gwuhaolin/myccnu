@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import study.CET.ManageCET;
 import tool.NetworkException;
 import tool.R;
+import tool.ValidateException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,9 +63,9 @@ public class MyLib {
 	 *
 	 * @param XH 学号
 	 * @param MM 密码
-	 * @return 如果查询失败返回数量为1的
+	 * @return 如果没有借书返回的数量1,//返回的第0个元素的title值等于获得的cookies值,用于续借时,不可能返回null
 	 */
-	public static List<MyLibBook> get(String XH, String MM) throws NetworkException {
+	public static List<MyLibBook> get(String XH, String MM) throws NetworkException, ValidateException {
 		String cookie = getCookie(XH, MM);
 		Connection connection = Jsoup.connect(URL_MyLibBooks);
 		connection.userAgent(R.USER_AGENT);
@@ -76,9 +77,19 @@ public class MyLib {
 			log.error(Arrays.toString(e.getStackTrace()));
 			throw new NetworkException("学校图书查询系统繁忙");
 		}
-		Elements trs = document.getElementsByClass("table_line").first().getElementsByTag("tr");
+
+		String location = document.location();
+		if(!location.equals("http://202.114.34.15/reader/book_lst.php")){
+			throw new  ValidateException("账号密码错误");
+		}
+
 		List<MyLibBook> re = new ArrayList<>();
 		re.add(new MyLibBook().setTitle(cookie));//返回的第0个元素的title值等于获得的cookies值,用于续借时
+		Element main_con=document.getElementsByClass("table_line").first();
+		if (main_con==null){
+			return re;
+		}
+		Elements trs = main_con.getElementsByTag("tr");
 		try {
 			for (int i = 1; i < trs.size(); i++) {
 				MyLibBook myLibBook = new MyLibBook();
