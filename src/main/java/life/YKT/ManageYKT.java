@@ -129,7 +129,13 @@ public class ManageYKT {
 			log.error(Arrays.toString(e.getStackTrace()));
 			return get(Type_Detail, XH, MaxSize);
 		}
-		Elements trs = document.getElementsByClass("baseTable").first().getElementsByTag("tr");
+		Elements trs;
+		try {
+			trs = document.getElementsByClass("baseTable").first().getElementsByTag("tr");
+		} catch (Exception e) {
+			log.error(Arrays.toString(e.getStackTrace()));
+			return get(Type_Detail, XH, MaxSize);
+		}
 		List<MyYktEntity> re = new LinkedList<>();
 		//解析数据
 		for (int i = 1; i < trs.size(); i++) {
@@ -183,7 +189,13 @@ public class ManageYKT {
 			log.error(Arrays.toString(e.getStackTrace()));
 			return get(Type_HelpMoney, XH, MaxSize);
 		}
-		Elements trs = document.getElementsByClass("baseTable").first().getElementsByTag("tr");
+		Elements trs;
+		try {
+			trs = document.getElementsByClass("baseTable").first().getElementsByTag("tr");
+		}catch (Exception e){
+			log.error(Arrays.toString(e.getStackTrace()));
+			return get(Type_HelpMoney, XH, MaxSize);
+		}
 		List<MyYktEntity> re = new LinkedList<>();
 		//解析数据
 		for (int i = 1; i < trs.size(); i++) {
@@ -236,7 +248,13 @@ public class ManageYKT {
 			log.error(Arrays.toString(e.getStackTrace()));
 			return get(Type_KaoQin, XH, MaxSize);
 		}
-		Elements trs = document.getElementsByClass("baseTable").first().getElementsByTag("tr");
+		Elements trs;
+		try {
+			trs = document.getElementsByClass("baseTable").first().getElementsByTag("tr");
+		}catch (Exception e){
+			log.error(Arrays.toString(e.getStackTrace()));
+			return get(Type_KaoQin, XH, MaxSize);
+		}
 		List<MyYktEntity> re = new LinkedList<>();
 		//解析数据
 		for (int i = 1; i < trs.size(); i++) {

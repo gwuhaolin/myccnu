@@ -20,7 +20,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 	<link href="../../lib/css/semantic.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="../../lib/css/main.css">
-
+	<script src="../../lib/js/jquery.min.js"></script>
+	<script src="../../lib/js/semantic.min.js"></script>
+	<script src="../../lib/js/main.js"></script>
 	<title>补助明细</title>
 </head>
 <body>
@@ -97,9 +99,6 @@
 	%>
 </div>
 
-<script src="../../lib/js/jquery.min.js"></script>
-<script src="../../lib/js/semantic.min.js"></script>
-<script src="../../lib/js/main.js"></script>
 
 </body>
 </html>
