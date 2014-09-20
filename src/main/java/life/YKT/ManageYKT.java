@@ -16,7 +16,6 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tool.*;
-import tool.ccnu.CCNUPortal;
 
 import java.io.IOException;
 import java.util.*;
@@ -192,7 +191,7 @@ public class ManageYKT {
 		Elements trs;
 		try {
 			trs = document.getElementsByClass("baseTable").first().getElementsByTag("tr");
-		}catch (Exception e){
+		} catch (Exception e) {
 			log.error(Arrays.toString(e.getStackTrace()));
 			return get(Type_HelpMoney, XH, MaxSize);
 		}
@@ -251,7 +250,7 @@ public class ManageYKT {
 		Elements trs;
 		try {
 			trs = document.getElementsByClass("baseTable").first().getElementsByTag("tr");
-		}catch (Exception e){
+		} catch (Exception e) {
 			log.error(Arrays.toString(e.getStackTrace()));
 			return get(Type_KaoQin, XH, MaxSize);
 		}
@@ -341,19 +340,30 @@ public class ManageYKT {
 	 * @throws tool.ValidateException 身份验证失败
 	 */
 	public static Map<String, String> getCookies(String XH, String MM) throws NetworkException, ValidateException {
-		Map<String, String> CCNUPORATLcookies = CCNUPortal.getCookie(XH, MM);
-		Connection connection = Jsoup.connect("http://portal.ccnu.edu.cn/roamingAction.do?appId=ECARD");
-		connection.cookies(CCNUPORATLcookies);
-		connection.userAgent(R.USER_AGENT);
-		connection.timeout(R.ConnectTimeout);
+		Connection connection = Jsoup.connect("http://192.168.44.7:10000/sisms/index.php/login/getimgcode");
+		connection.ignoreContentType(true);
+		Map<String, String> cookies;
 		try {
 			connection.get();
+			//获得会话cookies
+			cookies = connection.response().cookies();
+			//获得验证码
+			byte[] img = connection.response().bodyAsBytes();
+			String result = YKTORC.orc(img);
+			//登入
+			connection = Jsoup.connect("http://192.168.44.7:10000/sisms/index.php/login/dologin");
+			connection.cookies(cookies);
+			connection.data("username", XH);
+			connection.data("password", MM);
+			connection.data("usertype", "1");
+			connection.data("schoolcode", "001");
+			connection.data("imgcode", result);
+			connection.post();
+			return cookies;
 		} catch (IOException e) {
-			log.error(e.getMessage());
-			log.error(connection.response().toString());
-			throw new NetworkException("信息门户服务器繁忙");
+			e.printStackTrace();
+			throw new NetworkException("一卡通服务器繁忙");
 		}
-		return connection.response().cookies();
 	}
 
 	/**

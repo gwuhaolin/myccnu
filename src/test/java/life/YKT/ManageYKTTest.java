@@ -1,6 +1,7 @@
 package life.YKT;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -8,9 +9,17 @@ import java.util.Map;
 
 public class ManageYKTTest {
 
-	private final String XH = "2013214335";
-	private final String MM = "011109";
+	private final String XH = "2012210817";
+	private final String MM = "930820";
 	private final int TIMES = 10;
+
+	@Before
+	public void setUp() throws Exception {
+		//设置代理
+		System.setProperty("http.proxySet", "true");
+		System.setProperty("http.proxyHost", "my.ccnuyouth.com");
+		System.setProperty("http.proxyPort", "8888");
+	}
 
 	@Test
 	public void testGetRemain() throws Exception {
@@ -24,6 +33,7 @@ public class ManageYKTTest {
 	public void testGetDetail() throws Exception {
 		for (int i = 0; i < TIMES; i++) {
 			List<MyYktEntity> re = ManageYKT.spiderDetail(XH, MM);
+			System.out.println(re);
 			Assert.assertTrue(re.size() > 0);
 		}
 	}
