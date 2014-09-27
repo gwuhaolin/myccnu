@@ -1,5 +1,6 @@
 package study.CET;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.io.Serializable;
 public class Cet46EntityPK implements Serializable {
 	private String grade;
 	private String xh;
+	private String date;
 
 	@Column(name = "grade", nullable = false, insertable = true, updatable = true, length = 10)
 	@Id
@@ -50,5 +52,16 @@ public class Cet46EntityPK implements Serializable {
 		int result = grade != null ? grade.hashCode() : 0;
 		result = 31 * result + (xh != null ? xh.hashCode() : 0);
 		return result;
+	}
+
+	@Column(name = "date", nullable = false, insertable = true, updatable = true, length = 255)
+	@Basic
+	@Id
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
 	}
 }
