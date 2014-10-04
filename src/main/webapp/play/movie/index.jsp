@@ -22,20 +22,20 @@
 	</div>
 	<div class="column">
 		<div class="ui header icon center aligned huge">
-			<a href="list.jsp?target=<%=ManageMovie.Target_LTDYC%>">
-				<i class="icon video circular inverted red"></i>
-			</a>
-
-			<div class="ui label circular red">露天电影场</div>
-		</div>
-	</div>
-	<div class="column">
-		<div class="ui header icon center aligned huge">
 			<a href="list.jsp?target=<%=ManageMovie.Target_HDQNJC%>">
 				<i class="icon facetime video circular inverted green"></i>
 			</a>
 
 			<div class="ui label circular green">华大青年剧场</div>
+		</div>
+	</div>
+	<div class="column">
+		<div class="ui header icon center aligned huge">
+			<a href="list.jsp?target=<%=ManageMovie.Target_LTDYC%>">
+				<i class="icon video circular inverted red"></i>
+			</a>
+
+			<div class="ui label circular red">露天电影场</div>
 		</div>
 	</div>
 	<div class="column">
