@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 import tool.NetworkException;
 import tool.R;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -57,13 +56,13 @@ public class SearchBook {
 				.data("strText", want)
 				.data("page", page);//分页查询
 		Elements books;
+		List<MyBook> re = new LinkedList<>();
 		try {
 			books = connection.get().getElementById("search_book_list").getElementsByTag("li");
-		} catch (IOException e) {
+		} catch (Exception e) {
 			log.error(Arrays.toString(e.getStackTrace()));
-			throw new NetworkException("学校图书查询系统繁忙");
+			return re;
 		}
-		List<MyBook> re = new LinkedList<>();
 		try {
 			for (Element li : books) {
 				MyBook book = new MyBook();
