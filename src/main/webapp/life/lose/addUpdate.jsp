@@ -45,7 +45,7 @@
 </div>
 
 
-<%--搜索 注释--%>
+<%--搜索--%>
 <form action="searchResult.jsp" method="post" style="margin: 0;position: fixed;top: 0;z-index: 100;opacity: 0.8">
 	<input type="hidden"  name="type" value="<%=ManageLose.TYPE_Lose%>">
 	<div class="input-group">
