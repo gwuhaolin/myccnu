@@ -42,6 +42,7 @@ dependencies() {
 
 }
 
+
 //设置war打包的目标路径为当前工程下,输出名为ROOT.war
 war {
 	archiveName = 'ROOT.war'
