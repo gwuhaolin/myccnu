@@ -58,11 +58,10 @@ public class ManageLose {
 	 * @param XH
 	 * @return
 	 */
-	public static List<MyLoseEntity> search_page(int from, String want, byte type) {
+	public static List<MyLoseEntity> search_page(int from, String want) {
 		Session session = HibernateUtil.getSession();
-		Query query = session.createQuery("from MyLoseEntity where myDes like ? and myType=? order by myState asc ,id desc ");
+		Query query = session.createQuery("from MyLoseEntity where myDes like ? order by myState asc ,id desc ");
 		query.setString(0,"%"+want+"%");
-		query.setByte(1,type);
 		query.setFirstResult(from);
 		query.setMaxResults(R.ChangeCount);
 		List<MyLoseEntity> re=query.list();

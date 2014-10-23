@@ -124,16 +124,7 @@
 			<%
 				}
 			%>
-
 		</div>
-
-		<!--评论-->
-		<%--<div class="ui button icon circular inverted teal mini" onclick="toggleComment(this)"><i--%>
-				<%--class="icon comment"></i></div>--%>
-		<%--<!--评论框-->--%>
-		<%--<iframe src="comment.jsp?id=<%=one.getId()%>">--%>
-		<%--</iframe>--%>
-
 	</div>
 </div>
 <%

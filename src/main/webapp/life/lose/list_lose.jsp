@@ -12,10 +12,10 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link href="../../lib/css/bootstrap.min.css" rel="stylesheet">
-	<script src="../../lib/js/jquery.min.js"></script>
-	<script src="../../lib/js/bootstrap.min.js"></script>
+    <script src="../../lib/js/jquery.min.js"></script>
+	<script src="../../lib/js/semantic.min.js"></script>
 	<link href="../../lib/css/main.css" rel='stylesheet'>
+	<link href="../../lib/css/semantic.min.css" rel="stylesheet">
 	<script src="../../lib/js/main.js"></script>
 	<title>失物平台</title>
 	<script>
@@ -41,27 +41,6 @@
 				}
 			});
 		}
-
-		//加载评论框
-		function addComment(the) {
-			var id = $(the).attr('id');
-			var url = 'comment.jsp?id=' + id;
-			var Commnet = $(the).children('.comment').first();
-			$(Commnet).attr('src', url);
-			$(Commnet).toggle();
-		}
-
-		//设置该失误记录为完成
-		function completeOne(btn){
-			var id=$(btn).parent().parent().attr('id');
-			$.ajax({
-				url: "CompleteOneServlet.jsp",
-				data: {id:id},
-				contentType: "application/x-www-form-urlencoded; charset=utf-8"
-			}).done(function (data) {
-				$(btn).text(data);
-			});
-		}
 	</script>
 </head>
 <body>
@@ -73,21 +52,12 @@
 		<jsp:param name="type" value="<%=ManageLose.TYPE_Lose%>"/>
 	</jsp:include>
 	<%--ajax 加载更多--%>
-	<button class="form-control btn-info input-lg" onclick="ajaxMore(this)" begin="0">更多</button>
+	<button class="ui fluid button" onclick="ajaxMore(this)" begin="0">更多</button>
 	<br><br>
 </div>
 
-<%--搜索--%>
-<form action="searchResult.jsp" method="post" style="margin: 0;position: fixed;top: 0;z-index: 100;opacity: 0.8">
-	<input type="hidden"   name="type" value="<%=ManageLose.TYPE_Lose%>">
-	<div class="input-group">
-		<input type="text" name="want" class="form-control" placeholder="输入关键字在失物平台里搜索">
-		<span class="input-group-btn"><input type="submit" class="btn btn-info" value="GO"></span>
-	</div>
-</form>
-
 <%--链接--%>
-<%@ include file="link.jsp"%>
+<%@ include file="link.jsp" %>
 
 
 </body>

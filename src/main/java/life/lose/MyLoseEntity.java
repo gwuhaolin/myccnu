@@ -149,15 +149,6 @@ public class MyLoseEntity {
 		return this.myDate.equals(Tool.time_YYYY_MM_DD());
 	}
 
-	public String bootstapStateString(){
-		if (this.myState==ManageLose.STATE_Finding){
-			return "btn-warning";
-		}else if (this.myState==ManageLose.STATE_Complete){
-			return "btn-success";
-		}
-		return "";
-	}
-
 	public String stateString(){
 		if (this.myState==ManageLose.STATE_Finding){
 			return "正在招领中...";
