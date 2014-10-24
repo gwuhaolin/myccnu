@@ -1,17 +1,17 @@
 <%@ page import="life.lose.ManageLose" %>
 <%--链接--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="ui four item fluid menu" style="position: fixed;bottom: 0;z-index: 50;margin: 0">
-	<div class="ui item" style="background-color: red">
+<div class="four fluid ui buttons" style="position: fixed;bottom: 0;z-index: 50;margin: 0">
+	<div class="ui button" style="background-color: red">
         <a href="list_lose.jsp">大 家 掉 了</a>
 	</div>
-	<div class="ui item" style="background-color: red">
+	<div class="ui button" style="background-color: red">
         <a href="addLose.jsp">我 掉 了</a>
 	</div>
-    <div class="ui item" style="background-color: forestgreen">
+    <div class="ui button" style="background-color: forestgreen">
         <a href="addUpdate.jsp">我 捡 到</a>
     </div>
-    <div class="ui item" style="background-color: forestgreen">
+    <div class="ui button" style="background-color: forestgreen">
         <a href="list_update.jsp">大 家 捡 到</a>
     </div>
 </div>

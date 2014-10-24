@@ -62,10 +62,6 @@
 		}
 	%>
 </div>
-<script>
-	var a=document.getElementsByClassName("icon mobile");
-	a.parent.style.display="none";
-</script>
 <%
 		}
 	} catch (Exception e) {

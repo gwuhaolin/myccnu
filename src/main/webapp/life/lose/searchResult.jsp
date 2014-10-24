@@ -8,7 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
 	String want = request.getParameter("want");
-	byte type = Byte.parseByte(request.getParameter("type"));
 %>
 <!DOCTYPE html>
 <html>
@@ -52,7 +51,6 @@
 	<%--默认拿出前changeCount通知--%>
 	<jsp:include page="GetSearchForAJAX.jsp">
 		<jsp:param name="begin" value="0"/>
-		<jsp:param name="type" value="<%=type%>"/>
 		<jsp:param name="want" value="<%=want%>"/>
 	</jsp:include>
 	<%--ajax 加载更多--%>

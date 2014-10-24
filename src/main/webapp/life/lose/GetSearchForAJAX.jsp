@@ -9,9 +9,8 @@
 	response.setCharacterEncoding("UTF-8");
 	String want = request.getParameter("want");
 	int begin = Integer.parseInt(request.getParameter("begin"));
-	byte type = Byte.parseByte(request.getParameter("type"));
 	try {
-		List<MyLoseEntity> loseEntities = ManageLose.search_page(begin, want, type);
+		List<MyLoseEntity> loseEntities = ManageLose.search_page(begin, want);
 		if (loseEntities.size() > 0) {
 %>
 <div class="ui header">以下是包含了<%=want%>关键字的失物招领信息,看看有没有你想要的?</div>

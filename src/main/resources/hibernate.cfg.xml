@@ -14,7 +14,7 @@
 		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
 
 		<!--数据库连接URL-->
-		<property name="connection.url">jdbc:mysql://127.0.0.1:3306/weixin</property>
+		<property name="connection.url">jdbc:mysql://localhost/weixin</property>
 
 		<!-- JDBC connection pool (use the built-in) -->
 		<property name="connection.pool_size">
