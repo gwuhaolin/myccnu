@@ -169,9 +169,9 @@ public class MyLoseEntity {
 
 	public String loseOrUpdateGl(){
 		if (this.myType==ManageLose.TYPE_Lose){
-			return "glyphicon-arrow-down";
+			return "frown red";
 		}else if (this.myType==ManageLose.TYPE_Update){
-			return "glyphicon-arrow-up";
+			return "smile green";
 		}
 		return "";
 	}

@@ -2,17 +2,17 @@
 <%--链接--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="four fluid ui buttons" style="position: fixed;bottom: 0;z-index: 50;margin: 0">
-	<div class="ui button" style="background-color: red">
-        <a href="list_lose.jsp">大 家 掉 了</a>
+	<div class="ui button" style="background-color: red;color: #ffffff;font-size: smaller" onclick="window.location.href='list_lose.jsp'">
+        大家掉了
 	</div>
-	<div class="ui button" style="background-color: red">
-        <a href="addLose.jsp">我 掉 了</a>
+	<div class="ui button" style="background-color: red;color: #ffffff;font-size: smaller" onclick="window.location.href='addLose.jsp'">
+        我遗失了
 	</div>
-    <div class="ui button" style="background-color: forestgreen">
-        <a href="addUpdate.jsp">我 捡 到</a>
+    <div class="ui button" style="background-color: forestgreen;color: #ffffff;font-size: smaller" onclick="window.location.href='addUpdate.jsp'">
+        我捡到了
     </div>
-    <div class="ui button" style="background-color: forestgreen">
-        <a href="list_update.jsp">大 家 捡 到</a>
+    <div class="ui button" style="background-color: forestgreen;color: #ffffff;font-size: smaller" onclick="window.location.href='list_update.jsp'">
+	    大家捡到
     </div>
 </div>
 <%--搜索--%>
@@ -36,18 +36,8 @@
 			$(btn).text(data);
 		});
 	}
-	document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
-		WeixinJSBridge.call('hideToolbar');
-	});
-	var isIphone=navigator.userAgent.toLowerCase().match(/iphone/i);
 	function toCall(btn){
 		var phoneNumber=btn.innerText;
-		if(isIphone){
-			window.location.href="callto:"+phoneNumber;
-		}
-		else{
-			window.location.href="wtai://wp/mc;"+phoneNumber;
-		}
+		window.location.href="wtai://wp/mc;"+phoneNumber;
 	}
-
 </script>
