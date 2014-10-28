@@ -24,10 +24,9 @@
 	<img src="img/lose.png">
 
 	<form action="AddOneServlet.jsp" method="post">
-		<div class="ui piled segment">
-			<div class="ui fluid ribbon label red">描述</div>
+		<div class="ui segment">
 			<!--问题描述-->
-			<textarea name="des" style="height: 150px"></textarea>
+			<textarea name="des" style="height: 150px" placeholder="描述一下你心爱的物品"></textarea>
 			<!--失物地点-->
 			<div class="ui input icon">
 				<input type="text" name="location" placeholder="你在什么地方掉了你的物品">

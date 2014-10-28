@@ -30,7 +30,7 @@
 			</div>
 		</div>
 
-		<div class="ui relaxed divided tiny list">
+		<div class="ui relaxed divided mini list">
 
 
 			<%--来自--%>

@@ -1,9 +1,9 @@
 <%--通知列表里获得AJAX通知--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.List" %>
-<%@ page import="life.lose.MyLoseEntity" %>
 <%@ page import="life.lose.ManageLose" %>
+<%@ page import="life.lose.MyLoseEntity" %>
 <%@ page import="tool.Tool" %>
+<%@ page import="java.util.List" %>
 <%
 	// 将请求、响应的编码均设置为UTF-8（防止中文乱码）
 	request.setCharacterEncoding("UTF-8");
@@ -16,29 +16,29 @@
 <%
 	for (MyLoseEntity one : loseEntities) {
 %>
-<div class="ui piled segment" id="<%=one.getId()%>" onclick="addComment(this)">
+<div class="ui segment" id="<%=one.getId()%>" onclick="addComment(this)">
 	<%--描述--%>
 	<h4><%=one.getMyDes()%>
 	</h4>
 	<hr>
+	<%--联系方式--%>
+	<div class="ui mini labeled icon button positive">
+		<i class="icon phone"></i><%=one.getMyPhone()%>
+	</div>
 	<%--发布时间--%>
-	<div class="ui tiny labeled icon button">
+	<div class="ui mini labeled icon button">
 		<i class="icon time"></i><%=one.getMyDate()%>
 	</div>
 	<%--失物地点--%>
-	<div class="ui tiny labeled icon button">
+	<div class="ui mini labeled icon button">
 		<i class="icon location"></i><%=one.getMyLocation()%>
 	</div>
-	<%--联系方式--%>
-	<div class="ui tiny labeled icon button">
-		<i class="icon phone"></i><%=one.getMyPhone()%>
-	</div>
 	<%--目前状态--%>
-	<div class="ui tiny labeled icon button" onclick="completeOne(this);">
+	<div class="ui mini labeled icon button" onclick="completeOne(this);">
 		<i class="icon refresh"></i><%=one.stateString()%>
 	</div>
 	<%--失物还是招领--%>
-	<div class="ui tiny labeled icon button">
+	<div class="ui mini labeled icon button">
 		<%=one.loseOrUpdateChinese()%><i class="icon <%=one.loseOrUpdateGl()%>"></i>
 	</div>
 	<%--是否是今天的--%>

@@ -23,10 +23,9 @@
 	<br><br>
 	<img src="img/update.png">
 	<form  action="AddOneServlet.jsp" method="post">
-		<div class="ui piled segment">
-			<div class="ui ribbon label fluid green">描述</div>
+		<div class="ui segment">
 			<!--问题描述-->
-			<textarea name="des" style="height: 150px"></textarea>
+			<textarea name="des" style="height: 150px" placeholder="描述一下它"></textarea>
 			<!--失物地点-->
 			<div class="ui input icon">
 				<input type="text" name="location" placeholder="你在什么地方捡到了该物品">
