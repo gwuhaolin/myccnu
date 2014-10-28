@@ -21,7 +21,6 @@
 <body>
 <div class="ui form" align="center">
 	<br><br>
-	<img src="img/update.png">
 	<form  action="AddOneServlet.jsp" method="post">
 		<div class="ui segment">
 			<!--问题描述-->

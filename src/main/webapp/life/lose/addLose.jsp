@@ -21,7 +21,6 @@
 <body>
 <div class="ui form" align="center">
 	<br><br>
-	<img src="img/lose.png">
 
 	<form action="AddOneServlet.jsp" method="post">
 		<div class="ui segment">
