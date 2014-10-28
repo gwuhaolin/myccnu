@@ -47,7 +47,11 @@
 </script>
 <body>
 <div class="container">
-	<br>
+	<br><br>
+	<div class="ui segment inverted raised">
+		<p>以下是包含了<%=want%>关键字的失物招领信息,看看有没有你想要的?
+		</p>
+	</div>
 	<%--默认拿出前changeCount通知--%>
 	<jsp:include page="GetSearchForAJAX.jsp">
 		<jsp:param name="begin" value="0"/>
@@ -55,7 +59,7 @@
 	</jsp:include>
 	<%--ajax 加载更多--%>
 	<button class="ui fluid button" onclick="ajaxMore(this)" begin="0">更多</button>
-	<br>
+	<br><br><br>
 </div>
 
 <%--链接--%>

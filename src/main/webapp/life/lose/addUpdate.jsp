@@ -20,7 +20,7 @@
 </head>
 <body>
 <div class="ui form" align="center">
-	<br><br>
+	<br><br><br><br>
 	<form  action="AddOneServlet.jsp" method="post">
 		<div class="ui segment">
 			<!--问题描述-->

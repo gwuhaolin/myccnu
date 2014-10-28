@@ -1,4 +1,3 @@
-<%@ page import="life.lose.ManageLose" %>
 <%@ page import="tool.R" %>
 <%--
   Created by Intellij IDEA.
@@ -12,7 +11,7 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <script src="../../lib/js/jquery.min.js"></script>
+	<script src="../../lib/js/jquery.min.js"></script>
 	<script src="../../lib/js/semantic.min.js"></script>
 	<link href="../../lib/css/main.css" rel='stylesheet'>
 	<link href="../../lib/css/semantic.min.css" rel="stylesheet">
@@ -53,7 +52,7 @@
 	</jsp:include>
 	<%--ajax 加载更多--%>
 	<button class="ui fluid button" onclick="ajaxMore(this)" begin="0">更多</button>
-	<br><br>
+	<br><br><br>
 </div>
 
 <%--链接--%>

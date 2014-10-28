@@ -24,17 +24,3 @@
 		</div>
 	</div>
 </form>
-<script>
-	//设置该失误记录为完成
-	function completeOne(btn){
-		var id=$(btn).parent().attr('id');
-		$.ajax({
-			url: "CompleteOneServlet.jsp",
-			data: {id:id},
-			contentType: "application/x-www-form-urlencoded; charset=utf-8"
-		}).done(function (data) {
-			$(btn).text(data);
-		});
-	}
-
-</script>

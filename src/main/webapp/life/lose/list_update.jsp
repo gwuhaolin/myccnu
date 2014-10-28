@@ -53,7 +53,7 @@
 	</jsp:include>
 	<%--ajax 加载更多--%>
 	<button class="ui fluid button" onclick="ajaxMore(this)" begin="0">更多</button>
-	<br><br>
+	<br><br><br>
 </div>
 
 <%--链接--%>

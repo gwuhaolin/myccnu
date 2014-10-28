@@ -12,7 +12,7 @@
 		List<MyLoseEntity> loseEntities = ManageLose.get_page(begin, type);
 		for (MyLoseEntity one : loseEntities) {
 %>
-<div class="ui segment" id="<%=one.getId()%>">
+<div class="ui segment raised" id="<%=one.getId()%>">
 	<%--描述--%>
 	<h4><%=one.getMyDes()%>
 	</h4>
@@ -46,16 +46,6 @@
 		<%
 			}
 		%>
-		<%--目前状态--%>
-		<div class="ui small label" onclick="completeOne(this);">
-			<i class="icon refresh"></i>
-			<%=one.stateString()%>
-		</div>
-		<%--失物还是招领--%>
-		<div class="ui small label ">
-			<i class="icon <%=one.loseOrUpdateGl()%>"></i>
-			<%=one.loseOrUpdateChinese()%>
-		</div>
 		<%--是否是今天的--%>
 		<%
 			if (one.today()) {
