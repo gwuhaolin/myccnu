@@ -17,7 +17,7 @@
 	<link href="../../lib/css/main.css" rel='stylesheet'>
 	<link href="../../lib/css/semantic.min.css" rel="stylesheet">
 	<script src="../../lib/js/main.js"></script>
-	<title>失物平台</title>
+	<title>大家掉了</title>
 	<script>
 		var changeCount = Number(<%=R.ChangeCount%>);
 		<%--ajax加载更多--%>

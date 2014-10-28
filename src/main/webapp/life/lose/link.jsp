@@ -1,7 +1,7 @@
 <%@ page import="life.lose.ManageLose" %>
 <%--链接--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="four fluid ui buttons mini" style="position: fixed;bottom: 0;z-index: 50;margin: 0">
+<div class="four fluid ui buttons small" style="position: fixed;bottom: 0;z-index: 50;margin: 0">
 	<div class="ui button black" onclick="window.location.href='list_lose.jsp'">
         大家掉了
 	</div>
