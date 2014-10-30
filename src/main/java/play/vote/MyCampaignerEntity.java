@@ -6,6 +6,8 @@
 
 package play.vote;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 /**
@@ -27,6 +29,8 @@ public class MyCampaignerEntity {
 	private String other3;
 
 	@Id
+	@GenericGenerator(name = "idGenerator", strategy = "increment")
+	@GeneratedValue(generator = "idGenerator")
 	@Column(name = "id", nullable = false, insertable = true, updatable = true)
 	public int getId() {
 		return id;
