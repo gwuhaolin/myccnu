@@ -34,7 +34,7 @@
 				if (data.length < 20) {
 					$(btn).text("没有更多了!");
 				} else {
-					$(btn).before(data);
+					$(btn).before(data);//生成了多个ajaxmore.jsp，data的数据 直接通过before插入list
 					$(btn).removeClass('active');
 					$(btn).text("更多");
 					$(btn).attr('begin', begin);

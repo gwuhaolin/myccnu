@@ -294,5 +294,4 @@ public class ManageJob {
 		add_NotSame(scanPrivateTeacher());
 		System.out.println("结束扫描家教兼职信息");
 	}
-
 }

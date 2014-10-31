@@ -96,7 +96,7 @@
 	<br>
 </div>
 <script>
-	<%=Tool.makeAJAXLoadMoreJS(R.ChangeCount,"GetJobsManageFormForAJAX.jsp",", target:"+ManageJob.TARGET_PrivateTeacher)%>
+	<%=Tool.makeAJAXLoadMoreJS("GetJobsManageFormForAJAX.jsp",", target:"+ManageJob.TARGET_PrivateTeacher)%>
 </script>
 </body>
 </html>

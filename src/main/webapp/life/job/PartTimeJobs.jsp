@@ -23,7 +23,6 @@
 </head>
 <body>
 <div class="ui stackable three column page grid">
-
 	<%--默认拿出前changeCount通知--%>
 	<jsp:include page="GetAJAXServlet.jsp">
 		<jsp:param name="target" value="<%=ManageJob.TARGET_PartTimeJob%>"/>
