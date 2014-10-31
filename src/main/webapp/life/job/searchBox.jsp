@@ -16,7 +16,7 @@
 			<div class="field">
 				<div class="ui icon input">
 					<i class="search icon"></i>
-					<input type="text" name="want" placeholder="输入关键字搜索" value="搜索">
+					<input type="text" name="want" placeholder="输入关键字搜索">
 				</div>
 			</div>
 

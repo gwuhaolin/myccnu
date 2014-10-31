@@ -9,7 +9,6 @@
 	response.setCharacterEncoding("UTF-8");
 	try {
 		int begin = Integer.parseInt(request.getParameter("begin"));
-		int size = Integer.parseInt(request.getParameter("size"));
 		int target = Integer.parseInt(request.getParameter("target"));
 		List<MyJobEntity> jobEntities = ManageJob.get_OrderByID(begin, target);
 		for (MyJobEntity one : jobEntities) {
@@ -29,8 +28,6 @@
 			<span class="input-group-addon">名称</span>
 			<input type="text" name="name" class="form-control" value="<%=one.getName()%>">
 		</div>
-
-
 		<%--简介--%>
 		<div class="input-group">
 			<span class="input-group-addon">简介</span>
