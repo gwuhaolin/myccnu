@@ -7,6 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+	request.setCharacterEncoding("UTF-8");
+	response.setCharacterEncoding("UTF-8");
 	String want = request.getParameter("want");
 %>
 <!DOCTYPE html>
@@ -21,13 +23,32 @@
 	<script src="../../lib/js/main.js"></script>
 	<title>招领平台搜索结果</title>
 </head>
+<body>
+<div class="container">
+	<br><br>
+	<div class="ui segment inverted raised">
+		<p>以下是包含了<%=want%>关键字的失物招领信息,看看有没有你想要的?
+		</p>
+	</div>
+	<%--默认拿出前changeCount通知--%>
+	<jsp:include page="GetSearchForAJAX.jsp">
+		<jsp:param name="begin" value="0"/>
+		<jsp:param name="want" value="<%=want%>"/>
+	</jsp:include>
+	<%--ajax 加载更多--%>
+	<button class="ui fluid button" onclick="ajaxMore(this)">更多</button>
+	<br><br><br>
+</div>
+
+<%--链接--%>
+<%@ include file="link.jsp" %>
 <script>
 	var changeCount = Number(<%=R.ChangeCount%>);
+	var begin=0;
 	<%--ajax加载更多--%>
 	function ajaxMore(btn) {
 		$(btn).addClass('active');
 		$(btn).text("正在努力加载中...");
-		var begin = Number($(btn).attr('begin'));
 		begin += changeCount;
 		$.ajax({
 			url: "GetSearchForAJAX.jsp",
@@ -45,25 +66,5 @@
 		});
 	}
 </script>
-<body>
-<div class="container">
-	<br><br>
-	<div class="ui segment inverted raised">
-		<p>以下是包含了<%=want%>关键字的失物招领信息,看看有没有你想要的?
-		</p>
-	</div>
-	<%--默认拿出前changeCount通知--%>
-	<jsp:include page="GetSearchForAJAX.jsp">
-		<jsp:param name="begin" value="0"/>
-		<jsp:param name="want" value="<%=want%>"/>
-	</jsp:include>
-	<%--ajax 加载更多--%>
-	<button class="ui fluid button" onclick="ajaxMore(this)" begin="0">更多</button>
-	<br><br><br>
-</div>
-
-<%--链接--%>
-<%@ include file="link.jsp" %>
-
 </body>
 </html>

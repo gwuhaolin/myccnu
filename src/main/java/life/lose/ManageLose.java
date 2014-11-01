@@ -55,8 +55,6 @@ public class ManageLose {
 
 	/**
 	 * 按照发布时间排序记录,获取学号为XH的同学发布的所有失物信息,如果学号为空返回空集合
-	 * @param XH
-	 * @return
 	 */
 	public static List<MyLoseEntity> search_page(int from, String want) {
 		Session session = HibernateUtil.getSession();

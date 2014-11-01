@@ -7,11 +7,10 @@
 	// 将请求、响应的编码均设置为UTF-8（防止中文乱码）
 	request.setCharacterEncoding("UTF-8");
 	response.setCharacterEncoding("UTF-8");
-	String want = request.getParameter("want");
-	int begin = Integer.parseInt(request.getParameter("begin"));
 	try {
+		String want = request.getParameter("want");
+		int begin = Integer.parseInt(request.getParameter("begin"));
 		List<MyLoseEntity> loseEntities = ManageLose.search_page(begin, want);
-		if (loseEntities.size() > 0) {
 %>
 <%
 	for (MyLoseEntity one : loseEntities) {
@@ -66,10 +65,8 @@
 	</div>
 </div>
 <%
-			}
 		}
 	} catch (Exception e) {
 		e.printStackTrace();
-		return;
 	}
 %>
