@@ -26,27 +26,22 @@ import tool.feedback.ServiceFeedback;
  */
 public class RestConfig extends ResourceConfig {
 
-	public RestConfig() {
+  public RestConfig() {
+    //加载Resource
+    register(ServiceShuDong.class);
+    register(ServiceShuDongBgImg.class);
+    register(ServiceQiNiu.class);
+    register(ServiceShop.class);
+    register(ServiceStudents.class);
+    register(ServiceVote.class);
+    register(ServiceScore.class);
+    register(ServiceNotice.class);
+    register(ServicePjxfScore.class);
+    register(ServiceFeedback.class);
+    register(ServiceStudentAllInfo.class);
+    register(ServiceCET.class);
+    //注册数据转换器
+    register(JacksonJsonProvider.class);
 
-		//加载Resource
-		register(ServiceShuDong.class);
-		register(ServiceShuDongBgImg.class);
-		register(ServiceQiNiu.class);
-		register(ServiceShop.class);
-		register(ServiceStudents.class);
-		register(ServiceVote.class);
-		register(ServiceScore.class);
-		register(ServiceNotice.class);
-		register(ServicePjxfScore.class);
-		register(ServiceFeedback.class);
-		register(ServiceStudentAllInfo.class);
-		register(ServiceCET.class);
-
-		//注册数据转换器
-		register(JacksonJsonProvider.class);
-
-		// Logging.
-//		register(LoggingFilter.class);
-
-	}
+  }
 }

@@ -3,48 +3,47 @@ apply plugin: 'war'
 version = '1.0'
 
 repositories {
-	mavenLocal()
-	mavenCentral()
+  mavenLocal()
+  mavenCentral()
 }
 
 dependencies() {
 
-	//SQL
-	compile group: 'org.hibernate', name: 'hibernate-core', version: '4.3.5.Final'
-	compile 'mysql:mysql-connector-java:5.1.23'
+  //SQL
+  compile group: 'org.hibernate', name: 'hibernate-core', version: '4.3.5.Final'
+  compile 'mysql:mysql-connector-java:5.1.23'
 
-	//Jersey
-	compile 'org.glassfish.jersey.containers:jersey-container-servlet:2.8'
+  //Jersey
+  compile 'org.glassfish.jersey.containers:jersey-container-servlet:2.8'
 
-	//Json
-	compile 'org.codehaus.jackson:jackson-core-asl:1.9.13'
-	compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
-	compile 'org.codehaus.jackson:jackson-jaxrs:1.9.13'
+  //Json
+  compile 'org.codehaus.jackson:jackson-core-asl:1.9.13'
+  compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
+  compile 'org.codehaus.jackson:jackson-jaxrs:1.9.13'
 
-	//Jsoup
-	compile 'org.jsoup:jsoup:1.7.3'
+  //Jsoup
+  compile 'org.jsoup:jsoup:1.7.3'
 
-	//Apache Common IO
-	compile 'org.apache.commons:commons-io:1.3.2'
+  //Apache Common IO
+  compile 'org.apache.commons:commons-io:1.3.2'
 
-	//七牛云储存
-	compile 'com.qiniu:sdk:6.1.2'
+  //七牛云储存
+  compile 'com.qiniu:sdk:6.1.2'
 
-	//Servlet3.0
-	providedCompile 'javax.servlet:servlet-api:3.0-alpha-1'
+  //Servlet3.0
+  providedCompile 'javax.servlet:servlet-api:3.0-alpha-1'
 
-	//SLF4j
-	compile 'org.slf4j:slf4j-simple:1.6.2'
+  //SLF4j
+  compile 'org.slf4j:slf4j-simple:1.6.2'
 
-	//Junit
-	testCompile 'junit:junit:4.11'
+  //Junit
+  testCompile 'junit:junit:4.11'
 
 
 }
 
-
 //设置war打包的目标路径为当前工程下,输出名为ROOT.war
 war {
-	archiveName = 'ROOT.war'
-	destinationDir = new File("./");
+  archiveName = 'ROOT.war'
+  destinationDir = new File("./");
 }

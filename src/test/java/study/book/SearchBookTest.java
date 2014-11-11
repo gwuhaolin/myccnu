@@ -7,9 +7,9 @@ import java.util.List;
 
 public class SearchBookTest {
 
-	@Test
-	public void testGet() throws Exception {
-		List<SearchBook.MyBook> re = SearchBook.get("java", "1");
-		Assert.assertTrue(re.size() > 0);
-	}
+  @Test
+  public void testGet() throws Exception {
+    List<SearchBook.MyBook> re = SearchBook.get("java", "1");
+    Assert.assertTrue(re.size() > 0);
+  }
 }

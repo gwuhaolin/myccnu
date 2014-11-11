@@ -1,91 +1,91 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE hibernate-configuration PUBLIC
-		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+  "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 
 <hibernate-configuration>
 
-	<session-factory>
-		<!--编码为UTF8-->
-		<property name="connection.useUnicode">true</property>
-		<property name="connection.characterEncoding">UTF8</property>
+  <session-factory>
+    <!--编码为UTF8-->
+    <property name="connection.useUnicode">true</property>
+    <property name="connection.characterEncoding">UTF8</property>
 
-		<!-- 数据库连接驱动 -->
-		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+    <!-- 数据库连接驱动 -->
+    <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
 
-		<!--数据库连接URL-->
-		<property name="connection.url">jdbc:mysql://localhost/weixin</property>
+    <!--数据库连接URL-->
+    <property name="connection.url">jdbc:mysql://localhost/weixin</property>
 
-		<!-- JDBC connection pool (use the built-in) -->
-		<property name="connection.pool_size">
-			1000000
-		</property>
+    <!-- JDBC connection pool (use the built-in) -->
+    <property name="connection.pool_size">
+      1000000
+    </property>
 
-		<!-- SQL 方言-->
-		<property name="dialect">
-			org.hibernate.dialect.MySQLInnoDBDialect
-		</property>
+    <!-- SQL 方言-->
+    <property name="dialect">
+      org.hibernate.dialect.MySQLInnoDBDialect
+    </property>
 
-		<!-- Enable Hibernate's automatic session context management -->
-		<property name="current_session_context_class">
-			thread
-		</property>
+    <!-- Enable Hibernate's automatic session context management -->
+    <property name="current_session_context_class">
+      thread
+    </property>
 
-		<!-- Echo all executed SQL to stdout -->
-		<property name="show_sql">
-			false
-		</property>
+    <!-- Echo all executed SQL to stdout -->
+    <property name="show_sql">
+      false
+    </property>
 
-		<!-- Drop and re-create the database schema on startup -->
-		<property name="hbm2ddl.auto">
-			update
-		</property>
+    <!-- Drop and re-create the database schema on startup -->
+    <property name="hbm2ddl.auto">
+      update
+    </property>
 
-		<!--数据库帐号-->
-		<property name="connection.username">root</property>
-		<!--数据库密码-->
-		<property name="connection.password">ccnuyouth</property>
+    <!--数据库帐号-->
+    <property name="connection.username">root</property>
+    <!--数据库密码-->
+    <property name="connection.password">ccnuyouth</property>
 
-		<!-- 以下设置对象与数据库表的映像文件 -->
-		<!--电影-->
-		<mapping class="play.movie.MyMovieEntity"/>
-		<!--电脑维修队员-->
-		<mapping class="life.repairComputer.RepairComputerMansEntity"/>
-		<!--重要通知-->
-		<mapping class="life.notice.MyNoticeEntity"/>
-		<!--树洞-->
-		<mapping class="play.shudong.MyShuDongEntity"/>
-		<mapping class="play.shudong.MyShuDongBgImgEntity"/>
-		<!--兼职家教-->
-		<mapping class="life.jobs.MyJobEntity"/>
-		<!--讲座-->
-		<mapping class="study.lecture.MyEventEntity"/>
-		<!--失物招领-->
-		<mapping class="life.lose.MyLoseEntity"/>
-		<!--CET-->
-		<mapping class="study.CET.Cet46Entity"/>
-		<!--教室-->
-		<mapping class="study.classroom.MyClassroomEntity"/>
-		<!--二手商城-->
-		<mapping class="play.shop.ShopItemsEntity"/>
-		<mapping class="play.shop.ShopSearchTagEntity"/>
-		<!--所有的学院-->
-		<mapping class="tool.ccnu.academy.AcademyEntity"/>
-		<!--用于myccnu应用的学生的信息-->
-		<mapping class="tool.ccnu.student.StudentsEntity"/>
-		<!--从信息门户抓取的信息-->
-		<mapping class="tool.ccnu.student.detailInfo.StudentAllInfoEntity"/>
-		<!--投票-->
-		<mapping class="play.vote.MyCampaignerEntity"/>
-		<mapping class="play.vote.MyVoteEntity"/>
-		<!--期末成绩-->
-		<mapping class="study.score.MyScoreEntity"/>
-		<mapping class="study.score.MyPjxfScoreEntity"/>
-		<!--一卡通-->
-		<mapping class="life.YKT.MyYktEntity"/>
-		<!--提交反馈-->
-		<mapping class="tool.feedback.MyFeedbackEntity"/>
+    <!-- 以下设置对象与数据库表的映像文件 -->
+    <!--电影-->
+    <mapping class="play.movie.MyMovieEntity"/>
+    <!--电脑维修队员-->
+    <mapping class="life.repairComputer.RepairComputerMansEntity"/>
+    <!--重要通知-->
+    <mapping class="life.notice.MyNoticeEntity"/>
+    <!--树洞-->
+    <mapping class="play.shudong.MyShuDongEntity"/>
+    <mapping class="play.shudong.MyShuDongBgImgEntity"/>
+    <!--兼职家教-->
+    <mapping class="life.jobs.MyJobEntity"/>
+    <!--讲座-->
+    <mapping class="study.lecture.MyEventEntity"/>
+    <!--失物招领-->
+    <mapping class="life.lose.MyLoseEntity"/>
+    <!--CET-->
+    <mapping class="study.CET.Cet46Entity"/>
+    <!--教室-->
+    <mapping class="study.classroom.MyClassroomEntity"/>
+    <!--二手商城-->
+    <mapping class="play.shop.ShopItemsEntity"/>
+    <mapping class="play.shop.ShopSearchTagEntity"/>
+    <!--所有的学院-->
+    <mapping class="tool.ccnu.academy.AcademyEntity"/>
+    <!--用于myccnu应用的学生的信息-->
+    <mapping class="tool.ccnu.student.StudentsEntity"/>
+    <!--从信息门户抓取的信息-->
+    <mapping class="tool.ccnu.student.detailInfo.StudentAllInfoEntity"/>
+    <!--投票-->
+    <mapping class="play.vote.MyCampaignerEntity"/>
+    <mapping class="play.vote.MyVoteEntity"/>
+    <!--期末成绩-->
+    <mapping class="study.score.MyScoreEntity"/>
+    <mapping class="study.score.MyPjxfScoreEntity"/>
+    <!--一卡通-->
+    <mapping class="life.YKT.MyYktEntity"/>
+    <!--提交反馈-->
+    <mapping class="tool.feedback.MyFeedbackEntity"/>
 
-	</session-factory>
+  </session-factory>
 
 </hibernate-configuration>

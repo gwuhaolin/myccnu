@@ -26,8 +26,8 @@ public class ManageMyPjxfScoreTest {
   @Test
   public void testList() throws Exception {
     for (String xh : XHS) {
-	    List<MyPjxfScoreEntity> re=ManageMyPjxfScore.list(xh);
-	    Assert.assertTrue(re.size()>0);
+      List<MyPjxfScoreEntity> re = ManageMyPjxfScore.list(xh);
+      Assert.assertTrue(re.size() > 0);
     }
   }
 

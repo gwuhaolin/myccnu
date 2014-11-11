@@ -262,7 +262,7 @@ public class Tool {
    * @param e 异常
    */
   public static void log(Throwable e) {
-    if (e!=null){
+    if (e != null) {
       log.error(Arrays.toString(e.getStackTrace()));
     }
   }

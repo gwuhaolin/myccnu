@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8"/>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-	<link href="../../lib/css/semantic.min.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="../../lib/css/main.css">
+  <link href="../../lib/css/semantic.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="../../lib/css/main.css">
 
-	<title>对我们说点什么</title>
+  <title>对我们说点什么</title>
 </head>
 <body>
 
@@ -19,44 +19,44 @@
 
 <!--加载更多按钮-->
 <div class="ui stackable three column page grid center aligned SHUDONG_Modal">
-	<div class="row SHUDONG_Modal">
-		<div class="column"></div>
-		<div class="column">
-			<div id="ShuDongMoreBtn" class="ui button circular fluid" onclick="loadMore()">more</div>
-		</div>
-		<div class="column"></div>
-	</div>
+  <div class="row SHUDONG_Modal">
+    <div class="column"></div>
+    <div class="column">
+      <div id="ShuDongMoreBtn" class="ui button circular fluid" onclick="loadMore()">more</div>
+    </div>
+    <div class="column"></div>
+  </div>
 </div>
 
 <!--发树洞bar-->
 <div class="SHUDONG_Modal">
 
-	<!--TODO 再把sidebar搞大点-->
-	<div class="ui styled sidebar left floating" id="AddShuDongBarCon">
-		<div class="ui header icon huge center aligned">
-			<i class="icon mail circular inverted blue"></i>
-		</div>
-		<div class="ui form">
+  <!--TODO 再把sidebar搞大点-->
+  <div class="ui styled sidebar left floating" id="AddShuDongBarCon">
+    <div class="ui header icon huge center aligned">
+      <i class="icon mail circular inverted blue"></i>
+    </div>
+    <div class="ui form">
 
-			<div class="field">
-				<textarea id="addShuDongInput" placeholder="有什么想对我们说的?" class="SAY"></textarea>
-			</div>
-			<div class="field">
-				<button class="ui button fluid" onclick="addShuDong()">提交</button>
-			</div>
-		</div>
+      <div class="field">
+        <textarea id="addShuDongInput" placeholder="有什么想对我们说的?" class="SAY"></textarea>
+      </div>
+      <div class="field">
+        <button class="ui button fluid" onclick="addShuDong()">提交</button>
+      </div>
+    </div>
 
-	</div>
+  </div>
 
-	<!--发树洞按钮-->
-	<a onclick="toggleAddShuDongBox(this)" id="toggleAddBtn" class="ui button icon circular mini POPUP"
-	   style="position: fixed;z-index: 20;bottom: 5px;right: 5px" title="对我们说点什么">
-		<i class="icon mail"></i>
-	</a>
+  <!--发树洞按钮-->
+  <a onclick="toggleAddShuDongBox(this)" id="toggleAddBtn" class="ui button icon circular mini POPUP"
+     style="position: fixed;z-index: 20;bottom: 5px;right: 5px" title="对我们说点什么">
+    <i class="icon mail"></i>
+  </a>
 
-	<!--显示提交者信息的dimmer-->
-	<div id="UserInfo_Con" class="ui page dimmer inverted">
-	</div>
+  <!--显示提交者信息的dimmer-->
+  <div id="UserInfo_Con" class="ui page dimmer inverted">
+  </div>
 
 </div>
 
@@ -66,196 +66,196 @@
 <script src="../../lib/js/handlebars-v1.3.0.js"></script>
 
 <script>
-	/**
-	 * 所有树洞的容器
-	 */
-	var ShuDongHolder = $('#ShuDongHolder');
+  /**
+   * 所有树洞的容器
+   */
+  var ShuDongHolder = $('#ShuDongHolder');
 
-	/**
-	 *  加载更多树洞按钮
-	 */
-	var ShuDongMoreBtn = $('#ShuDongMoreBtn');
-	/**
-	 * 添加树洞的bar
-	 */
-	var AddShuDongBarCon = $('#AddShuDongBarCon');
+  /**
+   *  加载更多树洞按钮
+   */
+  var ShuDongMoreBtn = $('#ShuDongMoreBtn');
+  /**
+   * 添加树洞的bar
+   */
+  var AddShuDongBarCon = $('#AddShuDongBarCon');
 
-	/**
-	 * 当前分页数
-	 */
-	var nowCount = 0;
+  /**
+   * 当前分页数
+   */
+  var nowCount = 0;
 
-	/**
-	 * 获得树洞apiURL
-	 */
-	var url_GetShuDong = makeApiUrl('feedback/getPage');
+  /**
+   * 获得树洞apiURL
+   */
+  var url_GetShuDong = makeApiUrl('feedback/getPage');
 
-	/**
-	 * 添加树洞apiURL
-	 */
-	var url_AddShuDong = makeApiUrl('feedback/addOne');
+  /**
+   * 添加树洞apiURL
+   */
+  var url_AddShuDong = makeApiUrl('feedback/addOne');
 
-	$(document).ready(function () {
-		toggleAddShuDongBox($('#toggleAddBtn'));
-		loadMore(ShuDongMoreBtn);
-	});
+  $(document).ready(function () {
+    toggleAddShuDongBox($('#toggleAddBtn'));
+    loadMore(ShuDongMoreBtn);
+  });
 
-	/**
-	 * 加载更多树洞
-	 */
-	function loadMore() {
-		$(ShuDongMoreBtn).removeClass('disabled');
-		$(ShuDongMoreBtn).toggleClass('loading');
-		$.getJSON(url_GetShuDong,
-				{
-					begin: nowCount
-				}
-		).done(function (data) {
-					$(ShuDongMoreBtn).toggleClass('loading');
-					if (data.length > 0) {
-						var html = toHTML('OneShuDong', data);
-						$(ShuDongHolder).append(html);
-						nowCount += 5;
-					} else {
-						$(ShuDongMoreBtn).addClass('disabled');
-					}
-				}
-		).error(function () {
-					showError();
-				});
-	}
+  /**
+   * 加载更多树洞
+   */
+  function loadMore() {
+    $(ShuDongMoreBtn).removeClass('disabled');
+    $(ShuDongMoreBtn).toggleClass('loading');
+    $.getJSON(url_GetShuDong,
+      {
+        begin: nowCount
+      }
+    ).done(function (data) {
+        $(ShuDongMoreBtn).toggleClass('loading');
+        if (data.length > 0) {
+          var html = toHTML('OneShuDong', data);
+          $(ShuDongHolder).append(html);
+          nowCount += 5;
+        } else {
+          $(ShuDongMoreBtn).addClass('disabled');
+        }
+      }
+    ).error(function () {
+        showError();
+      });
+  }
 
-	/**
-	 * 向服务器发送一条树洞
-	 */
-	function addShuDong() {
-		var sayInput = $(AddShuDongBarCon).find('.SAY').first();
-		var say = $(sayInput).val();
-		$(sayInput).val('');//清空输入框
-		if (say.length < 1) {//检查非空
-			$(sayInput).transition('shake');
-			return;
-		}
-		$.getJSON(url_AddShuDong, {
-			say: say
-		}).done(function (data) {
-			var html = toHTML('OneShuDong', data);
-			$(html).prependTo(ShuDongHolder);
-			toggleAddShuDongBox();//收起发树洞bar
-			goTop();//滚到顶部
-		}).error(function () {
-			alert('Sorry,意见箱暂时被塞满了~');
-		});
-	}
+  /**
+   * 向服务器发送一条树洞
+   */
+  function addShuDong() {
+    var sayInput = $(AddShuDongBarCon).find('.SAY').first();
+    var say = $(sayInput).val();
+    $(sayInput).val('');//清空输入框
+    if (say.length < 1) {//检查非空
+      $(sayInput).transition('shake');
+      return;
+    }
+    $.getJSON(url_AddShuDong, {
+      say: say
+    }).done(function (data) {
+      var html = toHTML('OneShuDong', data);
+      $(html).prependTo(ShuDongHolder);
+      toggleAddShuDongBox();//收起发树洞bar
+      goTop();//滚到顶部
+    }).error(function () {
+      alert('Sorry,意见箱暂时被塞满了~');
+    });
+  }
 
-	/**
-	 * 显示出发树洞框
-	 */
-	function toggleAddShuDongBox(btn) {
-		$(btn).toggleClass('red');
-		$(AddShuDongBarCon).sidebar({
-			overlay: true
-		}).sidebar('toggle');
-	}
+  /**
+   * 显示出发树洞框
+   */
+  function toggleAddShuDongBox(btn) {
+    $(btn).toggleClass('red');
+    $(AddShuDongBarCon).sidebar({
+      overlay: true
+    }).sidebar('toggle');
+  }
 
-	/**
-	 * 显示提交者的信息,会在最上面
-	 * @param xh 提交者的学号
-	 */
-	function showUserInfo(xh) {
-		$.getJSON(GetStuInfo_URL, {XH: xh}).done(function (data) {
-			var html = toHTML('OwnerInfo_TEMP', data);
-			$('#UserInfo_Con').html(html).dimmer('show');
-		});
-	}
+  /**
+   * 显示提交者的信息,会在最上面
+   * @param xh 提交者的学号
+   */
+  function showUserInfo(xh) {
+    $.getJSON(GetStuInfo_URL, {XH: xh}).done(function (data) {
+      var html = toHTML('OwnerInfo_TEMP', data);
+      $('#UserInfo_Con').html(html).dimmer('show');
+    });
+  }
 
 </script>
 
 <!--模版-->
 <div style="display: none">
 
-	<!--一条树洞-->
-	<div id="OneShuDong">
-		{{#.}}
-		<div class="column">
-			<div class="ui segment  SHUDONG_Modal" ondblclick="showUserInfo({{xh}})">
-				<p>{{content}}</p>
+  <!--一条树洞-->
+  <div id="OneShuDong">
+    {{#.}}
+    <div class="column">
+      <div class="ui segment  SHUDONG_Modal" ondblclick="showUserInfo({{xh}})">
+        <p>{{content}}</p>
 
-				<!--分割线-->
-				<div class="ui divider"></div>
+        <!--分割线-->
+        <div class="ui divider"></div>
 
-				<!--时间-->
-				<i class="ui small label circular" style="font-size: xx-small">{{date}}</i>
+        <!--时间-->
+        <i class="ui small label circular" style="font-size: xx-small">{{date}}</i>
 
-			</div>
-		</div>
-		{{/.}}
-	</div>
+      </div>
+    </div>
+    {{/.}}
+  </div>
 
-	<!--提交者信息-->
-	<div id="OwnerInfo_TEMP">
+  <!--提交者信息-->
+  <div id="OwnerInfo_TEMP">
 
-		<div class="content">
-			<div class="ui header center aligned">
+    <div class="content">
+      <div class="ui header center aligned">
 
-				<div class=" ui relaxed divided selection list small animated">
+        <div class=" ui relaxed divided selection list small animated">
 
-					{{# if name}}
-					<div class="item">
-						{{# if sex}}
-						<i class="icon male blue"></i>
-						{{else}}
-						<i class="icon female red"></i>
-						{{/if}}
-						<div class="content">
-							<div class="header">{{name}}</div>
-						</div>
-					</div>
-					{{/if}}
+          {{# if name}}
+          <div class="item">
+            {{# if sex}}
+            <i class="icon male blue"></i>
+            {{else}}
+            <i class="icon female red"></i>
+            {{/if}}
+            <div class="content">
+              <div class="header">{{name}}</div>
+            </div>
+          </div>
+          {{/if}}
 
-					{{# if phoneNumber}}
-					<div class="item">
-						<i class="icon phone"></i>
+          {{# if phoneNumber}}
+          <div class="item">
+            <i class="icon phone"></i>
 
-						<div class="content">
-							<div class="header">{{phoneNumber}}</div>
-						</div>
-					</div>
-					{{/if}}
+            <div class="content">
+              <div class="header">{{phoneNumber}}</div>
+            </div>
+          </div>
+          {{/if}}
 
-					{{# if qq}}
-					<div class="item">
-						<i class="icon">Q</i>
+          {{# if qq}}
+          <div class="item">
+            <i class="icon">Q</i>
 
-						<div class="content">
-							<div class="header">{{qq}}</div>
-						</div>
-					</div>
-					{{/if}}
+            <div class="content">
+              <div class="header">{{qq}}</div>
+            </div>
+          </div>
+          {{/if}}
 
-					{{# if dormitory}}
-					<div class="item">
-						<i class="icon map marker"></i>
+          {{# if dormitory}}
+          <div class="item">
+            <i class="icon map marker"></i>
 
-						<div class="content">
-							<div class="header">{{dormitory}}</div>
-						</div>
-					</div>
-					{{/if}}
+            <div class="content">
+              <div class="header">{{dormitory}}</div>
+            </div>
+          </div>
+          {{/if}}
 
-					{{# if academyByAcademy.academyName}}
-					<div class="item">
-						<i class="icon book"></i>
+          {{# if academyByAcademy.academyName}}
+          <div class="item">
+            <i class="icon book"></i>
 
-						<div class="content">
-							<div class="header">{{academyByAcademy.academyName}}</div>
-						</div>
-					</div>
-					{{/if}}
-				</div>
-			</div>
-		</div>
-	</div>
+            <div class="content">
+              <div class="header">{{academyByAcademy.academyName}}</div>
+            </div>
+          </div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>
 

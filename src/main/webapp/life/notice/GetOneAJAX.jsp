@@ -9,22 +9,22 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-	int id = Integer.parseInt(request.getParameter("id"));
-	MyNoticeEntity noticeEntity = ManageNotice.get(id);
-	if (noticeEntity == null) {
-		return;
-	}
+  int id = Integer.parseInt(request.getParameter("id"));
+  MyNoticeEntity noticeEntity = ManageNotice.get(id);
+  if (noticeEntity == null) {
+    return;
+  }
 %>
 <div class="ui modal">
-	<i class="close icon red"></i>
+  <i class="close icon red"></i>
 
-	<div class="header">
-		<%=noticeEntity.getTitle()%>
-	</div>
-	<div class="content">
-		<%=noticeEntity.getContent()%>
-	</div>
-	<a class="ui label attached bottom right blue" href="<%=noticeEntity.getOrgUrl()%>">原文</a>
+  <div class="header">
+    <%=noticeEntity.getTitle()%>
+  </div>
+  <div class="content">
+    <%=noticeEntity.getContent()%>
+  </div>
+  <a class="ui label attached bottom right blue" href="<%=noticeEntity.getOrgUrl()%>">原文</a>
 
 </div>
 

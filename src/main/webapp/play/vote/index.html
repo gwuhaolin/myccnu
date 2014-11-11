@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8"/>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-	<link href="../../lib/css/semantic.min.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="../../lib/css/main.css">
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <link href="../../lib/css/semantic.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="../../lib/css/main.css">
 
-	<title>投票</title>
+  <title>投票</title>
 </head>
 <body>
 
@@ -22,7 +22,7 @@
 
 <!--分割线-->
 <div class="ui horizontal divider icon">
-	<i class="icon empty star"></i>
+  <i class="icon empty star"></i>
 </div>
 
 <!--所有选手-->
@@ -32,7 +32,7 @@
 <!--目前选中数-->
 <div id="showCheckSize" class="ui button circular icon black DES" style="position: fixed;top: 10px;left: 10px"
      title="提交你的投票" onclick="beforeSubmit()">
-	<i class="icon">0</i>
+  <i class="icon">0</i>
 </div>
 
 <!--目前排名-->
@@ -40,29 +40,29 @@
      onmouseout="$(this).popup('hide')"
      class="ui button circular icon inverted"
      style="position: fixed;top: 10px;right: 10px">
-	<i class="icon star"></i>
+  <i class="icon star"></i>
 </div>
 
 <!--输入帐号密码-->
 <div class="ui basic modal hidden" id="modal_bind"><i class="close icon red circular inverted"></i>
 
-	<div class="ui header icon center aligned"><i class="icon user inverted red circular"></i><em
-			id="msg_bind"></em></div>
-	<div class="ui form">
-		<div class="two fields">
-			<div class="field">
-				<div class="ui icon input"><input type="text" value="" id="XH_bind" placeholder="你的学号"><i
-						class="user icon"></i></div>
-			</div>
-			<div class="field">
-				<div class="ui icon input"><input type="password" value="" id="MM_bind" placeholder="你的信息门户登入密码"><i
-						class="lock icon"></i></div>
-			</div>
-		</div>
-		<div class="field">
-			<div id="btn_bind" class="ui button fluid blue" onclick="submit(this)">提交你的选票</div>
-		</div>
-	</div>
+  <div class="ui header icon center aligned"><i class="icon user inverted red circular"></i><em
+    id="msg_bind"></em></div>
+  <div class="ui form">
+    <div class="two fields">
+      <div class="field">
+        <div class="ui icon input"><input type="text" value="" id="XH_bind" placeholder="你的学号"><i
+          class="user icon"></i></div>
+      </div>
+      <div class="field">
+        <div class="ui icon input"><input type="password" value="" id="MM_bind" placeholder="你的信息门户登入密码"><i
+          class="lock icon"></i></div>
+      </div>
+    </div>
+    <div class="field">
+      <div id="btn_bind" class="ui button fluid blue" onclick="submit(this)">提交你的选票</div>
+    </div>
+  </div>
 </div>
 
 <script src="../../lib/js/jquery.min.js"></script>
@@ -71,239 +71,239 @@
 <script src="../../lib/js/main.js"></script>
 
 <script>
-	var ShouldCheckSize = 20;//需要选中的数目
-	var checkSize = 0;//目前已经选中的数目
-	var ids = [];//将要发送的被选中的Id
-	var showCheckOneBtn = $('#showCheckSize');//显示已经选中数目按钮
-	var BindModal = $('#modal_bind');//输入帐号密码框
-	var VoteIsStop = true;
-	var AllComCon = $('#all');//收有选手的容器
-	var BasicInfo_URL = makeApiUrl("vote/getBasicInfo");
-	var getAll_URL = makeApiUrl('vote/getAll');
+  var ShouldCheckSize = 20;//需要选中的数目
+  var checkSize = 0;//目前已经选中的数目
+  var ids = [];//将要发送的被选中的Id
+  var showCheckOneBtn = $('#showCheckSize');//显示已经选中数目按钮
+  var BindModal = $('#modal_bind');//输入帐号密码框
+  var VoteIsStop = true;
+  var AllComCon = $('#all');//收有选手的容器
+  var BasicInfo_URL = makeApiUrl("vote/getBasicInfo");
+  var getAll_URL = makeApiUrl('vote/getAll');
 
-	$(document).ready(function () {
-		//加载基本信息
-		$.getJSON(BasicInfo_URL).done(function (data) {
-			ShouldCheckSize = data.ShouldVoteCount;
-			VoteIsStop = data.VoteIsStop;
-			$('#header').append(toHTML('BasicInfo_TEMP', data));
-		});
+  $(document).ready(function () {
+    //加载基本信息
+    $.getJSON(BasicInfo_URL).done(function (data) {
+      ShouldCheckSize = data.ShouldVoteCount;
+      VoteIsStop = data.VoteIsStop;
+      $('#header').append(toHTML('BasicInfo_TEMP', data));
+    });
 
-		//加载所有竞选者
-		$.getJSON(getAll_URL).done(function (data) {
-			$(AllComCon).append(toHTML('One_TEMP', data));
-			//Semantic-UI
-			$('.segment .image').dimmer({
-				on: 'hover'
-			});
-			$('.DES').popup();
-			if (VoteIsStop) {
-				showResult();
-			}
-		});
-	});
+    //加载所有竞选者
+    $.getJSON(getAll_URL).done(function (data) {
+      $(AllComCon).append(toHTML('One_TEMP', data));
+      //Semantic-UI
+      $('.segment .image').dimmer({
+        on: 'hover'
+      });
+      $('.DES').popup();
+      if (VoteIsStop) {
+        showResult();
+      }
+    });
+  });
 
-	var submitVote_URL = makeApiUrl('vote/submitVote');
-	/**
-	 * 提交投票结果
-	 */
-	function submit(btn) {
-		$(btn).text('正在努力加载中....');
-		var XH = $('#XH_bind').val();
-		var MM = $('#MM_bind').val();
-		$.getJSON(submitVote_URL, {
-			XH: XH,
-			MM: MM,
-			ids: ids.toString()
-		}).done(function (data) {
-			if (data == 0) {
-				voteSuccess();
-			} else if (data == 1) {
-				alertMsg('帐号密码错误');
-			} else if (data == 2) {
-				alertMsg('所选人数不对,请刷新后重试');
-			} else if (data == 3) {
-				alertMsg('你的学号已经投票');
-			} else if (data == 4) {
-				alertMsg('投票已截至');
-			}
-			$(btn).text('提交你的选票');
-		});
-		console.log(ids);
-	}
+  var submitVote_URL = makeApiUrl('vote/submitVote');
+  /**
+   * 提交投票结果
+   */
+  function submit(btn) {
+    $(btn).text('正在努力加载中....');
+    var XH = $('#XH_bind').val();
+    var MM = $('#MM_bind').val();
+    $.getJSON(submitVote_URL, {
+      XH: XH,
+      MM: MM,
+      ids: ids.toString()
+    }).done(function (data) {
+      if (data == 0) {
+        voteSuccess();
+      } else if (data == 1) {
+        alertMsg('帐号密码错误');
+      } else if (data == 2) {
+        alertMsg('所选人数不对,请刷新后重试');
+      } else if (data == 3) {
+        alertMsg('你的学号已经投票');
+      } else if (data == 4) {
+        alertMsg('投票已截至');
+      }
+      $(btn).text('提交你的选票');
+    });
+    console.log(ids);
+  }
 
-	/**
-	 * 提交前检查一下
-	 */
-	function beforeSubmit() {
-		if (VoteIsStop) {
-			alertMsg('投票活动已经停止');
-		} else {
-			ids = [];
-			var allCom = $(AllComCon).find('.segment');
-			$(allCom).each(function (index, data) {
-				if ($(data).data('check')) {
-					ids.push($(data).attr('id'));
-				}
-			});
-			if (ids.length != ShouldCheckSize) {
-				alertMsg('你目前选中的人数为' + ids.length + '个,需要选中' + ShouldCheckSize + "个");
-			} else {
-				$(BindModal).modal('setting', {
-					closable: true,
-					onDeny: function () {
-						window.close();
-					}
-				}).modal('show');
-			}
-		}
-	}
+  /**
+   * 提交前检查一下
+   */
+  function beforeSubmit() {
+    if (VoteIsStop) {
+      alertMsg('投票活动已经停止');
+    } else {
+      ids = [];
+      var allCom = $(AllComCon).find('.segment');
+      $(allCom).each(function (index, data) {
+        if ($(data).data('check')) {
+          ids.push($(data).attr('id'));
+        }
+      });
+      if (ids.length != ShouldCheckSize) {
+        alertMsg('你目前选中的人数为' + ids.length + '个,需要选中' + ShouldCheckSize + "个");
+      } else {
+        $(BindModal).modal('setting', {
+          closable: true,
+          onDeny: function () {
+            window.close();
+          }
+        }).modal('show');
+      }
+    }
+  }
 
-	/**
-	 * 当投票成功时调用
-	 */
-	function voteSuccess() {
-		$('#modal_bind').modal('hide');
-		var allCom = $(AllComCon).find('.segment');
-		$(allCom).each(function (index, data) {
-			if ($(data).data('check')) {
-				var count = $(data).find('.VOTE_SUM');
-				$(count).text(Number($(count).text()) + 1);
-				$(data).dimmer('hide');
-				$(data).toggleClass('inverted');
-			}
-		});
-		$('#showResult').addClass('huge').animate({
-			right: '+50px',
-			top: '+50px'
-		}).popup('show');
-		$(showCheckOneBtn).transition('stop');
-	}
+  /**
+   * 当投票成功时调用
+   */
+  function voteSuccess() {
+    $('#modal_bind').modal('hide');
+    var allCom = $(AllComCon).find('.segment');
+    $(allCom).each(function (index, data) {
+      if ($(data).data('check')) {
+        var count = $(data).find('.VOTE_SUM');
+        $(count).text(Number($(count).text()) + 1);
+        $(data).dimmer('hide');
+        $(data).toggleClass('inverted');
+      }
+    });
+    $('#showResult').addClass('huge').animate({
+      right: '+50px',
+      top: '+50px'
+    }).popup('show');
+    $(showCheckOneBtn).transition('stop');
+  }
 
-	/**
-	 * 选中一个
-	 * @param id
-	 */
-	function checkOne(id) {
-		if (VoteIsStop) {
-			alertMsg('投票活动已经停止');
-		} else {
-			if (checkSize < ShouldCheckSize) {
-				var the = $('#' + id);
-				$(the).find('.Img_Dimmer').dimmer('hide');//隐藏图片dimmer
-				$(the).data('check', true);
-				checkSize++;
-				$(the).dimmer('show');
-				showChange();
-			} else {
-				alertMsg('最多只能选' + ShouldCheckSize + '个');
-			}
-		}
-	}
+  /**
+   * 选中一个
+   * @param id
+   */
+  function checkOne(id) {
+    if (VoteIsStop) {
+      alertMsg('投票活动已经停止');
+    } else {
+      if (checkSize < ShouldCheckSize) {
+        var the = $('#' + id);
+        $(the).find('.Img_Dimmer').dimmer('hide');//隐藏图片dimmer
+        $(the).data('check', true);
+        checkSize++;
+        $(the).dimmer('show');
+        showChange();
+      } else {
+        alertMsg('最多只能选' + ShouldCheckSize + '个');
+      }
+    }
+  }
 
-	/**
-	 * 当选中或取消选中时调用
-	 */
-	function showChange() {
-		var icon = $(showCheckOneBtn).find('.icon').first();
-		if (checkSize >= ShouldCheckSize) {
-			$(icon).addClass('star').text('');
-			$(showCheckOneBtn).addClass('huge').animate({
-				left: '+50px',
-				top: '+50px'
-			}).popup('show');
-			$(showCheckOneBtn).transition('set looping').transition('pulse');
-		} else {
-			$(icon).text(checkSize);
-			$(showCheckOneBtn).transition('bounce');
-		}
-	}
+  /**
+   * 当选中或取消选中时调用
+   */
+  function showChange() {
+    var icon = $(showCheckOneBtn).find('.icon').first();
+    if (checkSize >= ShouldCheckSize) {
+      $(icon).addClass('star').text('');
+      $(showCheckOneBtn).addClass('huge').animate({
+        left: '+50px',
+        top: '+50px'
+      }).popup('show');
+      $(showCheckOneBtn).transition('set looping').transition('pulse');
+    } else {
+      $(icon).text(checkSize);
+      $(showCheckOneBtn).transition('bounce');
+    }
+  }
 
-	/**
-	 * 取消一个
-	 * @param id
-	 */
-	function cancelOne(id) {
-		if (checkSize > 0) {
-			var the = $('#' + id);
-			$(the).data('check', false);
-			checkSize--;
-			$(the).dimmer('hide');
-			showChange();
-		}
-	}
+  /**
+   * 取消一个
+   * @param id
+   */
+  function cancelOne(id) {
+    if (checkSize > 0) {
+      var the = $('#' + id);
+      $(the).data('check', false);
+      checkSize--;
+      $(the).dimmer('hide');
+      showChange();
+    }
+  }
 
-	/**
-	 * 把结果按照票数排序
-	 */
-	function showResult() {
-		var allCom = $(AllComCon).find('.column');
-		$(allCom).sort(function (a, b) {
-			var aSum = $(a).find('.VOTE_SUM').text();
-			var bSum = $(b).find('.VOTE_SUM').text();
-			return bSum - aSum;
-		}).appendTo(AllComCon);
-		goTop();
-	}
+  /**
+   * 把结果按照票数排序
+   */
+  function showResult() {
+    var allCom = $(AllComCon).find('.column');
+    $(allCom).sort(function (a, b) {
+      var aSum = $(a).find('.VOTE_SUM').text();
+      var bSum = $(b).find('.VOTE_SUM').text();
+      return bSum - aSum;
+    }).appendTo(AllComCon);
+    goTop();
+  }
 
 </script>
 
 <!--模版-->
 <div style="display: none">
 
-	<!--基本信息-->
-	<div id="BasicInfo_TEMP">
-		<i class="icon star circular"></i>
+  <!--基本信息-->
+  <div id="BasicInfo_TEMP">
+    <i class="icon star circular"></i>
 
-		<div class="content">
-			{{VoteName}}
-			<div class="sub header">{{VoteDes}}</div>
-		</div>
-	</div>
+    <div class="content">
+      {{VoteName}}
+      <div class="sub header">{{VoteDes}}</div>
+    </div>
+  </div>
 
-	<!--一个竞选者-->
-	<div id="One_TEMP">
-		{{#.}}
-		<div class="column">
-			<div class="ui stacked segment DES" id="{{id}}" data-check="false" data-title="{{name}}"
-			     data-content="{{des}}" data-variation="inverted" data-position="bottom center">
-				<!--dimmer-->
-				<div class="ui dimmer">
-					<div class="content">
-						<div class="center">
-							<div class="ui center aligned header icon">
-								<i class="icon heart red inverted circular"></i>
+  <!--一个竞选者-->
+  <div id="One_TEMP">
+    {{#.}}
+    <div class="column">
+      <div class="ui stacked segment DES" id="{{id}}" data-check="false" data-title="{{name}}"
+           data-content="{{des}}" data-variation="inverted" data-position="bottom center">
+        <!--dimmer-->
+        <div class="ui dimmer">
+          <div class="content">
+            <div class="center">
+              <div class="ui center aligned header icon">
+                <i class="icon heart red inverted circular"></i>
 
-								<div class="content">
-									{{name}}
-								</div>
-								<div class="ui button mini circular black" onclick="cancelOne({{id}})">取消</div>
-							</div>
-						</div>
-					</div>
-				</div>
+                <div class="content">
+                  {{name}}
+                </div>
+                <div class="ui button mini circular black" onclick="cancelOne({{id}})">取消</div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-				<div class="ui image rounded fluid">
-					<!--dimmer-->
-					<div class="ui dimmer Img_Dimmer">
-						<div class="content">
-							<div class="center">
-								<div class="ui button large blue" onclick="checkOne({{id}})">
-									选择
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="ui label black inverted corner icon"><i class="icon VOTE_SUM">{{voteSum}}</i></div>
-					<img src="{{picUrl}}" alt="{{name}}:{{des}}">
-				</div>
-				<div class="ui divider inverted"></div>
-				<div class="ui ribbon label">{{name}}
-				</div>
-			</div>
-		</div>
-		{{/.}}
-	</div>
+        <div class="ui image rounded fluid">
+          <!--dimmer-->
+          <div class="ui dimmer Img_Dimmer">
+            <div class="content">
+              <div class="center">
+                <div class="ui button large blue" onclick="checkOne({{id}})">
+                  选择
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ui label black inverted corner icon"><i class="icon VOTE_SUM">{{voteSum}}</i></div>
+          <img src="{{picUrl}}" alt="{{name}}:{{des}}">
+        </div>
+        <div class="ui divider inverted"></div>
+        <div class="ui ribbon label">{{name}}
+        </div>
+      </div>
+    </div>
+    {{/.}}
+  </div>
 
 </div>
 

@@ -20,38 +20,38 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "myvote", schema = "", catalog = "weixin")
 public class MyVoteEntity {
-	private String xh;
+  private String xh;
 
-	@Id
-	@Column(name = "XH", nullable = false, insertable = true, updatable = true, length = 10)
-	public String getXh() {
-		return xh;
-	}
+  @Id
+  @Column(name = "XH", nullable = false, insertable = true, updatable = true, length = 10)
+  public String getXh() {
+    return xh;
+  }
 
-	public void setXh(String xh) {
-		this.xh = xh;
-	}
+  public void setXh(String xh) {
+    this.xh = xh;
+  }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
 
-		MyVoteEntity that = (MyVoteEntity) o;
+    MyVoteEntity that = (MyVoteEntity) o;
 
-		return !(xh != null ? !xh.equals(that.xh) : that.xh != null);
+    return !(xh != null ? !xh.equals(that.xh) : that.xh != null);
 
-	}
+  }
 
-	@Override
-	public int hashCode() {
-		return xh != null ? xh.hashCode() : 0;
-	}
+  @Override
+  public int hashCode() {
+    return xh != null ? xh.hashCode() : 0;
+  }
 
-	public MyVoteEntity(String xh) {
-		this.xh = xh;
-	}
+  public MyVoteEntity(String xh) {
+    this.xh = xh;
+  }
 
-	public MyVoteEntity() {
-	}
+  public MyVoteEntity() {
+  }
 }
