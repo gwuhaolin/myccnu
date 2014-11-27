@@ -40,6 +40,7 @@ public class RestConfig extends ResourceConfig {
         register(ServiceFeedback.class);
         register(ServiceStudentAllInfo.class);
         register(ServiceCET.class);
+        register(ServiceGithub.class);
         //注册数据转换器
         register(JacksonJsonProvider.class);
 
