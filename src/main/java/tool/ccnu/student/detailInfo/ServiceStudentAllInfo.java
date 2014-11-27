@@ -15,10 +15,10 @@ import javax.ws.rs.Produces;
 @Produces({"application/javascript"})
 public class ServiceStudentAllInfo {
 
-  @JSONP(queryParam = R.JSONP_CALLBACK)
-  @GET
-  @Path("/downloadAndStoreToSQLFromJWCwhereInfoNull")
-  public int ded() {
-    return ManageStudentAllInfo.downloadAndStoreToSQLFromJWCwhereInfoNull();
-  }
+    @JSONP(queryParam = R.JSONP_CALLBACK)
+    @GET
+    @Path("/downloadAndStoreToSQLFromJWCwhereInfoNull")
+    public int ded() {
+        return ManageStudentAllInfo.downloadAndStoreToSQLFromJWCwhereInfoNull();
+    }
 }

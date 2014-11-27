@@ -10,37 +10,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <link href="../../lib/css/semantic.min.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="../../lib/css/main.css">
-  <title>搜索结果</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link href="../../lib/css/semantic.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../../lib/css/main.css">
+    <title>搜索结果</title>
 </head>
 <body>
 <div class="ui stackable three column page grid">
-  <%
-    request.setCharacterEncoding("UTF-8");
-    response.setCharacterEncoding("UTF-8");
-    String want = request.getParameter("want");
-  %>
-  <%--默认拿出前changeCount通知--%>
-  <jsp:include page="GetAJAXServlet.jsp">
-    <jsp:param name="begin" value="0"/>
-    <jsp:param name="want" value="<%=want%>"/>
-  </jsp:include>
-  <%--ajax 加载更多--%>
-  <button class="ui button fluid circular" onclick="ajaxMore(this);" begin="0" style="margin-top: 10px">更多
-  </button>
-  <div class="ui divider horizontal icon inverted"><i class="icon smile"></i></div>
+    <%
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        String want = request.getParameter("want");
+    %>
+    <%--默认拿出前changeCount通知--%>
+    <jsp:include page="GetAJAXServlet.jsp">
+        <jsp:param name="begin" value="0"/>
+        <jsp:param name="want" value="<%=want%>"/>
+    </jsp:include>
+    <%--ajax 加载更多--%>
+    <button class="ui button fluid circular" onclick="ajaxMore(this);" begin="0" style="margin-top: 10px">更多
+    </button>
+    <div class="ui divider horizontal icon inverted"><i class="icon smile"></i></div>
 </div>
 
 <jsp:include page="searchBox.jsp"/>
 
 <script>
-  showHighLight('<%=want%>');
-  closeWeiXinBtn();
-  <%=Tool.makeAJAXLoadMoreJS_appendJS("GetAJAXServlet.jsp",",want:'"+want+"'","showHighLight('"+want+"');")%>
+    showHighLight('<%=want%>');
+    closeWeiXinBtn();
+    <%=Tool.makeAJAXLoadMoreJS_appendJS("GetAJAXServlet.jsp",",want:'"+want+"'","showHighLight('"+want+"');")%>
 </script>
 
 <script src="../../lib/js/jquery.min.js"></script>

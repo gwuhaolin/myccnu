@@ -23,36 +23,36 @@ import java.util.List;
 @Produces({"application/javascript"})
 public class ServicePjxfScore {
 
-  private static final Logger log = LoggerFactory.getLogger(ServicePjxfScore.class);
+    private static final Logger log = LoggerFactory.getLogger(ServicePjxfScore.class);
 
 
-  @JSONP(queryParam = R.JSONP_CALLBACK)
-  @GET
-  @Path("/list")
-  public List<MyPjxfScoreEntity> get(@CookieParam("XH") String xh) {
-    return ManageMyPjxfScore.list(xh);
-  }
-
-
-  /**
-   * 调用该接口会把成绩库里的所有的同学的平均学分成绩计算一边
-   */
-  @JSONP(queryParam = R.JSONP_CALLBACK)
-  @GET
-  @Path("/updateAll")
-  public void updateAll() {
-    Session session = HibernateUtil.getSession();
-    Query query = session.createQuery("from MyScoreEntity ");
-    List<MyScoreEntity> list = query.list();
-    HibernateUtil.closeSession(session);
-    HashSet<String> set = new HashSet<>();
-    for (MyScoreEntity one : list) {
-      set.add(one.getXh());
+    @JSONP(queryParam = R.JSONP_CALLBACK)
+    @GET
+    @Path("/list")
+    public List<MyPjxfScoreEntity> get(@CookieParam("XH") String xh) {
+        return ManageMyPjxfScore.list(xh);
     }
-    for (String one : set) {
-      log.info("成功更新" + one + "的平均学分成绩");
-      ManageMyPjxfScore.update(one);
+
+
+    /**
+     * 调用该接口会把成绩库里的所有的同学的平均学分成绩计算一边
+     */
+    @JSONP(queryParam = R.JSONP_CALLBACK)
+    @GET
+    @Path("/updateAll")
+    public void updateAll() {
+        Session session = HibernateUtil.getSession();
+        Query query = session.createQuery("from MyScoreEntity ");
+        List<MyScoreEntity> list = query.list();
+        HibernateUtil.closeSession(session);
+        HashSet<String> set = new HashSet<>();
+        for (MyScoreEntity one : list) {
+            set.add(one.getXh());
+        }
+        for (String one : set) {
+            log.info("成功更新" + one + "的平均学分成绩");
+            ManageMyPjxfScore.update(one);
+        }
     }
-  }
 
 }
