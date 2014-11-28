@@ -18,6 +18,6 @@ echo "开始编译代码"
 gradle war
 echo "重新部署项目"
 cp -f ROOT.war ${serverWebPath}"ROOT.war"
-echo "重新启动服务器"
-/opt/jetty/bin/jetty.sh restart
+#echo "重新启动服务器"
+#/opt/jetty/bin/jetty.sh restart
 
