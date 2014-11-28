@@ -1,4 +1,6 @@
 <%@ page import="tool.Tool" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Map" %>
 <%--通知列表--%>
 <%--
   Created by Intellij IDEA.
@@ -31,23 +33,26 @@
         <jsp:param name="want" value="<%=want%>"/>
         <jsp:param name="target" value="<%=target%>"/>
     </jsp:include>
-    <%--ajax 加载更多--%>
-    <button class="ui button fluid circular" onclick="ajaxMore(this);" begin="0" style="margin-top: 10px">更多
-    </button>
-    <div class="ui divider horizontal icon inverted"><i class="icon smile"></i></div>
+    <%=Tool.makeAjaxLoadMoreBtnHtml("showHighLight('" + want + "')")%>
 </div>
+
+<script src="../../lib/js/jquery.min.js"></script>
+<script src="../../lib/js/semantic.min.js"></script>
+<script src="../../lib/js/main.js"></script>
 
 <jsp:include page="searchBox.jsp">
     <jsp:param name="target" value="<%=target%>"/>
 </jsp:include>
 
-<script src="../../lib/js/jquery.min.js"></script>
-<script src="../../lib/js/semantic.min.js"></script>
-<script src="../../lib/js/main.js"></script>
 <script>
     showHighLight('<%=want%>');
     closeWeiXinBtn();
-    <%=Tool.makeAJAXLoadMoreJS_appendJS("GetAJAXServlet.jsp",",want:'"+want+"'","showHighLight('"+want+"');")%>
+    <%
+    Map<String,Object> params=new HashMap<>(1);
+    params.put("want",want);
+    params.put("target",target);
+    %>
+    <%=Tool.makeAJAXLoadMoreJS("GetAJAXServlet.jsp",params)%>
 </script>
 
 </body>

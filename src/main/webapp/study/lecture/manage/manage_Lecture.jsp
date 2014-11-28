@@ -1,5 +1,6 @@
 <%@ page import="study.lecture.ManageEvent" %>
 <%@ page import="tool.R" %>
+<%@ page import="tool.Tool" %>
 <%--通知列表--%>
 <%--
   Created by Intellij IDEA.
@@ -106,9 +107,7 @@
         <jsp:param name="begin" value="0"/>
         <jsp:param name="size" value="<%=R.ChangeCount%>"/>
     </jsp:include>
-    <%--ajax 加载更多--%>
-    <button class="form-control btn-info input-lg" onclick="ajaxMore(this)" begin="0">更多</button>
-    <br>
+    <%=Tool.makeAjaxLoadMoreBtnHtml()%>
 </div>
 </body>
 </html>

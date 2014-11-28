@@ -1,15 +1,19 @@
-<%@ page import="study.lecture.ManageEvent" %>
+<%--一卡通消费明细--%>
+<%@ page import="life.YKT.ManageYKT" %>
 <%@ page import="tool.Tool" %>
-<%@ page import="java.util.Map" %>
 <%@ page import="java.util.HashMap" %>
-<%--通知列表--%>
+<%@ page import="java.util.Map" %>
 <%--
   Created by Intellij IDEA.
   User: WuHaoLin
-  Date: 2/21/14
-  Time: 3:01 PM
+  Date: 2/22/14
+  Time: 2:13 PM
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page errorPage="../../tool/error/index.jsp" %>
+<%
+    int type = Integer.parseInt(request.getParameter("type"));
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,37 +22,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <link href="../../lib/css/semantic.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../../lib/css/main.css">
-
-    <title>最新讲座</title>
+    <script src="../../lib/js/jquery.min.js"></script>
+    <script src="../../lib/js/semantic.min.js"></script>
+    <script src="../../lib/js/main.js"></script>
+    <title><%=ManageYKT.tranTypeInt(type)%>
+    </title>
 </head>
 <body>
 <div class="ui stackable three column page grid">
 
     <%--默认拿出前changeCount通知--%>
     <jsp:include page="GetAJAXServlet.jsp">
-        <jsp:param name="target" value="<%=ManageEvent.TARGET_Lecture%>"/>
         <jsp:param name="begin" value="0"/>
+        <jsp:param name="type" value="<%=type%>"/>
     </jsp:include>
     <%=Tool.makeAjaxLoadMoreBtnHtml()%>
 </div>
-
-<script src="../../lib/js/jquery.min.js"></script>
-<script src="../../lib/js/main.js"></script>
-<script src="../../lib/js/semantic.min.js"></script>
-
 <script>
     <%
     Map<String,Object> params=new HashMap<>(1);
-    params.put("target",ManageEvent.TARGET_Lecture);
+    params.put("type",type);
     %>
     <%=Tool.makeAJAXLoadMoreJS("GetAJAXServlet.jsp",params)%>
-    closeWeiXinBtn();
-
 </script>
-
-<jsp:include page="searchBox.jsp">
-    <jsp:param name="target" value="<%=ManageEvent.TARGET_Lecture%>"/>
-</jsp:include>
-
 </body>
 </html>

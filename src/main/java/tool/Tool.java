@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Created with Intellij IDEA.
@@ -170,73 +171,58 @@ public class Tool {
     }
 
     /**
-     * **生成AJAX加载更多JS 不包含<scritp></scritp>标签
+     * 生成AJAX加载更多JS 不包含<scritp></scritp>标签
      *
-     * @param targetURL **目标URL
-     * @param datas     **传入的参数   如果没有就传入 "" **如果有先加一个,然后dataName:dateValue,dataName:dateValue
-     * @return
+     * @param targetURL 目标URL
+     * @param params    传入的参数,如果没有就传入null
+     *                  如果有先加一个,然后dataName:dateValue,dataName:dateValue
+     * @return js
      */
-    public static String makeAJAXLoadMoreJS(String targetURL, String datas) {
-        StringBuilder re = new StringBuilder(
+    public static String makeAJAXLoadMoreJS(String targetURL, Map<String, Object> params) {
+        String datas = "";
+        if (params != null && params.size() > 0) {
+            for (Map.Entry<String, Object> param : params.entrySet()) {
+                datas += "," + param.getKey() + ":'" + param.getValue() + "'";
+            }
+        }
+        return "var ajaxBegin=0;\n" +
                 "function ajaxMore(btn) {\n" +
-                        "$(btn).addClass('loading');\n" +
-                        "var begin = Number($(btn).attr('begin'));\n" +
-                        "begin += " + R.ChangeCount + ";\n" +
-                        "$.ajax({\n" +
-                        "type: 'POST',\n" +
-                        "url: '" + targetURL + "',\n" +
-                        "data: { begin: begin" + datas + "},\n" +
-                        "contentType: \"application/x-www-form-urlencoded; charset=utf-8\"\n" +
-                        "}).done(function (data) {\n" +
-                        "$(btn).removeClass('loading');\n" +
-                        "if (data.length < 20) {\n" +
-                        "$(btn).text(\"没有更多了!\");\n" +
-                        "$(btn).addClass('disabled');\n" +
-                        "} else {\n" +
-                        "$(btn).before(data);\n" +
-                        "$(btn).text(\"更多\");\n" +
-                        "$(btn).attr('begin', begin);\n" +
-                        "}\n" +
-                        "});\n" +
-                        "}"
-        );
-        return re.toString();
+                "$(btn).addClass('loading');\n" +
+                "ajaxBegin += " + R.ChangeCount + ";\n" +
+                "$.ajax({\n" +
+                "type: 'POST',\n" +
+                "url: '" + targetURL + "',\n" +
+                "data: { begin: ajaxBegin" + datas + "},\n" +
+                "contentType: \"application/x-www-form-urlencoded; charset=utf-8\"\n" +
+                "}).done(function (data) {\n" +
+                "$(btn).removeClass('loading');\n" +
+                "if (data.length < 20) {\n" +
+                "$(btn).text(\"没有更多了!\");\n" +
+                "$(btn).addClass('disabled');\n" +
+                "} else {\n" +
+                "$(btn).parent().before(data);\n" +
+                "$(btn).text(\"更多\");\n" +
+                "}\n" +
+                "});\n" +
+                "}";
     }
 
     /**
-     * **生成AJAX加载更多JS 不包含<scritp></scritp>标签
+     * 生成加载更多按钮的HTML
      *
-     * @param targetURL  **目标URL
-     * @param datas      **传入的参数   如果没有就传入 "" **如果有先加一个,然后dataName:dateValue,dataName:dateValue
-     * @param javastript 如果这次执行加载更多信息成功后执行会  javastript语句
-     * @return
+     * @param onclick 在按钮onclick时要执行的js语句
+     *                注意,在传入js语句时如果js语句有参数,参数要用'包围,不要用"
+     * @return HTML
      */
-    public static String makeAJAXLoadMoreJS_appendJS(String targetURL, String datas, String javastript) {
-        StringBuilder re = new StringBuilder(
-                "function ajaxMore(btn) {\n" +
-                        "$(btn).addClass('loading');\n" +
-                        "var begin = Number($(btn).attr('begin'));\n" +
-                        "begin += " + R.ChangeCount + ";\n" +
-                        "$.ajax({\n" +
-                        "type: 'POST',\n" +
-                        "url: '" + targetURL + "',\n" +
-                        "data: { begin: begin" + datas + "},\n" +
-                        "contentType: \"application/x-www-form-urlencoded; charset=utf-8\"\n" +
-                        "}).done(function (data) {\n" +
-                        "$(btn).removeClass('loading');\n" +
-                        "if (data.length < 20) {\n" +
-                        "$(btn).text(\"没有更多了!\");\n" +
-                        "$(btn).addClass('disabled');\n" +
-                        "} else {\n" +
-                        "$(btn).before(data);\n" +
-                        "$(btn).text(\"更多\");\n" +
-                        "$(btn).attr('begin', begin);\n" +
-                        javastript + "\n" +
-                        "}\n" +
-                        "});\n" +
-                        "}"
-        );
-        return re.toString();
+    public static String makeAjaxLoadMoreBtnHtml(String... onclick) {
+        String js = "";
+        for (String s : onclick) {
+            js += s + ";";
+        }
+        return "<div class='column'>\n" +
+                "        <button class='ui button fluid circular loadMoreBtn' onclick=\"ajaxMore(this);" + js + "\">MORE" +
+                "        </button>\n" +
+                "</div>";
     }
 
     /**

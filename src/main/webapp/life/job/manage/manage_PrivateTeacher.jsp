@@ -1,6 +1,8 @@
 <%@ page import="life.jobs.ManageJob" %>
 <%@ page import="tool.R" %>
 <%@ page import="tool.Tool" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Map" %>
 <%--通知列表--%>
 <%--
   Created by Intellij IDEA.
@@ -91,12 +93,16 @@
         <jsp:param name="begin" value="0"/>
         <jsp:param name="size" value="<%=R.ChangeCount%>"/>
     </jsp:include>
-    <%--ajax 加载更多--%>
-    <button class="form-control btn-info input-lg" onclick="ajaxMore(this)" begin="0">更多</button>
-    <br>
+
+    <%=Tool.makeAjaxLoadMoreBtnHtml()%>
+
 </div>
 <script>
-    <%=Tool.makeAJAXLoadMoreJS("GetJobsManageFormForAJAX.jsp",", target:"+ManageJob.TARGET_PrivateTeacher)%>
+    <%
+    Map<String,Object> params=new HashMap<>(1);
+    params.put("target",ManageJob.TARGET_PrivateTeacher);
+    %>
+    <%=Tool.makeAJAXLoadMoreJS("GetJobsManageFormForAJAX.jsp",params)%>
 </script>
 </body>
 </html>

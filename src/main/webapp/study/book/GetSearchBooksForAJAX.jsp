@@ -15,8 +15,7 @@
     String pageIndex = request.getParameter("page");
     List<SearchBook.MyBook> books = SearchBook.get(want, pageIndex);
     if (books != null && books.size() > 0) {
-        for (int i = 0; i < books.size(); i++) {
-            SearchBook.MyBook book = books.get(i);
+        for (SearchBook.MyBook book : books) {
 %>
 <div class="column">
 

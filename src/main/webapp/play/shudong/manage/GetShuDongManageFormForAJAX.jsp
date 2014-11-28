@@ -27,9 +27,6 @@
                 <span class="input-group-addon">浏览次数</span>
                 <input class="form-control" type="text" name="seeCount" value="<%=one.getSeeCount()%>">
             </div>
-            <%--学号--%>
-            <a class="btn" href="/java/studentsInfo/index.jsp?XH=<%=one.getXh()%>"><%=one.getXh()%>
-            </a>
 
         </div>
         <input type="hidden" name="id" value="<%=one.getId()%>">

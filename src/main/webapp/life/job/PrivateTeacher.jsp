@@ -1,5 +1,7 @@
 <%@ page import="life.jobs.ManageJob" %>
 <%@ page import="tool.Tool" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
 <%--通知列表--%>
 <%--
   Created by Intellij IDEA.
@@ -28,9 +30,9 @@
         <jsp:param name="target" value="<%=ManageJob.TARGET_PrivateTeacher%>"/>
         <jsp:param name="begin" value="0"/>
     </jsp:include>
-    <%--ajax 加载更多--%>
-    <button class="ui button fluid circular" onclick="ajaxMore(this)" begin="0" style="margin-top: 10px">更多
-    </button>
+
+    <%=Tool.makeAjaxLoadMoreBtnHtml()%>
+
     <div class="ui divider horizontal icon inverted"><i class="icon smile"></i></div>
 
     <div class="column">
@@ -63,7 +65,11 @@
 
 </div>
 <script>
-    <%=Tool.makeAJAXLoadMoreJS("GetAJAXServlet.jsp",",target:'"+ManageJob.TARGET_PrivateTeacher+"'")%>
+    <%
+    Map<String,Object> params=new HashMap<>(1);
+    params.put("target",ManageJob.TARGET_PrivateTeacher);
+    %>
+    <%=Tool.makeAJAXLoadMoreJS("GetAJAXServlet.jsp",params)%>
 </script>
 <jsp:include page="searchBox.jsp"/>
 

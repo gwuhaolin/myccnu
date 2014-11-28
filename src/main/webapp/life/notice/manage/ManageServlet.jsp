@@ -25,15 +25,21 @@
         String orgUrl = request.getParameter("orgUrl");
         String content = request.getParameter("content");
 
-        if (cmd.equals(ManageNotice.CMD_Add)) {//添加
-            MyNoticeEntity noticeEntity = new MyNoticeEntity(title, date, orgUrl, content, fromSite);
-            ManageNotice.add_NotSame(noticeEntity);
-        } else if (cmd.equals(ManageNotice.CMD_Change)) {//修改
-            MyNoticeEntity noticeEntity = new MyNoticeEntity(title, date, orgUrl, content, fromSite);
-            noticeEntity.setId(id);
-            ManageNotice.changeNotice(noticeEntity);
-        } else if (cmd.equals(ManageNotice.CMD_Delete)) {//删除
-            ManageNotice.remove(id);
+        switch (cmd) {
+            case ManageNotice.CMD_Add: {//添加
+                MyNoticeEntity noticeEntity = new MyNoticeEntity(title, date, orgUrl, content, fromSite);
+                ManageNotice.add_NotSame(noticeEntity);
+                break;
+            }
+            case ManageNotice.CMD_Change: {//修改
+                MyNoticeEntity noticeEntity = new MyNoticeEntity(title, date, orgUrl, content, fromSite);
+                noticeEntity.setId(id);
+                ManageNotice.changeNotice(noticeEntity);
+                break;
+            }
+            case ManageNotice.CMD_Delete: //删除
+                ManageNotice.remove(id);
+                break;
         }
         response.sendRedirect("manage.jsp");
         return;

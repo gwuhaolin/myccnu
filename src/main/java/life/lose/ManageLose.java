@@ -111,4 +111,13 @@ public class ManageLose {
         System.out.print(re);
     }
 
+    public static String tranTypeToChinese(byte type) {
+        switch (type) {
+            case TYPE_Lose:
+                return "大家掉了";
+            case TYPE_Update:
+                return "大家捡到";
+        }
+        return null;
+    }
 }

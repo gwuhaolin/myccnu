@@ -2,18 +2,18 @@
 <%--链接--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="four fluid ui buttons mini" style="position: fixed;bottom: 0;z-index: 50;margin: 0">
-    <div class="ui button black" onclick="window.location.href='list_lose.jsp'">
+    <a class="ui button black" href="index.jsp?type=<%=ManageLose.TYPE_Lose%>">
         大家掉了
-    </div>
-    <div class="ui button green" onclick="window.location.href='addLose.jsp'">
+    </a>
+    <a class="ui button green" href="addLose.jsp">
         我遗失了
-    </div>
-    <div class="ui button red" onclick="window.location.href='addUpdate.jsp'">
+    </a>
+    <a class="ui button red" href="addUpdate.jsp">
         我捡到了
-    </div>
-    <div class="ui button blue" onclick="window.location.href='list_update.jsp'">
+    </a>
+    <a class="ui button blue" href="index.jsp?type=<%=ManageLose.TYPE_Update%>">
         大家捡到
-    </div>
+    </a>
 </div>
 <%--搜索--%>
 <form action="searchResult.jsp" method="post" name="search" style="margin: 0;position: fixed;top: 0;opacity: 0.8">

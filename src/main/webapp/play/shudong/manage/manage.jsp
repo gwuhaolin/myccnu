@@ -1,5 +1,7 @@
 <%@ page import="tool.R" %>
 <%@ page import="tool.Tool" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
 <%--管理树洞--%>
 <%--
   Created by Intellij IDEA.
@@ -39,11 +41,11 @@
         <jsp:param name="size" value="<%=R.ChangeCount%>"/>
     </jsp:include>
     <%--ajax 加载更多--%>
-    <button class="form-control btn-info input-lg" onclick="ajaxMore(this)" begin="0">更多</button>
+    <button class="form-control btn-info input-lg" onclick="ajaxMore(this)">更多</button>
     <br>
 </div>
 <script>
-    <%=Tool.makeAJAXLoadMoreJS("GetShuDongManageFormForAJAX.jsp","")%>
+    <%=Tool.makeAJAXLoadMoreJS("GetShuDongManageFormForAJAX.jsp",null)%>
 </script>
 </body>
 </html>

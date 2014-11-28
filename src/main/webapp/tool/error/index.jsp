@@ -18,7 +18,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-    <link rel="stylesheet" type="text/css" href="../lib/css/main.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/css/main.css">
     <link href="../../lib/css/semantic.min.css" rel="stylesheet">
 
 </head>
@@ -33,11 +33,11 @@
 
             <div class="ui divider icon horizontal inverted"><i class="ui icon smile"></i></div>
             <div class="ui column">
-                <a class="ui button blue small" href="/tool/joinUs/index.html">来和我们一起修BUG</a>
+                <a class="ui button blue small" href="../../tool/joinUs/index.html">来和我们一起修BUG</a>
             </div>
             <div style="margin: 5px"></div>
             <div class="ui column">
-                <a class="ui button green small" href="/tool/feedback/index.html">告诉我们你的建议或好点子</a>
+                <a class="ui button green small" href="../../tool/feedback/index.html">告诉我们你的建议或好点子</a>
             </div>
         </div>
     </div>
@@ -45,7 +45,7 @@
 
 <script src="../../lib/js/jquery.min.js"></script>
 <script src="../../lib/js/semantic.min.js"></script>
-<script src="../lib/js/main.js"></script>
+<script src="../../lib/js/main.js"></script>
 
 </body>
 </html>

@@ -74,14 +74,11 @@
     <jsp:include page="GetNoticeManageFormForAJAX.jsp">
         <jsp:param name="begin" value="0"/>
     </jsp:include>
-
-    <%--ajax 加载更多--%>
-    <button class="form-control btn-info input-lg" onclick="ajaxMore(this)" begin="0">更多</button>
-    <br>
+    <%=Tool.makeAjaxLoadMoreBtnHtml()%>
 </div>
 
 <script>
-    <%=Tool.makeAJAXLoadMoreJS("GetNoticeManageFormForAJAX.jsp","")%>
+    <%=Tool.makeAJAXLoadMoreJS("GetNoticeManageFormForAJAX.jsp",null)%>
 </script>
 
 </body>

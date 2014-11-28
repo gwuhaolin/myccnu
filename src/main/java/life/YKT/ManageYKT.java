@@ -34,45 +34,19 @@ public class ManageYKT {
      * 2补助
      * 3刷卡考勤
      */
-    private static final int Type_State = 0, Type_Detail = 1, Type_HelpMoney = 2, Type_KaoQin = 3;
+    public static final int Type_State = 0, Type_Detail = 1, Type_HelpMoney = 2, Type_KaoQin = 3;
 
     /**
-     * 如果抓取失败, 就从数据库缓存中获取最新的查询数据,每次拿出几个?
-     */
-    private static final int MaxSize = 5;
-
-    /**
-     * @param type    要查询的数据类型区分是一卡通状态0,消费明细1,补助2,还是刷卡考勤3
-     * @param xh      学号
-     * @param maxSize 一次性最多去除多少个
-     * @return 目前最近的数据, 如果数据库中一个也没有就返回null
-     */
-    private static List<MyYktEntity> get(int type, String xh, int maxSize) {
-        Session session = HibernateUtil.getSession();
-        Query query = session.createQuery("from MyYktEntity where type=? and xh=?");
-        query.setInteger(0, type);
-        query.setString(1, xh);
-        query.setMaxResults(maxSize);
-        List<MyYktEntity> re = query.list();
-        HibernateUtil.closeSession(session);
-        if (re.size() < 1) {
-            return null;
-        } else {
-            return re;
-        }
-    }
-
-    /**
-     * 获得一卡通余额,和现在的卡的使用状态
+     * 抓取获得一卡通余额,和现在的卡的使用状态,保存到数据库
      *
-     * @param XH 学号
-     * @param MM 密码
-     * @return 如果抓取失败, 就从数据库缓存中获取最新的查询数据,如果数据库中也没有就返回 囧
+     * @param cookies 获取到的cookies
+     * @param XH      学号
+     * @return 如果抓取失败, 就返回null
      */
-    public static MyYktEntity spiderState(String XH, String MM) {
+    private static MyYktEntity spiderState(String XH, Map<String, String> cookies) {
         try {
             Connection connection = Jsoup.connect("http://192.168.44.7:10000/sisms/index.php/person/cardinfo");
-            connection.cookies(getCookies(XH, MM));
+            connection.cookies(cookies);
             connection.userAgent(R.USER_AGENT);
             connection.timeout(R.ConnectTimeout * 100);
             Document document;
@@ -89,14 +63,7 @@ public class ManageYKT {
             return myYktEntity;
         } catch (Exception e) {
             log.error(Arrays.toString(e.getStackTrace()));
-            List<MyYktEntity> re = get(Type_State, XH, 1);
-            if (re != null) {
-                return re.get(0);
-            } else {
-                MyYktEntity shitRe = new MyYktEntity();
-                shitRe.setRemainMoney("囧");
-                return shitRe;
-            }
+            return null;
         }
 
     }
@@ -105,185 +72,154 @@ public class ManageYKT {
     /**
      * 获得一卡通从今天前4天的消费明细
      *
-     * @param XH 学号
-     * @param MM 密码
-     * @return 如果抓取失败, 就从数据库缓存中获取最新的查询数据,如果数据库中也没有就返回null
+     * @param XH      学号
+     * @param cookies 获取到的cookies
+     * @return 如果抓取失败就返回null
      */
-    public static List<MyYktEntity> spiderDetail(String XH, String MM) {
+    private static List<MyYktEntity> spiderDetail(String XH, Map<String, String> cookies) {
         Connection connection = Jsoup.connect("http://192.168.44.7:10000/sisms/index.php/person/deal");
         try {
-            connection.cookies(getCookies(XH, MM));
-        } catch (NetworkException | ValidateException e) {
-            log.error(Arrays.toString(e.getStackTrace()));
-            return get(Type_Detail, XH, MaxSize);
-        }
-        connection.data("start_date", getBeforeDate(4));//起始时间
-        connection.data("end_date", Tool.time_YYYY_MM_DD());//结束时间
-        connection.timeout(R.ConnectTimeout * 100);
-        connection.userAgent(R.USER_AGENT);
-        Document document;
-        try {
+            connection.cookies(cookies);
+            connection.data("start_date", getBeforeDate(4));//起始时间
+            connection.data("end_date", Tool.time_YYYY_MM_DD());//结束时间
+            connection.timeout(R.ConnectTimeout * 100);
+            connection.userAgent(R.USER_AGENT);
+            Document document;
             document = connection.post();
+            Elements trs;
+            trs = document.getElementsByClass("baseTable").first().getElementsByTag("tr");
+            List<MyYktEntity> re = new LinkedList<>();
+            //解析数据
+            for (int i = 1; i < trs.size(); i++) {
+                try {
+                    Elements tds = trs.get(i).getElementsByTag("td");
+                    String date = tds.get(1).text();
+                    String location = tds.get(2).text();
+                    String changeMoney = tds.get(4).text();
+                    String remainMoney = tds.get(5).text();
+                    MyYktEntity oneChange = new MyYktEntity();
+                    oneChange.setType(Type_Detail);
+                    oneChange.setXh(XH);
+                    oneChange.setTime(date);
+                    oneChange.setLocation(location);
+                    oneChange.setChangeMoney(changeMoney);
+                    oneChange.setRemainMoney(remainMoney);
+                    re.add(oneChange);
+                } catch (Exception e) {
+                    log.error(Arrays.toString(e.getStackTrace()));
+                }
+            }
+            HibernateUtil.addOrUpdateEntitys(re);//把查询成功的保存到数据库
+            return re;
         } catch (IOException e) {
             log.error(Arrays.toString(e.getStackTrace()));
-            return get(Type_Detail, XH, MaxSize);
+            return null;
         }
-        Elements trs;
-        try {
-            trs = document.getElementsByClass("baseTable").first().getElementsByTag("tr");
-        } catch (Exception e) {
-            log.error(Arrays.toString(e.getStackTrace()));
-            return get(Type_Detail, XH, MaxSize);
-        }
-        List<MyYktEntity> re = new LinkedList<>();
-        //解析数据
-        for (int i = 1; i < trs.size(); i++) {
-            try {
-                Elements tds = trs.get(i).getElementsByTag("td");
-                String date = tds.get(1).text();
-                String location = tds.get(2).text();
-                String changeMoney = tds.get(4).text();
-                String remainMoney = tds.get(5).text();
-                MyYktEntity oneChange = new MyYktEntity();
-                oneChange.setType(Type_Detail);
-                oneChange.setXh(XH);
-                oneChange.setTime(date);
-                oneChange.setLocation(location);
-                oneChange.setChangeMoney(changeMoney);
-                oneChange.setRemainMoney(remainMoney);
-                re.add(oneChange);
-            } catch (Exception e) {
-                log.error(Arrays.toString(e.getStackTrace()));
-            }
-        }
-        HibernateUtil.addOrUpdateEntitys(re);//把查询成功的保存到数据库
-        return re;
     }
-
 
     /**
      * 获得一卡通从2013-01-01开始到现在的补助明细
      *
-     * @param XH 学号
-     * @param MM 密码
+     * @param XH      学号
+     * @param cookies 获取到的验证cookies
      * @return 如果抓取失败, 就从数据库缓存中获取最新的查询数据,如果数据库中也没有就返回null
      */
-    public static List<MyYktEntity> spiderHelpMoney(String XH, String MM) {
+    private static List<MyYktEntity> spiderHelpMoney(String XH, Map<String, String> cookies) {
         Connection connection = Jsoup.connect("http://192.168.44.7:10000/sisms/index.php/person/allowance");
         try {
-            connection.cookies(getCookies(XH, MM));
-        } catch (NetworkException | ValidateException e) {
-            log.error(Arrays.toString(e.getStackTrace()));
-            return get(Type_HelpMoney, XH, MaxSize);
-        }
-        String curDate = Tool.time_YYYY_MM_DD();
-        connection.data("start_date", curDate.split("-")[0] + "-01-01");//起始时间
-        connection.data("end_date", curDate);//结束时间
-        connection.timeout(R.ConnectTimeout * 100);
-        connection.userAgent(R.USER_AGENT);
-        Document document;
-        try {
+            connection.cookies(cookies);
+            String curDate = Tool.time_YYYY_MM_DD();
+            connection.data("start_date", curDate.split("-")[0] + "-01-01");//起始时间
+            connection.data("end_date", curDate);//结束时间
+            connection.timeout(R.ConnectTimeout * 100);
+            connection.userAgent(R.USER_AGENT);
+            Document document;
             document = connection.post();
+            Elements trs;
+            trs = document.getElementsByClass("baseTable").first().getElementsByTag("tr");
+            List<MyYktEntity> re = new LinkedList<>();
+            //解析数据
+            for (int i = 1; i < trs.size(); i++) {
+                try {
+                    Elements tds = trs.get(i).getElementsByTag("td");
+                    String date = tds.get(3).text();
+                    String location = tds.get(4).text();//这是补助名称
+                    String changeMoney = tds.get(5).text();
+                    String remainMoney = tds.get(6).text();
+                    MyYktEntity oneChange = new MyYktEntity();
+                    oneChange.setType(Type_HelpMoney);
+                    oneChange.setXh(XH);
+                    oneChange.setTime(date);
+                    oneChange.setLocation(location);
+                    oneChange.setChangeMoney(changeMoney);
+                    oneChange.setRemainMoney(remainMoney);
+                    re.add(oneChange);
+                } catch (Exception e) {
+                    log.error(Arrays.toString(e.getStackTrace()));
+                }
+            }
+            HibernateUtil.addOrUpdateEntitys(re);//把查询成功的保存到数据库
+            return re;
         } catch (IOException e) {
             log.error(Arrays.toString(e.getStackTrace()));
-            return get(Type_HelpMoney, XH, MaxSize);
+            return null;
         }
-        Elements trs;
-        try {
-            trs = document.getElementsByClass("baseTable").first().getElementsByTag("tr");
-        } catch (Exception e) {
-            log.error(Arrays.toString(e.getStackTrace()));
-            return get(Type_HelpMoney, XH, MaxSize);
-        }
-        List<MyYktEntity> re = new LinkedList<>();
-        //解析数据
-        for (int i = 1; i < trs.size(); i++) {
-            try {
-                Elements tds = trs.get(i).getElementsByTag("td");
-                String date = tds.get(3).text();
-                String location = tds.get(4).text();//这是补助名称
-                String changeMoney = tds.get(5).text();
-                String remainMoney = tds.get(6).text();
-                MyYktEntity oneChange = new MyYktEntity();
-                oneChange.setType(Type_HelpMoney);
-                oneChange.setXh(XH);
-                oneChange.setTime(date);
-                oneChange.setLocation(location);
-                oneChange.setChangeMoney(changeMoney);
-                oneChange.setRemainMoney(remainMoney);
-                re.add(oneChange);
-            } catch (Exception e) {
-                log.error(Arrays.toString(e.getStackTrace()));
-            }
-        }
-        HibernateUtil.addOrUpdateEntitys(re);//把查询成功的保存到数据库
-        return re;
+
     }
 
     /**
      * 获得最近一个星期内的考勤
      *
-     * @param XH 学号
-     * @param MM 密码
+     * @param XH      学号
+     * @param cookies 获取到的验证cookies
      * @return 如果抓取失败, 就从数据库缓存中获取最新的查询数据,如果数据库中也没有就返回null
      */
-    public static List<MyYktEntity> spiderKaoQin(String XH, String MM) {
+    private static List<MyYktEntity> spiderKaoQin(String XH, Map<String, String> cookies) {
         Connection connection = Jsoup.connect("http://192.168.44.7:10000/sisms/index.php/person/timer");
         try {
-            connection.cookies(getCookies(XH, MM));
-        } catch (NetworkException | ValidateException e) {
-            log.error(Arrays.toString(e.getStackTrace()));
-            return get(Type_KaoQin, XH, MaxSize);
-        }
-        String curDate = Tool.time_YYYY_MM_DD();
-        connection.data("start_date", Tool.DateFormat_YYYY_MM_DD.format(new Date(System.currentTimeMillis() - 604800000)));//起始时间,一周前
-        connection.data("end_date", curDate);//结束时间
-        connection.timeout(R.ConnectTimeout * 100);
-        connection.userAgent(R.USER_AGENT);
-        Document document;
-        try {
+            connection.cookies(cookies);
+            String curDate = Tool.time_YYYY_MM_DD();
+            connection.data("start_date", Tool.DateFormat_YYYY_MM_DD.format(new Date(System.currentTimeMillis() - 604800000)));//起始时间,一周前
+            connection.data("end_date", curDate);//结束时间
+            connection.timeout(R.ConnectTimeout * 100);
+            connection.userAgent(R.USER_AGENT);
+            Document document;
             document = connection.post();
+            Elements trs;
+            trs = document.getElementsByClass("baseTable").first().getElementsByTag("tr");
+            List<MyYktEntity> re = new LinkedList<>();
+            //解析数据
+            for (int i = 1; i < trs.size(); i++) {
+                try {
+                    Elements tds = trs.get(i).getElementsByTag("td");
+                    String date = tds.get(1).text();
+                    String location = tds.get(2).text();
+                    MyYktEntity oneChange = new MyYktEntity();
+                    oneChange.setType(Type_KaoQin);
+                    oneChange.setXh(XH);
+                    oneChange.setTime(date);
+                    oneChange.setLocation(location);
+                    re.add(oneChange);
+                } catch (Exception e) {
+                    log.error(Arrays.toString(e.getStackTrace()));
+
+                }
+            }
+            HibernateUtil.addOrUpdateEntitys(re);//把查询成功的保存到数据库
+            return re;
         } catch (IOException e) {
             log.error(Arrays.toString(e.getStackTrace()));
-            return get(Type_KaoQin, XH, MaxSize);
+            return null;
         }
-        Elements trs;
-        try {
-            trs = document.getElementsByClass("baseTable").first().getElementsByTag("tr");
-        } catch (Exception e) {
-            log.error(Arrays.toString(e.getStackTrace()));
-            return get(Type_KaoQin, XH, MaxSize);
-        }
-        List<MyYktEntity> re = new LinkedList<>();
-        //解析数据
-        for (int i = 1; i < trs.size(); i++) {
-            try {
-                Elements tds = trs.get(i).getElementsByTag("td");
-                String date = tds.get(1).text();
-                String location = tds.get(2).text();
-                MyYktEntity oneChange = new MyYktEntity();
-                oneChange.setType(Type_KaoQin);
-                oneChange.setXh(XH);
-                oneChange.setTime(date);
-                oneChange.setLocation(location);
-                re.add(oneChange);
-            } catch (Exception e) {
-                log.error(Arrays.toString(e.getStackTrace()));
-
-            }
-        }
-        HibernateUtil.addOrUpdateEntitys(re);//把查询成功的保存到数据库
-        return re;
     }
-
 
     /**
      * 挂失解挂
      * TODO 带调试,无法工作
      *
-     * @param XH
-     * @param MM
-     * @return
+     * @param XH 学号
+     * @param MM 密码
+     * @return 结果
      */
     public static String gsjg(String XH, String MM, String yktMM, boolean isJG) throws Exception {
         String url = "http://192.168.44.7:10000/sisms/index.php/person/guashi";
@@ -339,7 +275,7 @@ public class ManageYKT {
      * @throws tool.NetworkException  学校服务器异常
      * @throws tool.ValidateException 身份验证失败
      */
-    public static Map<String, String> getCookies(String XH, String MM) throws NetworkException, ValidateException {
+    private static Map<String, String> getCookies(String XH, String MM) throws NetworkException, ValidateException {
         Connection connection = Jsoup.connect("http://192.168.44.7:10000/sisms/index.php/login/getimgcode");
         connection.ignoreContentType(true);
         Map<String, String> cookies;
@@ -374,5 +310,86 @@ public class ManageYKT {
         return Tool.DateFormat_YYYY_MM_DD.format(reDate);
     }
 
+    /**
+     * 一次性抓取所有信息,只用获取一次cookies
+     * 开启一个新进程去抓取除去state的其他的信息
+     *
+     * @param xh 学号
+     * @param mm 密码
+     * @return 获取到的state, 如果获取state失败就返回null
+     */
+    private static MyYktEntity spiderAll(String xh, String mm) {
+        try {
+            Map<String, String> cookies = getCookies(xh, mm);
+            MyYktEntity state = spiderState(xh, cookies);
+            //开启一个新进程去抓取其他的信息
+            ((Runnable) () -> {
+                spiderDetail(xh, cookies);
+                spiderHelpMoney(xh, cookies);
+                spiderKaoQin(xh, cookies);
+            }).run();
+            return state;
+        } catch (NetworkException | ValidateException e) {
+            return null;
+        }
+    }
 
+    /**
+     * 当进入一卡通查询界面是要调用这个方法获取state
+     * 他会去抓取最新的state并返回
+     * 同时会开启一个新的进程去剩余的所有信息
+     * 如果获取state失败就会从数据库缓存中获取最新的查询数据,如果数据库中也没有就返回null
+     *
+     * @param xh 学号
+     * @return 如果数据库中也没有就返回null
+     */
+    public static MyYktEntity spiderAndGet(String xh, String mm) {
+        MyYktEntity re = spiderAll(xh, mm);
+        if (re == null) {
+            List<MyYktEntity> list = get(Type_State, xh, 0, 1);
+            if (list != null) {
+                re = list.get(0);
+            } else {
+                re = null;
+            }
+        }
+        return re;
+    }
+
+    /**
+     * 安装时间排序返回最近的记录
+     *
+     * @param type    要查询的数据类型区分是一卡通状态0,消费明细1,补助2,还是刷卡考勤3
+     * @param xh      学号
+     * @param begin   分页查询第一条index
+     * @param maxSize 一次性最多去除多少个
+     * @return 目前最近的数据, 如果数据库中一个也没有就返回null
+     */
+    public static List<MyYktEntity> get(int type, String xh, int begin, int maxSize) {
+        Session session = HibernateUtil.getSession();
+        Query query = session.createQuery("from MyYktEntity where type=? and xh=? order by time desc");
+        query.setInteger(0, type);
+        query.setString(1, xh);
+        query.setFirstResult(begin);
+        query.setMaxResults(maxSize);
+        List<MyYktEntity> re = query.list();
+        HibernateUtil.closeSession(session);
+        if (re.size() < 1) {
+            return null;
+        } else {
+            return re;
+        }
+    }
+
+    public static String tranTypeInt(int type) {
+        switch (type) {
+            case Type_Detail:
+                return "一卡通消费明细";
+            case Type_HelpMoney:
+                return "补助明细";
+            case Type_KaoQin:
+                return "一周考勤";
+        }
+        return null;
+    }
 }

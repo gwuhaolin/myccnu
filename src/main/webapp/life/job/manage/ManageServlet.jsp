@@ -31,15 +31,21 @@
         String otherInfo = request.getParameter("otherInfo");
 
 
-        if (cmd.equals(ManageJob.CMD_Add)) {//添加
-            MyJobEntity jobEntity = new MyJobEntity(name, jobInfo, money, jobTime, jobLocation, otherInfo, manager, target);
-            ManageJob.add(jobEntity);
-        } else if (cmd.equals(ManageJob.CMD_Change)) {//修改
-            MyJobEntity jobEntity = new MyJobEntity(name, jobInfo, money, jobTime, jobLocation, otherInfo, manager, target);
-            jobEntity.setId(id);
-            ManageJob.change(jobEntity);
-        } else if (cmd.equals(ManageJob.CMD_Delete)) {//删除
-            ManageJob.delete(id);
+        switch (cmd) {
+            case ManageJob.CMD_Add: {//添加
+                MyJobEntity jobEntity = new MyJobEntity(name, jobInfo, money, jobTime, jobLocation, otherInfo, manager, target);
+                ManageJob.add(jobEntity);
+                break;
+            }
+            case ManageJob.CMD_Change: {//修改
+                MyJobEntity jobEntity = new MyJobEntity(name, jobInfo, money, jobTime, jobLocation, otherInfo, manager, target);
+                jobEntity.setId(id);
+                ManageJob.change(jobEntity);
+                break;
+            }
+            case ManageJob.CMD_Delete: //删除
+                ManageJob.delete(id);
+                break;
         }
 
         if (target == ManageJob.TARGET_PrivateTeacher) {

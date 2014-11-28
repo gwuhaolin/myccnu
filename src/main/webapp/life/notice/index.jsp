@@ -25,18 +25,17 @@
     <jsp:include page="GetAJAXServlet.jsp">
         <jsp:param name="begin" value="0"/>
     </jsp:include>
-    <%--ajax 加载更多--%>
-    <button class="ui button fluid circular" onclick="ajaxMore(this);" begin="0" style="margin-top: 10px">更多
-    </button>
+    <%=Tool.makeAjaxLoadMoreBtnHtml()%>
     <div class="ui divider horizontal icon inverted"><i class="icon smile"></i></div>
 </div>
 
 <jsp:include page="searchBox.jsp"/>
 
-
+<script src="../../lib/js/jquery.min.js"></script>
+<script src="../../lib/js/semantic.min.js"></script>
+<script src="../../lib/js/main.js"></script>
 <script>
-    <%=Tool.makeAJAXLoadMoreJS("GetAJAXServlet.jsp","")%>
-
+    <%=Tool.makeAJAXLoadMoreJS("GetAJAXServlet.jsp",null)%>
     function openOneAJAX(id) {
         $.get('GetOneAJAX.jsp?id=' + id, function (data) {
             var newOne = $(data);
@@ -44,14 +43,8 @@
             $(newOne).modal('toggle');
         });
     }
-
     closeWeiXinBtn();
-
 </script>
-
-<script src="../../lib/js/jquery.min.js"></script>
-<script src="../../lib/js/semantic.min.js"></script>
-<script src="../../lib/js/main.js"></script>
 
 </body>
 </html>

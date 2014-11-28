@@ -496,7 +496,7 @@
                 chunk_size: '4mb',                //分块上传时，每片的体积
                 auto_start: true,                 //选择文件后自动上传，若关闭需要自己绑定事件触发上传,
                 init: {
-                    'BeforeUpload': function (up, file) {
+                    'BeforeUpload': function () {
                         // 每个文件上传前,处理相关的事情
                         $(Progress_UpBgImg).fadeIn();
                         $(Msg_UpBgImg).text('图片上传中...').addClass('blue');
@@ -508,7 +508,7 @@
                         $(Progress_UpBgImg).fadeOut();
                         $(Msg_UpBgImg).text('图片上传成功').addClass('green');
                     },
-                    'Error': function (up, err, errTip) {
+                    'Error': function () {
                         //上传出错时,处理相关的事情
                         showError();
                         $(Progress_UpBgImg).fadeOut();

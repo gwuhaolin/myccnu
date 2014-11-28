@@ -1,5 +1,7 @@
 <%@ page import="play.movie.ManageMovie" %>
 <%@ page import="tool.Tool" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
 <%--
   Created by Intellij IDEA.
   User: WuHaoLin
@@ -85,12 +87,15 @@
     </jsp:include>
 
     <%--ajax 加载更多--%>
-    <button class="form-control btn-info input-lg" onclick="ajaxMore(this)" begin="0">更多</button>
+    <button class="form-control btn-info input-lg" onclick="ajaxMore(this)">更多</button>
     <br>
 </div>
 <script>
-
-    <%=Tool.makeAJAXLoadMoreJS("GetMovieManageFormForAJAX.jsp"," ,target:'"+target+"'")%>
+    <%
+    Map<String,Object> params=new HashMap<>(1);
+    params.put("target",target);
+    %>
+    <%=Tool.makeAJAXLoadMoreJS("GetMovieManageFormForAJAX.jsp",params)%>
 
     //重新加载图片
     function reloadPic(input) {

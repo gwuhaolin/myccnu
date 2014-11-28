@@ -1,4 +1,7 @@
 <%@ page import="tool.R" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="tool.Tool" %>
 <%--
   Created by Intellij IDEA.
   User: WuHaoLin
@@ -16,11 +19,8 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <script src="../../lib/js/jquery.min.js"></script>
-    <script src="../../lib/js/semantic.min.js"></script>
     <link href="../../lib/css/main.css" rel='stylesheet'>
     <link href="../../lib/css/semantic.min.css" rel="stylesheet">
-    <script src="../../lib/js/main.js"></script>
     <title>招领平台搜索结果</title>
 </head>
 <body>
@@ -36,36 +36,25 @@
         <jsp:param name="begin" value="0"/>
         <jsp:param name="want" value="<%=want%>"/>
     </jsp:include>
-    <%--ajax 加载更多--%>
-    <button class="ui fluid button" onclick="ajaxMore(this)">更多</button>
-    <br><br><br>
+    <%=Tool.makeAjaxLoadMoreBtnHtml("showHighLight('" + want + "')")%>
 </div>
 
 <%--链接--%>
 <%@ include file="link.jsp" %>
+
+<script src="../../lib/js/jquery.min.js"></script>
+<script src="../../lib/js/semantic.min.js"></script>
+<script src="../../lib/js/main.js"></script>
+
 <script>
+    showHighLight(<%=want%>);
     var changeCount = Number(<%=R.ChangeCount%>);
     var begin = 0;
-    <%--ajax加载更多--%>
-    function ajaxMore(btn) {
-        $(btn).addClass('active');
-        $(btn).text("正在努力加载中...");
-        begin += changeCount;
-        $.ajax({
-            url: "GetSearchForAJAX.jsp",
-            data: {begin: begin, want: '<%=want%>'},
-            contentType: "application/x-www-form-urlencoded; charset=utf-8"
-        }).done(function (data) {
-            if (data.length < 20) {
-                $(btn).text("没有更多了!");
-            } else {
-                $(btn).before(data);
-                $(btn).removeClass('active');
-                $(btn).text("更多");
-                $(btn).attr('begin', begin);
-            }
-        });
-    }
+    <%
+    Map<String,Object> params=new HashMap<>(1);
+    params.put("want",want);
+    %>
+    <%=Tool.makeAJAXLoadMoreJS("GetSearchForAJAX.jsp",params)%>
 </script>
 </body>
 </html>

@@ -31,8 +31,6 @@
         </div>
 
         <div class="ui relaxed divided mini list">
-
-
             <%--来自--%>
             <%
                 if (one.getManager() != null && !one.getManager().equals("null")) {
@@ -51,7 +49,6 @@
             <%
                 }
             %>
-
             <%--地点--%>
             <%
                 if (one.getRunLocation() != null && !one.getRunLocation().equals("null")) {
@@ -70,7 +67,6 @@
             <%
                 }
             %>
-
             <!--时间-->
             <%
                 if (one.getRunDate() != null && !one.getRunDate().equals("null")) {
@@ -89,8 +85,6 @@
             <%
                 }
             %>
-
-
             <%--其他--%>
             <%
                 if (one.getOtherInfo() != null && !one.getOtherInfo().equals("null")) {
@@ -109,8 +103,6 @@
             <%
                 }
             %>
-
-
             <%
                 if (one.getIntro() != null && !one.getIntro().equals("null")) {
             %>
@@ -134,6 +126,7 @@
 <%
         }
     } catch (Exception e) {
+        e.printStackTrace();
         return;
     }
 %>

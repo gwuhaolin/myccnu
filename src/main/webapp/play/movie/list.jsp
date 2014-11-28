@@ -1,5 +1,7 @@
 <%@ page import="play.movie.ManageMovie" %>
 <%@ page import="tool.Tool" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
 <%--电影列表--%>
 <%--
   Created by Intellij IDEA.
@@ -37,8 +39,7 @@
         <jsp:param name="begin" value="0"/>
         <jsp:param name="target" value="<%=target%>"/>
     </jsp:include>
-    <%--ajax 加载更多--%>
-    <button class="ui button fluid circular" onclick="ajaxMore(this)" begin="0" style="margin-top: 10px">更多</button>
+    <%=Tool.makeAjaxLoadMoreBtnHtml()%>
     <div class="ui divider horizontal icon inverted"><a href="iWantMovie.jsp"><i class="icon heart"></i></a></div>
 </div>
 
@@ -47,7 +48,11 @@
         class="icon heart"></i></a>
 
 <script>
-    <%=Tool.makeAJAXLoadMoreJS("GetMovieForAJAX.jsp",",target:'"+target+"'")%>
+    <%
+    Map<String,Object> params=new HashMap<>(1);
+        params.put("target",target);
+    %>
+    <%=Tool.makeAJAXLoadMoreJS("GetMovieForAJAX.jsp",params)%>
 </script>
 </body>
 </html>

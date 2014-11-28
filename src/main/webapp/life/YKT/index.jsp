@@ -24,9 +24,9 @@
 <body>
 <%
     String XHMM[] = Tool.getXHMMfromCookie(request);
-    MyYktEntity result;
     if (Tool.XHMMisOK(XHMM)) {
-        result = ManageYKT.spiderState(XHMM[0], XHMM[1]);
+        MyYktEntity result = ManageYKT.spiderAndGet(XHMM[0], XHMM[1]);
+        if (result != null) {
 %>
 <div class="ui stackable three column page grid center aligned">
 
@@ -43,7 +43,7 @@
 
     <div class="column">
         <div class="ui header icon center aligned huge">
-            <a href="myDetail.jsp">
+            <a href="list.jsp?type=<%=ManageYKT.Type_Detail%>">
                 <i class="icon yuan circular inverted red"></i>
             </a>
 
@@ -53,7 +53,7 @@
 
     <div class="column">
         <div class="ui header icon center aligned huge">
-            <a href="myHelpMoney.jsp">
+            <a href="list.jsp?type=<%=ManageYKT.Type_HelpMoney%>">
                 <i class="icon list huge circular inverted green"></i>
             </a>
 
@@ -63,7 +63,7 @@
 
     <div class="column">
         <div class="ui header icon center aligned huge">
-            <a href="myKaoQin.jsp">
+            <a href="list.jsp?type=<%=ManageYKT.Type_KaoQin%>">
                 <i class="icon tags huge circular inverted black"></i>
             </a>
 
@@ -77,14 +77,19 @@
 
 </div>
 <%
+} else {//数据库缓存也没有数据
+%>
+<script>
+    alertMsg("暂时没有找到你的任何数据");
+</script>
+<%
+        }
     } else {//没有绑定
         Tool.jspWriteJSForHTML_shouldBind(response, "");
     }
 %>
-
 <script src="../../lib/js/jquery.min.js"></script>
 <script src="../../lib/js/semantic.min.js"></script>
 <script src="../../lib/js/main.js"></script>
-
 </body>
 </html>

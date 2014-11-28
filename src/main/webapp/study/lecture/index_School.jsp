@@ -1,5 +1,7 @@
 <%@ page import="study.lecture.ManageEvent" %>
 <%@ page import="tool.Tool" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
 <%--通知列表--%>
 <%--
   Created by Intellij IDEA.
@@ -29,15 +31,20 @@
         <jsp:param name="target" value="<%=ManageEvent.TARGET_School%>"/>
         <jsp:param name="begin" value="0"/>
     </jsp:include>
-    <%--ajax 加载更多--%>
-    <button class="ui button fluid circular" onclick="ajaxMore(this)" begin="0" style="margin-top: 10px">更多
-    </button>
-    <div class="ui divider horizontal icon inverted"><a href="index_Lecture.jsp"><i class="icon smile"></i></a></div>
-
+    <%=Tool.makeAjaxLoadMoreBtnHtml()%>
 </div>
+
+<script src="../../lib/js/jquery.min.js"></script>
+<script src="../../lib/js/semantic.min.js"></script>
+<script src="../../lib/js/main.js"></script>
+
 <script>
     <%--ajax加载更多--%>
-    <%=Tool.makeAJAXLoadMoreJS("GetAJAXServlet.jsp",", target:"+ManageEvent.TARGET_School)%>
+    <%
+    Map<String,Object> params=new HashMap<>(1);
+    params.put("target",ManageEvent.TARGET_School);
+    %>
+    <%=Tool.makeAJAXLoadMoreJS("GetAJAXServlet.jsp",params)%>
 
     closeWeiXinBtn();
 
@@ -47,8 +54,5 @@
     <jsp:param name="target" value="<%=ManageEvent.TARGET_School%>"/>
 </jsp:include>
 
-<script src="../../lib/js/jquery.min.js"></script>
-<script src="../../lib/js/semantic.min.js"></script>
-<script src="../../lib/js/main.js"></script>
 </body>
 </html>

@@ -24,17 +24,24 @@
     String other = request.getParameter("other");
     String date = request.getParameter("date");
 
-    if (cmd.equals(ManageMovie.Cmd_add)) {//添加电影
-        MyMovieEntity movieEntity = new MyMovieEntity(name, picUrl, des, pay, other, date, target);
-        ManageMovie.add(movieEntity);
-    } else if (cmd.equals(ManageMovie.Cmd_change)) {//修改电影
-        MyMovieEntity movieEntity = new MyMovieEntity(name, picUrl, des, pay, other, date, target);
-        int id = Integer.parseInt(request.getParameter("movieId"));
-        movieEntity.setId(id);
-        ManageMovie.change(movieEntity);
-    } else if (cmd.equals(ManageMovie.Cmd_delete)) {//删除电影
-        int id = Integer.parseInt(request.getParameter("movieId"));
-        ManageMovie.remove(id);
+    switch (cmd) {
+        case ManageMovie.Cmd_add: {//添加电影
+            MyMovieEntity movieEntity = new MyMovieEntity(name, picUrl, des, pay, other, date, target);
+            ManageMovie.add(movieEntity);
+            break;
+        }
+        case ManageMovie.Cmd_change: {//修改电影
+            MyMovieEntity movieEntity = new MyMovieEntity(name, picUrl, des, pay, other, date, target);
+            int id = Integer.parseInt(request.getParameter("movieId"));
+            movieEntity.setId(id);
+            ManageMovie.change(movieEntity);
+            break;
+        }
+        case ManageMovie.Cmd_delete: {//删除电影
+            int id = Integer.parseInt(request.getParameter("movieId"));
+            ManageMovie.remove(id);
+            break;
+        }
     }
     if (target.equals(ManageMovie.Target_iWANT)) {//如果是同学们提交想要的电影,那么提交后转到所有的提交结果
         response.sendRedirect("../list.jsp?target=iWANT");

@@ -9,7 +9,7 @@
     <script src="../../lib/js/jquery.min.js"></script>
     <link href="../../lib/css/semantic.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../../lib/css/main.css">
-    <script src="../../lib/css/javascript/semantic.min.js"></script>
+    <script src="../../lib/js/semantic.min.js"></script>
 
     <script src="../../lib/js/main.js"></script>
     <title>校园电影</title>

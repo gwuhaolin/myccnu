@@ -63,17 +63,16 @@
             $(btn).toggleClass('remove ');
         }
 
-        $('.ui.form')
-                .form({
-                    want: {
-                        identifier: 'want',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: '你想要什么呢?输入关键字吧~'
-                            }
-                        ]
+        $('.ui.form').form({
+            want: {
+                identifier: 'want',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '你想要什么呢?输入关键字吧~'
                     }
-                });
+                ]
+            }
+        });
     </script>
 </div>

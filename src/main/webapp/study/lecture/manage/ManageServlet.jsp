@@ -29,15 +29,21 @@
         String otherInfo = request.getParameter("otherInfo");
 
 
-        if (cmd.equals(ManageEvent.CMD_Add)) {//添加
-            MyEventEntity jobEntity = new MyEventEntity(name, manager, runDate, runLocation, intro, otherInfo, target);
-            ManageEvent.add(jobEntity);
-        } else if (cmd.equals(ManageEvent.CMD_Change)) {//修改
-            MyEventEntity jobEntity = new MyEventEntity(name, manager, runDate, runLocation, intro, otherInfo, target);
-            jobEntity.setId(id);
-            ManageEvent.change(jobEntity);
-        } else if (cmd.equals(ManageEvent.CMD_Delete)) {//删除
-            ManageEvent.delete(id);
+        switch (cmd) {
+            case ManageEvent.CMD_Add: {//添加
+                MyEventEntity jobEntity = new MyEventEntity(name, manager, runDate, runLocation, intro, otherInfo, target);
+                ManageEvent.add(jobEntity);
+                break;
+            }
+            case ManageEvent.CMD_Change: {//修改
+                MyEventEntity jobEntity = new MyEventEntity(name, manager, runDate, runLocation, intro, otherInfo, target);
+                jobEntity.setId(id);
+                ManageEvent.change(jobEntity);
+                break;
+            }
+            case ManageEvent.CMD_Delete: //删除
+                ManageEvent.delete(id);
+                break;
         }
 
         if (target == ManageEvent.TARGET_School) {
