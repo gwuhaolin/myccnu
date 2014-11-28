@@ -7,53 +7,24 @@
 
     <link href="lib/css/semantic.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="lib/css/main.css">
-
 </head>
 <body>
 
-<div class="ui dimmer">
-    <div class="content">
-        <div class="center">{{# if name}}
-            <div class="item">{{# if sex}}<i class="icon male blue"></i>{{else}}<i class="icon female red"></i>{{/if}}
-                <div class="content">
-                    <div class="header">{{name}}</div>
-                </div>
-            </div>
-            {{/if}}{{# if phoneNumber}}
-            <div class="item"><i class="icon phone"></i>
-
-                <div class="content">
-                    <div class="header">{{phoneNumber}}</div>
-                </div>
-            </div>
-            {{/if}}{{# if qq}}
-            <div class="item"><i class="icon">Q</i>
-
-                <div class="content">
-                    <div class="header">{{qq}}</div>
-                </div>
-            </div>
-            {{/if}}{{# if dormitory}}
-            <div class="item"><i class="icon map marker"></i>
-
-                <div class="content">
-                    <div class="header">{{dormitory}}</div>
-                </div>
-            </div>
-            {{/if}}{{# if academyByAcademy.academyName}}
-            <div class="item"><i class="icon book"></i>
-
-                <div class="content">
-                    <div class="header">{{academyByAcademy.academyName}}</div>
-                </div>
-            </div>
-            {{/if}}
-        </div>
-    </div>
+<div id="particles"
+     style="background-color: #3e3e3e;position: fixed;top: 0;left: 0;height: 100%;width: 100%;z-index: -1000">
 </div>
 
 <script src="lib/js/jquery.min.js"></script>
 <script src="lib/js/semantic.min.js"></script>
+<script src="lib/js/jquery.particleground.min.js"></script>
 <script src="lib/js/main.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#particles').particleground({
+            dotColor: '#5cbdaa',
+            lineColor: '#5cbdaa'
+        });
+    });
+</script>
 </body>
 </html>

@@ -27,7 +27,7 @@
 <body style="margin: 0;padding: 0;overflow-x: hidden">
 
 <!--顶部导航条-->
-<div class="ui top overlay sidebar" style="overflow: visible" id="Menu">
+<div class="ui top overlay sidebar" style="overflow: visible;width: 100%" id="Menu">
     <div class="ui three item fluid menu">
         <div class="item ui dropdown pointing red" id="life_drop">
             爱生活<i class="icon heart"></i>
@@ -68,11 +68,15 @@
     </div>
 </div>
 
+<!--科幻背景-->
+<div id="particles"
+     style="background-color: #3e3e3e;position: fixed;top: 0;left: 0;height: 100%;width: 100%;z-index: -1000">
+</div>
+
 <!--大标题-->
 <div class="ui grid"
-     style="color: #ffffff;text-shadow: 0 0 5px rgba(0, 0, 0, 0.4);background: url('http://myccnutest.qiniudn.com/bg.png');height: 100%">
+     style="color: #ffffff;text-shadow: 0 0 5px rgba(0, 0, 0, 0.4);">
     <div class="column">
-        <div class="ui row" style="padding: 5px"></div>
 
         <div class="ui header center aligned">
 
@@ -136,7 +140,7 @@
 </div>
 
 <!--使用最新的技术-->
-<div class="ui three column stackable grid" style="background-color: #a4e0eb;color: #ffffff">
+<div class="ui three column stackable grid" style="background-color: transparent;color: #ffffff">
 
     <div class="sixteen wide column">
         <div class="ui header center aligned">
@@ -160,7 +164,7 @@
     </div>
     <div class="column">
         <div class="ui header icon center aligned huge POPUP" title="响应式网页设计,对所有屏幕友好适配">
-            <i class="icon trello circular black"></i>
+            <i class="icon trello circular white"></i>
 
             <div class="ui label circular blue">Response</div>
         </div>
@@ -171,7 +175,7 @@
 </div>
 
 <!--优势-->
-<div class="ui three column stackable grid" style="background-color:#fbf65a ;color: #ffffff">
+<div class="ui three column stackable grid" style="background-color:#b5fdff ;color: #ffffff">
 
     <div class="sixteen wide column">
         <div class="ui header center aligned">
@@ -232,7 +236,7 @@
 </div>
 
 <!--所以功能列表-->
-<div class="ui page grid" style="background-color: #86ff80;color: #fef6ff">
+<div class="ui page grid" style="background-color: transparent;color: #fef6ff">
     <div class="column">
         <h2 class="ui center aligned icon header huge">
             <i class="circular emphasized users icon"></i>
@@ -373,6 +377,7 @@
 
 <script src="lib/js/jquery.min.js"></script>
 <script src="lib/js/semantic.min.js"></script>
+<script src="lib/js/jquery.particleground.min.js"></script>
 <script src="lib/js/main.js"></script>
 
 <script>
@@ -404,7 +409,11 @@
         //震动的元素
         $('.shake').transition('shake');
 
-
+        //加载科幻背景
+        $('#particles').particleground({
+            dotColor: '#5cbdaa',
+            lineColor: '#5cbdaa'
+        });
     });
 </script>
 
