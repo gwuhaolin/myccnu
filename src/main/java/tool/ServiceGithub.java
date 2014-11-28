@@ -3,7 +3,9 @@ package tool;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * Created by wuhaolin on 11/27/14.
@@ -24,9 +26,17 @@ public class ServiceGithub {
     public String getSomeByPage() {
         Runtime runtime = Runtime.getRuntime();
         try {
-            runtime.exec("myccnu");
-            return "Exe myccnu!";
+            Process process = runtime.exec("myccnu");
+            process.waitFor();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line, output = "";
+            while ((line = reader.readLine()) != null) {
+                output += line + "\n";
+            }
+            return output;
         } catch (IOException e) {
+            return "Update error! " + e.getMessage();
+        } catch (InterruptedException e) {
             return "Update error! " + e.getMessage();
         }
     }
