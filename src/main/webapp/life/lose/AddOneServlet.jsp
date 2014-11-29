@@ -17,10 +17,10 @@
     String XH = Tool.getXHMMfromCookie(request)[0];
     ManageLose.add(des, location, phone, type, XH);
     if (type == ManageLose.TYPE_Lose) {
-        response.sendRedirect("list_lose.jsp");
+        response.sendRedirect("index.jsp?type=" + ManageLose.TYPE_Lose);
         return;
     } else if (type == ManageLose.TYPE_Update) {
-        response.sendRedirect("list_update.jsp");
+        response.sendRedirect("index.jsp?type=" + ManageLose.TYPE_Update);
         return;
     }
 %>

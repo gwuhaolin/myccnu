@@ -19,29 +19,61 @@
     <title>捡到东西</title>
 </head>
 <body>
-<div class="ui form" align="center">
-    <br><br><br><br>
-
-    <form action="AddOneServlet.jsp" method="post">
-        <div class="ui segment">
-            <!--问题描述-->
-            <textarea name="des" style="height: 150px" placeholder="描述一下它"></textarea>
+<div style="margin: 60px"></div>
+<form id='add' class="ui form" action="AddOneServlet.jsp" method="post">
+    <div class="field">
+        <!--问题描述-->
+        <textarea name="des" style="height: 150px" placeholder="描述一下它"></textarea>
+    </div>
+    <div class="two fields">
+        <div class="field">
             <!--失物地点-->
             <div class="ui input icon">
                 <input type="text" name="location" placeholder="你在什么地方捡到了该物品">
-                <i class="icon map"></i>
+                <i class="icon location"></i>
             </div>
+        </div>
+        <div class="field">
             <!--联系方式-->
             <div class="ui icon input">
                 <input type="text" name="phone" placeholder="输入你的电话">
                 <i class="icon mobile"></i>
             </div>
         </div>
-        <input type="hidden" name="type" value="<%=ManageLose.TYPE_Update%>">
-        <button type="submit" class="ui fluid blue button">提交</button>
-        <br><br>
-    </form>
-</div>
+    </div>
+    <input type="hidden" name="type" value="<%=ManageLose.TYPE_Update%>">
+    <button type="submit" class="ui fluid blue button">提交</button>
+</form>
+<script>
+    $('#add')
+            .form({
+                des: {
+                    identifier: 'des',
+                    rules: [
+                        {
+                            type: 'empty'
+                        }
+                    ]
+                },
+                location: {
+                    identifier: 'location',
+                    rules: [
+                        {
+                            type: 'empty'
+                        }
+                    ]
+                },
+                phone: {
+                    identifier: 'phone',
+                    rules: [
+                        {
+                            type: 'empty'
+                        }
+                    ]
+                }
+            })
+    ;
+</script>
 
 <%--链接--%>
 <%@ include file="link.jsp" %>
