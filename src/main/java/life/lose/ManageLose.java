@@ -18,7 +18,7 @@ public class ManageLose {
     public static final byte TYPE_Lose = 1;//掉了东西
     public static final byte TYPE_Update = 2;//捡到东西
     public static final byte STATE_Finding = 1;//正在寻找
-    public static final byte STATE_Complete = 2;//已经完成找到x`
+    public static final byte STATE_Complete = 2;//已经完成找到x
 
     /**
      * 按照发布时间排序记录
@@ -104,11 +104,6 @@ public class ManageLose {
         session.update(re);
         HibernateUtil.closeSession(session);
         return reString;
-    }
-
-    public static void main(String[] args) {
-        List<MyLoseEntity> re = get_page(0, (byte) 1);
-        System.out.print(re);
     }
 
     public static String tranTypeToChinese(byte type) {

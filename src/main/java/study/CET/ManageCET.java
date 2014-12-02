@@ -20,6 +20,8 @@ import org.slf4j.LoggerFactory;
 import tool.HibernateUtil;
 import tool.R;
 import tool.ccnu.student.StudentsEntity;
+import tool.ccnu.student.detailInfo.ManageStudentAllInfo;
+import tool.ccnu.student.detailInfo.StudentAllInfoEntity;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -93,7 +95,7 @@ public class ManageCET {
             String read = all.get(2).text();
             String essay = all.get(4).text();
             log.info("成功抓取{}的CET成绩={}", IdNumber, sum);
-            return new Cet46Entity(sum, listen, read, essay, grade);
+            return new Cet46Entity(sum, listen, read, essay, grade, date);
         } catch (Exception e) {
             log.info("抓取CET失败-身份证:{}-{}", IdNumber, date + "-" + grade);
 //			log.error(Arrays.toString(e.getStackTrace()));
@@ -114,7 +116,13 @@ public class ManageCET {
         for (String date : DATE) {
             Cet46Entity one = spider(grade, idNumber, date);
             if (one != null) {
-                HibernateUtil.addEntity(one);
+                StudentAllInfoEntity studentAllInfoEntity = ManageStudentAllInfo.get_idNumber(idNumber);
+                String xh = studentAllInfoEntity.getXh();
+                if (xh != null) {
+                    one.setXh(xh);
+                    one.setName(studentAllInfoEntity.getName());
+                    HibernateUtil.addOrUpdateEntity(one);
+                }
                 return one;
             }
         }
@@ -191,7 +199,7 @@ public class ManageCET {
             String listen = all[3];
             String read = all[5];
             String essay = all[7];
-            Cet46Entity re = new Cet46Entity(sum, listen, read, essay, " ");
+            Cet46Entity re = new Cet46Entity(sum, listen, read, essay, "", "");
             HibernateUtil.addEntity(re);
             return re;
         } catch (Exception e) {

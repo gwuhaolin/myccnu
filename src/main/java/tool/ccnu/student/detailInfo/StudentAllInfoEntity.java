@@ -35,18 +35,6 @@ public class StudentAllInfoEntity {
         this.xh = xh;
     }
 
-    private String openId;
-
-    @Basic
-    @javax.persistence.Column(name = "OpenID", nullable = true, insertable = true, updatable = true, length = 64)
-    public String getOpenId() {
-        return openId;
-    }
-
-    public void setOpenId(String openId) {
-        this.openId = openId;
-    }
-
     private String weight;
 
     @Basic
@@ -333,7 +321,6 @@ public class StudentAllInfoEntity {
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (nation != null ? !nation.equals(that.nation) : that.nation != null) return false;
         if (nativePlace != null ? !nativePlace.equals(that.nativePlace) : that.nativePlace != null) return false;
-        if (openId != null ? !openId.equals(that.openId) : that.openId != null) return false;
         if (password != null ? !password.equals(that.password) : that.password != null) return false;
         if (phoneNumber != null ? !phoneNumber.equals(that.phoneNumber) : that.phoneNumber != null) return false;
         if (qq != null ? !qq.equals(that.qq) : that.qq != null) return false;
@@ -346,7 +333,6 @@ public class StudentAllInfoEntity {
     @Override
     public int hashCode() {
         int result = xh != null ? xh.hashCode() : 0;
-        result = 31 * result + (openId != null ? openId.hashCode() : 0);
         result = 31 * result + (weight != null ? weight.hashCode() : 0);
         result = 31 * result + (highSchool != null ? highSchool.hashCode() : 0);
         result = 31 * result + (dormAddress != null ? dormAddress.hashCode() : 0);

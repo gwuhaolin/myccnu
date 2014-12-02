@@ -1,7 +1,12 @@
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Consolas", "Menlo", "Courier", monospace;
     background-color: lightblue;
     margin: 0;
+}
+
+a:link {
+    text-decoration: none;
+    color: #808080;
 }
 
 .hidden {
@@ -62,9 +67,4 @@ em {
     left: 0;
     bottom: -300px;
     height: 300px;
-}
-
-a:link {
-    text-decoration: none;
-    color: #808080;
 }

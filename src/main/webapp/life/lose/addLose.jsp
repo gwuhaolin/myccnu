@@ -11,16 +11,13 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <script src="../../lib/js/jquery.min.js"></script>
-    <script src="../../lib/js/semantic.min.js"></script>
     <link href="../../lib/css/semantic.min.css" rel="stylesheet">
     <link href="../../lib/css/main.css" rel='stylesheet'>
-    <script src="../../lib/js/main.js"></script>
     <title>掉了东西</title>
 </head>
 <body>
 <div style="margin: 60px"></div>
-<form id="add" class="ui form" action="AddOneServlet.jsp" method="post">
+<form id="form" class="ui form" action="AddOneServlet.jsp" method="post">
     <div class="field">
         <!--问题描述-->
         <textarea name="des" style="height: 150px" placeholder="描述一下你心爱的物品"></textarea>
@@ -45,29 +42,32 @@
     <button type="submit" class="ui blue submit fluid button">提交</button>
 </form>
 <script>
-    $('#add')
-            .form({
-                des: {
-                    identifier: 'des',
-                    rules: [
-                        {
-                            type: 'empty'
-                        }
-                    ]
-                },
-                phone: {
-                    identifier: 'phone',
-                    rules: [
-                        {
-                            type: 'empty'
-                        }
-                    ]
-                }
-            })
-    ;
+    $(document).ready(function () {
+        $('#form').form({
+            des: {
+                identifier: 'des',
+                rules: [
+                    {
+                        type: 'empty'
+                    }
+                ]
+            },
+            phone: {
+                identifier: 'phone',
+                rules: [
+                    {
+                        type: 'empty'
+                    }
+                ]
+            }
+        });
+    });
 </script>
 <%--链接--%>
 <%@ include file="link.jsp" %>
+<script src="../../lib/js/jquery.min.js"></script>
+<script src="../../lib/js/semantic.min.js"></script>
+<script src="../../lib/js/main.js"></script>
 
 </body>
 </html>

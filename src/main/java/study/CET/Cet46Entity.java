@@ -19,12 +19,13 @@ public class Cet46Entity implements Comparable<Cet46Entity> {
     private String xh;
     private String date;
 
-    public Cet46Entity(Float sumScore, String listening, String reading, String essay, String garde) {
+    public Cet46Entity(Float sumScore, String listening, String reading, String essay, String grade, String date) {
         this.sumScore = sumScore;
         this.listening = listening;
         this.reading = reading;
         this.essay = essay;
-        this.grade = garde;
+        this.grade = grade;
+        this.date = date;
     }
 
     public Cet46Entity() {
@@ -180,24 +181,6 @@ public class Cet46Entity implements Comparable<Cet46Entity> {
 
     public boolean pass() {
         return this.sumScore >= 425;
-    }
-
-    public String sayToYou() {
-        String re = "这是你在" + this.date + "学期的" + "CET" + this.grade + "的成绩.";
-        if (this.sumScore > 600) {//学霸
-            re += "膜拜!快点截屏分享炫耀下吧.";
-        } else if (this.sumScore > 500) {//一般
-//			re+= "一般般";
-        } else if (this.sumScore >= 425) {//低分飘过
-            re += "低分飘过的你快截屏分享给你的小伙伴们看看吧!";
-        } else if (this.sumScore > 400) {//可惜了差点
-            re += "就差那么一点";
-        } else if (this.sumScore > 350) {//没过!
-            re += "明年还是一条好汉";
-        } else {//学杂啊
-            re += "学杂,快戒撸!";
-        }
-        return re;
     }
 
     /**

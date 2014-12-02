@@ -72,6 +72,23 @@ public class ManageStudentAllInfo {
     }
 
     /**
+     * 获得身份证号码为idCard的同学
+     * 如果数据库中不存在就返回null
+     */
+    public static StudentAllInfoEntity get_idNumber(String idNumber) {
+        Session session = HibernateUtil.getSession();
+        Query query = session.createQuery("from StudentAllInfoEntity where idNumber=?");
+        query.setString(0, idNumber);
+        Object o = query.uniqueResult();
+        if (o == null) {
+            return null;
+        }
+        StudentAllInfoEntity re = (StudentAllInfoEntity) o;
+        HibernateUtil.closeSession(session);
+        return re;
+    }
+
+    /**
      * 获得姓名包含keyword的同学
      */
     public static List<StudentAllInfoEntity> get_Name(String keyWord) {
