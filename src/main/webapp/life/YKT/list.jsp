@@ -29,12 +29,19 @@
     </title>
 </head>
 <body>
+
+<!--用于返回个人主页面-->
+<a href="index.jsp?cmd=NO" id="homeBtn" class="ui button circular icon inverted black"
+   style="position: fixed;right: 5px;bottom: 5px">
+    <i class="icon user"></i>
+</a>
+
 <div class="ui stackable three column page grid">
 
     <%--默认拿出前changeCount通知--%>
     <jsp:include page="GetAJAXServlet.jsp">
         <jsp:param name="begin" value="0"/>
-        <jsp:param name="type" value="<%=type%>"/>
+        <jsp:param name="type" value="<%=type%> "/>
     </jsp:include>
     <%=Tool.makeAjaxLoadMoreBtnHtml()%>
 </div>

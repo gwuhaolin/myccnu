@@ -13,10 +13,10 @@
 <%
     request.setCharacterEncoding("UTF-8");
     response.setCharacterEncoding("UTF-8");
-    String XHMM[] = Tool.getXHMMfromCookie(request);
+    String XHMM[] = ManageYKT.getXHMMfromCookie(request);
 
     if (!Tool.XHMMisOK(XHMM)) {//没有绑定
-        Tool.jspWriteJSForHTML_shouldBind(response, "");
+        response.sendRedirect("login.jsp");
         return;
     }
     int begin = Integer.parseInt(request.getParameter("begin"));
