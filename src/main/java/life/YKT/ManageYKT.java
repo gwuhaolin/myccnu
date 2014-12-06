@@ -17,9 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tool.*;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
@@ -298,10 +295,6 @@ public class ManageYKT {
             connection.data("schoolcode", "001");
             connection.data("imgcode", result);
             connection.post();
-            String responseBody = connection.response().body();
-            if (responseBody.contains("错误")) {
-                throw new ValidateException("身份验证失败");
-            }
             return cookies;
         } catch (IOException e) {
             e.printStackTrace();
@@ -318,40 +311,40 @@ public class ManageYKT {
     }
 
     /**
-     * 一次性抓取所有信息,使用同一个cookies
+     * 一次性抓取所有信息,只用获取一次cookies
      * 开启一个新进程去抓取除去state的其他的信息
      *
-     * @param xh      学号
-     * @param cookies 密码
+     * @param xh 学号
+     * @param mm 密码
      * @return 获取到的state, 如果获取state失败就返回null
      */
-    private static MyYktEntity spiderAll(String xh, Map<String, String> cookies) {
-        MyYktEntity state = spiderState(xh, cookies);
-        //开启一个新进程去抓取其他的信息
-        ((Runnable) () -> {
-            //每个spider都会把抓取到的数据保存到数据库
-            spiderDetail(xh, cookies);
-            spiderHelpMoney(xh, cookies);
-            spiderKaoQin(xh, cookies);
-        }).run();
-        return state;
+    private static MyYktEntity spiderAll(String xh, String mm) {
+        try {
+            Map<String, String> cookies = getCookies(xh, mm);
+            MyYktEntity state = spiderState(xh, cookies);
+            //开启一个新进程去抓取其他的信息
+            ((Runnable) () -> {
+                spiderDetail(xh, cookies);
+                spiderHelpMoney(xh, cookies);
+                spiderKaoQin(xh, cookies);
+            }).run();
+            return state;
+        } catch (NetworkException | ValidateException e) {
+            return null;
+        }
     }
 
     /**
-     * * 当进入一卡通查询界面是要调用这个方法获取state
+     * 当进入一卡通查询界面是要调用这个方法获取state
      * 他会去抓取最新的state并返回
      * 同时会开启一个新的进程去剩余的所有信息
      * 如果获取state失败就会从数据库缓存中获取最新的查询数据,如果数据库中也没有就返回null
      *
      * @param xh 学号
-     * @param mm 密码
-     * @return 如果没有抓取到数据而且数据库中也没有数据就返回null
-     * @throws NetworkException  网络异常
-     * @throws ValidateException 账号密码错误
+     * @return 如果数据库中也没有就返回null
      */
-    public static MyYktEntity spiderAndGet(String xh, String mm) throws NetworkException, ValidateException {
-        Map<String, String> cookies = getCookies(xh, mm);
-        MyYktEntity re = spiderAll(xh, cookies);
+    public static MyYktEntity spiderAndGet(String xh, String mm) {
+        MyYktEntity re = spiderAll(xh, mm);
         if (re == null) {
             List<MyYktEntity> list = get(Type_State, xh, 0, 1);
             if (list != null) {
@@ -398,40 +391,5 @@ public class ManageYKT {
                 return "一周考勤";
         }
         return null;
-    }
-
-    /**
-     * 该请求的cookies中如果有XH就返回XH,如果没有就返回""放在第0个
-     * 该请求的cookies中如果有MM就返回MM,如果没有就返回""放在第1个
-     * 如果cookies中没有该cookies的话就返回"",而不是null
-     */
-    public static String[] getXHMMfromCookie(HttpServletRequest request) {
-        String XHMM[] = {"", ""};
-        Cookie[] cookies = request.getCookies();
-        if (cookies == null) {
-            return XHMM;
-        }
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("XH") && cookie.getValue() != null) {
-                XHMM[0] = cookie.getValue();
-            } else if (cookie.getName().equals("YKTMM") && cookie.getValue() != null) {
-                XHMM[1] = cookie.getValue();
-            }
-        }
-        return XHMM;
-    }
-
-    /**
-     * 把该学号密码写到cookies(更目录)中保存一月(共享Cookie)
-     */
-    public static void setXHMMtoCookies(HttpServletResponse response, String XH, String MM) {
-        Cookie cookieXH = new Cookie("XH", XH);
-        cookieXH.setPath("/");
-        cookieXH.setMaxAge(R.CookiesStoreTime);
-        Cookie cookieMM = new Cookie("YKTMM", MM);
-        cookieMM.setPath("/");
-        cookieMM.setMaxAge(R.CookiesStoreTime);
-        response.addCookie(cookieXH);
-        response.addCookie(cookieMM);
     }
 }

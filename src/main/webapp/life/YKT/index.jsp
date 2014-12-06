@@ -8,8 +8,8 @@
 <%@ page import="life.YKT.ManageYKT" %>
 <%@ page import="life.YKT.MyYktEntity" %>
 <%@ page import="tool.Tool" %>
-<%@ page import="tool.ValidateException" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page errorPage="../../tool/error/index.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,20 +23,9 @@
 </head>
 <body>
 <%
-    String XHMM[] = ManageYKT.getXHMMfromCookie(request);
+    String XHMM[] = Tool.getXHMMfromCookie(request);
     if (Tool.XHMMisOK(XHMM)) {
-        String cmd = request.getParameter("cmd");
-        MyYktEntity result;
-        if (cmd != null && cmd.equals("NO")) {//不用重新抓取更新
-            result = ManageYKT.get(ManageYKT.Type_State, XHMM[0], 0, 1).get(0);
-        } else {//要查询更新最新数据
-            try {
-                result = ManageYKT.spiderAndGet(XHMM[0], XHMM[1]);
-            } catch (ValidateException e) {//密码错误
-                response.sendRedirect("login.jsp?info=Password error!");
-                return;
-            }
-        }
+        MyYktEntity result = ManageYKT.spiderAndGet(XHMM[0], XHMM[1]);
         if (result != null) {
 %>
 <div class="ui stackable three column page grid center aligned">
@@ -88,7 +77,7 @@
 
 </div>
 <%
-} else {//没有抓取到数据,数据库缓存也没有数据
+} else {//数据库缓存也没有数据
 %>
 <script>
     alertMsg("暂时没有找到你的任何数据");
@@ -96,8 +85,7 @@
 <%
         }
     } else {//没有绑定
-        response.sendRedirect("login.jsp?info=Who you are?");
-        return;
+        Tool.jspWriteJSForHTML_shouldBind(response, "");
     }
 %>
 <script src="../../lib/js/jquery.min.js"></script>
