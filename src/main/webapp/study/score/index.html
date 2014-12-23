@@ -62,9 +62,9 @@
     var Msg=$('#msg');
     var myXH = getCookie('XH');
     $(document).ready(function () {
-        if (myXH.length > 0) {
+        if (myXH.length > 0) {//已经绑定
+            spiderMyScore();
             $('#Page_Dimmer').dimmer('show');
-            updateMyScore();
             //加载自己的成绩,并保存下来用于回到主页
             getScore_XH(myXH, function (data) {
                 if (data.length < 1) {
@@ -95,9 +95,10 @@
     /**
      * 去教务处抓取我的最新的成绩
      */
-    function updateMyScore() {
+    function spiderMyScore() {
         $.getJSON(makeApiUrl('score/update')).done(function (data) {
             if (data == 1) {
+                showScore_xh(myXH);
                 console.log('成功更新成绩');
             } else if (data == 0) {
                 console.log('教务处网站出问题');

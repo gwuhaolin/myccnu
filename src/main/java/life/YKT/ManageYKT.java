@@ -16,6 +16,7 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tool.*;
+import tool.ccnu.CCNUPortal;
 
 import java.io.IOException;
 import java.util.*;
@@ -281,26 +282,60 @@ public class ManageYKT {
         Map<String, String> cookies;
         try {
             connection.get();
-            //获得会话cookies
-            cookies = connection.response().cookies();
-            //获得验证码
-            byte[] img = connection.response().bodyAsBytes();
-            String result = YKTORC.orc(img);
-            //登入
-            connection = Jsoup.connect("http://192.168.44.7:10000/sisms/index.php/login/dologin");
-            connection.cookies(cookies);
-            connection.data("username", XH);
-            connection.data("password", MM);
-            connection.data("usertype", "1");
-            connection.data("schoolcode", "001");
-            connection.data("imgcode", result);
-            connection.post();
-            return cookies;
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new NetworkException("一卡通服务器繁忙");
+            throw new NetworkException("一卡通查询系统繁忙");
+        }
+        //获得会话cookies
+        cookies = connection.response().cookies();
+        //获得验证码
+        byte[] img = connection.response().bodyAsBytes();
+        String result = YKTORC.orc(img);
+        //登入
+        connection = Jsoup.connect("http://192.168.44.7:10000/sisms/index.php/login/dologin");
+        connection.cookies(cookies);
+        connection.data("username", XH);
+        connection.data("password", MM);
+        connection.data("usertype", "1");
+        connection.data("schoolcode", "001");
+        connection.data("imgcode", result);
+        try {
+            connection.post();
+        } catch (IOException e) {
+            throw new NetworkException("一卡通查询系统繁忙");
+        }
+        String re = connection.response().body();
+
+        /**
+         * password error =  {"flag":0,"msg":"\u5bc6\u7801\u9519\u8bef!","data":""}
+         * ok = {"flag":1,"msg":"","data":""}
+         */
+        if (re.charAt(8) != '1') {
+            throw new ValidateException("一卡通查询账号密码错误");
+        }
+        return cookies;
+    }
+
+    /**
+     * 获得cookie
+     *
+     * @param XH 学号
+     * @param MM 密码
+     * @return cookies
+     * @throws tool.NetworkException  学校服务器异常
+     * @throws tool.ValidateException 身份验证失败
+     */
+    protected static Map<String, String> getCookies_CCNUPortal(String XH, String MM) throws NetworkException, ValidateException {
+        Map<String, String> cookies = CCNUPortal.getCookie(XH, MM);
+        Connection connection = Jsoup.connect("http://portal.ccnu.edu.cn/roamingAction.do?appId=ECARD");
+        connection.cookies(cookies);
+        try {
+            connection.get();
+            return connection.response().cookies();
+        } catch (IOException e) {
+            throw new NetworkException("一卡通查询系统繁忙");
         }
     }
+
 
     /**
      * 获得yyyy-MM-dd格式的系统当前时间day天前的时间
@@ -319,19 +354,29 @@ public class ManageYKT {
      * @return 获取到的state, 如果获取state失败就返回null
      */
     private static MyYktEntity spiderAll(String xh, String mm) {
-        try {
-            Map<String, String> cookies = getCookies(xh, mm);
-            MyYktEntity state = spiderState(xh, cookies);
-            //开启一个新进程去抓取其他的信息
-            ((Runnable) () -> {
-                spiderDetail(xh, cookies);
-                spiderHelpMoney(xh, cookies);
-                spiderKaoQin(xh, cookies);
-            }).run();
-            return state;
+        //获取cookies
+        Map<String, String> cookies;
+        try {//优先直接去一卡通网站查询跳过信息门户
+            cookies = getCookies(xh, mm);
         } catch (NetworkException | ValidateException e) {
-            return null;
+            try {//如果一卡通网站查询失败就通过信息门户查询
+                cookies = getCookies_CCNUPortal(xh, mm);
+            } catch (NetworkException | ValidateException e1) {
+                log.error("抓取一卡通信息失败 XH=%s MM=%s", xh, mm);
+                return null;
+            }
         }
+
+        //抓取信息
+        MyYktEntity state = spiderState(xh, cookies);
+        //开启一个新进程去抓取其他的信息
+        final Map<String, String> finalCookies = cookies;
+        ((Runnable) () -> {
+            spiderDetail(xh, finalCookies);
+            spiderHelpMoney(xh, finalCookies);
+            spiderKaoQin(xh, finalCookies);
+        }).run();
+        return state;
     }
 
     /**
