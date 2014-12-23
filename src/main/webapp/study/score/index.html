@@ -11,26 +11,17 @@
 </head>
 <body>
 
-<!--显示所有成绩的容器-->
-<div class="ui stackable three column page grid" id="Score_Con">
-
-</div>
-
 <!--提示-->
 <div class="ui page grid one column center aligned">
-
-    <!--查看平均学分成绩按钮-->
     <div class="ui column">
-        <div class="ui button circular fluid" onclick="showPjxf()">
-            轻击这查看你的平均学分绩排名
-        </div>
-    </div>
-
-    <div class="ui column">
-        <div class="ui message floating info">
+        <div class="ui message floating info" id="msg">
             想对任何一个白块更深入了解,只需点它,你就会知道很多!
         </div>
     </div>
+</div>
+
+<!--显示所有成绩的容器-->
+<div class="ui stackable three column page grid" id="Score_Con">
 
 </div>
 
@@ -48,10 +39,15 @@
 
 <!--当进入非主页模式时显示,用于返回个人成绩单-->
 <div id="homeBtn" onclick="showHome()" class="ui button circular icon inverted black"
-     style="position: fixed;right: 5px;bottom: 5px;display: none">
+     style="position: fixed;right: 5px;bottom: 5px;">
     <i class="icon user"></i>
 </div>
 
+<!--查看自己的平均学分绩-->
+<div id="averageBtn" onclick="showPjxf()" class="ui button circular icon inverted black"
+     style="position: fixed;left: 5px;bottom: 5px;">
+    <i class="icon list"></i>
+</div>
 
 <script src="../../lib/js/jquery.min.js"></script>
 <script src="../../lib/js/semantic.min.js"></script>
@@ -63,18 +59,21 @@
     var GetScore_URL = makeApiUrl("score/get");
     var Score_Con = $('#Score_Con');
     var TempHTML = '';
-    var HomeBtn = $('#homeBtn');
+    var Msg=$('#msg');
     var myXH = getCookie('XH');
     $(document).ready(function () {
         if (myXH.length > 0) {
             $('#Page_Dimmer').dimmer('show');
+            updateMyScore();
             //加载自己的成绩,并保存下来用于回到主页
             getScore_XH(myXH, function (data) {
-                TempHTML = toHTML('Score_TEMP', data);//保存原来的
-                Score_Con.append(TempHTML);
-                $('#Page_Dimmer').dimmer('hide');
                 if (data.length < 1) {
                     alertMsg('暂时还没有获得你的成绩,等下再试试吧');
+                }else{
+                    TempHTML = toHTML('Score_TEMP', data);//保存原来的
+                    Score_Con.append(TempHTML);
+                    $('#Page_Dimmer').dimmer('hide');
+                    $(Msg).text('你的成绩单');
                 }
             });
         } else {//还没有绑定
@@ -94,6 +93,21 @@
     }
 
     /**
+     * 去教务处抓取我的最新的成绩
+     */
+    function updateMyScore() {
+        $.getJSON(makeApiUrl('score/update')).done(function (data) {
+            if (data == 1) {
+                console.log('成功更新成绩');
+            } else if (data == 0) {
+                console.log('教务处网站出问题');
+            } else if (data == -1) {
+                shouldBind('信息门户账号密码错误');
+            }
+        });
+    }
+
+    /**
      * 显示学号为学号的同学的成绩
      * @param xh 学号
      */
@@ -101,8 +115,8 @@
         getScore_XH(xh, function (data) {
             Score_Con.html('');//清空原来的
             Score_Con.append(toHTML('Score_TEMP', data));
-            $(HomeBtn).fadeIn();
             goTop();
+            $(Msg).text(xh+'的成绩单');
         });
     }
 
@@ -141,7 +155,7 @@
             Score_Con.html('');//清空原来的
             Score_Con.append(toHTML('Basic_TEMP', basic));
             Score_Con.append(toHTML('Score_TEMP', data));
-            $(HomeBtn).fadeIn();
+            $(Msg).text('课程号为'+classID+'的所有同学的成绩');
             goTop();
         });
     }
@@ -168,7 +182,7 @@
             Score_Con.html('');//清空原来的
             Score_Con.append(toHTML('PJXF-self_TEMP', my));
             Score_Con.append(toHTML('PJXF-one_TEMP', others));
-            $(HomeBtn).fadeIn();
+            $(Msg).text('你的平均学分绩');
             goTop();
         });
     }
@@ -177,8 +191,8 @@
      * 退回到自己的成绩列表
      */
     function showHome() {
-        $(HomeBtn).hide();
         Score_Con.html(TempHTML);
+        $(Msg).text('你的成绩单');
         goTop();
     }
 

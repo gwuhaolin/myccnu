@@ -50,7 +50,8 @@ function executeAJAXBind() {
             } else if (data == 1) {
                 $(bindModal).modal('hide');
                 loadMyInfo();
-                alert('绑定成功,请继续');
+                //alert('绑定成功,请继续');
+                location.reload();
             }
         });
     }

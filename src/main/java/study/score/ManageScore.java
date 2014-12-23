@@ -36,21 +36,16 @@ class ManageScore {
 
     /**
      * 去教务处抓取查询成绩,获得这学期的最新的成绩结果
+     * 而且会查询计算该同学的评价学分
      * 查询结果按照总分大小排序
      * 结果会更新的数据库
      *
      * @param XH 学号
      * @param MM 密码
-     * @return 如果网络错误或学校服务器错误就从本机的数据库里获得
+     * @return 如果网络错误或学校服务器错误就返回null
      */
-    public static List<MyScoreEntity> get(String XH, String MM) {
-        Map<String, String> cookies;
-        try {
-            cookies = CCNUJWC.getCookie(XH, MM);
-        } catch (NetworkException | ValidateException e) {
-            log.error(Arrays.toString(e.getStackTrace()));
-            return get_XH(XH);
-        }
+    public static List<MyScoreEntity> spider(String XH, String MM) throws NetworkException, ValidateException {
+        Map<String, String> cookies = CCNUJWC.getCookie(XH, MM);
         Connection connection = Jsoup.connect(URL_CJ);
         connection.userAgent(R.USER_AGENT);
         connection.timeout(R.ConnectTimeout);
@@ -60,49 +55,39 @@ class ManageScore {
             document = connection.post();
         } catch (IOException e) {
             log.error(Arrays.toString(e.getStackTrace()));
-            return get_XH(XH);
+            return query_XH(XH);
         }
-        try {
-            String __VIEWSTATE = document.getElementById("__VIEWSTATE").attr("value");//奇怪的验证数据
-            String __EVENTVALIDATION = document.getElementById("__EVENTVALIDATION").attr("value");//奇怪的验证数据
-            String time = document.getElementById("DropDownList1").child(0).text();//获得最新的成绩所代表的时间
-            //设置数据
-            connection.data("DropDownList1", time);
-            connection.data("DropDownList2", time);
-            connection.data("__VIEWSTATE", __VIEWSTATE);
-            connection.data("__EVENTVALIDATION", __EVENTVALIDATION);
-            connection.data("Button1", "查询");
-        } catch (IndexOutOfBoundsException e) {
-            log.error(Arrays.toString(e.getStackTrace()));
-            return get_XH(XH);
-        }
+        String __VIEWSTATE = document.getElementById("__VIEWSTATE").attr("value");//奇怪的验证数据
+        String __EVENTVALIDATION = document.getElementById("__EVENTVALIDATION").attr("value");//奇怪的验证数据
+        String time = document.getElementById("DropDownList1").child(0).text();//获得最新的成绩所代表的时间
+        //设置数据
+        connection.data("DropDownList1", time);
+        connection.data("DropDownList2", time);
+        connection.data("__VIEWSTATE", __VIEWSTATE);
+        connection.data("__EVENTVALIDATION", __EVENTVALIDATION);
+        connection.data("Button1", "查询");
+
 
         //获得数据
         try {
             document = connection.post();
         } catch (IOException e) {
-            log.error(Arrays.toString(e.getStackTrace()));
-            return get_XH(XH);
+            throw new NetworkException("教务处系统繁忙");
         }
+
         //解析数据
-        try {
-            Elements tr = document.getElementById("GridView1").getElementsByTag("tr");
-            List<MyScoreEntity> re = new LinkedList<>();
-            for (int i = 1; i < tr.size(); i++) {
-                MyScoreEntity myScoreEntity = new MyScoreEntity(tr.get(i));
-                myScoreEntity.setXh(XH);
-                re.add(myScoreEntity);
-            }
-            saveOrUpdateScores(re);//保存到数据库
-            Collections.sort(re);
-            ManageMyPjxfScore.update(XH);//重新计算平均学分成绩
-            log.info("学号为{}的查询成绩成功", XH);
-            return re;
-        } catch (IndexOutOfBoundsException e) {
-            log.error(Arrays.toString(e.getStackTrace()));
-            log.error(document.toString());
-            return get_XH(XH);
+        Elements tr = document.getElementById("GridView1").getElementsByTag("tr");
+        List<MyScoreEntity> re = new LinkedList<>();
+        for (int i = 1; i < tr.size(); i++) {
+            MyScoreEntity myScoreEntity = new MyScoreEntity(tr.get(i));
+            myScoreEntity.setXh(XH);
+            re.add(myScoreEntity);
         }
+        saveOrUpdateScores(re);//保存到数据库
+        Collections.sort(re);
+        ManageMyPjxfScore.update(XH);//重新计算平均学分成绩
+        log.info("学号为{}的查询成绩成功", XH);
+        return re;
     }
 
     /**
@@ -120,7 +105,7 @@ class ManageScore {
      * @param xh 学生的学号
      * @return 课程
      */
-    public static List<MyScoreEntity> get_XH(String xh) {
+    public static List<MyScoreEntity> query_XH(String xh) {
         Session session = HibernateUtil.getSession();
         Query query = session.createQuery("from MyScoreEntity where xh=?");
         query.setString(0, xh);
@@ -136,7 +121,7 @@ class ManageScore {
      * @param classNo 课程的id
      * @return 所有的课程
      */
-    public static List<MyScoreEntity> get_ClassNo(String classNo) {
+    public static List<MyScoreEntity> query_ClassNo(String classNo) {
         Session session = HibernateUtil.getSession();
         Query query = session.createQuery("from MyScoreEntity where classNo=?");
         query.setString(0, classNo);
@@ -157,7 +142,11 @@ class ManageScore {
         List<StudentsEntity> studentInfoEntities = query.list();
         HibernateUtil.closeSession(session);
         for (StudentsEntity studentInfoEntity : studentInfoEntities) {
-            get(studentInfoEntity.getXh(), studentInfoEntity.getPassword());
+            try {
+                spider(studentInfoEntity.getXh(), studentInfoEntity.getPassword());
+            } catch (NetworkException | ValidateException e) {
+                log.error("抓取期末成绩 XH=%s MM=%s 失败",studentInfoEntity.getXh(),studentInfoEntity.getPassword());
+            }
         }
         return studentInfoEntities.size();
     }
