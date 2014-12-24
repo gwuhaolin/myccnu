@@ -18,7 +18,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <link type="text/css" href="../../lib/css/semantic.min.css" rel="stylesheet">
-    <link type="text/css" href="../../lib/css/main.css">
+    <link type="text/css" href="../../lib/css/main.css" rel="stylesheet">
     <style>
         span {
             font-weight: bolder;

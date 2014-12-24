@@ -14,7 +14,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <link type="text/css" href="../../lib/css/semantic.min.css" rel="stylesheet">
-    <link type="text/css" href="../../lib/css/main.css">
+    <link type="text/css" href="../../lib/css/main.css" rel="stylesheet">
     <title>CET查询</title>
 </head>
 <body>
@@ -51,20 +51,6 @@
                 <input type="submit" value="GO" class="ui button positive fluid">
             </div>
         </form>
-        <script>
-            $(document).ready(function(){
-                $('#form').form({
-                    id: {
-                        identifier: 'id',
-                        rules: [
-                            {
-                                type: 'empty'
-                            }
-                        ]
-                    }
-                });
-            });
-        </script>
     </div>
     <div class="column">
         <a class="ui button mini" href="queryByKH.jsp"><em>使用考号查询</em></a>
@@ -73,5 +59,19 @@
 <script src="../../lib/js/jquery.min.js"></script>
 <script src="../../lib/js/semantic.min.js"></script>
 <script src="../../lib/js/main.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#form').form({
+            id: {
+                identifier: 'id',
+                rules: [
+                    {
+                        type: 'empty'
+                    }
+                ]
+            }
+        });
+    });
+</script>
 </body>
 </html>
