@@ -125,7 +125,7 @@
     } else {//没有借书
     %>
     <script>
-        alert('你目前还没有在接图书');
+        alert('你目前还没有在借图书');
         window.location = 'index.jsp';
     </script>
     <%
