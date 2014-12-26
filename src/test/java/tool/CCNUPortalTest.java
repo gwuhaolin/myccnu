@@ -8,8 +8,8 @@ public class CCNUPortalTest {
 
     final String xh = "2012210817";
     final String mm = "930820";
-    final String xh2 = "2012210008";
-    final String mm2 = "2012210008";
+    final String xh2 = "2014214826";
+    final String mm2 = "yanchao19950818~";
     final String errorPassword = "error";
     final int TIME = 100;
 

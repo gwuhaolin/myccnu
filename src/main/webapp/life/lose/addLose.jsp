@@ -41,6 +41,9 @@
     <input type="hidden" name="type" value="<%=ManageLose.TYPE_Lose%>">
     <button type="submit" class="ui blue submit fluid button">提交</button>
 </form>
+<script src="../../lib/js/jquery.min.js"></script>
+<script src="../../lib/js/semantic.min.js"></script>
+<script src="../../lib/js/main.js"></script>
 <script>
     $(document).ready(function () {
         $('#form').form({
@@ -65,9 +68,5 @@
 </script>
 <%--链接--%>
 <%@ include file="link.jsp" %>
-<script src="../../lib/js/jquery.min.js"></script>
-<script src="../../lib/js/semantic.min.js"></script>
-<script src="../../lib/js/main.js"></script>
-
 </body>
 </html>

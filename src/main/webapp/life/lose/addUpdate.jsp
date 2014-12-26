@@ -12,10 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link href="../../lib/css/semantic.min.css" rel="stylesheet">
-    <script src="../../lib/js/jquery.min.js"></script>
-    <script src="../../lib/js/semantic.min.js"></script>
-    <link href="../../lib/css/main.css" rel='stylesheet'>
-    <script src="../../lib/js/main.js"></script>
+
     <title>捡到东西</title>
 </head>
 <body>
@@ -44,6 +41,10 @@
     <input type="hidden" name="type" value="<%=ManageLose.TYPE_Update%>">
     <button type="submit" class="ui fluid blue button">提交</button>
 </form>
+<script src="../../lib/js/jquery.min.js"></script>
+<script src="../../lib/js/semantic.min.js"></script>
+<link href="../../lib/css/main.css" rel='stylesheet'>
+<script src="../../lib/js/main.js"></script>
 <script>
     $('#add')
             .form({
@@ -74,9 +75,7 @@
             })
     ;
 </script>
-
 <%--链接--%>
 <%@ include file="link.jsp" %>
-
 </body>
 </html>
