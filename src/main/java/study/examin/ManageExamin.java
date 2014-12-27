@@ -5,6 +5,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import tool.ccnu.academy.AcademyEntity;
 import tool.ccnu.student.ManageStudents;
 import tool.ccnu.student.StudentsEntity;
 
@@ -67,7 +68,7 @@ public class ManageExamin {
      */
     public static List<OneExamin> f(String dep, String grade) {
         if (grade == null) {
-            grade = "-1";
+            grade = "2014";
         }
         if (!Deps.containsKey(dep)) {
             dep = "公共素质课";
@@ -117,8 +118,10 @@ public class ManageExamin {
         if (XH != null) {
             StudentsEntity studentInfoEntity = ManageStudents.get(XH);
             if (studentInfoEntity != null) {
-                String dep = studentInfoEntity.getAcademyByAcademy().getAcademyName();
-                return f(dep, XH.substring(0, 4));
+                AcademyEntity academyEntity=studentInfoEntity.getAcademyByAcademy();
+                if (academyEntity!=null){
+                    return f(academyEntity.getAcademyName(), XH.substring(0, 4));
+                }
             }
         }
         return f(null, null);
