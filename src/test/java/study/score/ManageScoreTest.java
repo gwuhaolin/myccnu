@@ -30,12 +30,6 @@ public class ManageScoreTest {
     }
 
     @Test
-    public void testSaveOrUpdateScores() throws Exception {
-        List<MyScoreEntity> myScoreEntities = ManageScore.spider(xh, mm);
-        ManageScore.saveOrUpdateScores(myScoreEntities);
-    }
-
-    @Test
     public void testGet_XH() throws Exception {
         List<MyScoreEntity> myScoreEntities = ManageScore.query_XH(xh);
         Assert.assertTrue(myScoreEntities.size() > 0);

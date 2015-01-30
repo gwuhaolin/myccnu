@@ -25,7 +25,7 @@ import java.util.*;
 /**
  * 从教务处网站获得成绩
  */
-class ManageScore {
+public class ManageScore {
 
     private static final Logger log = LoggerFactory.getLogger(ManageScore.class);
 
@@ -61,8 +61,8 @@ class ManageScore {
         String __EVENTVALIDATION = document.getElementById("__EVENTVALIDATION").attr("value");//奇怪的验证数据
         String time = document.getElementById("DropDownList1").child(0).text();//获得最新的成绩所代表的时间
         //设置数据
-        connection.data("DropDownList1", time);
-        connection.data("DropDownList2", time);
+        connection.data("DropDownList1", time);//开始时间
+        connection.data("DropDownList2", time);//结束时间 都是本学期
         connection.data("__VIEWSTATE", __VIEWSTATE);
         connection.data("__EVENTVALIDATION", __EVENTVALIDATION);
         connection.data("Button1", "查询");
@@ -85,7 +85,8 @@ class ManageScore {
         }
         saveOrUpdateScores(re);//保存到数据库
         Collections.sort(re);
-        ManageMyPjxfScore.update(XH);//重新计算平均学分成绩
+        //新线程更新该同学的平均学分成绩
+        ((Runnable) () -> ManageMyPjxfScore.update(XH)).run();
         log.info("学号为{}的查询成绩成功", XH);
         return re;
     }
@@ -95,12 +96,12 @@ class ManageScore {
      *
      * @param scoreEntities 所有获得的成绩
      */
-    public static void saveOrUpdateScores(List<MyScoreEntity> scoreEntities) {
+    private static void saveOrUpdateScores(List<MyScoreEntity> scoreEntities) {
         scoreEntities.forEach(HibernateUtil::addOrUpdateEntity);
     }
 
     /**
-     * 获得所有学号等于xh的课程
+     * 获得所有学号等于xh的课程成绩
      *
      * @param xh 学生的学号
      * @return 课程

@@ -9,6 +9,7 @@ package tool;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
 import java.util.List;
@@ -22,11 +23,10 @@ public class HibernateUtil {
 
     private static SessionFactory buildSessionFactory() {
         try {
-            // Create the SessionFactory from hibernate.cfg.xml
-            return new Configuration().configure().buildSessionFactory();
+            Configuration configuration=new Configuration().configure();
+            StandardServiceRegistryBuilder standardServiceRegistryBuilder=new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
+            return configuration.buildSessionFactory(standardServiceRegistryBuilder.build());
         } catch (Throwable ex) {
-            // Make sure you log the exception, as it might be swallowed
-            System.err.println("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
         }
     }
@@ -56,18 +56,6 @@ public class HibernateUtil {
     }
 
     /**
-     * 向数据库添加多个
-     */
-    public static boolean addEntitys(List entitys) {
-        Session session = getSession();
-        for (Object one : entitys) {
-            session.save(one);
-        }
-        HibernateUtil.closeSession(session);
-        return true;
-    }
-
-    /**
      * 向数据库中添加或更新这个对象
      */
     public static boolean addOrUpdateEntity(Object o) {
@@ -82,9 +70,7 @@ public class HibernateUtil {
      */
     public static boolean addOrUpdateEntitys(List entitys) {
         Session session = getSession();
-        for (Object one : entitys) {
-            session.saveOrUpdate(one);
-        }
+        entitys.forEach(session::saveOrUpdate);
         closeSession(session);
         return true;
     }
