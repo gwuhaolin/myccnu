@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: org.json:org.json:chargebee-1.0">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/json/org.json/chargebee-1.0/org.json-chargebee-1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
