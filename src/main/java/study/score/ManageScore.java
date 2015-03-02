@@ -15,7 +15,10 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import tool.*;
+import tool.HibernateUtil;
+import tool.NetworkException;
+import tool.R;
+import tool.ValidateException;
 import tool.ccnu.CCNUJWC;
 import tool.ccnu.student.StudentsEntity;
 
@@ -35,7 +38,7 @@ public class ManageScore {
     private static final String URL_CJ = "http://jwc.ccnu.edu.cn/stuScore.aspx";
 
     /**
-     * 去教务处抓取查询成绩,获得这学期的最新的成绩结果
+     * 去教务处抓取查询成绩,获得改同学所有学期的成绩结果
      * 而且会查询计算该同学的评价学分
      * 查询结果按照总分大小排序
      * 结果会更新的数据库
@@ -59,14 +62,15 @@ public class ManageScore {
         }
         String __VIEWSTATE = document.getElementById("__VIEWSTATE").attr("value");//奇怪的验证数据
         String __EVENTVALIDATION = document.getElementById("__EVENTVALIDATION").attr("value");//奇怪的验证数据
-        String time = document.getElementById("DropDownList1").child(0).text();//获得最新的成绩所代表的时间 学期
+        Elements schoolTerm = document.getElementById("DropDownList1").children();
+        String startTerm =schoolTerm.get(schoolTerm.size()-1).text();//获得最新的成绩所代表的时间 学期
+        String endTerm = schoolTerm.get(0).text();
         //设置数据
-        connection.data("DropDownList1", time);//开始时间
-        connection.data("DropDownList2", time);//结束时间 都是本学期
+        connection.data("DropDownList1", startTerm);//开始时间
+        connection.data("DropDownList2", endTerm);//结束学期
         connection.data("__VIEWSTATE", __VIEWSTATE);
         connection.data("__EVENTVALIDATION", __EVENTVALIDATION);
         connection.data("Button1", "查询");
-
 
         //获得数据
         try {
@@ -81,7 +85,6 @@ public class ManageScore {
         for (int i = 1; i < tr.size(); i++) {
             MyScoreEntity myScoreEntity = new MyScoreEntity(tr.get(i));
             myScoreEntity.setXh(XH);
-            myScoreEntity.setXueqi(time);
             re.add(myScoreEntity);
         }
         saveOrUpdateScores(re);//保存到数据库
@@ -102,7 +105,7 @@ public class ManageScore {
     }
 
     /**
-     * 获得所有学号等于xh的课程成绩
+     * 获得所有学号等于xh的课程成绩(所有学期的成绩)
      *
      * @param xh 学生的学号
      * @return 课程

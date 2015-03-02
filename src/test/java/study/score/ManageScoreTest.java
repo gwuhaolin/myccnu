@@ -13,18 +13,20 @@ public class ManageScoreTest {
 
     @Test
     public void testGet() throws Exception {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             List<MyScoreEntity> myScoreEntities = ManageScore.spider(xh, mm);
+            Assert.assertTrue(myScoreEntities.size() > 0);
+            myScoreEntities = ManageScore.spider("2010210537", "cyf1992206");
+            Assert.assertTrue(myScoreEntities.size() > 0);
+            myScoreEntities = ManageScore.spider("2011210123", "930926");
             Assert.assertTrue(myScoreEntities.size() > 0);
             myScoreEntities = ManageScore.spider("2012210008", "2012210008");
             Assert.assertTrue(myScoreEntities.size() > 0);
-            myScoreEntities = ManageScore.spider("2013213766", "190124");
+            myScoreEntities = ManageScore.spider("2012210817", "930820");
             Assert.assertTrue(myScoreEntities.size() > 0);
-            myScoreEntities = ManageScore.spider("2013213760", "666895");
+            myScoreEntities = ManageScore.spider("2013210990", "224110");
             Assert.assertTrue(myScoreEntities.size() > 0);
-            myScoreEntities = ManageScore.spider("2013213756", "081994");
-            Assert.assertTrue(myScoreEntities.size() > 0);
-            myScoreEntities = ManageScore.spider("2013213752", "004817");
+            myScoreEntities = ManageScore.spider("2014210035", "717395");
             Assert.assertTrue(myScoreEntities.size() > 0);
         }
     }
