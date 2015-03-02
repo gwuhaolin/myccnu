@@ -59,7 +59,7 @@ public class ManageScore {
         }
         String __VIEWSTATE = document.getElementById("__VIEWSTATE").attr("value");//奇怪的验证数据
         String __EVENTVALIDATION = document.getElementById("__EVENTVALIDATION").attr("value");//奇怪的验证数据
-        String time = document.getElementById("DropDownList1").child(0).text();//获得最新的成绩所代表的时间
+        String time = document.getElementById("DropDownList1").child(0).text();//获得最新的成绩所代表的时间 学期
         //设置数据
         connection.data("DropDownList1", time);//开始时间
         connection.data("DropDownList2", time);//结束时间 都是本学期
@@ -81,6 +81,7 @@ public class ManageScore {
         for (int i = 1; i < tr.size(); i++) {
             MyScoreEntity myScoreEntity = new MyScoreEntity(tr.get(i));
             myScoreEntity.setXh(XH);
+            myScoreEntity.setXueqi(time);
             re.add(myScoreEntity);
         }
         saveOrUpdateScores(re);//保存到数据库

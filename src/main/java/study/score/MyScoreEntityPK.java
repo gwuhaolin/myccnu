@@ -5,10 +5,10 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * Created by wuhaolin on 8/30/14.
+ * Created by wuhaolin on 3/2/15.
  * :
  */
-public class MyScoreEntityPK implements Serializable {
+public class MyscoreEntityPK implements Serializable {
     private String xh;
     private String classNo;
 
@@ -37,10 +37,10 @@ public class MyScoreEntityPK implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MyScoreEntityPK that = (MyScoreEntityPK) o;
+        MyscoreEntityPK that = (MyscoreEntityPK) o;
 
-        if (classNo != null ? !classNo.equals(that.classNo) : that.classNo != null) return false;
         if (xh != null ? !xh.equals(that.xh) : that.xh != null) return false;
+        if (classNo != null ? !classNo.equals(that.classNo) : that.classNo != null) return false;
 
         return true;
     }

@@ -6,13 +6,13 @@ import org.jsoup.select.Elements;
 import javax.persistence.*;
 
 /**
- * Created by wuhaolin on 8/30/14.
+ * Created by wuhaolin on 3/2/15.
  * :
  */
 @Entity
 @Table(name = "myscore", schema = "", catalog = "weixin")
-@IdClass(MyScoreEntityPK.class)
-public class MyScoreEntity implements Comparable<MyScoreEntity> {
+@IdClass(MyscoreEntityPK.class)
+public class MyScoreEntity implements Comparable<MyScoreEntity>{
     private String xh;
     private String classNo;
     private String className;
@@ -20,6 +20,7 @@ public class MyScoreEntity implements Comparable<MyScoreEntity> {
     private Float qimoScore;
     private Float pinshiScore;
     private Float xuefen;
+    private String xueqi;
 
     @Id
     @Column(name = "XH", nullable = false, insertable = true, updatable = true, length = 15)
@@ -77,8 +78,8 @@ public class MyScoreEntity implements Comparable<MyScoreEntity> {
         return pinshiScore;
     }
 
-    public void setPinshiScore(Float pinshiSocre) {
-        this.pinshiScore = pinshiSocre;
+    public void setPinshiScore(Float pinshiScore) {
+        this.pinshiScore = pinshiScore;
     }
 
     @Basic
@@ -91,6 +92,16 @@ public class MyScoreEntity implements Comparable<MyScoreEntity> {
         this.xuefen = xuefen;
     }
 
+    @Basic
+    @Column(name = "xueqi", nullable = true, insertable = true, updatable = true, length = 10)
+    public String getXueqi() {
+        return xueqi;
+    }
+
+    public void setXueqi(String xueqi) {
+        this.xueqi = xueqi;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -98,13 +109,14 @@ public class MyScoreEntity implements Comparable<MyScoreEntity> {
 
         MyScoreEntity that = (MyScoreEntity) o;
 
-        if (className != null ? !className.equals(that.className) : that.className != null) return false;
-        if (classNo != null ? !classNo.equals(that.classNo) : that.classNo != null) return false;
-        if (pinshiScore != null ? !pinshiScore.equals(that.pinshiScore) : that.pinshiScore != null) return false;
-        if (qimoScore != null ? !qimoScore.equals(that.qimoScore) : that.qimoScore != null) return false;
-        if (sumScore != null ? !sumScore.equals(that.sumScore) : that.sumScore != null) return false;
         if (xh != null ? !xh.equals(that.xh) : that.xh != null) return false;
+        if (classNo != null ? !classNo.equals(that.classNo) : that.classNo != null) return false;
+        if (className != null ? !className.equals(that.className) : that.className != null) return false;
+        if (sumScore != null ? !sumScore.equals(that.sumScore) : that.sumScore != null) return false;
+        if (qimoScore != null ? !qimoScore.equals(that.qimoScore) : that.qimoScore != null) return false;
+        if (pinshiScore != null ? !pinshiScore.equals(that.pinshiScore) : that.pinshiScore != null) return false;
         if (xuefen != null ? !xuefen.equals(that.xuefen) : that.xuefen != null) return false;
+        if (xueqi != null ? !xueqi.equals(that.xueqi) : that.xueqi != null) return false;
 
         return true;
     }
@@ -118,6 +130,7 @@ public class MyScoreEntity implements Comparable<MyScoreEntity> {
         result = 31 * result + (qimoScore != null ? qimoScore.hashCode() : 0);
         result = 31 * result + (pinshiScore != null ? pinshiScore.hashCode() : 0);
         result = 31 * result + (xuefen != null ? xuefen.hashCode() : 0);
+        result = 31 * result + (xueqi != null ? xueqi.hashCode() : 0);
         return result;
     }
 
@@ -128,7 +141,7 @@ public class MyScoreEntity implements Comparable<MyScoreEntity> {
     /**
      * 把HTML里的tr解析成一门成绩的详细信息
      *
-     * @param tr
+     * @param tr 一门成绩
      */
     public MyScoreEntity(Element tr) {
         Elements tds = tr.children();
