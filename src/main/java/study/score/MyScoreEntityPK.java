@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by wuhaolin on 3/2/15.
  * :
  */
-public class MyscoreEntityPK implements Serializable {
+public class MyScoreEntityPK implements Serializable {
     private String xh;
     private String classNo;
 
@@ -37,7 +37,7 @@ public class MyscoreEntityPK implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MyscoreEntityPK that = (MyscoreEntityPK) o;
+        MyScoreEntityPK that = (MyScoreEntityPK) o;
 
         if (xh != null ? !xh.equals(that.xh) : that.xh != null) return false;
         if (classNo != null ? !classNo.equals(that.classNo) : that.classNo != null) return false;

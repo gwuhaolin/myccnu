@@ -11,7 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "myscore", schema = "", catalog = "weixin")
-@IdClass(MyscoreEntityPK.class)
+@IdClass(MyScoreEntityPK.class)
 public class MyScoreEntity implements Comparable<MyScoreEntity>{
     private String xh;
     private String classNo;
