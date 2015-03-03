@@ -93,9 +93,10 @@
                 } else {
                     allScores=data;
                     findOutAllTermAndGenHTML();
-                    showMyScoreWithTerm(allTerms[allTerms.length-1]);
+                    var nowTerm = allTerms[allTerms.length-1];
+                    showMyScoreWithTerm(nowTerm);
                     $('#Page_Dimmer').dimmer('hide');
-                    $(Msg).text(myXH+'的成绩单');
+                    $(Msg).text('你在'+nowTerm+'学期的成绩单');
                 }
             });
         } else {//还没有绑定
