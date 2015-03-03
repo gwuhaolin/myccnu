@@ -129,11 +129,13 @@
                         findOutAllTermAndGenHTML();
                         showMyScoreWithTerm(allTerms[allTerms.length-1]);
                         goTop();
-                        $(Msg).text('成功更新成功,以下为最新成绩');
+                        $(Msg).removeClass('error');
+                        $(Msg).text('成绩更新成功,以下为最新成绩');
                     }
                 });
             } else if (data == 0) {
                 goTop();
+                $(Msg).addClass('error');
                 $(Msg).text('更新成绩失败,以下为已缓存成绩');
             } else if (data == -1) {
                 shouldBind('信息门户账号密码错误');
