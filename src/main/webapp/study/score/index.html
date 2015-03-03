@@ -15,7 +15,12 @@
 <div id="ChooseTermContainer"
      style="display: none;background-color: #ffffff;text-align: center;padding-bottom: 10px;position: fixed;z-index: 2;top: 0;height: auto;width: 100%">
     <h4 style="margin: 5px">选择学期</h4>
-    <div class="ui mini button" onclick="showMyScoreWithTerm();toggleChooseTermContainer()">全部</div>
+    <div class="ui mini buttons" id="TermOptionButtonsContainer">
+    </div>
+    <div class="ui mini buttons">
+        <button class="ui mini button" onclick="showMyScoreWithTerm();toggleChooseTermContainer()">全部学期</button>
+        <button class="ui mini button" onclick="showMySumXueFen();toggleChooseTermContainer()">学分总和</button>
+    </div>
 </div>
 
 <!--提示-->
@@ -91,12 +96,12 @@
                 if (data.length < 1) {
                     alertMsg('暂时还没有获得你的成绩,等下再试试吧');
                 } else {
-                    allScores=data;
+                    allScores = data;
                     findOutAllTermAndGenHTML();
-                    var nowTerm = allTerms[allTerms.length-1];
+                    var nowTerm = allTerms[allTerms.length - 1];
                     showMyScoreWithTerm(nowTerm);
                     $('#Page_Dimmer').dimmer('hide');
-                    $(Msg).text('你在'+nowTerm+'学期的成绩单');
+                    $(Msg).text('你在' + nowTerm + '学期的成绩单');
                 }
             });
         } else {//还没有绑定
@@ -126,9 +131,9 @@
                     if (data.length < 1) {
                         alertMsg('暂时还没有获得你的成绩,等下再试试吧');
                     } else {
-                        allScores=data;
+                        allScores = data;
                         findOutAllTermAndGenHTML();
-                        showMyScoreWithTerm(allTerms[allTerms.length-1]);
+                        showMyScoreWithTerm(allTerms[allTerms.length - 1]);
                         goTop();
                         $(Msg).removeClass('error');
                         $(Msg).text('成绩更新成功,以下为最新成绩');
@@ -154,45 +159,89 @@
             Score_Con.html('');//清空原来的
             Score_Con.append(toHTML('Score_TEMP', data));
             goTop();
-            $(Msg).text(xh+'的成绩单');
+            $(Msg).text(xh + '的成绩单');
         });
     }
 
-    function findOutAllTermAndGenHTML(){
+    function findOutAllTermAndGenHTML() {
         allTerms = [];
-        for(var i=0;i<allScores.length;i++){
+        var TermOptionButtonsContainer = $('#TermOptionButtonsContainer');
+        $(TermOptionButtonsContainer).html('');
+        for (var i = 0; i < allScores.length; i++) {
             var term = allScores[i].term;
-            if(term && allTerms.indexOf(term)==-1){
+            if (term && allTerms.indexOf(term) == -1) {
                 allTerms.push(term);
-                $(chooseTermContainer).append($('<div class="ui mini button" onclick="showMyScoreWithTerm('+term+');toggleChooseTermContainer()">'+term+'</div>'));
+                $(TermOptionButtonsContainer).append($('<button class="ui mini button" onclick="showMyScoreWithTerm(' + term + ');toggleChooseTermContainer()">' + term + '</button>'));
             }
         }
     }
 
-    function showMyScoreWithTerm(term){
+    function showMyScoreWithTerm(term) {
         var shouldShowScores = [];
-        if(term){
-            for(var i=0;i<allScores.length;i++){
+        if (term) {
+            for (var i = 0; i < allScores.length; i++) {
                 var oneScore = allScores[i];
-                if (oneScore.term == term){
+                if (oneScore.term == term) {
                     shouldShowScores.push(oneScore);
                 }
             }
-        }else{
+        } else {
             shouldShowScores = allScores;
         }
         TempHTML = toHTML('Score_TEMP', shouldShowScores);
         Score_Con.html('');//清空原来的
         Score_Con.append(TempHTML);
-        if(term){
-            $(Msg).text('你在'+term+'学期的成绩单');
-        }else{
+        if (term) {
+            $(Msg).text('你在' + term + '学期的成绩单');
+        } else {
             $(Msg).text('你所有学期的成绩单');
         }
         goTop();
     }
 
-    function showMyTempScore(){
+    /**
+     * 显示我所有学分的总和
+     */
+    function showMySumXueFen() {
+        var gb = [], zb = [], zx = [], rx = [], fx = [];
+        for (var i = 0; i < allScores.length; i++) {
+            var oneScore = allScores[i];
+            if (oneScore.zhufu == '主') {
+                if (oneScore.classFlag == '公必') {
+                    gb.push(oneScore);
+                } else if (oneScore.classFlag == '专必') {
+                    zb.push(oneScore);
+                } else if (oneScore.classFlag == '专选') {
+                    zx.push(oneScore);
+                } else if (oneScore.classFlag == '任选') {
+                    rx.push(oneScore);
+                }
+            } else if (oneScore.zhufu == '辅') {
+                fx.push(oneScore);
+            }
+        }
+        function sumXueFen(scores) {
+            var re = 0;
+            for (i = 0; i < scores.length; i++) {
+                re += scores[i].xuefen;
+            }
+            return re;
+        }
+
+        var result = {
+            gb: sumXueFen(gb),
+            zb: sumXueFen(zb),
+            zx: sumXueFen(zx),
+            rx: sumXueFen(rx),
+            fx: sumXueFen(fx)
+        };
+        var html = toHTML('SumXueFen_TEMP', result);
+        Score_Con.html('');//清空原来的
+        Score_Con.append(html);
+        goTop();
+    }
+
+    function showMyTempScore() {
         Score_Con.html('');//清空原来的
         Score_Con.append(TempHTML);
         $(Msg).text('你的成绩单');
@@ -266,7 +315,7 @@
         });
     }
 
-    function toggleChooseTermContainer(){
+    function toggleChooseTermContainer() {
         $(chooseTermContainer).toggle();
     }
 </script>
@@ -336,16 +385,6 @@
                             <a class="header">{{xuefen}}</a>
 
                             <div class="description">学分
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <i class="calendar icon circular inverted"></i>
-
-                        <div class="content">
-                            <a class="header">{{term}}</a>
-
-                            <div class="description">学期
                             </div>
                         </div>
                     </div>
@@ -513,6 +552,63 @@
             </div>
         </div>
         {{/.}}
+    </div>
+
+    <!--显示我的所有成绩的学分总和-->
+    <div id="SumXueFen_TEMP">
+        <div class="column">
+            <div class="ui stacked segment">
+
+                <div class="ui relaxed divided list">
+
+                    <div class="item">
+                        <div class="content">
+                            <a class="header">{{gb}}</a>
+
+                            <div class="description">公必
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="content">
+                            <a class="header">{{zb}}</a>
+
+                            <div class="description">专必
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="content">
+                            <a class="header">{{rx}}</a>
+
+                            <div class="description">任选
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="content">
+                            <a class="header">{{zx}}</a>
+
+                            <div class="description">专选
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="content">
+                            <a class="header">{{fx}}</a>
+
+                            <div class="description">辅修
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 
 </div>

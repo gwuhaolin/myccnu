@@ -87,6 +87,7 @@
         <mapping class="tool.feedback.MyFeedbackEntity"/>
         <mapping class="study.score.MyScoreEntity"/>
         <mapping class="study.score.MyScoreEntity"/>
+        <mapping class="study.score.MyScoreEntity"/>
 
     </session-factory>
 
