@@ -184,7 +184,11 @@
         TempHTML = toHTML('Score_TEMP', shouldShowScores);
         Score_Con.html('');//清空原来的
         Score_Con.append(TempHTML);
-        $(Msg).text('你在'+term+'学期的成绩单');
+        if(term){
+            $(Msg).text('你在'+term+'学期的成绩单');
+        }else{
+            $(Msg).text('你所有学期的成绩单');
+        }
         goTop();
     }
 
