@@ -1,6 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'war'
-version = '1.0'
+compileJava.options.encoding = 'UTF-8'
 
 repositories {
   mavenLocal()
