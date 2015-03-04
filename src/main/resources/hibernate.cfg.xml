@@ -85,9 +85,6 @@
         <mapping class="life.YKT.MyYktEntity"/>
         <!--提交反馈-->
         <mapping class="tool.feedback.MyFeedbackEntity"/>
-        <mapping class="study.score.MyScoreEntity"/>
-        <mapping class="study.score.MyScoreEntity"/>
-        <mapping class="study.score.MyScoreEntity"/>
 
     </session-factory>
 

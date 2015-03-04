@@ -51,4 +51,11 @@ public class ServiceScore {
         return ManageScore.query_ClassNo(classId);
     }
 
+    @JSONP(queryParam = R.JSONP_CALLBACK)
+    @GET
+    @Path("/updateStudentsScore")
+    public int updateStudentsScore(){
+        return ManageScore.updateAllStudentsScore();
+    }
+
 }
