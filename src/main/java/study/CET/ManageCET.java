@@ -47,7 +47,7 @@ public class ManageCET {
      * 要查询的CET考试的时间,用于从学校抓取数据时提交的数据
      * 会按照顺序依次抓取,把优先的写在前面
      */
-    public static final String[] DATE = {"201406", "201312"};
+    public static final String[] DATE = {"201412","201406"};
 
     /**
      * 查询时的所有的等级
@@ -94,7 +94,7 @@ public class ManageCET {
             String listen = all.get(1).text();
             String read = all.get(2).text();
             String essay = all.get(4).text();
-            log.info("成功抓取{}的CET成绩={}", IdNumber, sum);
+            log.info("成功抓取{}的CET成绩={} 时间="+date+" 级数="+grade, IdNumber, sum);
             return new Cet46Entity(sum, listen, read, essay, grade, date);
         } catch (Exception e) {
             log.info("抓取CET失败-身份证:{}-{}", IdNumber, date + "-" + grade);
@@ -182,7 +182,7 @@ public class ManageCET {
      * @param name 姓名
      * @return 成绩, 如果失败返回null
      */
-    public static Cet46Entity get_KH(String KH, String name) {
+    public static Cet46Entity spider_KH(String KH, String name) {
         System.out.println(KH + name);
         try {
             Connection connection = Jsoup.connect("http://www.chsi.com.cn/cet/query");

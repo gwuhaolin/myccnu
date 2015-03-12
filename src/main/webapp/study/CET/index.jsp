@@ -32,7 +32,7 @@
     } else if (type.equals("KH")) {
         String kh = request.getParameter("kh");
         String name = request.getParameter("name");
-        cet = ManageCET.get_KH(kh, name);
+        cet = ManageCET.spider_KH(kh, name);
     }
     request.getSession().setAttribute("cet", cet);
     response.sendRedirect("result.jsp");
