@@ -7,7 +7,6 @@ package tool;
  * Time: 6:17 PM
  */
 
-import life.jobs.ManageJob;
 import life.notice.ManageNotice;
 import study.lecture.ManageEvent;
 
@@ -32,7 +31,7 @@ public class AutoUpdate {
             System.out.println("==========开始自动更新扫描===========");
             ManageEvent.update();//讲座信息
             ManageNotice.update();//重要通知
-            ManageJob.update();//兼职家教
+//            ManageJob.update();//兼职家教
             Tool.update();//更新系统当前时间
             System.out.println("==========自动更新扫描结束==========");
         }

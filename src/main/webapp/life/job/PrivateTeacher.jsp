@@ -44,7 +44,7 @@
                 <div class="content">
                     <a class="header">81881616、67868534</a>
 
-                    <div class="description">质询电话
+                    <div class="description">咨询电话
                     </div>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                 <i class="location icon circular inverted teal"></i>
 
                 <div class="content">
-                    <a class="header">大学生活动中心207办公室</a>
+                    <a class="header">大学生活动中心104办公室</a>
 
                     <div class="description">咨询地点
                     </div>
