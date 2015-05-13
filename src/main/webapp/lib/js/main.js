@@ -163,3 +163,13 @@ function getCookie(c_name) {
     }
     return "";
 }
+
+//显示广告
+function showAD() {
+    var adHtml = $('<a href="http://mp.weixin.qq.com/s?__biz=MzAwMDQwMjMxNg==&mid=205566574&idx=1&sn=5784b3b5f4d870ca4715c2dd56d8f01e#rd" class="ui modal"><img src="/AD.png" style="width: 100%;height: 100%"></a>');
+    $(document.body).append(adHtml);
+    $(adHtml).modal('setting', {
+        closable: true
+    }).modal('show');
+}
+showAD();

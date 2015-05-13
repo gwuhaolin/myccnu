@@ -18,7 +18,8 @@
             <div class="field">
                 <div class="ui compact menu fluid">
                     <div class="ui simple dropdown item fluid">
-                        你想要来自哪里的呢 <i class="dropdown icon"></i>
+                        <div class="text">你想要来自哪里的呢</div>
+                        <i class="dropdown icon"></i>
 
                         <div class="menu fluid">
                             <%
