@@ -172,4 +172,4 @@ function showAD() {
         closable: true
     }).modal('show');
 }
-showAD();
+//showAD();
