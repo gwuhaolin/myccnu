@@ -168,8 +168,5 @@ function getCookie(c_name) {
 function showAD() {
     var adHtml = $('<a class="sixteen wide column center aligned" href="http://mp.weixin.qq.com/s?__biz=MzAwMDQwMjMxNg==&mid=205566574&idx=1&sn=5784b3b5f4d870ca4715c2dd56d8f01e#rd"><img src="/AD.png" style="width: 100%;height: auto"></a>');
     $(document.body).prepend(adHtml);
-    setTimeout(function () {
-        $(adHtml).remove();
-    }, 5000);
 }
-showAD();
+//showAD();
