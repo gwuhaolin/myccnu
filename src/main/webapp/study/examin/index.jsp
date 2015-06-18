@@ -86,6 +86,9 @@
         }
     %>
 
+    <div class="column">
+        <div class="ui message">你还可以点击右下角的＋按钮切换学院年级</div>
+    </div>
 </div>
 
 <%--隐藏于左边的功能框--%>
