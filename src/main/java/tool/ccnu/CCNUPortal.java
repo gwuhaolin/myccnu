@@ -46,17 +46,17 @@ public class CCNUPortal {
         connection.userAgent(R.USER_AGENT);
         connection.data("userName", XH);
         connection.data("userPass", MM);
+        boolean re = false;
         try {
             Document document = connection.post();
-            boolean re = !document.toString().contains("错误");
+            re = !document.toString().contains("错误");
             if (re) {//如果是正确的帐号密码就更新的数据库
-                ManageStudents.update_PasswordToSQL(XH, MM);
+                ((Runnable) () -> ManageStudents.update_PasswordToSQL(XH, MM)).run();
             }
-            return re;
         } catch (IOException e) {
             log.error(Arrays.toString(e.getStackTrace()));
-            return false;
         }
+        return re;
     }
 
     /**

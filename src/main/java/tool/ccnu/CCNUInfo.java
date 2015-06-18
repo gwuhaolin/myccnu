@@ -55,12 +55,14 @@ public class CCNUInfo {
         }
         String JsessionIdValue = connection.response().cookie("JSESSIONID");
         Document re = null;
-        connection = Jsoup.connect("http://202.114.32.143/ccnuxg/xg/studentInfo.do?method=getStudentInfo");
-        connection.cookie("JSESSIONID", JsessionIdValue);
-        try {
-            re = connection.post();
-        } catch (IOException e) {
-            log.error(Arrays.toString(e.getStackTrace()));
+        if (JsessionIdValue != null) {
+            connection = Jsoup.connect("http://202.114.32.143/ccnuxg/xg/studentInfo.do?method=getStudentInfo");
+            try {
+                connection.cookie("JSESSIONID", JsessionIdValue);
+                re = connection.post();
+            } catch (IOException e) {
+                log.error(Arrays.toString(e.getStackTrace()));
+            }
         }
         return re;
     }
