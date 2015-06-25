@@ -47,9 +47,6 @@ public class ManageEvent {
 
     /**
      * 从数据库中获得一个
-     *
-     * @param id
-     * @return
      */
     public static MyEventEntity get(int id) {
         Session session = HibernateUtil.getSession();
@@ -62,10 +59,6 @@ public class ManageEvent {
 
     /**
      * 用于分页查询,按照id排序
-     *
-     * @param from 从这个开始
-     * @param size 拿出多少个
-     * @return
      */
     public static List<MyEventEntity> get_page(int from, int target) {
         Session session = HibernateUtil.getSession();
@@ -80,10 +73,6 @@ public class ManageEvent {
 
     /**
      * 用于分页查询,按照id排序,关键字搜索
-     *
-     * @param from 从这个开始
-     * @param size 拿出多少个
-     * @return
      */
     public static List<MyEventEntity> search_page(int from, int target, String want) {
         Session session = HibernateUtil.getSession();
@@ -99,8 +88,6 @@ public class ManageEvent {
 
     /**
      * 数据库中删除一个event
-     *
-     * @param id
      */
     public static void delete(int id) {
         Session session = HibernateUtil.getSession();
@@ -112,8 +99,6 @@ public class ManageEvent {
 
     /**
      * 向数据库中更新一个
-     *
-     * @param eventEntity
      */
     public static void change(MyEventEntity eventEntity) {
         HibernateUtil.updateEntity(eventEntity);
@@ -121,8 +106,6 @@ public class ManageEvent {
 
     /**
      * 向数据库中添加一个工作
-     *
-     * @param jobEntity
      */
     public static void add(MyEventEntity eventEntity) {
         HibernateUtil.addEntity(eventEntity);
@@ -130,34 +113,21 @@ public class ManageEvent {
 
     /**
      * 向数据库中添加工作
-     *
-     * @param eventEntity
      */
     public static void add(List<MyEventEntity> eventEntitys) {
-        for (MyEventEntity eventEntity : eventEntitys) {
-            HibernateUtil.addEntity(eventEntity);
-        }
+        eventEntitys.forEach(HibernateUtil::addEntity);
     }
-
-    private static final String URL_Lecture = "http://lecture.guisheng.net/";
 
     /**
      * 向数据库中添加工作要求内容不能一样
-     *
-     * @param jobEntity
      */
     private static void add_NotSame(List<MyEventEntity> jobEntitys) {
-        for (MyEventEntity myEventEntity : jobEntitys) {
-            if (!DBhasThisOne(myEventEntity)) {
-                HibernateUtil.addEntity(myEventEntity);
-            }
-        }
+        jobEntitys.stream().filter(myEventEntity -> !DBhasThisOne(myEventEntity)).forEach(HibernateUtil::addEntity);
     }
 
     /**
      * 数据库中是否有内容一样的记录
      *
-     * @param name
      * @return 如果有返回true
      */
     private static boolean DBhasThisOne(MyEventEntity myEventEntity) {
@@ -178,17 +148,14 @@ public class ManageEvent {
 
     /**
      * 从桂声网抓取讲座信息
-     *
-     * @param link
-     * @return
      */
     private static List<MyEventEntity> get0() {
-        List<MyEventEntity> allLectures = new ArrayList<MyEventEntity>();
+        List<MyEventEntity> allLectures = new ArrayList<>();
         try {
-            Document document = Jsoup.connect(URL_Lecture).get();
+            Document document = Jsoup.connect("http://lecture.guisheng.net/").get();
             Elements allLinks = document.getElementById("lectures").getElementsByClass("post");
-            for (int i = 0; i < allLinks.size(); i++) {
-                Element link = allLinks.get(i).getElementsByTag("a").first();
+            for (Element allLink : allLinks) {
+                Element link = allLink.getElementsByTag("a").first();
                 String href = link.attr("href");
                 try {
                     MyEventEntity re = new MyEventEntity();
@@ -203,10 +170,10 @@ public class ManageEvent {
                     re.setRunDate(time);
                     String location = infos.get(5).text();
                     re.setRunLocation(location);
-                    String detial = le.getElementsByClass("text").first().text();
-                    re.setIntro(detial);
+                    String detail = le.getElementsByClass("text").first().text();
+                    re.setIntro(detail);
                     allLectures.add(re);
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                 }
             }
         } catch (IOException e) {
@@ -215,7 +182,4 @@ public class ManageEvent {
         return allLectures;
     }
 
-    public static void main(String[] args) {
-
-    }
 }

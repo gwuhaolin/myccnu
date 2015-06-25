@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <link rel="icon" href="/favicon.ico">
+    <meta name="keywords" content="微信,服务平台,掌上华师,华中师范大学,myccnu">
+    <meta name="description" content="华中师范大学微信服务号掌上华师">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <link href="lib/css/semantic.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="lib/css/main.css">
+
+    <title>掌上华师</title>
+    <style>
+        a:link {
+            text-decoration: none;
+        }
+
+        body {
+            background-color: #ffffff;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        .grid {
+            opacity: 0.9;
+        }
+    </style>
+
+</head>
+<body style="margin: 0;padding: 0;overflow-x: hidden">
+
+<!--所以功能列表-->
+<div class="ui page grid" style="background-color: transparent;color: #fef6ff">
+    <div class="column">
+
+        <div class="ui row" style="padding: 10px"></div>
+
+        <div class="ui stackable grid" data-demo="true">
+            <div class="three column center aligned row">
+                <div class="column">
+                    <div class="ui stacked segment red ">
+                        <div class="ui icon header">
+                            <i class="icon heart circular inverted red"></i>
+                            爱生活
+                        </div>
+                        <div class="ui divided selection list animated">
+
+                            <a class="item blue" href="life/notice/index.jsp"><i class="icon tags"></i>最新通知</a>
+                            <a class="item red" href="life/job/index.jsp"><i class="icon pencil"></i>兼职家教</a>
+                            <a class="item green" href="life/YKT/index.jsp"><i class="icon money"></i>查一卡通</a>
+                            <a class="item orange" href="life/computer/index.jsp"><i class="icon desktop"></i>电脑维修</a>
+                            <a class="item teal" href="life/lose/index.jsp"><i class="icon heart empty"></i>失物招领</a>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column">
+                    <div class="ui stacked segment green">
+                        <div class="ui icon header">
+                            <i class="icon book circular inverted green"></i>
+                            做学霸
+                        </div>
+                        <div class="ui divided selection list animated">
+
+                            <a class="item teal" href="study/book/index.jsp"><i class="icon book"></i>校图书馆</a>
+                            <a class="item orange" href="study/CET/index.jsp"><i class="icon">C</i>CET成绩</a>
+                            <a class="item purple" href="study/score/index.html"><i class="icon list"></i>期末成绩</a>
+                            <a class="item blue" href="study/lecture/index_Lecture.jsp"><i class="icon bullhorn"></i>讲座信息</a>
+                            <a class="item blue" href="study/classroom/index.jsp"><i class="icon room"></i>查空教室</a>
+                            <a class="item blue" href="study/examin/index.jsp"><i class="icon room"></i>考试时间</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column">
+                    <div class="ui stacked segment purple">
+                        <div class="ui icon header">
+                            <i class="icon gamepad circular inverted purple"></i>
+                            找乐子
+                        </div>
+                        <div class="ui divided selection list animated">
+                            <a class="item teal" href="play/shop/index.html"><i class="icon gift"></i>二手市场</a>
+                            <a class="item purple" href="study/lecture/index_School.jsp"><i class="icon smile"></i>校园活动</a>
+                            <a class="item green" href="play/movie/index.jsp"><i class="icon play sign"></i>校园电影</a>
+                            <a class="item red" href="play/shudong/index.html"><i class="icon mail"></i>秘密树洞</a>
+                            <a class="item blue" href="http://wx.wsq.qq.com/188514346"><i class="icon facebook"></i>掌上社区</a>
+                            <a class="item teal" href="play/vote/index.html"><i class="icon star"></i>投票活动</a>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--底部-->
+<div class="ui page grid center aligned" style="background-color: #000000;color: #ffffff">
+
+    <div class="column">
+        <a href="http://www.ccnuyouth.com/" style="color: #808080">关于我们</a>
+    </div>
+</div>
+
+<script src="lib/js/jquery.min.js"></script>
+<script src="lib/js/semantic.min.js"></script>
+<script src="lib/js/main.js"></script>
+
+<script>
+
+    //显示菜单
+    function showMenu() {
+        $('#Menu').sidebar('show');
+    }
+
+    $(document).ready(function () {
+        //要漂浮于上面的sidebar
+        $('.overlay.sidebar').sidebar('setting', {
+            overlay: true
+        });
+
+        //下拉
+        $('.dropdown').dropdown();
+
+        //popup
+        $('.POPUP').popup();
+
+        //图标的反色
+        $('.circular.icon').mouseenter(function () {
+            $(this).toggleClass('inverted');
+        }).mouseleave(function () {
+            $(this).toggleClass('inverted');
+        });
+    });
+</script>
+
+</body>
+</html>
