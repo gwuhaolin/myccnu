@@ -15,11 +15,12 @@
 <div id="ChooseTermContainer"
      style="display: none;background-color: #ffffff;text-align: center;padding-bottom: 10px;position: fixed;z-index: 2;top: 0;height: auto;width: 100%">
     <h4 style="margin: 5px">选择学期</h4>
+
     <div class="ui mini buttons" id="TermOptionButtonsContainer">
     </div>
     <div class="ui mini buttons">
         <button class="ui mini button" onclick="showMyScoreWithTerm();toggleChooseTermContainer()">全部学期</button>
-        <button class="ui mini button" onclick="showMySumXueFen();toggleChooseTermContainer()">学分总和</button>
+        <button class="ui mini button" onclick="showPjxf();toggleChooseTermContainer()">平均学分绩排名</button>
     </div>
 </div>
 
@@ -51,20 +52,8 @@
 
 <!--toggle选择学期容器,用于切换学期-->
 <div id="ChooseTermBtn" onclick="toggleChooseTermContainer()" class="ui button circular icon inverted black"
-     style="position: fixed;right: 5px;top: 5px;">
-    <i class="icon calendar"></i>
-</div>
-
-<!--回到自己的成绩单-->
-<div onclick="showMyTempScore()" class="ui button circular icon inverted black"
      style="position: fixed;right: 5px;bottom: 5px;">
     <i class="icon user"></i>
-</div>
-
-<!--查看自己的平均学分绩-->
-<div id="GoAverageBtn" onclick="showPjxf()" class="ui button circular icon inverted black"
-     style="position: fixed;left: 5px;bottom: 5px;">
-    <i class="icon list"></i>
 </div>
 
 <script src="../../lib/js/jquery.min.js"></script>
@@ -190,6 +179,7 @@
         }
         TempHTML = toHTML('Score_TEMP', shouldShowScores);
         Score_Con.html('');//清空原来的
+        showMySumXueFen(shouldShowScores);
         Score_Con.append(TempHTML);
         if (term) {
             $(Msg).text('你在' + term + '学期的成绩单');
@@ -202,10 +192,10 @@
     /**
      * 显示我所有学分的总和
      */
-    function showMySumXueFen() {
+    function showMySumXueFen(shouldShowScores) {
         var gb = [], zb = [], zx = [], rx = [], fx = [];
-        for (var i = 0; i < allScores.length; i++) {
-            var oneScore = allScores[i];
+        for (var i = 0; i < shouldShowScores.length; i++) {
+            var oneScore = shouldShowScores[i];
             if (oneScore.zhufu == '主') {
                 if (oneScore.classFlag == '公必') {
                     gb.push(oneScore);
@@ -221,11 +211,16 @@
             }
         }
         function sumXueFen(scores) {
-            var re = 0;
+            var xuefenSum = 0;
+            var pjxfjSum = 0;
             for (i = 0; i < scores.length; i++) {
-                re += scores[i].xuefen;
+                xuefenSum += scores[i].xuefen;
+                pjxfjSum += scores[i].sumScore * scores[i].xuefen;
             }
-            return re;
+            return {
+                x: xuefenSum,
+                p: (pjxfjSum / xuefenSum).toFixed(2)
+            }
         }
 
         var result = {
@@ -239,13 +234,6 @@
         Score_Con.html('');//清空原来的
         Score_Con.append(html);
         $(Msg).text('你所有成绩的学分总和');
-        goTop();
-    }
-
-    function showMyTempScore() {
-        Score_Con.html('');//清空原来的
-        Score_Con.append(TempHTML);
-        $(Msg).text('你的成绩单');
         goTop();
     }
 
@@ -564,45 +552,50 @@
 
                     <div class="item">
                         <div class="content">
-                            <a class="header">{{gb}}</a>
+                            <a class="header">公必</a>
 
-                            <div class="description">公必
+                            <div class="description">
+                                共<strong>{{gb.x}}</strong>学分<br>平均学分绩<strong>{{gb.p}}</strong>
                             </div>
                         </div>
                     </div>
 
                     <div class="item">
                         <div class="content">
-                            <a class="header">{{zb}}</a>
+                            <a class="header">专必</a>
 
-                            <div class="description">专必
+                            <div class="description">
+                                共<strong>{{zb.x}}</strong>学分<br>平均学分绩<strong>{{zb.p}}</strong>
                             </div>
                         </div>
                     </div>
 
                     <div class="item">
                         <div class="content">
-                            <a class="header">{{rx}}</a>
+                            <a class="header">任选</a>
 
-                            <div class="description">任选
+                            <div class="description">
+                                共<strong>{{rx.x}}</strong>学分<br>平均学分绩<strong>{{rx.p}}</strong>
                             </div>
                         </div>
                     </div>
 
                     <div class="item">
                         <div class="content">
-                            <a class="header">{{zx}}</a>
+                            <a class="header">专选</a>
 
-                            <div class="description">专选
+                            <div class="description">
+                                共<strong>{{zx.x}}</strong>学分<br>平均学分绩<strong>{{zx.p}}</strong>
                             </div>
                         </div>
                     </div>
 
                     <div class="item">
                         <div class="content">
-                            <a class="header">{{fx}}</a>
+                            <a class="header">辅修</a>
 
-                            <div class="description">辅修
+                            <div class="description">
+                                共<strong>{{fx.x}}</strong>学分<br>平均学分绩<strong>{{fx.p}}</strong>
                             </div>
                         </div>
                     </div>
