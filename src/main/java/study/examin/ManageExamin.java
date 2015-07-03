@@ -62,8 +62,8 @@ public class ManageExamin {
      * 如果学号为空 就查全部年级
      * 如果院系为空就返回公共素质课
      *
-     * @param dep   院系名称
-     * @param grade 年级2012
+     * @param dep   院系名称 公共素质课
+     * @param grade 年级2012 2014
      * @return 所有的考试 如果查询失败返回null
      */
     public static List<OneExamin> f(String dep, String grade) {

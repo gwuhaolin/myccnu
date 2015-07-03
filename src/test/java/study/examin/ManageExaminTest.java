@@ -5,8 +5,6 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 public class ManageExaminTest {
 
     @Test
@@ -17,7 +15,7 @@ public class ManageExaminTest {
 
     @Test
     public void testF2() throws Exception {
-        List<OneExamin> re = ManageExamin.f("2012210008");
+        List<OneExamin> re = ManageExamin.f("2012210817");
         Assert.assertTrue(re.size() > 0);
     }
 }
