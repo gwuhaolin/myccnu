@@ -16,18 +16,4 @@ public class MyLibTest {
         Assert.assertTrue(re.size() > 0);
     }
 
-    @Test
-    public void testRenew() throws Exception {
-
-    }
-
-    @Test
-    public void testPasswordIsOk() throws Exception {
-
-    }
-
-    @Test
-    public void testJianGouBook() throws Exception {
-
-    }
 }

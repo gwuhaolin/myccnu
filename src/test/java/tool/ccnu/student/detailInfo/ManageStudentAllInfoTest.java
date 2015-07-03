@@ -18,8 +18,4 @@ public class ManageStudentAllInfoTest {
         int re = ManageStudentAllInfo.downloadAndStoreToSQLFromJWCwhereInfoNull();
     }
 
-    @Test
-    public void testParse() throws Exception {
-
-    }
 }

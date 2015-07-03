@@ -11,14 +11,10 @@ public class ManageYKTTest extends TestCase {
 
     private final String XH = "2006982669";
     private final String MM = "2006982669";
-    private final int TIMES = 10;
 
     @Before
     public void setUp() throws Exception {
-        //设置代理
-//        System.setProperty("http.proxySet", "true");
-//        System.setProperty("http.proxyHost", "my.ccnuyouth.com");
-//        System.setProperty("http.proxyPort", "8888");
+
     }
 
     public void testSpiderAndGet() throws Exception {
