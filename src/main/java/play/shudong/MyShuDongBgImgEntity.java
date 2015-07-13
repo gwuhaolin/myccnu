@@ -6,7 +6,6 @@
 
 package play.shudong;
 
-import org.hibernate.annotations.GenericGenerator;
 import tool.Tool;
 
 import javax.persistence.*;

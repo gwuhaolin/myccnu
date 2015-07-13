@@ -19,53 +19,6 @@ public class Cet46Entity implements Comparable<Cet46Entity> {
     private String xh;
     private String date;
 
-    public Cet46Entity(Float sumScore, String listening, String reading, String essay, String grade, String date) {
-        this.sumScore = sumScore;
-        this.listening = listening;
-        this.reading = reading;
-        this.essay = essay;
-        this.grade = grade;
-        this.date = date;
-    }
-
-    public Cet46Entity() {
-    }
-
-    /**
-     * 正态分布函数
-     *
-     * @param u
-     * @return
-     */
-    private static double calc(double u) {
-        double y = Math.abs(u);
-        double y2 = y * y;
-        double z = Math.exp(-0.5 * y2) * 0.398942280401432678;
-        double p = 0;
-        int k = 28;
-        double s = -1;
-        double fj = k;
-
-        if (y > 3) {
-            //当y>3时
-            for (int i = 1; i <= k; i++) {
-                p = fj / (y + p);
-                fj = fj - 1.0;
-            }
-            p = z / (y + p);
-        } else {
-            //当y<3时
-            for (int i = 1; i <= k; i++) {
-                p = fj * y2 / (2.0 * fj + 1.0 + s * p);
-                s = -s;
-                fj = fj - 1.0;
-            }
-            p = 0.5 - z * y / (1 - p);
-        }
-        if (u > 0) p = 1.0 - p;
-        return p;
-    }
-
     @Basic
     @Column(name = "sumScore", nullable = true, insertable = true, updatable = true, precision = 0)
     public Float getSumScore() {
@@ -177,6 +130,53 @@ public class Cet46Entity implements Comparable<Cet46Entity> {
         result = 31 * result + (xh != null ? xh.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         return result;
+    }
+
+    public Cet46Entity(Float sumScore, String listening, String reading, String essay, String grade, String date) {
+        this.sumScore = sumScore;
+        this.listening = listening;
+        this.reading = reading;
+        this.essay = essay;
+        this.grade = grade;
+        this.date = date;
+    }
+
+    public Cet46Entity() {
+    }
+
+    /**
+     * 正态分布函数
+     *
+     * @param u
+     * @return
+     */
+    private static double calc(double u) {
+        double y = Math.abs(u);
+        double y2 = y * y;
+        double z = Math.exp(-0.5 * y2) * 0.398942280401432678;
+        double p = 0;
+        int k = 28;
+        double s = -1;
+        double fj = k;
+
+        if (y > 3) {
+            //当y>3时
+            for (int i = 1; i <= k; i++) {
+                p = fj / (y + p);
+                fj = fj - 1.0;
+            }
+            p = z / (y + p);
+        } else {
+            //当y<3时
+            for (int i = 1; i <= k; i++) {
+                p = fj * y2 / (2.0 * fj + 1.0 + s * p);
+                s = -s;
+                fj = fj - 1.0;
+            }
+            p = 0.5 - z * y / (1 - p);
+        }
+        if (u > 0) p = 1.0 - p;
+        return p;
     }
 
     public boolean pass() {
