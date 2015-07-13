@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Gradle: org.glassfish.hk2:hk2-locator:2.2.0">
-    <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/glassfish/hk2/hk2-locator/2.2.0/hk2-locator-2.2.0.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

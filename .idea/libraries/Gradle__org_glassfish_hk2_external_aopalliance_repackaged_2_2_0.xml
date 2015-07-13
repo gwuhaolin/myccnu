@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Gradle: org.glassfish.hk2.external:aopalliance-repackaged:2.2.0">
-    <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/glassfish/hk2/external/aopalliance-repackaged/2.2.0/aopalliance-repackaged-2.2.0.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
