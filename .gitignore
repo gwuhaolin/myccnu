@@ -2,3 +2,6 @@
 build
 classes
 ROOT.war
+.gradle
+.idea
+myccnu.iml
