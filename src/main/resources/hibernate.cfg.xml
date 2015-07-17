@@ -14,11 +14,11 @@
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
 
         <!--数据库连接URL-->
-        <property name="connection.url">jdbc:mysql://localhost:3306/weixin</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306</property>
 
         <!-- JDBC connection pool (use the built-in) -->
         <property name="connection.pool_size">
-            1000000
+            10000
         </property>
 
         <!-- SQL 方言-->
@@ -43,8 +43,6 @@
 
         <!--数据库帐号-->
         <property name="connection.username">root</property>
-        <!--数据库密码-->
-        <property name="connection.password"/>
 
         <!-- 以下设置对象与数据库表的映像文件 -->
         <!--电影-->
