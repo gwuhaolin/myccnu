@@ -47,10 +47,3 @@ war {
     archiveName = 'ROOT.war'
     destinationDir = new File('../../webapps/');
 }
-
-task gitPull {
-    def gitPull = "git pull".execute()
-    gitPull.waitFor()
-}
-//下载最新代码，然后编译部署到jetty
-task deploy(dependsOn: [gitPull, war]) {}
