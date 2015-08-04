@@ -29,7 +29,7 @@ class ManageShopItem {
     /**
      * 当物品的图片URL为空时的默认URL
      */
-    public static final String DEFAULT_PIC_URL = "http://myccnushop.qiniudn.com/default.png";
+    public static final String DEFAULT_PIC_URL = "http://7fvj67.com1.z0.glb.clouddn.com/default.png";
 
     /**
      * 向数据库中添加一个物品,且自动为其分类
